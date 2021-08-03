@@ -1,0 +1,21 @@
+syntax: glob
+__pycache__
+*.h5
+*.h5.iso.xml
+*.png
+pyl4c.egg-info/
+docs/html
+
+# Cython stuff
+*.c
+*.so
+*.o
+
+# Editor extras (Emacs,Vi/Vim)
+\#*\#
+.\#*
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]

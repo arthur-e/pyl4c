@@ -1,0 +1,6 @@
+{
+  "BPLUT_file": "SMAP_BPLUT_2020-07-31.csv",
+  "drivers_file": "L4_C_tower_site_drivers_NRv8-3_for_356_sites.h5",
+  "scratch_file": "L4_C_calibration_scratch.h5",
+  "towers_file": "Fluxnet2015_LaThuile_tower_data_for_356_sites.h5"
+}
