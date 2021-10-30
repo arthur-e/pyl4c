@@ -125,6 +125,39 @@ def pft_dominant(pft_map_array):
     ]
 
 
+def pft_selector(pft_map, pft):
+    '''
+    For a given PFT class, returns the tower sites, as rank indices, that
+    represent that PFT. Exceptions are made according to the L4C calibration
+    protocol, e.g., sites with any amount of Deciduous Needleleaf (DNF) in
+    their 1-km subgrid are considered to represent the DNF PFT class.
+
+    Parameters
+    ----------
+    pft_map : numpy.ndarray
+        An (N x M) array where N is the number of sites and M is the number
+        of replicates within each site; e.g., for SMAP L4C, M=81 corresponding
+        with the 81 cells of the 1-km subgrid for each eddy covariance flux
+        tower site.
+    pft : int
+        The integer number of the PFT to select
+
+    Returns
+    -------
+    numpy.ndarray
+    '''
+    idx = pft_map.shape[0]
+    if pft == 3:
+        return np.apply_along_axis(lambda x: x == 3, 1, pft_map).any(axis = 1)
+    return np.equal(pft, [ # Skip invalid PFT codes
+        count[1][0] if count[0][0] not in range(1, 9) else count[0][0]
+        for count in [ # Count 1-km cells by PFT
+            a.most_common() for a in np.apply_along_axis(
+                lambda x: Counter(x.tolist()), 1, pft_map)
+        ]
+    ])
+
+
 def suppress_warnings(func):
     'Decorator to suppress NumPy warnings'
     def inner(*args, **kwargs):
