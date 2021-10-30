@@ -289,7 +289,7 @@ def rmsd(x1, x2, n = None, weights = None):
     -------
     float
     '''
-    assert n is None or hasattr(n, 'real'), 'Argument "n" must be of integer type'
+    assert isinstance(n, int) or n is None, 'Argument "n" must be of integer type'
     assert x1.ndim <= 2 and x2.ndim <= 2, 'No support for more than 2 axes'
     diffs = np.subtract(x1, x2)
     # Optionally weight the residuals first

@@ -21,7 +21,7 @@ VIIRS_METADATA = re.compile(
     r'.*LowerRightMtrs=\((?P<lr>[0-9,\-\.]+)\).*', re.DOTALL)
 VIIRS_H5_ROOT = 'HDFEOS/GRIDS/VNP_Grid_VNP15A2H/Data Fields'
 
-def dec2bin_unpack(x, axis = None):
+def dec2bin_unpack(x):
     '''
     Unpacks an arbitrary decimal NumPy array into a binary representation
     along a new axis. Assumes decimal digits are on the interval [0, 255],
@@ -30,14 +30,16 @@ def dec2bin_unpack(x, axis = None):
     Parameters
     ----------
     x : numpy.ndarray
-    axis : int
-        The axis along which the binary digits should be unpacked
 
     Returns
     -------
     numpy.ndarray
     '''
-    axis = x.ndim if axis is None else axis
+    # Make sure the bit representation is enumerated along a new axis, the
+    #   very last axis
+    axis = x.ndim
+    # unpackbits() returns the bit representation in big-endian order, so we
+    #   flip the array (with -8) to get litte-endian order
     return np.unpackbits(x[...,None], axis = axis)[...,-8:]
 
 
@@ -88,7 +90,7 @@ def mod15a2h_qc_fail(x):
     Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
     `FparLai_QC` band: Bad pixels have either `1` in the first bit ("Pixel not
     produced at all") or anything other than `00` ("clear") in bits 3-4.
-    Compare to:
+    Output array is True wherever the array fails QC criteria. Compare to:
 
         np.vectorize(lambda v: v[0] == 1 or v[3:5] != '00')
 
@@ -101,7 +103,7 @@ def mod15a2h_qc_fail(x):
     Returns
     -------
     numpy.ndarray
-        Boolean array
+        Boolean array with True wherever QC criteria are failed
     '''
     y = dec2bin_unpack(x)
     # Emit 1 = FAIL if these two bits are not == "00"
@@ -245,8 +247,7 @@ def vnp15a2h_qc_fail(x):
     Parameters
     ----------
     x : numpy.ndarray
-        Array where the last axis enumerates the unpacked bits
-        (ones and zeros)
+        Unsigned, 8-bit integer array
 
     Returns
     -------
@@ -272,6 +273,7 @@ def vnp15a2h_cloud_fail(x):
     Parameters
     ----------
     x : numpy.ndarray
+        Unsigned, 8-bit integer array
 
     Returns
     -------

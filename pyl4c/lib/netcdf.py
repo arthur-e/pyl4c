@@ -131,7 +131,7 @@ def netcdf_array(nc, keys, cell_size = None, time_idx = 0, x_offset = -180):
 
     # If necessary, re-sort data so west-most longitude is the first column
     if start_idx is not None:
-        arr = np.concatenate((arr[:,start_idx:], arr[:,:start_idx]), axis = 2)
+        arr = np.concatenate((arr[...,start_idx:], arr[...,:start_idx]), axis = 2)
 
     scale = 1
     if hasattr(nc.variables[keys[0]], 'scale_factor'):
