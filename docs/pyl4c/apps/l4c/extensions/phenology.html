@@ -1,0 +1,1345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.apps.l4c.extensions.phenology API documentation</title>
+<meta name="description" content="Couple of the operational L4C model and various phenology-related
+extensions; see corresponding calibration code in the module:
+…" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.apps.l4c.extensions.phenology</code></h1>
+</header>
+<section id="section-intro">
+<p>Couple of the operational L4C model and various phenology-related
+extensions; see corresponding calibration code in the module:
+<code><a title="pyl4c.apps.calibration.extensions.phenology" href="../../calibration/extensions/phenology.html">pyl4c.apps.calibration.extensions.phenology</a></code>.</p>
+<p>In sub-classes of <code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></code> (and of <code>L4CForwardProcessPoint</code> more
+generally), typically all that is required to change the start-up and
+initialization of a forward run is to modify one of the class-level variables
+in all caps (e.g., <code>DRIVERS_INDEX</code>, which registers constraint functions
+during setup).</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Couple of the operational L4C model and various phenology-related
+extensions; see corresponding calibration code in the module:
+`pyl4c.apps.calibration.extensions.phenology`.
+
+In sub-classes of `L4CPhenologyProcess` (and of `L4CForwardProcessPoint` more
+generally), typically all that is required to change the start-up and
+initialization of a forward run is to modify one of the class-level variables
+in all caps (e.g., `DRIVERS_INDEX`, which registers constraint functions
+during setup).
+&#39;&#39;&#39;
+
+import datetime
+import pickle
+import h5py
+import numpy as np
+from pyl4c import suppress_warnings
+from pyl4c.science import ordinals365
+from pyl4c.lib.cli import ProgressBar
+from pyl4c.apps.l4c.io import L4CStreamingInputDataset
+from pyl4c.apps.l4c.main import L4CForwardProcessPoint
+from pyl4c.apps.calibration import BPLUT
+
+class L4CPhenologyProcess(L4CForwardProcessPoint):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the RH sub-model is modified to allow
+    for respiration phenology. Driver data are the same as for any L4C Science
+    run, so additional configuration data must be provided:
+
+    1. To update the SOC and litterfall parameters, an `soc_data_path`
+        configuration option must be supplied.
+    2. New model parameters must be provided in the `extra_parameters`
+        configuration option.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    stream : bool
+        True to use L4CStreamingInputDataset instead of reading in all driver
+        data; this reduces memory use but increases I/O
+    verbose : bool
+        True to print all output to stdout
+    debug : bool
+        True to store additional diagnostic information from each time step
+    &#39;&#39;&#39;
+    PFT_CODES = range(1, 9)
+    DIAGNOSTICS_INDEX = (&#39;f_tsoil&#39;, &#39;f_smsf&#39;)
+    STATE_INDEX = (&#39;soc1&#39;, &#39;soc2&#39;, &#39;soc3&#39;)
+
+    def __init__(
+            self, config, stream = True, verbose = True, debug = False):
+        for key in (&#39;extra_parameters&#39;, &#39;soc_data_path&#39;):
+            assert key in config.keys(),\
+                &#39;L4CPhenologyProcess model requires &#34;%s&#34; configuration key&#39; % key
+        super().__init__(
+            config = config, stream = stream, verbose = verbose, debug = debug)
+        if config[&#39;extra_parameters&#39;] is not None:
+            with open(config[&#39;extra_parameters&#39;], &#39;rb&#39;) as file:
+                data_dict = pickle.load(file)
+            # Identify the extra parameters
+            params = set(data_dict.keys()).difference(self._bplut.keys())
+            # Set invalid PFT codes to PFT 0
+            self._pft = np.where(self._pft &gt; max(self.PFT_CODES), 0, self._pft)
+            # Vectorize the new parameters
+            self._extra_params = dict([
+                (p, data_dict[p][self._pft]) for p in params
+            ])
+        # Set the daily litterfall
+        with open(self.config[&#39;soc_data_path&#39;], &#39;rb&#39;) as file:
+            litterfall, _ = pickle.load(file)
+        # Overwrite the daily litterfall that was set in the parent model
+        self.constants.add(litterfall, &#39;litterfall&#39;)
+
+    @suppress_warnings
+    def _load_state(self, hdf, keys):
+        &#39;&#39;&#39;
+        Overrides original _load_state() so as to accept an alternate source
+        of SOC data, without having to duplicate all the other data in the
+        drivers HDF5.
+        &#39;&#39;&#39;
+        soc_path = self.config[&#39;soc_data_path&#39;]
+        with open(soc_path, &#39;rb&#39;) as file:
+            _, soil_organic_carbon = pickle.load(file)
+        shp = (1, self.config[&#39;time_steps&#39;], self.config[&#39;site_count&#39;], 81)
+        init_state = []
+        new_state = []
+        for p, key in enumerate(keys):
+            # Create an empty state array, allocated T time steps
+            new_state.append(np.full(shp, np.nan))
+            if key.startswith(&#39;soc&#39;):
+                arr = soil_organic_carbon[p,...]
+                # Filter out any NoData, which (should) only correspond to
+                #   1-km subgrid pixels that are outside the PFT range [1, 8]
+                init_state.append(
+                    np.where(arr &lt; 0, np.nan, arr).reshape((1, 1, *shp[2:])))
+            else:
+                init_state.append(np.full((1, 1, *shp[2:]), np.nan))
+        return (init_state, new_state)
+
+
+class L4CWithO2Diffusion(L4CPhenologyProcess):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the RH sub-model is modified to
+    include an O2 diffusion limitation. Driver data are the same as for any
+    L4C Science run, so additional configuration data must be provided:
+
+    1. To update the SOC and litterfall parameters, an `soc_data_path`
+        configuration option must be supplied.
+    2. New model parameters must be provided in the `extra_parameters`
+        configuration option.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    stream : bool
+        True to use L4CStreamingInputDataset instead of reading in all driver
+        data; this reduces memory use but increases I/O
+    verbose : bool
+        True to print all output to stdout
+    debug : bool
+        True to store additional diagnostic information from each time step
+    &#39;&#39;&#39;
+    PFT_CODES = range(1, 9)
+    DIAGNOSTICS_INDEX = (&#39;f_tsoil&#39;, &#39;f_smsf&#39;, &#39;conc_O2&#39;, &#39;mm_O2&#39;)
+    STATE_INDEX = (&#39;soc1&#39;, &#39;soc2&#39;, &#39;soc3&#39;)
+    AIR_FRAC_O2 = 0.2095 # Liters of O2 per liter of air (20.95%)
+
+    def __init__(
+            self, config, stream = True, verbose = True, debug = False):
+        super().__init__(
+            config = config, stream = stream, verbose = verbose, debug = debug)
+        with h5py.File(self.file_path, &#39;r&#39;) as hdf:
+            # Read in porosity, copy to 1-km subgrid
+            self._porosity = hdf[&#39;state/porosity&#39;][:][:,np.newaxis]\
+                .repeat(81, axis = 1)
+
+    def concentration_O2(self, soil_vwc):
+        &#39;Concentration of O2 given soil vegetation water content (VWC)&#39;
+        d_gas = self._extra_params[&#39;d_gas&#39;]
+        return d_gas * self.AIR_FRAC_O2 * np.power(
+            self._porosity - soil_vwc, 4/3)
+
+    def rh(self, state, drivers):
+        &#39;&#39;&#39;
+        Calculate RH for a single time step.
+
+        Parameters
+        ----------
+        state : numpy.ndarray
+            `(3 x N x M)` array of current SOC state in each pool
+        drivers : list or tuple
+            Sequence of `numpy.ndarray`: `(tsoil, smsf)` where `tsoil` is the
+            the soil temperature and `smsf` is the surface soil moisture, each
+            is an (N x M) array
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        # Translate Tsoil and SMSF into environmental constraints on RH
+        tsoil, smsf = drivers
+        f_tsoil = self.constrain(*tsoil)
+        f_smsf = self.constrain(*smsf)
+        smsf, _ = smsf # Pop off the label &#34;smsf&#34; and just get the data
+        # NOTE: Converting from &#34;wetness&#34; to volumetric water content (VWC)
+        soil_vwc = np.multiply(smsf / 100, self._porosity)
+        conc_O2 = self.concentration_O2(soil_vwc)
+        mm_O2 = conc_O2 / (self._extra_params[&#39;km_oxy&#39;] + conc_O2)
+        # Take the minimum of the SMSF and Soil VWC constraint
+        k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
+        k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
+        # NOTE: These are true decay rates for 2nd and 3rd pools, so it
+        #   is straightfoward to multiply them against SOC
+        rh = k_mult * self.constants.decay_rates * state
+        # &#34;the adjustment...to account for material transferred into the
+        #   slow pool during humification&#34; (Jones et al. 2017 TGARS, p.5)
+        rh[1,...] = rh[1,...] * (1 - self.constants.f_structural)
+        # T_mult, W_mult same for each pool
+        return (rh, (f_tsoil, f_smsf, conc_O2, mm_O2))
+
+    def run(self, steps = None):
+        &#39;&#39;&#39;
+        A forward run in serial over multiple time steps; currently works in
+        streaming mode ONLY.
+
+        Parameters
+        ----------
+        steps : int
+            Number of time steps to run or None to run through the end of the
+            available time steps (exhaust driver data) (Default: `None`)
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def step(t, fields_gpp, fields_rh):
+            &#39;Calculate fluxes, new states for the next time step t&#39;
+            if t == 0:
+                # Retrieve intial SOC pool sizes
+                state = self.state_initial[0:3,0,...]
+            else:
+                # Retrieve SOC in each pool from prior step
+                state = self.state.data[0:3,t-1,...]
+            # Calculate fluxes, new states
+            gpp, e_mult = self.gpp(
+                zip(hdf.index(t + self._t0, *fields_gpp), fields_gpp))
+            rh, rh_diag = self.rh(
+                state, zip(hdf.index(t + self._t0, *fields_rh), fields_rh))
+            npp = gpp * self.constants.CUE
+            d_soc = self.soc(rh)
+            # Record fluxes for this time step
+            self.fluxes.update(&#39;gpp&#39;, t, gpp)
+            self.fluxes.update(&#39;rh&#39;, t, rh.sum(axis = 0))
+            self.fluxes.update(&#39;nee&#39;, t, rh.sum(axis = 0) - npp)
+            if self._debug:
+                f_tsoil, f_smsf, conc_O2, mm_O2 = rh_diag
+                self.state.update(&#39;f_tsoil&#39;, t, f_tsoil)
+                self.state.update(&#39;f_smsf&#39;, t, f_smsf)
+                self.state.update(&#39;conc_O2&#39;, t, conc_O2)
+                self.state.update(&#39;mm_O2&#39;, t, mm_O2)
+            # Update the SOC state
+            for p in range(1, 4):
+                if t == 0:
+                    # At time t=0, we have no state to advance, so update
+                    #   the state at t=0 based on the initial state
+                    delta = np.add(self.state_initial[p-1,0,...], d_soc[p-1])
+                    self.state.update(
+                        &#39;soc%d&#39; % p, t, delta, bounds = (0, np.inf))
+                else:
+                    self.state.advance(
+                        &#39;soc%d&#39; % p, t, d_soc[p-1], bounds = (0, np.inf))
+        with L4CStreamingInputDataset(
+                self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
+            fields_gpp = [&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;]
+            fields_rh = [&#39;tsoil&#39;, &#39;smsf&#39;]
+            num_steps = self.config[&#39;time_steps&#39;] if steps is None else steps
+            with ProgressBar(num_steps, &#39;Running...&#39;) as progress:
+                for t in range(self._time_idx + 1, num_steps):
+                    step(t, fields_gpp, fields_rh)
+                    self._time_idx += 1
+                    progress.update(t)
+
+
+class L4CWithKokEffect(L4CPhenologyProcess):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the NEE model is modified to include
+    the Kok effect (CUE is dependent on PAR). Driver data are the same as for
+    any L4C Science run, so additional configuration data must be provided:
+
+    1. To update the SOC and litterfall parameters, an `soc_data_path`
+        configuration option must be supplied.
+    2. New model parameters must be provided in the `extra_parameters`
+        configuration option.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    stream : bool
+        True to use L4CStreamingInputDataset instead of reading in all driver
+        data; this reduces memory use but increases I/O
+    verbose : bool
+        True to print all output to stdout
+    debug : bool
+        True to store additional diagnostic information from each time step
+    &#39;&#39;&#39;
+    PFT_CODES = range(1, 9)
+    DIAGNOSTICS_INDEX = (&#39;f_tsoil&#39;, &#39;f_smsf&#39;, &#39;CUE&#39;)
+    DRIVERS_INDEX = (&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;, &#39;tsoil&#39;, &#39;smsf&#39;, &#39;par&#39;)
+    STATE_INDEX = (&#39;soc1&#39;, &#39;soc2&#39;, &#39;soc3&#39;)
+
+    def run(self, steps = None):
+        &#39;&#39;&#39;
+        A forward run in serial over multiple time steps; currently works in
+        streaming mode ONLY.
+
+        Parameters
+        ----------
+        steps : int
+            Number of time steps to run or None to run through the end of the
+            available time steps (exhaust driver data) (Default: None)
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def step(t, fields_gpp, fields_rh):
+            &#39;Calculate fluxes, new states for the next time step t&#39;
+            if t == 0:
+                # Retrieve intial SOC pool sizes
+                state = self.state_initial[0:3,0,...]
+            else:
+                # Retrieve SOC in each pool from prior step
+                state = self.state.data[0:3,t-1,...]
+            # Calculate fluxes, new states
+            gpp, e_mult = self.gpp(
+                zip(hdf.index(t + self._t0, *fields_gpp), fields_gpp))
+            rh, rh_diag = self.rh(
+                state, zip(hdf.index(t + self._t0, *fields_rh), fields_rh))
+            # NOTE: Different in this model:
+            #   CUE is constrained by PAR
+            par = hdf.index(t + self._t0, &#39;par&#39;)
+            cue = self.constrain(par[0], &#39;par&#39;) * self.constants.CUE
+            npp = gpp * cue
+            d_soc = self.soc(rh)
+            # Record fluxes for this time step
+            self.fluxes.update(&#39;gpp&#39;, t, gpp)
+            self.fluxes.update(&#39;rh&#39;, t, rh.sum(axis = 0))
+            self.fluxes.update(&#39;nee&#39;, t, rh.sum(axis = 0) - npp)
+            if self._debug:
+                f_tsoil, f_smsf = rh_diag
+                self.state.update(&#39;f_tsoil&#39;, t, f_tsoil)
+                self.state.update(&#39;f_smsf&#39;, t, f_smsf)
+                self.state.update(&#39;CUE&#39;, t, cue)
+            # Update the SOC state
+            for p in range(1, 4):
+                if t == 0:
+                    # At time t=0, we have no state to advance, so update
+                    #   the state at t=0 based on the initial state
+                    delta = np.add(self.state_initial[p-1,0,...], d_soc[p-1])
+                    self.state.update(
+                        &#39;soc%d&#39; % p, t, delta, bounds = (0, np.inf))
+                else:
+                    self.state.advance(
+                        &#39;soc%d&#39; % p, t, d_soc[p-1], bounds = (0, np.inf))
+        with L4CStreamingInputDataset(
+                self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
+            fields_gpp = [&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;]
+            fields_rh = [&#39;tsoil&#39;, &#39;smsf&#39;]
+            num_steps = self.config[&#39;time_steps&#39;] if steps is None else steps
+            with ProgressBar(num_steps, &#39;Running...&#39;) as progress:
+                for t in range(self._time_idx + 1, num_steps):
+                    step(t, fields_gpp, fields_rh)
+                    self._time_idx += 1
+                    progress.update(t)
+
+
+class L4CWithLitterfallPhenology(L4CPhenologyProcess):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the SOC model is modified to include
+    a litterfall phenology. Driver data are the same as for any L4C Science
+    run, except that litterfall is different.
+    &#39;&#39;&#39;
+    def __init__(
+            self, config, stream = True, verbose = True, debug = False):
+        super().__init__(
+            config = config, stream = stream, verbose = verbose, debug = debug)
+        # It is necessary to have a way to look up the day of year for
+        #   indexing the litterfall array, which is (365 x N x 81)
+        with h5py.File(self.file_path, &#39;r&#39;) as hdf:
+            dt = [datetime.date(*t[:-1]) for t in hdf[&#39;time&#39;][:].tolist()]
+            self._doy = ordinals365(dt)
+
+    def soc(self, rh, t):
+        &#39;&#39;&#39;
+        Calculate change in SOC for a single time step.
+
+        Parameters
+        ----------
+        rh : numpy.ndarray
+            (3 x N x M) array of RH at the current time step
+        t : int
+            Current time step
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        # Change in SOC according to diff. eq. in Jones et al. (2017)
+        doy = self._doy[t] - 1 # Get DOY on [1,365] then on [0,364] for Python
+        litter = self.constants.litterfall[doy,...]
+        dc1 = (litter * self.constants.f_metabolic) - rh[0,...]
+        dc2 = (litter * (1 - self.constants.f_metabolic)) - rh[1,...]
+        dc3 = (self.constants.f_structural * rh[1,...]) - rh[2,...]
+        return (dc1, dc2, dc3)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess"><code class="flex name class">
+<span>class <span class="ident">L4CPhenologyProcess</span></span>
+<span>(</span><span>config, stream=True, verbose=True, debug=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Variation on SMAP L4C model, where the RH sub-model is modified to allow
+for respiration phenology. Driver data are the same as for any L4C Science
+run, so additional configuration data must be provided:</p>
+<ol>
+<li>To update the SOC and litterfall parameters, an <code>soc_data_path</code>
+configuration option must be supplied.</li>
+<li>New model parameters must be provided in the <code>extra_parameters</code>
+configuration option.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of configuration parameters</dd>
+<dt><strong><code>stream</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use L4CStreamingInputDataset instead of reading in all driver
+data; this reduces memory use but increases I/O</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to print all output to stdout</dd>
+<dt><strong><code>debug</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to store additional diagnostic information from each time step</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class L4CPhenologyProcess(L4CForwardProcessPoint):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the RH sub-model is modified to allow
+    for respiration phenology. Driver data are the same as for any L4C Science
+    run, so additional configuration data must be provided:
+
+    1. To update the SOC and litterfall parameters, an `soc_data_path`
+        configuration option must be supplied.
+    2. New model parameters must be provided in the `extra_parameters`
+        configuration option.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    stream : bool
+        True to use L4CStreamingInputDataset instead of reading in all driver
+        data; this reduces memory use but increases I/O
+    verbose : bool
+        True to print all output to stdout
+    debug : bool
+        True to store additional diagnostic information from each time step
+    &#39;&#39;&#39;
+    PFT_CODES = range(1, 9)
+    DIAGNOSTICS_INDEX = (&#39;f_tsoil&#39;, &#39;f_smsf&#39;)
+    STATE_INDEX = (&#39;soc1&#39;, &#39;soc2&#39;, &#39;soc3&#39;)
+
+    def __init__(
+            self, config, stream = True, verbose = True, debug = False):
+        for key in (&#39;extra_parameters&#39;, &#39;soc_data_path&#39;):
+            assert key in config.keys(),\
+                &#39;L4CPhenologyProcess model requires &#34;%s&#34; configuration key&#39; % key
+        super().__init__(
+            config = config, stream = stream, verbose = verbose, debug = debug)
+        if config[&#39;extra_parameters&#39;] is not None:
+            with open(config[&#39;extra_parameters&#39;], &#39;rb&#39;) as file:
+                data_dict = pickle.load(file)
+            # Identify the extra parameters
+            params = set(data_dict.keys()).difference(self._bplut.keys())
+            # Set invalid PFT codes to PFT 0
+            self._pft = np.where(self._pft &gt; max(self.PFT_CODES), 0, self._pft)
+            # Vectorize the new parameters
+            self._extra_params = dict([
+                (p, data_dict[p][self._pft]) for p in params
+            ])
+        # Set the daily litterfall
+        with open(self.config[&#39;soc_data_path&#39;], &#39;rb&#39;) as file:
+            litterfall, _ = pickle.load(file)
+        # Overwrite the daily litterfall that was set in the parent model
+        self.constants.add(litterfall, &#39;litterfall&#39;)
+
+    @suppress_warnings
+    def _load_state(self, hdf, keys):
+        &#39;&#39;&#39;
+        Overrides original _load_state() so as to accept an alternate source
+        of SOC data, without having to duplicate all the other data in the
+        drivers HDF5.
+        &#39;&#39;&#39;
+        soc_path = self.config[&#39;soc_data_path&#39;]
+        with open(soc_path, &#39;rb&#39;) as file:
+            _, soil_organic_carbon = pickle.load(file)
+        shp = (1, self.config[&#39;time_steps&#39;], self.config[&#39;site_count&#39;], 81)
+        init_state = []
+        new_state = []
+        for p, key in enumerate(keys):
+            # Create an empty state array, allocated T time steps
+            new_state.append(np.full(shp, np.nan))
+            if key.startswith(&#39;soc&#39;):
+                arr = soil_organic_carbon[p,...]
+                # Filter out any NoData, which (should) only correspond to
+                #   1-km subgrid pixels that are outside the PFT range [1, 8]
+                init_state.append(
+                    np.where(arr &lt; 0, np.nan, arr).reshape((1, 1, *shp[2:])))
+            else:
+                init_state.append(np.full((1, 1, *shp[2:]), np.nan))
+        return (init_state, new_state)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint">L4CForwardProcessPoint</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.l4c.extensions.coupling.L4CEnhancedDecomposition" href="coupling.html#pyl4c.apps.l4c.extensions.coupling.L4CEnhancedDecomposition">L4CEnhancedDecomposition</a></li>
+<li><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect">L4CWithKokEffect</a></li>
+<li><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology">L4CWithLitterfallPhenology</a></li>
+<li><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion">L4CWithO2Diffusion</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.DIAGNOSTICS_INDEX"><code class="name">var <span class="ident">DIAGNOSTICS_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.PFT_CODES"><code class="name">var <span class="ident">PFT_CODES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.STATE_INDEX"><code class="name">var <span class="ident">STATE_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint">L4CForwardProcessPoint</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint.constrain" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.constrain">constrain</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint.gpp" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.gpp">gpp</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint.rh" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.rh">rh</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint.run" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.run">run</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint.soc" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.soc">soc</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect"><code class="flex name class">
+<span>class <span class="ident">L4CWithKokEffect</span></span>
+<span>(</span><span>config, stream=True, verbose=True, debug=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Variation on SMAP L4C model, where the NEE model is modified to include
+the Kok effect (CUE is dependent on PAR). Driver data are the same as for
+any L4C Science run, so additional configuration data must be provided:</p>
+<ol>
+<li>To update the SOC and litterfall parameters, an <code>soc_data_path</code>
+configuration option must be supplied.</li>
+<li>New model parameters must be provided in the <code>extra_parameters</code>
+configuration option.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of configuration parameters</dd>
+<dt><strong><code>stream</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use L4CStreamingInputDataset instead of reading in all driver
+data; this reduces memory use but increases I/O</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to print all output to stdout</dd>
+<dt><strong><code>debug</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to store additional diagnostic information from each time step</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class L4CWithKokEffect(L4CPhenologyProcess):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the NEE model is modified to include
+    the Kok effect (CUE is dependent on PAR). Driver data are the same as for
+    any L4C Science run, so additional configuration data must be provided:
+
+    1. To update the SOC and litterfall parameters, an `soc_data_path`
+        configuration option must be supplied.
+    2. New model parameters must be provided in the `extra_parameters`
+        configuration option.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    stream : bool
+        True to use L4CStreamingInputDataset instead of reading in all driver
+        data; this reduces memory use but increases I/O
+    verbose : bool
+        True to print all output to stdout
+    debug : bool
+        True to store additional diagnostic information from each time step
+    &#39;&#39;&#39;
+    PFT_CODES = range(1, 9)
+    DIAGNOSTICS_INDEX = (&#39;f_tsoil&#39;, &#39;f_smsf&#39;, &#39;CUE&#39;)
+    DRIVERS_INDEX = (&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;, &#39;tsoil&#39;, &#39;smsf&#39;, &#39;par&#39;)
+    STATE_INDEX = (&#39;soc1&#39;, &#39;soc2&#39;, &#39;soc3&#39;)
+
+    def run(self, steps = None):
+        &#39;&#39;&#39;
+        A forward run in serial over multiple time steps; currently works in
+        streaming mode ONLY.
+
+        Parameters
+        ----------
+        steps : int
+            Number of time steps to run or None to run through the end of the
+            available time steps (exhaust driver data) (Default: None)
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def step(t, fields_gpp, fields_rh):
+            &#39;Calculate fluxes, new states for the next time step t&#39;
+            if t == 0:
+                # Retrieve intial SOC pool sizes
+                state = self.state_initial[0:3,0,...]
+            else:
+                # Retrieve SOC in each pool from prior step
+                state = self.state.data[0:3,t-1,...]
+            # Calculate fluxes, new states
+            gpp, e_mult = self.gpp(
+                zip(hdf.index(t + self._t0, *fields_gpp), fields_gpp))
+            rh, rh_diag = self.rh(
+                state, zip(hdf.index(t + self._t0, *fields_rh), fields_rh))
+            # NOTE: Different in this model:
+            #   CUE is constrained by PAR
+            par = hdf.index(t + self._t0, &#39;par&#39;)
+            cue = self.constrain(par[0], &#39;par&#39;) * self.constants.CUE
+            npp = gpp * cue
+            d_soc = self.soc(rh)
+            # Record fluxes for this time step
+            self.fluxes.update(&#39;gpp&#39;, t, gpp)
+            self.fluxes.update(&#39;rh&#39;, t, rh.sum(axis = 0))
+            self.fluxes.update(&#39;nee&#39;, t, rh.sum(axis = 0) - npp)
+            if self._debug:
+                f_tsoil, f_smsf = rh_diag
+                self.state.update(&#39;f_tsoil&#39;, t, f_tsoil)
+                self.state.update(&#39;f_smsf&#39;, t, f_smsf)
+                self.state.update(&#39;CUE&#39;, t, cue)
+            # Update the SOC state
+            for p in range(1, 4):
+                if t == 0:
+                    # At time t=0, we have no state to advance, so update
+                    #   the state at t=0 based on the initial state
+                    delta = np.add(self.state_initial[p-1,0,...], d_soc[p-1])
+                    self.state.update(
+                        &#39;soc%d&#39; % p, t, delta, bounds = (0, np.inf))
+                else:
+                    self.state.advance(
+                        &#39;soc%d&#39; % p, t, d_soc[p-1], bounds = (0, np.inf))
+        with L4CStreamingInputDataset(
+                self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
+            fields_gpp = [&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;]
+            fields_rh = [&#39;tsoil&#39;, &#39;smsf&#39;]
+            num_steps = self.config[&#39;time_steps&#39;] if steps is None else steps
+            with ProgressBar(num_steps, &#39;Running...&#39;) as progress:
+                for t in range(self._time_idx + 1, num_steps):
+                    step(t, fields_gpp, fields_rh)
+                    self._time_idx += 1
+                    progress.update(t)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></li>
+<li><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint">L4CForwardProcessPoint</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.DIAGNOSTICS_INDEX"><code class="name">var <span class="ident">DIAGNOSTICS_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.DRIVERS_INDEX"><code class="name">var <span class="ident">DRIVERS_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.PFT_CODES"><code class="name">var <span class="ident">PFT_CODES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.STATE_INDEX"><code class="name">var <span class="ident">STATE_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self, steps=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A forward run in serial over multiple time steps; currently works in
+streaming mode ONLY.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of time steps to run or None to run through the end of the
+available time steps (exhaust driver data) (Default: None)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self, steps = None):
+    &#39;&#39;&#39;
+    A forward run in serial over multiple time steps; currently works in
+    streaming mode ONLY.
+
+    Parameters
+    ----------
+    steps : int
+        Number of time steps to run or None to run through the end of the
+        available time steps (exhaust driver data) (Default: None)
+    &#39;&#39;&#39;
+    @suppress_warnings
+    def step(t, fields_gpp, fields_rh):
+        &#39;Calculate fluxes, new states for the next time step t&#39;
+        if t == 0:
+            # Retrieve intial SOC pool sizes
+            state = self.state_initial[0:3,0,...]
+        else:
+            # Retrieve SOC in each pool from prior step
+            state = self.state.data[0:3,t-1,...]
+        # Calculate fluxes, new states
+        gpp, e_mult = self.gpp(
+            zip(hdf.index(t + self._t0, *fields_gpp), fields_gpp))
+        rh, rh_diag = self.rh(
+            state, zip(hdf.index(t + self._t0, *fields_rh), fields_rh))
+        # NOTE: Different in this model:
+        #   CUE is constrained by PAR
+        par = hdf.index(t + self._t0, &#39;par&#39;)
+        cue = self.constrain(par[0], &#39;par&#39;) * self.constants.CUE
+        npp = gpp * cue
+        d_soc = self.soc(rh)
+        # Record fluxes for this time step
+        self.fluxes.update(&#39;gpp&#39;, t, gpp)
+        self.fluxes.update(&#39;rh&#39;, t, rh.sum(axis = 0))
+        self.fluxes.update(&#39;nee&#39;, t, rh.sum(axis = 0) - npp)
+        if self._debug:
+            f_tsoil, f_smsf = rh_diag
+            self.state.update(&#39;f_tsoil&#39;, t, f_tsoil)
+            self.state.update(&#39;f_smsf&#39;, t, f_smsf)
+            self.state.update(&#39;CUE&#39;, t, cue)
+        # Update the SOC state
+        for p in range(1, 4):
+            if t == 0:
+                # At time t=0, we have no state to advance, so update
+                #   the state at t=0 based on the initial state
+                delta = np.add(self.state_initial[p-1,0,...], d_soc[p-1])
+                self.state.update(
+                    &#39;soc%d&#39; % p, t, delta, bounds = (0, np.inf))
+            else:
+                self.state.advance(
+                    &#39;soc%d&#39; % p, t, d_soc[p-1], bounds = (0, np.inf))
+    with L4CStreamingInputDataset(
+            self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
+        fields_gpp = [&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;]
+        fields_rh = [&#39;tsoil&#39;, &#39;smsf&#39;]
+        num_steps = self.config[&#39;time_steps&#39;] if steps is None else steps
+        with ProgressBar(num_steps, &#39;Running...&#39;) as progress:
+            for t in range(self._time_idx + 1, num_steps):
+                step(t, fields_gpp, fields_rh)
+                self._time_idx += 1
+                progress.update(t)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.constrain" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.constrain">constrain</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.gpp" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.gpp">gpp</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.rh" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.rh">rh</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.soc" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.soc">soc</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology"><code class="flex name class">
+<span>class <span class="ident">L4CWithLitterfallPhenology</span></span>
+<span>(</span><span>config, stream=True, verbose=True, debug=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Variation on SMAP L4C model, where the SOC model is modified to include
+a litterfall phenology. Driver data are the same as for any L4C Science
+run, except that litterfall is different.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class L4CWithLitterfallPhenology(L4CPhenologyProcess):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the SOC model is modified to include
+    a litterfall phenology. Driver data are the same as for any L4C Science
+    run, except that litterfall is different.
+    &#39;&#39;&#39;
+    def __init__(
+            self, config, stream = True, verbose = True, debug = False):
+        super().__init__(
+            config = config, stream = stream, verbose = verbose, debug = debug)
+        # It is necessary to have a way to look up the day of year for
+        #   indexing the litterfall array, which is (365 x N x 81)
+        with h5py.File(self.file_path, &#39;r&#39;) as hdf:
+            dt = [datetime.date(*t[:-1]) for t in hdf[&#39;time&#39;][:].tolist()]
+            self._doy = ordinals365(dt)
+
+    def soc(self, rh, t):
+        &#39;&#39;&#39;
+        Calculate change in SOC for a single time step.
+
+        Parameters
+        ----------
+        rh : numpy.ndarray
+            (3 x N x M) array of RH at the current time step
+        t : int
+            Current time step
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        # Change in SOC according to diff. eq. in Jones et al. (2017)
+        doy = self._doy[t] - 1 # Get DOY on [1,365] then on [0,364] for Python
+        litter = self.constants.litterfall[doy,...]
+        dc1 = (litter * self.constants.f_metabolic) - rh[0,...]
+        dc2 = (litter * (1 - self.constants.f_metabolic)) - rh[1,...]
+        dc3 = (self.constants.f_structural * rh[1,...]) - rh[2,...]
+        return (dc1, dc2, dc3)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></li>
+<li><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint">L4CForwardProcessPoint</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology.soc"><code class="name flex">
+<span>def <span class="ident">soc</span></span>(<span>self, rh, t)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate change in SOC for a single time step.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>rh</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(3 x N x M) array of RH at the current time step</dd>
+<dt><strong><code>t</code></strong> :&ensp;<code>int</code></dt>
+<dd>Current time step</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def soc(self, rh, t):
+    &#39;&#39;&#39;
+    Calculate change in SOC for a single time step.
+
+    Parameters
+    ----------
+    rh : numpy.ndarray
+        (3 x N x M) array of RH at the current time step
+    t : int
+        Current time step
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    # Change in SOC according to diff. eq. in Jones et al. (2017)
+    doy = self._doy[t] - 1 # Get DOY on [1,365] then on [0,364] for Python
+    litter = self.constants.litterfall[doy,...]
+    dc1 = (litter * self.constants.f_metabolic) - rh[0,...]
+    dc2 = (litter * (1 - self.constants.f_metabolic)) - rh[1,...]
+    dc3 = (self.constants.f_structural * rh[1,...]) - rh[2,...]
+    return (dc1, dc2, dc3)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.constrain" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.constrain">constrain</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.gpp" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.gpp">gpp</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.rh" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.rh">rh</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.run" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion"><code class="flex name class">
+<span>class <span class="ident">L4CWithO2Diffusion</span></span>
+<span>(</span><span>config, stream=True, verbose=True, debug=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Variation on SMAP L4C model, where the RH sub-model is modified to
+include an O2 diffusion limitation. Driver data are the same as for any
+L4C Science run, so additional configuration data must be provided:</p>
+<ol>
+<li>To update the SOC and litterfall parameters, an <code>soc_data_path</code>
+configuration option must be supplied.</li>
+<li>New model parameters must be provided in the <code>extra_parameters</code>
+configuration option.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of configuration parameters</dd>
+<dt><strong><code>stream</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use L4CStreamingInputDataset instead of reading in all driver
+data; this reduces memory use but increases I/O</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to print all output to stdout</dd>
+<dt><strong><code>debug</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to store additional diagnostic information from each time step</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class L4CWithO2Diffusion(L4CPhenologyProcess):
+    &#39;&#39;&#39;
+    Variation on SMAP L4C model, where the RH sub-model is modified to
+    include an O2 diffusion limitation. Driver data are the same as for any
+    L4C Science run, so additional configuration data must be provided:
+
+    1. To update the SOC and litterfall parameters, an `soc_data_path`
+        configuration option must be supplied.
+    2. New model parameters must be provided in the `extra_parameters`
+        configuration option.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    stream : bool
+        True to use L4CStreamingInputDataset instead of reading in all driver
+        data; this reduces memory use but increases I/O
+    verbose : bool
+        True to print all output to stdout
+    debug : bool
+        True to store additional diagnostic information from each time step
+    &#39;&#39;&#39;
+    PFT_CODES = range(1, 9)
+    DIAGNOSTICS_INDEX = (&#39;f_tsoil&#39;, &#39;f_smsf&#39;, &#39;conc_O2&#39;, &#39;mm_O2&#39;)
+    STATE_INDEX = (&#39;soc1&#39;, &#39;soc2&#39;, &#39;soc3&#39;)
+    AIR_FRAC_O2 = 0.2095 # Liters of O2 per liter of air (20.95%)
+
+    def __init__(
+            self, config, stream = True, verbose = True, debug = False):
+        super().__init__(
+            config = config, stream = stream, verbose = verbose, debug = debug)
+        with h5py.File(self.file_path, &#39;r&#39;) as hdf:
+            # Read in porosity, copy to 1-km subgrid
+            self._porosity = hdf[&#39;state/porosity&#39;][:][:,np.newaxis]\
+                .repeat(81, axis = 1)
+
+    def concentration_O2(self, soil_vwc):
+        &#39;Concentration of O2 given soil vegetation water content (VWC)&#39;
+        d_gas = self._extra_params[&#39;d_gas&#39;]
+        return d_gas * self.AIR_FRAC_O2 * np.power(
+            self._porosity - soil_vwc, 4/3)
+
+    def rh(self, state, drivers):
+        &#39;&#39;&#39;
+        Calculate RH for a single time step.
+
+        Parameters
+        ----------
+        state : numpy.ndarray
+            `(3 x N x M)` array of current SOC state in each pool
+        drivers : list or tuple
+            Sequence of `numpy.ndarray`: `(tsoil, smsf)` where `tsoil` is the
+            the soil temperature and `smsf` is the surface soil moisture, each
+            is an (N x M) array
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        # Translate Tsoil and SMSF into environmental constraints on RH
+        tsoil, smsf = drivers
+        f_tsoil = self.constrain(*tsoil)
+        f_smsf = self.constrain(*smsf)
+        smsf, _ = smsf # Pop off the label &#34;smsf&#34; and just get the data
+        # NOTE: Converting from &#34;wetness&#34; to volumetric water content (VWC)
+        soil_vwc = np.multiply(smsf / 100, self._porosity)
+        conc_O2 = self.concentration_O2(soil_vwc)
+        mm_O2 = conc_O2 / (self._extra_params[&#39;km_oxy&#39;] + conc_O2)
+        # Take the minimum of the SMSF and Soil VWC constraint
+        k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
+        k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
+        # NOTE: These are true decay rates for 2nd and 3rd pools, so it
+        #   is straightfoward to multiply them against SOC
+        rh = k_mult * self.constants.decay_rates * state
+        # &#34;the adjustment...to account for material transferred into the
+        #   slow pool during humification&#34; (Jones et al. 2017 TGARS, p.5)
+        rh[1,...] = rh[1,...] * (1 - self.constants.f_structural)
+        # T_mult, W_mult same for each pool
+        return (rh, (f_tsoil, f_smsf, conc_O2, mm_O2))
+
+    def run(self, steps = None):
+        &#39;&#39;&#39;
+        A forward run in serial over multiple time steps; currently works in
+        streaming mode ONLY.
+
+        Parameters
+        ----------
+        steps : int
+            Number of time steps to run or None to run through the end of the
+            available time steps (exhaust driver data) (Default: `None`)
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def step(t, fields_gpp, fields_rh):
+            &#39;Calculate fluxes, new states for the next time step t&#39;
+            if t == 0:
+                # Retrieve intial SOC pool sizes
+                state = self.state_initial[0:3,0,...]
+            else:
+                # Retrieve SOC in each pool from prior step
+                state = self.state.data[0:3,t-1,...]
+            # Calculate fluxes, new states
+            gpp, e_mult = self.gpp(
+                zip(hdf.index(t + self._t0, *fields_gpp), fields_gpp))
+            rh, rh_diag = self.rh(
+                state, zip(hdf.index(t + self._t0, *fields_rh), fields_rh))
+            npp = gpp * self.constants.CUE
+            d_soc = self.soc(rh)
+            # Record fluxes for this time step
+            self.fluxes.update(&#39;gpp&#39;, t, gpp)
+            self.fluxes.update(&#39;rh&#39;, t, rh.sum(axis = 0))
+            self.fluxes.update(&#39;nee&#39;, t, rh.sum(axis = 0) - npp)
+            if self._debug:
+                f_tsoil, f_smsf, conc_O2, mm_O2 = rh_diag
+                self.state.update(&#39;f_tsoil&#39;, t, f_tsoil)
+                self.state.update(&#39;f_smsf&#39;, t, f_smsf)
+                self.state.update(&#39;conc_O2&#39;, t, conc_O2)
+                self.state.update(&#39;mm_O2&#39;, t, mm_O2)
+            # Update the SOC state
+            for p in range(1, 4):
+                if t == 0:
+                    # At time t=0, we have no state to advance, so update
+                    #   the state at t=0 based on the initial state
+                    delta = np.add(self.state_initial[p-1,0,...], d_soc[p-1])
+                    self.state.update(
+                        &#39;soc%d&#39; % p, t, delta, bounds = (0, np.inf))
+                else:
+                    self.state.advance(
+                        &#39;soc%d&#39; % p, t, d_soc[p-1], bounds = (0, np.inf))
+        with L4CStreamingInputDataset(
+                self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
+            fields_gpp = [&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;]
+            fields_rh = [&#39;tsoil&#39;, &#39;smsf&#39;]
+            num_steps = self.config[&#39;time_steps&#39;] if steps is None else steps
+            with ProgressBar(num_steps, &#39;Running...&#39;) as progress:
+                for t in range(self._time_idx + 1, num_steps):
+                    step(t, fields_gpp, fields_rh)
+                    self._time_idx += 1
+                    progress.update(t)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></li>
+<li><a title="pyl4c.apps.l4c.main.L4CForwardProcessPoint" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint">L4CForwardProcessPoint</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.AIR_FRAC_O2"><code class="name">var <span class="ident">AIR_FRAC_O2</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.DIAGNOSTICS_INDEX"><code class="name">var <span class="ident">DIAGNOSTICS_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.PFT_CODES"><code class="name">var <span class="ident">PFT_CODES</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.STATE_INDEX"><code class="name">var <span class="ident">STATE_INDEX</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.concentration_O2"><code class="name flex">
+<span>def <span class="ident">concentration_O2</span></span>(<span>self, soil_vwc)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Concentration of O2 given soil vegetation water content (VWC)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def concentration_O2(self, soil_vwc):
+    &#39;Concentration of O2 given soil vegetation water content (VWC)&#39;
+    d_gas = self._extra_params[&#39;d_gas&#39;]
+    return d_gas * self.AIR_FRAC_O2 * np.power(
+        self._porosity - soil_vwc, 4/3)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.rh"><code class="name flex">
+<span>def <span class="ident">rh</span></span>(<span>self, state, drivers)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate RH for a single time step.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd><code>(3 x N x M)</code> array of current SOC state in each pool</dd>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of <code>numpy.ndarray</code>: <code>(tsoil, smsf)</code> where <code>tsoil</code> is the
+the soil temperature and <code>smsf</code> is the surface soil moisture, each
+is an (N x M) array</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rh(self, state, drivers):
+    &#39;&#39;&#39;
+    Calculate RH for a single time step.
+
+    Parameters
+    ----------
+    state : numpy.ndarray
+        `(3 x N x M)` array of current SOC state in each pool
+    drivers : list or tuple
+        Sequence of `numpy.ndarray`: `(tsoil, smsf)` where `tsoil` is the
+        the soil temperature and `smsf` is the surface soil moisture, each
+        is an (N x M) array
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    # Translate Tsoil and SMSF into environmental constraints on RH
+    tsoil, smsf = drivers
+    f_tsoil = self.constrain(*tsoil)
+    f_smsf = self.constrain(*smsf)
+    smsf, _ = smsf # Pop off the label &#34;smsf&#34; and just get the data
+    # NOTE: Converting from &#34;wetness&#34; to volumetric water content (VWC)
+    soil_vwc = np.multiply(smsf / 100, self._porosity)
+    conc_O2 = self.concentration_O2(soil_vwc)
+    mm_O2 = conc_O2 / (self._extra_params[&#39;km_oxy&#39;] + conc_O2)
+    # Take the minimum of the SMSF and Soil VWC constraint
+    k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
+    k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
+    # NOTE: These are true decay rates for 2nd and 3rd pools, so it
+    #   is straightfoward to multiply them against SOC
+    rh = k_mult * self.constants.decay_rates * state
+    # &#34;the adjustment...to account for material transferred into the
+    #   slow pool during humification&#34; (Jones et al. 2017 TGARS, p.5)
+    rh[1,...] = rh[1,...] * (1 - self.constants.f_structural)
+    # T_mult, W_mult same for each pool
+    return (rh, (f_tsoil, f_smsf, conc_O2, mm_O2))</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self, steps=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A forward run in serial over multiple time steps; currently works in
+streaming mode ONLY.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of time steps to run or None to run through the end of the
+available time steps (exhaust driver data) (Default: <code>None</code>)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self, steps = None):
+    &#39;&#39;&#39;
+    A forward run in serial over multiple time steps; currently works in
+    streaming mode ONLY.
+
+    Parameters
+    ----------
+    steps : int
+        Number of time steps to run or None to run through the end of the
+        available time steps (exhaust driver data) (Default: `None`)
+    &#39;&#39;&#39;
+    @suppress_warnings
+    def step(t, fields_gpp, fields_rh):
+        &#39;Calculate fluxes, new states for the next time step t&#39;
+        if t == 0:
+            # Retrieve intial SOC pool sizes
+            state = self.state_initial[0:3,0,...]
+        else:
+            # Retrieve SOC in each pool from prior step
+            state = self.state.data[0:3,t-1,...]
+        # Calculate fluxes, new states
+        gpp, e_mult = self.gpp(
+            zip(hdf.index(t + self._t0, *fields_gpp), fields_gpp))
+        rh, rh_diag = self.rh(
+            state, zip(hdf.index(t + self._t0, *fields_rh), fields_rh))
+        npp = gpp * self.constants.CUE
+        d_soc = self.soc(rh)
+        # Record fluxes for this time step
+        self.fluxes.update(&#39;gpp&#39;, t, gpp)
+        self.fluxes.update(&#39;rh&#39;, t, rh.sum(axis = 0))
+        self.fluxes.update(&#39;nee&#39;, t, rh.sum(axis = 0) - npp)
+        if self._debug:
+            f_tsoil, f_smsf, conc_O2, mm_O2 = rh_diag
+            self.state.update(&#39;f_tsoil&#39;, t, f_tsoil)
+            self.state.update(&#39;f_smsf&#39;, t, f_smsf)
+            self.state.update(&#39;conc_O2&#39;, t, conc_O2)
+            self.state.update(&#39;mm_O2&#39;, t, mm_O2)
+        # Update the SOC state
+        for p in range(1, 4):
+            if t == 0:
+                # At time t=0, we have no state to advance, so update
+                #   the state at t=0 based on the initial state
+                delta = np.add(self.state_initial[p-1,0,...], d_soc[p-1])
+                self.state.update(
+                    &#39;soc%d&#39; % p, t, delta, bounds = (0, np.inf))
+            else:
+                self.state.advance(
+                    &#39;soc%d&#39; % p, t, d_soc[p-1], bounds = (0, np.inf))
+    with L4CStreamingInputDataset(
+            self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
+        fields_gpp = [&#39;apar&#39;, &#39;tmin&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;smrz&#39;]
+        fields_rh = [&#39;tsoil&#39;, &#39;smsf&#39;]
+        num_steps = self.config[&#39;time_steps&#39;] if steps is None else steps
+        with ProgressBar(num_steps, &#39;Running...&#39;) as progress:
+            for t in range(self._time_idx + 1, num_steps):
+                step(t, fields_gpp, fields_rh)
+                self._time_idx += 1
+                progress.update(t)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.constrain" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.constrain">constrain</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.gpp" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.gpp">gpp</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.soc" href="../main.html#pyl4c.apps.l4c.main.L4CForwardProcessPoint.soc">soc</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.apps.l4c.extensions" href="index.html">pyl4c.apps.l4c.extensions</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess">L4CPhenologyProcess</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.DIAGNOSTICS_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.DIAGNOSTICS_INDEX">DIAGNOSTICS_INDEX</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.PFT_CODES" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.PFT_CODES">PFT_CODES</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.STATE_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CPhenologyProcess.STATE_INDEX">STATE_INDEX</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect">L4CWithKokEffect</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.DIAGNOSTICS_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.DIAGNOSTICS_INDEX">DIAGNOSTICS_INDEX</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.DRIVERS_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.DRIVERS_INDEX">DRIVERS_INDEX</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.PFT_CODES" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.PFT_CODES">PFT_CODES</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.STATE_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.STATE_INDEX">STATE_INDEX</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.run" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithKokEffect.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology">L4CWithLitterfallPhenology</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology.soc" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithLitterfallPhenology.soc">soc</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion">L4CWithO2Diffusion</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.AIR_FRAC_O2" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.AIR_FRAC_O2">AIR_FRAC_O2</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.DIAGNOSTICS_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.DIAGNOSTICS_INDEX">DIAGNOSTICS_INDEX</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.PFT_CODES" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.PFT_CODES">PFT_CODES</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.STATE_INDEX" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.STATE_INDEX">STATE_INDEX</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.concentration_O2" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.concentration_O2">concentration_O2</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.rh" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.rh">rh</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.run" href="#pyl4c.apps.l4c.extensions.phenology.L4CWithO2Diffusion.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

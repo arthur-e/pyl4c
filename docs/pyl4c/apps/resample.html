@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.apps.resample API documentation</title>
+<meta name="description" content="Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.apps.resample</code></h1>
+</header>
+<section id="section-intro">
+<p>Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means.</p>
+<pre><code>nested = NestedGrid(subset_id = "CONUS")
+arr = nested.pft_mask(8) # 1-km map of PFT 8
+with h5py.File("something.h5", "r") as hdf:
+    nested.downscale_hdf5_by_pft(hdf, "GPP/gpp_pft%d_mean")
+</code></pre>
+<p>All of the SMAP Level 4 Carbon (L4C) flux and soil organic carbon (SOC) state
+variables are computed on a global, 1-km equal-area grid. We spatially average
+the data to 9-km to meet operational constraints on data storage. However,
+within each 9-km cell, we save the mean values for each Plant Functional Type
+(PFT); e.g., the mean SOC density at all the "Evergreen Needleleaf" pixels in
+a 9-km cell (between 0 and 81 pixels) is recorded, along with the means of up
+to eight other PFTs. This allows a reconstruction of finer-scale detail, using
+the 1-km map of PFT and assigning the mean values within each 9-km cell. The
+9-km and 1-km grids are designed to nest perfectly [1]. <strong>Therefore, it is
+possible to generate a down-scaled 1-km map of SOC density (and of RH, NEE,
+and GPP).</strong></p>
+<ol>
+<li><a href="https://nsidc.org/ease/ease-grid-projection-gt">https://nsidc.org/ease/ease-grid-projection-gt</a></li>
+</ol>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means.
+
+    nested = NestedGrid(subset_id = &#34;CONUS&#34;)
+    arr = nested.pft_mask(8) # 1-km map of PFT 8
+    with h5py.File(&#34;something.h5&#34;, &#34;r&#34;) as hdf:
+        nested.downscale_hdf5_by_pft(hdf, &#34;GPP/gpp_pft%d_mean&#34;)
+
+All of the SMAP Level 4 Carbon (L4C) flux and soil organic carbon (SOC) state
+variables are computed on a global, 1-km equal-area grid. We spatially average
+the data to 9-km to meet operational constraints on data storage. However,
+within each 9-km cell, we save the mean values for each Plant Functional Type
+(PFT); e.g., the mean SOC density at all the &#34;Evergreen Needleleaf&#34; pixels in
+a 9-km cell (between 0 and 81 pixels) is recorded, along with the means of up
+to eight other PFTs. This allows a reconstruction of finer-scale detail, using
+the 1-km map of PFT and assigning the mean values within each 9-km cell. The
+9-km and 1-km grids are designed to nest perfectly [1]. **Therefore, it is
+possible to generate a down-scaled 1-km map of SOC density (and of RH, NEE,
+and GPP).**
+
+1. https://nsidc.org/ease/ease-grid-projection-gt
+&#39;&#39;&#39;
+
+import os
+import tempfile
+import h5py
+import numpy as np
+from osgeo import gdal
+from scipy.ndimage import zoom
+from cached_property import cached_property
+from pyl4c.data.fixtures import EASE2_GRID_PARAMS
+from pyl4c.utils import get_ease2_slice_idx, get_pft_array
+from pyl4c.spatial import ease2_to_geotiff
+from pyl4c.lib.cli import CommandLineInterface
+
+class NestedGrid(object):
+    &#39;&#39;&#39;
+    Represents a nested L4C data structure, where each grid cell has a mean
+    value for each sub-grid PFT class. This allows the reconstruction of a
+    finer scale grid by applying the PFT mean values to the subgrid.
+
+    Parameters
+    ----------
+    pft : tuple
+        PFT values to use in downscaling
+    subset_id : str or None
+        Name of a well-known spatial subset
+    &#39;&#39;&#39;
+    def __init__(self, pft = range(1, 9), subset_id = None):
+        self._offsets = (0, 0)
+        self._pft_codes = pft
+        self._shp_1km = EASE2_GRID_PARAMS[&#39;M01&#39;][&#39;shape&#39;]
+        self._shp_9km = EASE2_GRID_PARAMS[&#39;M09&#39;][&#39;shape&#39;]
+        self._slice_idx_1km = None
+        self._slice_idx_9km = None
+        self._subset_id = subset_id
+        if subset_id is not None:
+            # Get the slicing indices, shape of the downscaled subset
+            self._slice_idx_1km = get_ease2_slice_idx(&#39;M01&#39;, subset_id)
+            self._shp_1km = (
+                self._slice_idx_1km[1][1] - self._slice_idx_1km[1][0],
+                self._slice_idx_1km[0][1] - self._slice_idx_1km[0][0])
+            # Get the slicing indices, shape of the 9-km grid
+            self._slice_idx_9km = get_ease2_slice_idx(&#39;M09&#39;, subset_id)
+            self._shp_9km = (
+                self._slice_idx_9km[1][1] - self._slice_idx_9km[1][0],
+                self._slice_idx_9km[0][1] - self._slice_idx_9km[0][0])
+            # Set the 1-km slicing indices
+            xoff = self._slice_idx_1km[0][0]
+            yoff = self._slice_idx_1km[1][0]
+            self._offsets = (xoff, yoff)
+
+    @cached_property
+    def pft(self):
+        &#39;The 1-km PFT map&#39;
+        return get_pft_array(
+            &#39;M01&#39;, self._subset_id).astype(np.uint8)[np.newaxis,...]
+
+    @property
+    def offsets(self):
+        &#39;&#39;&#39;
+        Returns the xoff, yoff offsets for a subset array.
+        Returns:
+        tuple   (int, int)
+        &#39;&#39;&#39;
+        return self._offsets
+
+    @property
+    def shape(self):
+        &#39;Returns the 1-km array shape&#39;
+        return self._shp_1km
+
+    def pft_mask(self, p):
+        &#39;&#39;&#39;
+        An (M x N) mask for selecting pixels matching specified PFT class.
+
+        Parameters
+        ----------
+        p : int
+            The numeric code for the PFT of interest
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        return np.where(self.pft == p, 1, 0)
+
+    def downscale_hdf5_by_pft(
+            self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
+        &#39;&#39;&#39;
+        Will subset the *arrays if they are not the expected shape of the
+        subset at 9-km scale. NOTE: Use scale = 1e6 if a total flux
+        (e.g., total GPP) is required; 1e6 is the number of square meters in
+        a 1-km L4C pixel.
+
+        Parameters
+        ----------
+        hdf : h5py.File
+        field : str
+            Template for PFT-mean field in the HDF5 granule, e.g.,
+            &#34;GPP/gpp_pft%d_mean&#34;
+        scale : int or float
+        dtype : numpy.dtype
+        nodata : int or float
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        if nodata &lt; 0:
+            assert dtype not in (np.uint0, np.uint8, np.uint16, np.uint32, np.uint64),\
+                &#34;Can&#39;t use an unsigned data type with a negative NoData value&#34;
+        opts = { # Options to zoom()
+            &#39;order&#39;: 0, &#39;zoom&#39;: 9, &#39;mode&#39;: &#39;grid-constant&#39;, &#39;grid_mode&#39;: True
+        }
+        if self._subset_id is not None:
+            x_idx, y_idx = self._slice_idx_9km
+            xmin, xmax = x_idx
+            ymin, ymax = y_idx
+
+        downscaled = np.zeros(self._shp_1km)
+        for p in self._pft_codes:
+            # If needed, subset the 9-km arrays, then down-scale to 1-km
+            if self._subset_id is None:
+                arr = hdf[field % p][:]
+            else:
+                arr = hdf[field % p][ymin:ymax, xmin:xmax]
+            # Resize, multiply by PFT mask, then add to output where != NoData
+            downscaled = np.add(
+                downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
+
+        # Where the PFT map is in the valid range, return data, else NoData
+        return np.where(
+            np.logical_and(
+                np.in1d(self.pft.ravel(), self._pft_codes),
+                downscaled.ravel() != nodata),
+            np.multiply(downscaled.ravel(), scale), nodata)\
+            .reshape(self._shp_1km)\
+            .astype(dtype)
+
+
+class CLI(CommandLineInterface):
+    &#39;&#39;&#39;
+    Command-line interface for running the downscaling procedure.
+
+        python resample.py run &lt;hdf5_granule&gt; --field=&#34;GPP/gpp_pft%d_mean&#34;
+            --subset-id=&#34;CONUS&#34;
+    &#39;&#39;&#39;
+
+    def __init__(
+            self, output_path, pft = range(1, 9),
+            field = &#39;SOC/soc_pft%d_mean&#39;, subset_id = None, scale = 1,
+            nodata = -9999, dtype = &#39;float32&#39;, verbose = True):
+        self._dtype = self.lookup_dtype(dtype)
+        self._field_tpl = field
+        self._nodata = nodata
+        self._output_path = output_path
+        self._pft = pft
+        self._scale = scale
+        self._subset_id = subset_id
+        self._verbose = verbose
+
+    def run(self, hdf5_path, compress = True):
+        &#39;&#39;&#39;
+        Downscales an L4C variable from the given HDF5 granule.
+
+        Parameters
+        ----------
+        hdf5_path : str
+            File path to an HDF5 granule
+        compress : bool
+            True to compress the output file (Default: True)
+        &#39;&#39;&#39;
+        nested = NestedGrid(self._pft, self._subset_id)
+        with h5py.File(hdf5_path, &#39;r&#39;) as hdf:
+            arr = nested.downscale_hdf5_by_pft(
+                hdf, self._field_tpl, self._scale)
+            if self._verbose:
+                print(&#39;Downscaling...&#39;)
+        xoff, yoff = nested.offsets
+        output_path = self._output_path
+        if compress:
+            tmp = tempfile.NamedTemporaryFile()
+            output_path = tmp.name
+        # Write initial file
+        ease2_to_geotiff(arr, output_path, &#39;M01&#39;, xoff = xoff, yoff = yoff)
+        if not compress:
+            return # Done
+        # Optionally, compress the output file
+        opts = gdal.TranslateOptions(
+            format = &#39;GTiff&#39;, creationOptions = [&#39;COMPRESS=LZW&#39;])
+        # Note that &#34;output_path&#34; is the temporary file
+        gdal.Translate(self._output_path, output_path, options = opts)
+
+
+if __name__ == &#39;__main__&#39;:
+    import fire
+    fire.Fire(CLI)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.apps.resample.CLI"><code class="flex name class">
+<span>class <span class="ident">CLI</span></span>
+<span>(</span><span>output_path, pft=range(1, 9), field='SOC/soc_pft%d_mean', subset_id=None, scale=1, nodata=-9999, dtype='float32', verbose=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Command-line interface for running the downscaling procedure.</p>
+<pre><code>python resample.py run &lt;hdf5_granule&gt; --field="GPP/gpp_pft%d_mean"
+    --subset-id="CONUS"
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CLI(CommandLineInterface):
+    &#39;&#39;&#39;
+    Command-line interface for running the downscaling procedure.
+
+        python resample.py run &lt;hdf5_granule&gt; --field=&#34;GPP/gpp_pft%d_mean&#34;
+            --subset-id=&#34;CONUS&#34;
+    &#39;&#39;&#39;
+
+    def __init__(
+            self, output_path, pft = range(1, 9),
+            field = &#39;SOC/soc_pft%d_mean&#39;, subset_id = None, scale = 1,
+            nodata = -9999, dtype = &#39;float32&#39;, verbose = True):
+        self._dtype = self.lookup_dtype(dtype)
+        self._field_tpl = field
+        self._nodata = nodata
+        self._output_path = output_path
+        self._pft = pft
+        self._scale = scale
+        self._subset_id = subset_id
+        self._verbose = verbose
+
+    def run(self, hdf5_path, compress = True):
+        &#39;&#39;&#39;
+        Downscales an L4C variable from the given HDF5 granule.
+
+        Parameters
+        ----------
+        hdf5_path : str
+            File path to an HDF5 granule
+        compress : bool
+            True to compress the output file (Default: True)
+        &#39;&#39;&#39;
+        nested = NestedGrid(self._pft, self._subset_id)
+        with h5py.File(hdf5_path, &#39;r&#39;) as hdf:
+            arr = nested.downscale_hdf5_by_pft(
+                hdf, self._field_tpl, self._scale)
+            if self._verbose:
+                print(&#39;Downscaling...&#39;)
+        xoff, yoff = nested.offsets
+        output_path = self._output_path
+        if compress:
+            tmp = tempfile.NamedTemporaryFile()
+            output_path = tmp.name
+        # Write initial file
+        ease2_to_geotiff(arr, output_path, &#39;M01&#39;, xoff = xoff, yoff = yoff)
+        if not compress:
+            return # Done
+        # Optionally, compress the output file
+        opts = gdal.TranslateOptions(
+            format = &#39;GTiff&#39;, creationOptions = [&#39;COMPRESS=LZW&#39;])
+        # Note that &#34;output_path&#34; is the temporary file
+        gdal.Translate(self._output_path, output_path, options = opts)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.lib.cli.CommandLineInterface" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface">CommandLineInterface</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.resample.CLI.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self, hdf5_path, compress=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downscales an L4C variable from the given HDF5 granule.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf5_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>File path to an HDF5 granule</dd>
+<dt><strong><code>compress</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to compress the output file (Default: True)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self, hdf5_path, compress = True):
+    &#39;&#39;&#39;
+    Downscales an L4C variable from the given HDF5 granule.
+
+    Parameters
+    ----------
+    hdf5_path : str
+        File path to an HDF5 granule
+    compress : bool
+        True to compress the output file (Default: True)
+    &#39;&#39;&#39;
+    nested = NestedGrid(self._pft, self._subset_id)
+    with h5py.File(hdf5_path, &#39;r&#39;) as hdf:
+        arr = nested.downscale_hdf5_by_pft(
+            hdf, self._field_tpl, self._scale)
+        if self._verbose:
+            print(&#39;Downscaling...&#39;)
+    xoff, yoff = nested.offsets
+    output_path = self._output_path
+    if compress:
+        tmp = tempfile.NamedTemporaryFile()
+        output_path = tmp.name
+    # Write initial file
+    ease2_to_geotiff(arr, output_path, &#39;M01&#39;, xoff = xoff, yoff = yoff)
+    if not compress:
+        return # Done
+    # Optionally, compress the output file
+    opts = gdal.TranslateOptions(
+        format = &#39;GTiff&#39;, creationOptions = [&#39;COMPRESS=LZW&#39;])
+    # Note that &#34;output_path&#34; is the temporary file
+    gdal.Translate(self._output_path, output_path, options = opts)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.lib.cli.CommandLineInterface" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface">CommandLineInterface</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.lib.cli.CommandLineInterface.infer_file_mode" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface.infer_file_mode">infer_file_mode</a></code></li>
+<li><code><a title="pyl4c.lib.cli.CommandLineInterface.lookup_dtype" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface.lookup_dtype">lookup_dtype</a></code></li>
+<li><code><a title="pyl4c.lib.cli.CommandLineInterface.lookup_gdt" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface.lookup_gdt">lookup_gdt</a></code></li>
+<li><code><a title="pyl4c.lib.cli.CommandLineInterface.read_array" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface.read_array">read_array</a></code></li>
+<li><code><a title="pyl4c.lib.cli.CommandLineInterface.read_chunked" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface.read_chunked">read_chunked</a></code></li>
+<li><code><a title="pyl4c.lib.cli.CommandLineInterface.read_raster" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface.read_raster">read_raster</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pyl4c.apps.resample.NestedGrid"><code class="flex name class">
+<span>class <span class="ident">NestedGrid</span></span>
+<span>(</span><span>pft=range(1, 9), subset_id=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents a nested L4C data structure, where each grid cell has a mean
+value for each sub-grid PFT class. This allows the reconstruction of a
+finer scale grid by applying the PFT mean values to the subgrid.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pft</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>PFT values to use in downscaling</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>Name of a well-known spatial subset</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NestedGrid(object):
+    &#39;&#39;&#39;
+    Represents a nested L4C data structure, where each grid cell has a mean
+    value for each sub-grid PFT class. This allows the reconstruction of a
+    finer scale grid by applying the PFT mean values to the subgrid.
+
+    Parameters
+    ----------
+    pft : tuple
+        PFT values to use in downscaling
+    subset_id : str or None
+        Name of a well-known spatial subset
+    &#39;&#39;&#39;
+    def __init__(self, pft = range(1, 9), subset_id = None):
+        self._offsets = (0, 0)
+        self._pft_codes = pft
+        self._shp_1km = EASE2_GRID_PARAMS[&#39;M01&#39;][&#39;shape&#39;]
+        self._shp_9km = EASE2_GRID_PARAMS[&#39;M09&#39;][&#39;shape&#39;]
+        self._slice_idx_1km = None
+        self._slice_idx_9km = None
+        self._subset_id = subset_id
+        if subset_id is not None:
+            # Get the slicing indices, shape of the downscaled subset
+            self._slice_idx_1km = get_ease2_slice_idx(&#39;M01&#39;, subset_id)
+            self._shp_1km = (
+                self._slice_idx_1km[1][1] - self._slice_idx_1km[1][0],
+                self._slice_idx_1km[0][1] - self._slice_idx_1km[0][0])
+            # Get the slicing indices, shape of the 9-km grid
+            self._slice_idx_9km = get_ease2_slice_idx(&#39;M09&#39;, subset_id)
+            self._shp_9km = (
+                self._slice_idx_9km[1][1] - self._slice_idx_9km[1][0],
+                self._slice_idx_9km[0][1] - self._slice_idx_9km[0][0])
+            # Set the 1-km slicing indices
+            xoff = self._slice_idx_1km[0][0]
+            yoff = self._slice_idx_1km[1][0]
+            self._offsets = (xoff, yoff)
+
+    @cached_property
+    def pft(self):
+        &#39;The 1-km PFT map&#39;
+        return get_pft_array(
+            &#39;M01&#39;, self._subset_id).astype(np.uint8)[np.newaxis,...]
+
+    @property
+    def offsets(self):
+        &#39;&#39;&#39;
+        Returns the xoff, yoff offsets for a subset array.
+        Returns:
+        tuple   (int, int)
+        &#39;&#39;&#39;
+        return self._offsets
+
+    @property
+    def shape(self):
+        &#39;Returns the 1-km array shape&#39;
+        return self._shp_1km
+
+    def pft_mask(self, p):
+        &#39;&#39;&#39;
+        An (M x N) mask for selecting pixels matching specified PFT class.
+
+        Parameters
+        ----------
+        p : int
+            The numeric code for the PFT of interest
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        return np.where(self.pft == p, 1, 0)
+
+    def downscale_hdf5_by_pft(
+            self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
+        &#39;&#39;&#39;
+        Will subset the *arrays if they are not the expected shape of the
+        subset at 9-km scale. NOTE: Use scale = 1e6 if a total flux
+        (e.g., total GPP) is required; 1e6 is the number of square meters in
+        a 1-km L4C pixel.
+
+        Parameters
+        ----------
+        hdf : h5py.File
+        field : str
+            Template for PFT-mean field in the HDF5 granule, e.g.,
+            &#34;GPP/gpp_pft%d_mean&#34;
+        scale : int or float
+        dtype : numpy.dtype
+        nodata : int or float
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        if nodata &lt; 0:
+            assert dtype not in (np.uint0, np.uint8, np.uint16, np.uint32, np.uint64),\
+                &#34;Can&#39;t use an unsigned data type with a negative NoData value&#34;
+        opts = { # Options to zoom()
+            &#39;order&#39;: 0, &#39;zoom&#39;: 9, &#39;mode&#39;: &#39;grid-constant&#39;, &#39;grid_mode&#39;: True
+        }
+        if self._subset_id is not None:
+            x_idx, y_idx = self._slice_idx_9km
+            xmin, xmax = x_idx
+            ymin, ymax = y_idx
+
+        downscaled = np.zeros(self._shp_1km)
+        for p in self._pft_codes:
+            # If needed, subset the 9-km arrays, then down-scale to 1-km
+            if self._subset_id is None:
+                arr = hdf[field % p][:]
+            else:
+                arr = hdf[field % p][ymin:ymax, xmin:xmax]
+            # Resize, multiply by PFT mask, then add to output where != NoData
+            downscaled = np.add(
+                downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
+
+        # Where the PFT map is in the valid range, return data, else NoData
+        return np.where(
+            np.logical_and(
+                np.in1d(self.pft.ravel(), self._pft_codes),
+                downscaled.ravel() != nodata),
+            np.multiply(downscaled.ravel(), scale), nodata)\
+            .reshape(self._shp_1km)\
+            .astype(dtype)</code></pre>
+</details>
+<h3>Instance variables</h3>
+<dl>
+<dt id="pyl4c.apps.resample.NestedGrid.offsets"><code class="name">var <span class="ident">offsets</span></code></dt>
+<dd>
+<div class="desc"><p>Returns the xoff, yoff offsets for a subset array.
+Returns:
+tuple
+(int, int)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def offsets(self):
+    &#39;&#39;&#39;
+    Returns the xoff, yoff offsets for a subset array.
+    Returns:
+    tuple   (int, int)
+    &#39;&#39;&#39;
+    return self._offsets</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.resample.NestedGrid.pft"><code class="name">var <span class="ident">pft</span></code></dt>
+<dd>
+<div class="desc"><p>The 1-km PFT map</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj, cls):
+    if obj is None:
+        return self
+
+    if asyncio and asyncio.iscoroutinefunction(self.func):
+        return self._wrap_in_coroutine(obj)
+
+    value = obj.__dict__[self.func.__name__] = self.func(obj)
+    return value</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.resample.NestedGrid.shape"><code class="name">var <span class="ident">shape</span></code></dt>
+<dd>
+<div class="desc"><p>Returns the 1-km array shape</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def shape(self):
+    &#39;Returns the 1-km array shape&#39;
+    return self._shp_1km</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.resample.NestedGrid.downscale_hdf5_by_pft"><code class="name flex">
+<span>def <span class="ident">downscale_hdf5_by_pft</span></span>(<span>self, hdf, field, scale=1, dtype=numpy.float32, nodata=-9999)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Will subset the *arrays if they are not the expected shape of the
+subset at 9-km scale. NOTE: Use scale = 1e6 if a total flux
+(e.g., total GPP) is required; 1e6 is the number of square meters in
+a 1-km L4C pixel.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>Template for PFT-mean field in the HDF5 granule, e.g.,
+"GPP/gpp_pft%d_mean"</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>numpy.dtype</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def downscale_hdf5_by_pft(
+        self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
+    &#39;&#39;&#39;
+    Will subset the *arrays if they are not the expected shape of the
+    subset at 9-km scale. NOTE: Use scale = 1e6 if a total flux
+    (e.g., total GPP) is required; 1e6 is the number of square meters in
+    a 1-km L4C pixel.
+
+    Parameters
+    ----------
+    hdf : h5py.File
+    field : str
+        Template for PFT-mean field in the HDF5 granule, e.g.,
+        &#34;GPP/gpp_pft%d_mean&#34;
+    scale : int or float
+    dtype : numpy.dtype
+    nodata : int or float
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    if nodata &lt; 0:
+        assert dtype not in (np.uint0, np.uint8, np.uint16, np.uint32, np.uint64),\
+            &#34;Can&#39;t use an unsigned data type with a negative NoData value&#34;
+    opts = { # Options to zoom()
+        &#39;order&#39;: 0, &#39;zoom&#39;: 9, &#39;mode&#39;: &#39;grid-constant&#39;, &#39;grid_mode&#39;: True
+    }
+    if self._subset_id is not None:
+        x_idx, y_idx = self._slice_idx_9km
+        xmin, xmax = x_idx
+        ymin, ymax = y_idx
+
+    downscaled = np.zeros(self._shp_1km)
+    for p in self._pft_codes:
+        # If needed, subset the 9-km arrays, then down-scale to 1-km
+        if self._subset_id is None:
+            arr = hdf[field % p][:]
+        else:
+            arr = hdf[field % p][ymin:ymax, xmin:xmax]
+        # Resize, multiply by PFT mask, then add to output where != NoData
+        downscaled = np.add(
+            downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
+
+    # Where the PFT map is in the valid range, return data, else NoData
+    return np.where(
+        np.logical_and(
+            np.in1d(self.pft.ravel(), self._pft_codes),
+            downscaled.ravel() != nodata),
+        np.multiply(downscaled.ravel(), scale), nodata)\
+        .reshape(self._shp_1km)\
+        .astype(dtype)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.resample.NestedGrid.pft_mask"><code class="name flex">
+<span>def <span class="ident">pft_mask</span></span>(<span>self, p)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An (M x N) mask for selecting pixels matching specified PFT class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>p</code></strong> :&ensp;<code>int</code></dt>
+<dd>The numeric code for the PFT of interest</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pft_mask(self, p):
+    &#39;&#39;&#39;
+    An (M x N) mask for selecting pixels matching specified PFT class.
+
+    Parameters
+    ----------
+    p : int
+        The numeric code for the PFT of interest
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    return np.where(self.pft == p, 1, 0)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.apps" href="index.html">pyl4c.apps</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.apps.resample.CLI" href="#pyl4c.apps.resample.CLI">CLI</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.resample.CLI.run" href="#pyl4c.apps.resample.CLI.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.resample.NestedGrid" href="#pyl4c.apps.resample.NestedGrid">NestedGrid</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.resample.NestedGrid.downscale_hdf5_by_pft" href="#pyl4c.apps.resample.NestedGrid.downscale_hdf5_by_pft">downscale_hdf5_by_pft</a></code></li>
+<li><code><a title="pyl4c.apps.resample.NestedGrid.offsets" href="#pyl4c.apps.resample.NestedGrid.offsets">offsets</a></code></li>
+<li><code><a title="pyl4c.apps.resample.NestedGrid.pft" href="#pyl4c.apps.resample.NestedGrid.pft">pft</a></code></li>
+<li><code><a title="pyl4c.apps.resample.NestedGrid.pft_mask" href="#pyl4c.apps.resample.NestedGrid.pft_mask">pft_mask</a></code></li>
+<li><code><a title="pyl4c.apps.resample.NestedGrid.shape" href="#pyl4c.apps.resample.NestedGrid.shape">shape</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

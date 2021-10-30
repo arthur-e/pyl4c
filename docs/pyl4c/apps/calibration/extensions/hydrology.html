@@ -1,0 +1,2138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.apps.calibration.extensions.hydrology API documentation</title>
+<meta name="description" content="Extensions to SMAP L4C (and calibration) to support soil respiration
+enhancements related to improved soil hydrology modeling." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.apps.calibration.extensions.hydrology</code></h1>
+</header>
+<section id="section-intro">
+<p>Extensions to SMAP L4C (and calibration) to support soil respiration
+enhancements related to improved soil hydrology modeling.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Extensions to SMAP L4C (and calibration) to support soil respiration
+enhancements related to improved soil hydrology modeling.
+&#39;&#39;&#39;
+
+import os
+import pickle
+import warnings
+import h5py
+import numpy as np
+import matplotlib
+from functools import partial
+from matplotlib import pyplot
+from pyl4c import suppress_warnings
+from pyl4c.apps.calibration.main import CLI, CONFIG
+from pyl4c.science import arrhenius
+from pyl4c.stats import linear_constraint
+from pyl4c.apps.calibration import GenericOptimization, BPLUT, report_fit_stats, solve_least_squares
+from pyl4c.data.fixtures import restore_bplut
+
+# All DEPTHS must be positive
+DEPTHS = np.array((0.05, 0.15, 0.35, 0.75, 1.5, 3.0))\
+    .reshape((6,1)) # meters
+# Constrained optimization bounds
+OPT_BOUNDS = {
+    &#39;reco_z&#39;: ( # CUE, tsoil, smsf0, smsf1, k_depth_decay
+        np.array((0.2,   1,  -30,  25, 0.3)),
+        np.array((0.7, 800, 24.9, 100, 1.0))),
+    &#39;reco_z_power&#39;: ( # CUE, tsoil, smsf0, smsf1, z_tau_a, z_tau_b
+        np.array((0.2,   1,  -30,  25, 0.01, 0.01)),
+        np.array((0.7, 800, 24.9, 100, 1.00, 1.00))),
+    # After Davidson et al. (2012)...
+    #   Median d_gas in completely dry soil conditions (soil VWC &lt; 5th
+    #       percentile): 3.82
+    &#39;reco_o2_limit&#39;: ( # CUE, tsoil, smsf0, smsf1, k_depth_decay, d_gas, km_oxy
+        np.array((0.2,   1,  -30,  25, 0.05, 3, 0.01)),
+        np.array((0.7, 800, 24.9, 100, 1.50, 5, 0.15))),
+}
+NEW_PARAMETERS = (&#39;k_depth_decay&#39;, &#39;d_gas&#39;, &#39;km_oxy&#39;, &#39;z_tau_a&#39;, &#39;z_tau_b&#39;)
+L4C_PARAMETERS = list(BPLUT._labels)
+L4C_PARAMETERS.extend(NEW_PARAMETERS)
+
+
+class StratifiedSoilCalibrationCLI(CLI):
+    &#39;&#39;&#39;
+    Command line interface for calibrating L4C with a vertically stratified
+    soil organic carbon (SOC) model.
+
+    Get started by creating a scratch dataset:
+
+        python hydrology.py setup
+
+    Optionally, filter the tower GPP and/or RECO time series:
+
+        python hydrology.py filter-all gpp &lt;window_size&gt;
+        python hydrology.py filter-all reco &lt;window_size&gt;
+
+    To optimize the RECO parameters for the model with vertically resolved
+    soil organic carbon, specify a PFT class:
+
+        python hydrology.py pft &lt;pft&gt; tune-reco
+
+    To optimize the RECO parameters for the vertically resolved model that
+    also includes an O2 diffusion limitation:
+
+        python hydrology.py pft &lt;pft&gt; tune-reco-o2-limit
+    &#39;&#39;&#39;
+    _model_name = &#39;reco_z&#39;
+    _parameters = {
+        &#39;gpp&#39;: (
+            &#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;),
+        &#39;reco_z&#39;: (
+            &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;k_depth_decay&#39;),
+        &#39;reco_z_power&#39;: (
+            &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;z_tau_a&#39;, &#39;z_tau_b&#39;),
+        &#39;reco_o2_limit&#39;: (
+            &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;k_depth_decay&#39;, &#39;d_gas&#39;, &#39;km_oxy&#39;),
+    }
+    _path_to_temp_profile = &#39;/home/arthur/Downloads/L4C_experiments/L4C-Phenology/L4_SM_gph_NRv8-3_profile_at_356_tower_sites.h5&#39;
+    _path_to_sm_profile = &#39;/home/arthur/Downloads/L4C_experiments/L4C-Phenology/L4_C_NRv8-3_soil_moisture_profiles_simulated_at_356_tower_sites.h5&#39;
+
+    def __init__(
+            self, config = CONFIG, pft = None, start = None, end = None,
+            debug = True, use_legacy_pft = True, n_layers = 6):
+        super().__init__(
+            config = config, pft = pft, start = start, end = end,
+            debug = debug, use_legacy_pft = use_legacy_pft)
+        self.depths = DEPTHS[0:n_layers]
+        print(&#39;Working with layer depths: %s&#39; % &#39;, &#39;.join(map(lambda v: &#39;%.3f&#39; % v, self.depths)))
+        self.n_layers = n_layers
+        # (Re-)creates the BPLUT store using the correct (expanded) list of
+        #   parameter labels
+        self._init_bplut(labels = L4C_PARAMETERS)
+
+    @suppress_warnings
+    def _configure(self, q_rh, q_k, fixed, model = &#39;reco_z&#39;):
+        &#39;Loads driver data, sets starting parameters for RECO calibration&#39;
+        assert self._is_setup, &#39;Must run setup first&#39;
+        assert q_rh &gt;= 0 and q_rh &lt;= 100 and q_k &gt;= 0 and q_k &lt;= 100,\
+            &#39;Invalid setting for &#34;q_rh&#34; or &#34;q_k&#34; parameters&#39;
+        params = self._parameters[model]
+        if fixed is not None:
+            assert all(p in params for p in fixed),\
+                &#39;Arguments to &#34;fixed&#34; should be in: [%s]&#39; % &#39;, &#39;.join(params)
+        init_params = self.bplut.flat(self._pft, params)
+        # Read in data, with optional subsetting of the time axis
+        t0 = self._time_start if self._time_start is not None else 0
+        t1 = self._time_end if self._time_end is not None else self._nsteps
+        self._drivers = []
+        # Open the soil moisture, temperature driver datasets
+        with h5py.File(self._path_to_temp_profile, &#39;r&#39;) as hdf:
+            # Calculate extent of soil layers, given bedrock depth
+            bedrock = hdf[&#39;LAND_MODEL_CONSTANTS/depth_to_bedrock_m&#39;][self._sites]
+            self._layer_mask = self.depths &lt; bedrock
+            self._porosity = hdf[&#39;LAND_MODEL_CONSTANTS/porosity&#39;][self._sites]
+            temp_profile = []
+            temp_profile.append(hdf[&#39;L4SM_DAILY_MEAN/surface_temp&#39;][t0:t1,self._sites])
+            for i in range(1, self.n_layers):
+                temp_profile.append(
+                    hdf[&#39;L4SM_DAILY_MEAN/soil_temp_layer%d&#39; % i][t0:t1,self._sites])
+            temp_profile = np.stack(temp_profile)
+            self._drivers.append(temp_profile)
+        # Convert soil VWC to wetness (%)
+        if os.path.basename(self._path_to_sm_profile).split(&#39;.&#39;).pop() == &#39;h5&#39;:
+            with h5py.File(self._path_to_sm_profile, &#39;r&#39;) as hdf:
+                soil_m = 100 * np.divide(
+                    hdf[&#39;soil_moisture_vwc&#39;][:,t0:t1,self._sites], self._porosity)
+                # Clip f(SM) response, as wetness values might be unrealistic
+                #   given problems in ice-filled soil layers
+                soil_m[soil_m &gt; 100] = 100
+                self._drivers.append(soil_m)
+                # Add soil moisture in VWC
+                if model == &#39;reco_o2_limit&#39;:
+                    self._drivers.append(hdf[&#39;soil_moisture_vwc&#39;][:,t0:t1,self._sites])
+        elif os.path.basename(self._path_to_sm_profile).split(&#39;.&#39;).pop() == &#39;pickle&#39;:
+            with open(self._path_to_sm_profile, &#39;rb&#39;) as file:
+                profiles = pickle.load(file)
+                soil_m = 100 * np.divide(
+                    profiles[:,t0:t1,self._sites], self._porosity)
+                # Clip f(SM) response, as wetness values might be unrealistic
+                #   given problems in ice-filled soil layers
+                soil_m[soil_m &gt; 100] = 100
+                self._drivers.append(soil_m)
+                # Add soil moisture in VWC
+                if model == &#39;reco_o2_limit&#39;:
+                    self._drivers.append(profiles[:,t0:t1,self._sites])
+        # Read in the tower flux data and site weights
+        with h5py.File(self._path_to_scratch, &#39;r&#39;) as hdf:
+            self._gpp_tower = hdf[&#39;tower/GPP&#39;][t0:t1,self._sites,:].mean(axis = 2)
+            self._reco_tower = hdf[&#39;tower/RECO&#39;][t0:t1,self._sites,:].mean(axis = 2)
+            self._site_weights = hdf[&#39;site_weights&#39;][:,self._sites]
+        return init_params
+
+    def _concentration_O2(self, d_gas, soil_vwc):
+        air_frac_O2 = 0.2095 # Liters of O2 per liter of air (20.95%)
+        return d_gas * air_frac_O2 * np.power(self._porosity - soil_vwc, 4/3)
+
+    def _k_mult(self, params):
+        &#39;Calculate K_mult based on current parameters&#39;
+        tsoil, sm = self._drivers
+        # Note that f_z() is NOT included here, because we do not want
+        #   cbar() to decline with depth
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_sm = linear_constraint(params[2], params[3])
+        return f_tsoil(tsoil) * f_sm(sm)
+
+    @suppress_warnings
+    def _reco(self, params, q_rh, q_k):
+        &#39;Modeled ecosystem respiration (RECO) based on current parameters&#39;
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+        ra = ((1 - params[0]) * self._gpp_tower)
+        rh0 = self._reco_tower - ra
+        rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+        # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+        kmult0 = self._k_mult(params)
+        cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+        # Extinction rate of heterotrophic respiration with depth, due to
+        #   factors OTHER THAN temperature, moisture (Koven et al. 2013)
+        f_z = np.exp(-np.abs(self.depths) / params[4]) *\
+            np.ones(cbar0.shape)
+        # Set RH from layers below the bedrock depth to zero
+        rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+        rh[~self._layer_mask] = 0
+        reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+        return reco0
+
+    def _tune(
+            self, fit, residuals, init_params, fixed_params, step_sizes, trials,
+            optimize, nlopt):
+        &#39;&#39;&#39;
+        Runs the optimization.
+
+        Parameters
+        ----------
+        fit : function
+            The function that returns fit values, given parameters
+        residuals : function
+            The function that returns residuals, given parameters
+        init_params : tuple or list or numpy.ndarray
+        fixed_params : tuple or list or numpy.ndarray
+        step_sizes : tuple or list or numpy.ndarray
+        trials : int
+        optimize : bool
+        nlopt : bool
+        &#39;&#39;&#39;
+        # Get bounds for the parameter search
+        bounds = self._bounds(
+            init_params, self._model_name, fixed_params, bounds = OPT_BOUNDS)
+        params = []
+        params0 = []
+        scores = []
+        param_space = np.linspace(bounds[0], bounds[1], 100)
+        assert not np.isnan(init_params).any(),\
+            &#39;One or more NaNs were provided as &#34;init_params&#34;&#39;
+        for t in range(0, trials):
+            # If multiple trials, randomize the initial parameter values
+            #   and score the model in each trial
+            if optimize and trials &gt; 1:
+                p = param_space.shape[1] # Number of parameters
+                idx = np.random.randint(0, param_space.shape[0], p)
+                init_params = param_space[idx,np.arange(0, p)]
+                params0.append(init_params)
+            if optimize and not nlopt:
+                # Apply constrained, non-linear least-squares optimization
+                #   NOTE: arctan loss function doesn&#39;t work well here
+                if &#39;loss&#39; in kwargs.keys():
+                    print(&#39;NOTE: Overriding &#34;loss&#34; function specification&#39;)
+                kwargs.update({&#39;loss&#39;: &#39;linear&#39;})
+                solution = solve_least_squares(
+                    residuals, init_params,
+                    labels = self._parameters[self._model_name],
+                    bounds = bounds, **kwargs)
+                fitted = solution.x.tolist()
+                message = solution.message
+            elif optimize and nlopt:
+                opt = GenericOptimization(
+                    residuals, bounds, step_size = step_sizes)
+                try:
+                    fitted = opt.solve(init_params)
+                except RuntimeError:
+                    params.append(None)
+                    scores.append(np.inf)
+                    print(&#39;Error in objective function; restarting...&#39;)
+                    continue # Try again!
+                message = &#39;Success&#39;
+            else:
+                fitted = [None for i in range(0, len(init_params))]
+                break # Do not iterate through trials if not optimizing
+            # Record the found solution and its goodness-of-fit score
+            params.append(fitted)
+            pred = fit(fitted if optimize else init_params)
+            _, rmse_score, _, _ = self._report_fit(
+                self._reco_tower, pred, self._site_weights, verbose = False)
+            print(&#39;[%s/%s] RMSE score of last trial: %.3f&#39; % (
+                str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+            scores.append(rmse_score)
+
+        # Select the fit params with the best score
+        if optimize and trials &gt; 1:
+            fitted = params[np.argmin(scores)]
+            init_params = params0[np.argmin(scores)]
+        # Generate and print a report, update the BPLUT parameters
+        self._report(
+            init_params, fitted, self._parameters[self._model_name],
+            &#39;RECO Optimization&#39;)
+        pred = fit(fitted if optimize else init_params)
+        self._report_fit(self._reco_tower, pred, self._site_weights)
+        if optimize:
+            user_prompt = input(&#39;Update parameters for PFT=%d? [Y/n] &#39; % self._pft)
+            do_write = user_prompt == &#39;Y&#39;
+            if do_write:
+                print(&#39;Updating parameters for PFT=%d...&#39; % self._pft)
+                self.bplut.update(self._pft, fitted,
+                self._parameters[self._model_name])
+
+    def plot_reco(
+            self, driver, model = &#39;reco_z&#39;, q_rh = 75, q_k = 50,
+            by_depth = True, ylim = None, **kwargs):
+        &#39;&#39;&#39;
+        Plots both the soil moisture (wetness) ramp function and the O2
+        diffusion limitation curve (a function of soil volumetric water
+        content). As the model is vertically stratified but the EC flux tower
+        data have a single value for each site-day observation, we take the
+        mean soil moisture and mean Cbar values; hence, the plot shows the
+        predicted response to environmental conditions for the &#34;average&#34; soil
+        layer.
+
+        Parameters
+        ----------
+        driver : str
+            Name of environmental driver to plot
+        model : str
+            Name of the RECO model to use
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        by_depth : bool
+            True to plot the RH/Cbar quantity separately for each soil layer
+        ylim : tuple or list or None
+            Sequence of 2 values, the lower and upper limits for the vertical
+            axis of the plot
+        &#39;&#39;&#39;
+        palette = [&#39;#6e016b&#39;, &#39;#88419d&#39;, &#39;#8c6bb1&#39;, &#39;#8c96c6&#39;, &#39;#9ebcda&#39;]
+        matplotlib.rcParams[&#39;text.usetex&#39;] = True
+        matplotlib.rc(&#39;font&#39;, **{
+            &#39;weight&#39; : &#39;bold&#39;,
+            &#39;size&#39;   : 14
+        })
+        params = self._configure(q_rh, q_k, None, model = model)
+        assert not np.isnan(params).any(),\
+            &#39;Some required parameters are undefined; run calibration first&#39;
+        if model == &#39;reco_z&#39;:
+            tsoil, sm = self._drivers
+            f_sm = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+            k_mult = f_sm(sm) * arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft])
+        else:
+            tsoil, sm, vwc = self._drivers
+            f_sm = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+            conc_O2 = self._concentration_O2(
+                self._parameters[self._model_name].index(&#39;d_gas&#39;), vwc)
+            mm_O2 = conc_O2 / (params[-1] + conc_O2) # km_oxy param
+            k_mult = arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft]) *\
+                np.nanmin(np.stack((f_sm(sm), mm_O2)), axis = 0)
+
+        # Calculate RH as (RECO - RA)
+        rh0 = self._reco_tower - ((1 - self.bplut[&#39;CUE&#39;][0,self._pft]) * self._gpp_tower)
+        # Set negative RH values to zero
+        rh0 = np.where(suppress_warnings(np.less)(rh0, 0), 0, rh0)
+        cbar0 = suppress_warnings(cbar)(rh0, k_mult, q_rh, q_k)
+        # Update plotting parameters
+        kwargs.setdefault(&#39;alpha&#39;, 0.08)
+        kwargs.setdefault(&#39;marker&#39;, &#39;.&#39;)
+        div = suppress_warnings(np.divide) # Quiet divide
+        if driver == &#39;vwc&#39;:
+            if by_depth:
+                for z in range(0, vwc.shape[0]):
+                    points = pyplot.scatter(
+                        vwc[z], np.where(
+                            cbar0[z] == 0, np.nan, div(rh0, cbar0[z])),
+                        color = palette[z], label = &#39;%.2f m&#39; % self.depths[z],
+                        **kwargs)
+                    points.set_alpha(1)
+            else:
+                pyplot.scatter(
+                    vwc.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                    **kwargs)
+            ramp = self._ramp(sm, &#39;smsf&#39;)
+            domain, y = ramp
+            pyplot.plot(domain / 100, y, &#39;k-&#39;, label = &#39;Substrate Limit&#39;)
+            conc_O2 = params[5] * 0.2095 *\
+                np.power(0.8 - np.multiply(domain / 100, 0.8), 4/3)
+            pyplot.plot(
+                domain / 100, conc_O2 / (params[6] + conc_O2), &#39;r-&#39;,
+                label = &#39;O2 Diffusion Limit&#39;)
+            pyplot.xlabel(r&#39;Soil Volumetric Water Content $(m^3 m^{-3})$&#39;)
+        elif driver in (&#39;smsf&#39;, &#39;sm&#39;):
+            if by_depth:
+                for z in range(0, sm.shape[0]):
+                    points = pyplot.scatter(
+                        sm[z], np.where(
+                            cbar0[z] == 0, np.nan, div(rh0, cbar0[z])),
+                        color = palette[z], label = &#39;%.2f m&#39; % self.depths[z],
+                        **kwargs)
+                    points.set_alpha(1)
+            else:
+                pyplot.scatter(
+                    sm.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                    **kwargs)
+            pyplot.plot(*self._ramp(sm, &#39;smsf&#39;), &#39;k-&#39;)
+            pyplot.xlabel(&#39;Soil Moisture Wetness (\%)&#39;)
+        elif driver == &#39;tsoil&#39;:
+            if by_depth:
+                for z in range(0, tsoil.shape[0]):
+                    points = pyplot.scatter(
+                        tsoil[z], div(rh0, cbar0[z]), color = palette[z],
+                        label = &#39;%.2f m&#39; % self.depths[z], **kwargs)
+                    points.set_alpha(1)
+            else:
+                pyplot.scatter(
+                    tsoil.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                    **kwargs)
+            domain = np.arange(tsoil.min(), tsoil.max(), 0.1)
+            pyplot.plot(domain,
+                arrhenius(domain, self.bplut[&#39;tsoil&#39;][0,self._pft]), &#39;k-&#39;)
+            pyplot.xlabel(&#39;Soil Temperature (deg K)&#39;)
+        else:
+            raise NotImplementedError(
+                &#39;Can only plot the following drivers: &#34;vwc&#34;, &#34;sm&#34;, &#34;tsoil&#34;&#39;)
+        if by_depth:
+            pyplot.legend(markerscale = 2)
+        pyplot.ylabel(r&#39;$R_H$/$\bar{C}$&#39;)
+        pyplot.title(r&#39;Average $K_{mult}$ Response in PFT=%d&#39; % self._pft)
+        if ylim is not None:
+            pyplot.ylim(*ylim)
+        pyplot.show()
+
+    def plot_reco_time_series(
+            self, model = &#39;reco_z&#39;, q_rh = 75, q_k = 50, q_nan = 20,
+            ylim = None, **kwargs):
+        &#39;&#39;&#39;
+        Plots the observed tower RECO time series and the predicted (modeled)
+        RECO time series, based on the current calibrated parameters. One of
+        the tower sites with a long record is randomly chosen.
+
+        Parameters
+        ----------
+        model : str
+            Name of the RECO model to use
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        q_nan : int
+            The percentile of total NaN count by site, above which a site will
+            not be plotted
+        ylim : tuple or list or None
+            Sequence of 2 values, the lower and upper limits for the vertical
+            axis of the plot
+        &#39;&#39;&#39;
+        matplotlib.rcParams[&#39;text.usetex&#39;] = True
+        matplotlib.rc(&#39;font&#39;, **{
+            &#39;weight&#39; : &#39;bold&#39;,
+            &#39;size&#39;   : 14
+        })
+        params = self._configure(q_rh, q_k, None, model = model)
+        assert not np.isnan(params).any(),\
+            &#39;Some required parameters are undefined; run calibration first&#39;
+        # Randomly pick a site based on low missing-ness
+        missing = np.apply_along_axis(lambda x: np.isnan(x).sum(), 0, self._reco_tower)
+        idx = np.argwhere(missing &lt;= np.percentile(missing, q_nan)).ravel()
+        idx = idx[int(np.random.sample(1) * idx.size)]
+        with h5py.File(self._path_to_temp_profile, &#39;r&#39;) as hdf:
+            site_name = hdf[&#39;site_id&#39;][self._sites][idx]
+        # Get predicted, observed values
+        predicted = self._reco(params, q_rh, q_k)
+        # Update plotting parameters
+        kwargs.setdefault(&#39;alpha&#39;, 0.6)
+        pyplot.figure(figsize = (12, 6))
+        pyplot.plot(self._reco_tower[:,idx], &#39;k-&#39;, **kwargs)
+        pyplot.plot(predicted[:,idx], &#39;r-&#39;, **kwargs)
+        pyplot.ylabel(r&#39;RECO $(g\,C\,m^{-2}\,d^{-1})$&#39;)
+        pyplot.title(r&#39;Site &#34;%s&#34;, PFT=%d&#39; % (site_name, self._pft))
+        if ylim is not None:
+            pyplot.ylim(*ylim)
+        pyplot.show()
+
+    def tune_reco(
+            self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+            nlopt = True, trials = 1, **kwargs):
+        &#39;&#39;&#39;
+        Optimizes RECO for the vertically stratified SOC model.
+        Considerations:
+
+        1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        fixed : tuple or list
+            Zero or more parameters whose values should be fixed
+            (i.e, NOT optimized)
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        trials : int
+            Number of searches of the parameter space to perform; if &gt;1,
+            initial parameters are randomized for each trial
+        **kwargs
+            Any number of additional keyword arguments to
+            scipy.optimize.least_squares()
+        &#39;&#39;&#39;
+        def residuals(params, q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = self._reco(params, q_rh, q_k)
+            diff = np.subtract(self._reco_tower, reco0)
+            # Multiply by the tower weights
+            return (self._site_weights * diff)[np.isfinite(diff)]
+
+        self._model_name = &#39;reco_z&#39;
+        init_params = self._configure(
+            q_rh, q_k, fixed, model = self._model_name)
+        # NaNs may be present because not every site has soil moisture
+        #   estimates in every layer (bedrock may be present in soil column)
+        assert np.nanmax(self._drivers[1]) &lt;= 100
+        assert np.nanmin(self._drivers[1]) &gt;= 0
+        # Set defaults where needed
+        if np.isnan(init_params).any():
+            init_params[np.isnan(init_params)] = np.array(
+                [0.4, 270, 10, 50, 0.3])[np.isnan(init_params)]
+        self._tune( # Step sizes specified here
+            partial(self._reco, q_rh = q_rh, q_k = q_k),
+            partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+            (0.01, 1, 0.1, 0.1, 0.005), trials, optimize, nlopt)
+
+    def tune_reco_power(
+            self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+            nlopt = True, trials = 1, **kwargs):
+        &#39;&#39;&#39;
+        Optimizes RECO for the vertically stratified SOC model with a
+        power-law RH extinction function. Considerations:
+
+        1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        fixed : tuple or list
+            Zero or more parameters whose values should be fixed
+            (i.e, NOT optimized)
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        trials : int
+            Number of searches of the parameter space to perform; if &gt;1,
+            initial parameters are randomized for each trial
+        **kwargs
+            Any number of additional keyword arguments to
+            scipy.optimize.least_squares()
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def reco(params, q_rh, q_k):
+            # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+            ra = ((1 - params[0]) * self._gpp_tower)
+            rh0 = self._reco_tower - ra
+            rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+            # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+            kmult0 = self._k_mult(params)
+            cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+            # Extinction rate of heterotrophic respiration with depth
+            #   factors OTHER THAN temperature, moisture
+            f_z = params[4] * np.power(np.abs(self.depths), -params[5]) *\
+                np.ones(cbar0.shape)
+            # Set RH from layers below the bedrock depth to zero
+            rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+            rh[~self._layer_mask] = 0
+            reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+            return reco0
+
+        def residuals(params, q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = reco(params, q_rh, q_k)
+            diff = np.subtract(self._reco_tower, reco0)
+            # Multiply by the tower weights
+            return (self._site_weights * diff)[np.isfinite(diff)]
+
+        self._model_name = &#39;reco_z_power&#39;
+        init_params = self._configure(
+            q_rh, q_k, fixed, model = self._model_name)
+        # NaNs may be present because not every site has soil moisture
+        #   estimates in every layer (bedrock may be present in soil column)
+        assert np.nanmax(self._drivers[1]) &lt;= 100
+        assert np.nanmin(self._drivers[1]) &gt;= 0
+        # Set defaults where needed
+        if np.isnan(init_params).any():
+            init_params[np.isnan(init_params)] = np.array(
+                [0.4, 270, 10, 50, 1, 0.5])[np.isnan(init_params)]
+        self._tune( # Step sizes specified here
+            partial(self._reco, q_rh = q_rh, q_k = q_k),
+            partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+            (0.01, 1, 0.1, 0.1, 0.01, 0.01), trials, optimize, nlopt)
+
+    def tune_reco_o2_limit(
+            self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+            nlopt = True, trials = 1, infer_diff_coefs = True, **kwargs):
+        &#39;&#39;&#39;
+        Optimizes RECO for the vertically stratified SOC model.
+        Considerations:
+
+        1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        fixed : tuple or list
+            Zero or more parameters whose values should be fixed
+            (i.e, NOT optimized)
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        trials : int
+            Number of searches of the parameter space to perform; if &gt;1,
+            initial parameters are randomized for each trial
+        infer_diff_coefs : bool
+            True to infer the diffusion coefficients based on characteristic
+            soil moisture conditions (Default: True); if False, coefficients
+            will be fit to the tower respiration data
+        **kwargs
+            Any number of additional keyword arguments to
+            scipy.optimize.least_squares()
+        &#39;&#39;&#39;
+        def k_mult(params):
+            # Calculate K_mult* based on current parameters
+            #   *K_mult but including O2 diffusion limitation
+            f_tsoil = partial(arrhenius, beta0 = params[1])
+            f_sm  = linear_constraint(params[2], params[3])
+            # Note that f_z() is NOT included here, because we do not want
+            #   cbar() to decline with depth
+            tsoil, sm, soil_vwc = self._drivers
+            conc_O2 = self._concentration_O2(
+                self._parameters[self._model_name].index(&#39;d_gas&#39;), soil_vwc)
+            mm_O2 = conc_O2 / (params[-1] + conc_O2) # km_oxy param
+            return f_tsoil(tsoil) *\
+                np.nanmin(np.stack((f_sm(sm), mm_O2)), axis = 0)
+
+        @suppress_warnings
+        def reco(params, q_rh, q_k):
+            # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+            ra = ((1 - params[0]) * self._gpp_tower)
+            rh0 = self._reco_tower - ra
+            rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+            # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+            kmult0 = k_mult(params)
+            cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+            # Extinction rate of heterotrophic respiration with depth, due to
+            #   factors OTHER THAN temperature, moisture (Koven et al. 2013)
+            f_z = np.exp(-np.abs(self.depths) / params[
+                self._parameters[self._model_name].index(&#39;k_depth_decay&#39;)
+            ])
+            # Set RH from layers below the bedrock depth to zero
+            rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+            rh[~self._layer_mask] = 0
+            reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+            return reco0
+
+        def residuals(params, q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = reco(params, q_rh, q_k)
+            diff = np.subtract(self._reco_tower, reco0)
+            # Multiply by the tower weights
+            return (self._site_weights * diff)[np.isfinite(diff)]
+
+        self._model_name = &#39;reco_o2_limit&#39;
+        init_params = self._configure(
+            q_rh, q_k, fixed, model = self._model_name)
+        assert np.nanmax(self._drivers[1]) &lt;= 100
+        assert np.nanmin(self._drivers[1]) &gt;= 0
+        assert np.nanmax(self._drivers[2]) &lt;= 1
+        assert np.nanmax(self._drivers[2]) &gt;= 0
+        # Set defaults where needed
+        if np.isnan(init_params).any():
+            init_params[np.isnan(init_params)] = np.array(
+                [0.4, 270, 10, 50, 0.3, 0.1, 0.002])[np.isnan(init_params)]
+
+        # Optionally, instead of fitting d_gas and km_oxy, we can infer their
+        #   values based on the soil moisture distribution
+        if infer_diff_coefs:
+            _, _, soil_vwc = self._drivers
+            with warnings.catch_warnings():
+                warnings.simplefilter(&#39;ignore&#39;)
+                a = np.power(np.subtract(self._porosity, soil_vwc), 4/3)
+            nt, ns = a.shape[-2:]
+            soil_vwc_ptiles = np.percentile(
+                soil_vwc.reshape((self.depths.size, nt * ns)), (5, 50),
+                axis = 1)
+            # d_gas when soil is completely dry assuming soil [O2] = atm. [O2]
+            with warnings.catch_warnings():
+                warnings.simplefilter(&#39;ignore&#39;)
+                d_gas = np.median(
+                    1 / a[soil_vwc &lt;= soil_vwc_ptiles[0][:,None,None]])
+                km_oxy = np.nanmedian(
+                    d_gas * 0.2095 * np.power(
+                        self._porosity - soil_vwc_ptiles[1][:,None,None], 4/3))
+            print(&#39;Inferred coefficients: d_gas = %.2f; km_oxy = %.3f&#39; % (d_gas, km_oxy))
+            init_params[
+                self._parameters[self._model_name].index(&#39;d_gas&#39;)] = d_gas
+            init_params[
+                self._parameters[self._model_name].index(&#39;km_oxy&#39;)] = km_oxy
+            fixed = [] if fixed is None else fixed
+            fixed = set(fixed).union((&#39;d_gas&#39;, &#39;km_oxy&#39;))
+
+        self._tune( # Step sizes specified here
+            partial(reco, q_rh = q_rh, q_k = q_k),
+            partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+            (0.01, 1, 0.1, 0.1, 0.01, 0, 0), trials, optimize, nlopt)
+
+
+def cbar(rh, k_mult, q_rh = 75, q_k = 50):
+    &#39;&#39;&#39;
+    Customized Cbar calculation, with depth dependence.
+
+    Parameters
+    ----------
+    rh : numpy.ndarray
+        (N x T) array of tower inferred RH
+    k_mult : numpy.ndarray
+        (Z x N x T) array of Kmult, for each of Z depths
+    q_rh
+    q_k
+
+    Returns
+    -------
+    (Z x N) array of steady-state SOC
+    &#39;&#39;&#39;
+    cutoff = np.apply_along_axis(np.percentile, 1, k_mult, q = q_k)
+    # Where environmental conditions are above a cutoff, return the
+    #   pseudo-steady state SOC
+    cbar0 = np.where(
+        k_mult &gt;= cutoff[:,None,:],
+        np.divide(rh, np.where(k_mult == 0, np.nan, k_mult)), np.nan)
+    return np.nanpercentile(cbar0, q = q_rh, axis = 1)
+
+
+if __name__ == &#39;__main__&#39;:
+    import fire
+    fire.Fire(StratifiedSoilCalibrationCLI)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.cbar"><code class="name flex">
+<span>def <span class="ident">cbar</span></span>(<span>rh, k_mult, q_rh=75, q_k=50)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Customized Cbar calculation, with depth dependence.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>rh</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(N x T) array of tower inferred RH</dd>
+<dt><strong><code>k_mult</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Z x N x T) array of Kmult, for each of Z depths</dd>
+<dt><strong><code>q_rh</code></strong></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>q_k</code></strong></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>(Z x N) array of steady-state SOC</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def cbar(rh, k_mult, q_rh = 75, q_k = 50):
+    &#39;&#39;&#39;
+    Customized Cbar calculation, with depth dependence.
+
+    Parameters
+    ----------
+    rh : numpy.ndarray
+        (N x T) array of tower inferred RH
+    k_mult : numpy.ndarray
+        (Z x N x T) array of Kmult, for each of Z depths
+    q_rh
+    q_k
+
+    Returns
+    -------
+    (Z x N) array of steady-state SOC
+    &#39;&#39;&#39;
+    cutoff = np.apply_along_axis(np.percentile, 1, k_mult, q = q_k)
+    # Where environmental conditions are above a cutoff, return the
+    #   pseudo-steady state SOC
+    cbar0 = np.where(
+        k_mult &gt;= cutoff[:,None,:],
+        np.divide(rh, np.where(k_mult == 0, np.nan, k_mult)), np.nan)
+    return np.nanpercentile(cbar0, q = q_rh, axis = 1)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI"><code class="flex name class">
+<span>class <span class="ident">StratifiedSoilCalibrationCLI</span></span>
+<span>(</span><span>config='/usr/local/dev/pyl4c/pyl4c/data/files/config_calibration.json', pft=None, start=None, end=None, debug=True, use_legacy_pft=True, n_layers=6)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Command line interface for calibrating L4C with a vertically stratified
+soil organic carbon (SOC) model.</p>
+<p>Get started by creating a scratch dataset:</p>
+<pre><code>python hydrology.py setup
+</code></pre>
+<p>Optionally, filter the tower GPP and/or RECO time series:</p>
+<pre><code>python hydrology.py filter-all gpp &lt;window_size&gt;
+python hydrology.py filter-all reco &lt;window_size&gt;
+</code></pre>
+<p>To optimize the RECO parameters for the model with vertically resolved
+soil organic carbon, specify a PFT class:</p>
+<pre><code>python hydrology.py pft &lt;pft&gt; tune-reco
+</code></pre>
+<p>To optimize the RECO parameters for the vertically resolved model that
+also includes an O2 diffusion limitation:</p>
+<pre><code>python hydrology.py pft &lt;pft&gt; tune-reco-o2-limit
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StratifiedSoilCalibrationCLI(CLI):
+    &#39;&#39;&#39;
+    Command line interface for calibrating L4C with a vertically stratified
+    soil organic carbon (SOC) model.
+
+    Get started by creating a scratch dataset:
+
+        python hydrology.py setup
+
+    Optionally, filter the tower GPP and/or RECO time series:
+
+        python hydrology.py filter-all gpp &lt;window_size&gt;
+        python hydrology.py filter-all reco &lt;window_size&gt;
+
+    To optimize the RECO parameters for the model with vertically resolved
+    soil organic carbon, specify a PFT class:
+
+        python hydrology.py pft &lt;pft&gt; tune-reco
+
+    To optimize the RECO parameters for the vertically resolved model that
+    also includes an O2 diffusion limitation:
+
+        python hydrology.py pft &lt;pft&gt; tune-reco-o2-limit
+    &#39;&#39;&#39;
+    _model_name = &#39;reco_z&#39;
+    _parameters = {
+        &#39;gpp&#39;: (
+            &#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;),
+        &#39;reco_z&#39;: (
+            &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;k_depth_decay&#39;),
+        &#39;reco_z_power&#39;: (
+            &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;z_tau_a&#39;, &#39;z_tau_b&#39;),
+        &#39;reco_o2_limit&#39;: (
+            &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;k_depth_decay&#39;, &#39;d_gas&#39;, &#39;km_oxy&#39;),
+    }
+    _path_to_temp_profile = &#39;/home/arthur/Downloads/L4C_experiments/L4C-Phenology/L4_SM_gph_NRv8-3_profile_at_356_tower_sites.h5&#39;
+    _path_to_sm_profile = &#39;/home/arthur/Downloads/L4C_experiments/L4C-Phenology/L4_C_NRv8-3_soil_moisture_profiles_simulated_at_356_tower_sites.h5&#39;
+
+    def __init__(
+            self, config = CONFIG, pft = None, start = None, end = None,
+            debug = True, use_legacy_pft = True, n_layers = 6):
+        super().__init__(
+            config = config, pft = pft, start = start, end = end,
+            debug = debug, use_legacy_pft = use_legacy_pft)
+        self.depths = DEPTHS[0:n_layers]
+        print(&#39;Working with layer depths: %s&#39; % &#39;, &#39;.join(map(lambda v: &#39;%.3f&#39; % v, self.depths)))
+        self.n_layers = n_layers
+        # (Re-)creates the BPLUT store using the correct (expanded) list of
+        #   parameter labels
+        self._init_bplut(labels = L4C_PARAMETERS)
+
+    @suppress_warnings
+    def _configure(self, q_rh, q_k, fixed, model = &#39;reco_z&#39;):
+        &#39;Loads driver data, sets starting parameters for RECO calibration&#39;
+        assert self._is_setup, &#39;Must run setup first&#39;
+        assert q_rh &gt;= 0 and q_rh &lt;= 100 and q_k &gt;= 0 and q_k &lt;= 100,\
+            &#39;Invalid setting for &#34;q_rh&#34; or &#34;q_k&#34; parameters&#39;
+        params = self._parameters[model]
+        if fixed is not None:
+            assert all(p in params for p in fixed),\
+                &#39;Arguments to &#34;fixed&#34; should be in: [%s]&#39; % &#39;, &#39;.join(params)
+        init_params = self.bplut.flat(self._pft, params)
+        # Read in data, with optional subsetting of the time axis
+        t0 = self._time_start if self._time_start is not None else 0
+        t1 = self._time_end if self._time_end is not None else self._nsteps
+        self._drivers = []
+        # Open the soil moisture, temperature driver datasets
+        with h5py.File(self._path_to_temp_profile, &#39;r&#39;) as hdf:
+            # Calculate extent of soil layers, given bedrock depth
+            bedrock = hdf[&#39;LAND_MODEL_CONSTANTS/depth_to_bedrock_m&#39;][self._sites]
+            self._layer_mask = self.depths &lt; bedrock
+            self._porosity = hdf[&#39;LAND_MODEL_CONSTANTS/porosity&#39;][self._sites]
+            temp_profile = []
+            temp_profile.append(hdf[&#39;L4SM_DAILY_MEAN/surface_temp&#39;][t0:t1,self._sites])
+            for i in range(1, self.n_layers):
+                temp_profile.append(
+                    hdf[&#39;L4SM_DAILY_MEAN/soil_temp_layer%d&#39; % i][t0:t1,self._sites])
+            temp_profile = np.stack(temp_profile)
+            self._drivers.append(temp_profile)
+        # Convert soil VWC to wetness (%)
+        if os.path.basename(self._path_to_sm_profile).split(&#39;.&#39;).pop() == &#39;h5&#39;:
+            with h5py.File(self._path_to_sm_profile, &#39;r&#39;) as hdf:
+                soil_m = 100 * np.divide(
+                    hdf[&#39;soil_moisture_vwc&#39;][:,t0:t1,self._sites], self._porosity)
+                # Clip f(SM) response, as wetness values might be unrealistic
+                #   given problems in ice-filled soil layers
+                soil_m[soil_m &gt; 100] = 100
+                self._drivers.append(soil_m)
+                # Add soil moisture in VWC
+                if model == &#39;reco_o2_limit&#39;:
+                    self._drivers.append(hdf[&#39;soil_moisture_vwc&#39;][:,t0:t1,self._sites])
+        elif os.path.basename(self._path_to_sm_profile).split(&#39;.&#39;).pop() == &#39;pickle&#39;:
+            with open(self._path_to_sm_profile, &#39;rb&#39;) as file:
+                profiles = pickle.load(file)
+                soil_m = 100 * np.divide(
+                    profiles[:,t0:t1,self._sites], self._porosity)
+                # Clip f(SM) response, as wetness values might be unrealistic
+                #   given problems in ice-filled soil layers
+                soil_m[soil_m &gt; 100] = 100
+                self._drivers.append(soil_m)
+                # Add soil moisture in VWC
+                if model == &#39;reco_o2_limit&#39;:
+                    self._drivers.append(profiles[:,t0:t1,self._sites])
+        # Read in the tower flux data and site weights
+        with h5py.File(self._path_to_scratch, &#39;r&#39;) as hdf:
+            self._gpp_tower = hdf[&#39;tower/GPP&#39;][t0:t1,self._sites,:].mean(axis = 2)
+            self._reco_tower = hdf[&#39;tower/RECO&#39;][t0:t1,self._sites,:].mean(axis = 2)
+            self._site_weights = hdf[&#39;site_weights&#39;][:,self._sites]
+        return init_params
+
+    def _concentration_O2(self, d_gas, soil_vwc):
+        air_frac_O2 = 0.2095 # Liters of O2 per liter of air (20.95%)
+        return d_gas * air_frac_O2 * np.power(self._porosity - soil_vwc, 4/3)
+
+    def _k_mult(self, params):
+        &#39;Calculate K_mult based on current parameters&#39;
+        tsoil, sm = self._drivers
+        # Note that f_z() is NOT included here, because we do not want
+        #   cbar() to decline with depth
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_sm = linear_constraint(params[2], params[3])
+        return f_tsoil(tsoil) * f_sm(sm)
+
+    @suppress_warnings
+    def _reco(self, params, q_rh, q_k):
+        &#39;Modeled ecosystem respiration (RECO) based on current parameters&#39;
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+        ra = ((1 - params[0]) * self._gpp_tower)
+        rh0 = self._reco_tower - ra
+        rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+        # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+        kmult0 = self._k_mult(params)
+        cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+        # Extinction rate of heterotrophic respiration with depth, due to
+        #   factors OTHER THAN temperature, moisture (Koven et al. 2013)
+        f_z = np.exp(-np.abs(self.depths) / params[4]) *\
+            np.ones(cbar0.shape)
+        # Set RH from layers below the bedrock depth to zero
+        rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+        rh[~self._layer_mask] = 0
+        reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+        return reco0
+
+    def _tune(
+            self, fit, residuals, init_params, fixed_params, step_sizes, trials,
+            optimize, nlopt):
+        &#39;&#39;&#39;
+        Runs the optimization.
+
+        Parameters
+        ----------
+        fit : function
+            The function that returns fit values, given parameters
+        residuals : function
+            The function that returns residuals, given parameters
+        init_params : tuple or list or numpy.ndarray
+        fixed_params : tuple or list or numpy.ndarray
+        step_sizes : tuple or list or numpy.ndarray
+        trials : int
+        optimize : bool
+        nlopt : bool
+        &#39;&#39;&#39;
+        # Get bounds for the parameter search
+        bounds = self._bounds(
+            init_params, self._model_name, fixed_params, bounds = OPT_BOUNDS)
+        params = []
+        params0 = []
+        scores = []
+        param_space = np.linspace(bounds[0], bounds[1], 100)
+        assert not np.isnan(init_params).any(),\
+            &#39;One or more NaNs were provided as &#34;init_params&#34;&#39;
+        for t in range(0, trials):
+            # If multiple trials, randomize the initial parameter values
+            #   and score the model in each trial
+            if optimize and trials &gt; 1:
+                p = param_space.shape[1] # Number of parameters
+                idx = np.random.randint(0, param_space.shape[0], p)
+                init_params = param_space[idx,np.arange(0, p)]
+                params0.append(init_params)
+            if optimize and not nlopt:
+                # Apply constrained, non-linear least-squares optimization
+                #   NOTE: arctan loss function doesn&#39;t work well here
+                if &#39;loss&#39; in kwargs.keys():
+                    print(&#39;NOTE: Overriding &#34;loss&#34; function specification&#39;)
+                kwargs.update({&#39;loss&#39;: &#39;linear&#39;})
+                solution = solve_least_squares(
+                    residuals, init_params,
+                    labels = self._parameters[self._model_name],
+                    bounds = bounds, **kwargs)
+                fitted = solution.x.tolist()
+                message = solution.message
+            elif optimize and nlopt:
+                opt = GenericOptimization(
+                    residuals, bounds, step_size = step_sizes)
+                try:
+                    fitted = opt.solve(init_params)
+                except RuntimeError:
+                    params.append(None)
+                    scores.append(np.inf)
+                    print(&#39;Error in objective function; restarting...&#39;)
+                    continue # Try again!
+                message = &#39;Success&#39;
+            else:
+                fitted = [None for i in range(0, len(init_params))]
+                break # Do not iterate through trials if not optimizing
+            # Record the found solution and its goodness-of-fit score
+            params.append(fitted)
+            pred = fit(fitted if optimize else init_params)
+            _, rmse_score, _, _ = self._report_fit(
+                self._reco_tower, pred, self._site_weights, verbose = False)
+            print(&#39;[%s/%s] RMSE score of last trial: %.3f&#39; % (
+                str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+            scores.append(rmse_score)
+
+        # Select the fit params with the best score
+        if optimize and trials &gt; 1:
+            fitted = params[np.argmin(scores)]
+            init_params = params0[np.argmin(scores)]
+        # Generate and print a report, update the BPLUT parameters
+        self._report(
+            init_params, fitted, self._parameters[self._model_name],
+            &#39;RECO Optimization&#39;)
+        pred = fit(fitted if optimize else init_params)
+        self._report_fit(self._reco_tower, pred, self._site_weights)
+        if optimize:
+            user_prompt = input(&#39;Update parameters for PFT=%d? [Y/n] &#39; % self._pft)
+            do_write = user_prompt == &#39;Y&#39;
+            if do_write:
+                print(&#39;Updating parameters for PFT=%d...&#39; % self._pft)
+                self.bplut.update(self._pft, fitted,
+                self._parameters[self._model_name])
+
+    def plot_reco(
+            self, driver, model = &#39;reco_z&#39;, q_rh = 75, q_k = 50,
+            by_depth = True, ylim = None, **kwargs):
+        &#39;&#39;&#39;
+        Plots both the soil moisture (wetness) ramp function and the O2
+        diffusion limitation curve (a function of soil volumetric water
+        content). As the model is vertically stratified but the EC flux tower
+        data have a single value for each site-day observation, we take the
+        mean soil moisture and mean Cbar values; hence, the plot shows the
+        predicted response to environmental conditions for the &#34;average&#34; soil
+        layer.
+
+        Parameters
+        ----------
+        driver : str
+            Name of environmental driver to plot
+        model : str
+            Name of the RECO model to use
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        by_depth : bool
+            True to plot the RH/Cbar quantity separately for each soil layer
+        ylim : tuple or list or None
+            Sequence of 2 values, the lower and upper limits for the vertical
+            axis of the plot
+        &#39;&#39;&#39;
+        palette = [&#39;#6e016b&#39;, &#39;#88419d&#39;, &#39;#8c6bb1&#39;, &#39;#8c96c6&#39;, &#39;#9ebcda&#39;]
+        matplotlib.rcParams[&#39;text.usetex&#39;] = True
+        matplotlib.rc(&#39;font&#39;, **{
+            &#39;weight&#39; : &#39;bold&#39;,
+            &#39;size&#39;   : 14
+        })
+        params = self._configure(q_rh, q_k, None, model = model)
+        assert not np.isnan(params).any(),\
+            &#39;Some required parameters are undefined; run calibration first&#39;
+        if model == &#39;reco_z&#39;:
+            tsoil, sm = self._drivers
+            f_sm = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+            k_mult = f_sm(sm) * arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft])
+        else:
+            tsoil, sm, vwc = self._drivers
+            f_sm = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+            conc_O2 = self._concentration_O2(
+                self._parameters[self._model_name].index(&#39;d_gas&#39;), vwc)
+            mm_O2 = conc_O2 / (params[-1] + conc_O2) # km_oxy param
+            k_mult = arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft]) *\
+                np.nanmin(np.stack((f_sm(sm), mm_O2)), axis = 0)
+
+        # Calculate RH as (RECO - RA)
+        rh0 = self._reco_tower - ((1 - self.bplut[&#39;CUE&#39;][0,self._pft]) * self._gpp_tower)
+        # Set negative RH values to zero
+        rh0 = np.where(suppress_warnings(np.less)(rh0, 0), 0, rh0)
+        cbar0 = suppress_warnings(cbar)(rh0, k_mult, q_rh, q_k)
+        # Update plotting parameters
+        kwargs.setdefault(&#39;alpha&#39;, 0.08)
+        kwargs.setdefault(&#39;marker&#39;, &#39;.&#39;)
+        div = suppress_warnings(np.divide) # Quiet divide
+        if driver == &#39;vwc&#39;:
+            if by_depth:
+                for z in range(0, vwc.shape[0]):
+                    points = pyplot.scatter(
+                        vwc[z], np.where(
+                            cbar0[z] == 0, np.nan, div(rh0, cbar0[z])),
+                        color = palette[z], label = &#39;%.2f m&#39; % self.depths[z],
+                        **kwargs)
+                    points.set_alpha(1)
+            else:
+                pyplot.scatter(
+                    vwc.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                    **kwargs)
+            ramp = self._ramp(sm, &#39;smsf&#39;)
+            domain, y = ramp
+            pyplot.plot(domain / 100, y, &#39;k-&#39;, label = &#39;Substrate Limit&#39;)
+            conc_O2 = params[5] * 0.2095 *\
+                np.power(0.8 - np.multiply(domain / 100, 0.8), 4/3)
+            pyplot.plot(
+                domain / 100, conc_O2 / (params[6] + conc_O2), &#39;r-&#39;,
+                label = &#39;O2 Diffusion Limit&#39;)
+            pyplot.xlabel(r&#39;Soil Volumetric Water Content $(m^3 m^{-3})$&#39;)
+        elif driver in (&#39;smsf&#39;, &#39;sm&#39;):
+            if by_depth:
+                for z in range(0, sm.shape[0]):
+                    points = pyplot.scatter(
+                        sm[z], np.where(
+                            cbar0[z] == 0, np.nan, div(rh0, cbar0[z])),
+                        color = palette[z], label = &#39;%.2f m&#39; % self.depths[z],
+                        **kwargs)
+                    points.set_alpha(1)
+            else:
+                pyplot.scatter(
+                    sm.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                    **kwargs)
+            pyplot.plot(*self._ramp(sm, &#39;smsf&#39;), &#39;k-&#39;)
+            pyplot.xlabel(&#39;Soil Moisture Wetness (\%)&#39;)
+        elif driver == &#39;tsoil&#39;:
+            if by_depth:
+                for z in range(0, tsoil.shape[0]):
+                    points = pyplot.scatter(
+                        tsoil[z], div(rh0, cbar0[z]), color = palette[z],
+                        label = &#39;%.2f m&#39; % self.depths[z], **kwargs)
+                    points.set_alpha(1)
+            else:
+                pyplot.scatter(
+                    tsoil.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                    **kwargs)
+            domain = np.arange(tsoil.min(), tsoil.max(), 0.1)
+            pyplot.plot(domain,
+                arrhenius(domain, self.bplut[&#39;tsoil&#39;][0,self._pft]), &#39;k-&#39;)
+            pyplot.xlabel(&#39;Soil Temperature (deg K)&#39;)
+        else:
+            raise NotImplementedError(
+                &#39;Can only plot the following drivers: &#34;vwc&#34;, &#34;sm&#34;, &#34;tsoil&#34;&#39;)
+        if by_depth:
+            pyplot.legend(markerscale = 2)
+        pyplot.ylabel(r&#39;$R_H$/$\bar{C}$&#39;)
+        pyplot.title(r&#39;Average $K_{mult}$ Response in PFT=%d&#39; % self._pft)
+        if ylim is not None:
+            pyplot.ylim(*ylim)
+        pyplot.show()
+
+    def plot_reco_time_series(
+            self, model = &#39;reco_z&#39;, q_rh = 75, q_k = 50, q_nan = 20,
+            ylim = None, **kwargs):
+        &#39;&#39;&#39;
+        Plots the observed tower RECO time series and the predicted (modeled)
+        RECO time series, based on the current calibrated parameters. One of
+        the tower sites with a long record is randomly chosen.
+
+        Parameters
+        ----------
+        model : str
+            Name of the RECO model to use
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        q_nan : int
+            The percentile of total NaN count by site, above which a site will
+            not be plotted
+        ylim : tuple or list or None
+            Sequence of 2 values, the lower and upper limits for the vertical
+            axis of the plot
+        &#39;&#39;&#39;
+        matplotlib.rcParams[&#39;text.usetex&#39;] = True
+        matplotlib.rc(&#39;font&#39;, **{
+            &#39;weight&#39; : &#39;bold&#39;,
+            &#39;size&#39;   : 14
+        })
+        params = self._configure(q_rh, q_k, None, model = model)
+        assert not np.isnan(params).any(),\
+            &#39;Some required parameters are undefined; run calibration first&#39;
+        # Randomly pick a site based on low missing-ness
+        missing = np.apply_along_axis(lambda x: np.isnan(x).sum(), 0, self._reco_tower)
+        idx = np.argwhere(missing &lt;= np.percentile(missing, q_nan)).ravel()
+        idx = idx[int(np.random.sample(1) * idx.size)]
+        with h5py.File(self._path_to_temp_profile, &#39;r&#39;) as hdf:
+            site_name = hdf[&#39;site_id&#39;][self._sites][idx]
+        # Get predicted, observed values
+        predicted = self._reco(params, q_rh, q_k)
+        # Update plotting parameters
+        kwargs.setdefault(&#39;alpha&#39;, 0.6)
+        pyplot.figure(figsize = (12, 6))
+        pyplot.plot(self._reco_tower[:,idx], &#39;k-&#39;, **kwargs)
+        pyplot.plot(predicted[:,idx], &#39;r-&#39;, **kwargs)
+        pyplot.ylabel(r&#39;RECO $(g\,C\,m^{-2}\,d^{-1})$&#39;)
+        pyplot.title(r&#39;Site &#34;%s&#34;, PFT=%d&#39; % (site_name, self._pft))
+        if ylim is not None:
+            pyplot.ylim(*ylim)
+        pyplot.show()
+
+    def tune_reco(
+            self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+            nlopt = True, trials = 1, **kwargs):
+        &#39;&#39;&#39;
+        Optimizes RECO for the vertically stratified SOC model.
+        Considerations:
+
+        1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        fixed : tuple or list
+            Zero or more parameters whose values should be fixed
+            (i.e, NOT optimized)
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        trials : int
+            Number of searches of the parameter space to perform; if &gt;1,
+            initial parameters are randomized for each trial
+        **kwargs
+            Any number of additional keyword arguments to
+            scipy.optimize.least_squares()
+        &#39;&#39;&#39;
+        def residuals(params, q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = self._reco(params, q_rh, q_k)
+            diff = np.subtract(self._reco_tower, reco0)
+            # Multiply by the tower weights
+            return (self._site_weights * diff)[np.isfinite(diff)]
+
+        self._model_name = &#39;reco_z&#39;
+        init_params = self._configure(
+            q_rh, q_k, fixed, model = self._model_name)
+        # NaNs may be present because not every site has soil moisture
+        #   estimates in every layer (bedrock may be present in soil column)
+        assert np.nanmax(self._drivers[1]) &lt;= 100
+        assert np.nanmin(self._drivers[1]) &gt;= 0
+        # Set defaults where needed
+        if np.isnan(init_params).any():
+            init_params[np.isnan(init_params)] = np.array(
+                [0.4, 270, 10, 50, 0.3])[np.isnan(init_params)]
+        self._tune( # Step sizes specified here
+            partial(self._reco, q_rh = q_rh, q_k = q_k),
+            partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+            (0.01, 1, 0.1, 0.1, 0.005), trials, optimize, nlopt)
+
+    def tune_reco_power(
+            self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+            nlopt = True, trials = 1, **kwargs):
+        &#39;&#39;&#39;
+        Optimizes RECO for the vertically stratified SOC model with a
+        power-law RH extinction function. Considerations:
+
+        1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        fixed : tuple or list
+            Zero or more parameters whose values should be fixed
+            (i.e, NOT optimized)
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        trials : int
+            Number of searches of the parameter space to perform; if &gt;1,
+            initial parameters are randomized for each trial
+        **kwargs
+            Any number of additional keyword arguments to
+            scipy.optimize.least_squares()
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def reco(params, q_rh, q_k):
+            # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+            ra = ((1 - params[0]) * self._gpp_tower)
+            rh0 = self._reco_tower - ra
+            rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+            # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+            kmult0 = self._k_mult(params)
+            cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+            # Extinction rate of heterotrophic respiration with depth
+            #   factors OTHER THAN temperature, moisture
+            f_z = params[4] * np.power(np.abs(self.depths), -params[5]) *\
+                np.ones(cbar0.shape)
+            # Set RH from layers below the bedrock depth to zero
+            rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+            rh[~self._layer_mask] = 0
+            reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+            return reco0
+
+        def residuals(params, q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = reco(params, q_rh, q_k)
+            diff = np.subtract(self._reco_tower, reco0)
+            # Multiply by the tower weights
+            return (self._site_weights * diff)[np.isfinite(diff)]
+
+        self._model_name = &#39;reco_z_power&#39;
+        init_params = self._configure(
+            q_rh, q_k, fixed, model = self._model_name)
+        # NaNs may be present because not every site has soil moisture
+        #   estimates in every layer (bedrock may be present in soil column)
+        assert np.nanmax(self._drivers[1]) &lt;= 100
+        assert np.nanmin(self._drivers[1]) &gt;= 0
+        # Set defaults where needed
+        if np.isnan(init_params).any():
+            init_params[np.isnan(init_params)] = np.array(
+                [0.4, 270, 10, 50, 1, 0.5])[np.isnan(init_params)]
+        self._tune( # Step sizes specified here
+            partial(self._reco, q_rh = q_rh, q_k = q_k),
+            partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+            (0.01, 1, 0.1, 0.1, 0.01, 0.01), trials, optimize, nlopt)
+
+    def tune_reco_o2_limit(
+            self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+            nlopt = True, trials = 1, infer_diff_coefs = True, **kwargs):
+        &#39;&#39;&#39;
+        Optimizes RECO for the vertically stratified SOC model.
+        Considerations:
+
+        1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        fixed : tuple or list
+            Zero or more parameters whose values should be fixed
+            (i.e, NOT optimized)
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        trials : int
+            Number of searches of the parameter space to perform; if &gt;1,
+            initial parameters are randomized for each trial
+        infer_diff_coefs : bool
+            True to infer the diffusion coefficients based on characteristic
+            soil moisture conditions (Default: True); if False, coefficients
+            will be fit to the tower respiration data
+        **kwargs
+            Any number of additional keyword arguments to
+            scipy.optimize.least_squares()
+        &#39;&#39;&#39;
+        def k_mult(params):
+            # Calculate K_mult* based on current parameters
+            #   *K_mult but including O2 diffusion limitation
+            f_tsoil = partial(arrhenius, beta0 = params[1])
+            f_sm  = linear_constraint(params[2], params[3])
+            # Note that f_z() is NOT included here, because we do not want
+            #   cbar() to decline with depth
+            tsoil, sm, soil_vwc = self._drivers
+            conc_O2 = self._concentration_O2(
+                self._parameters[self._model_name].index(&#39;d_gas&#39;), soil_vwc)
+            mm_O2 = conc_O2 / (params[-1] + conc_O2) # km_oxy param
+            return f_tsoil(tsoil) *\
+                np.nanmin(np.stack((f_sm(sm), mm_O2)), axis = 0)
+
+        @suppress_warnings
+        def reco(params, q_rh, q_k):
+            # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+            ra = ((1 - params[0]) * self._gpp_tower)
+            rh0 = self._reco_tower - ra
+            rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+            # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+            kmult0 = k_mult(params)
+            cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+            # Extinction rate of heterotrophic respiration with depth, due to
+            #   factors OTHER THAN temperature, moisture (Koven et al. 2013)
+            f_z = np.exp(-np.abs(self.depths) / params[
+                self._parameters[self._model_name].index(&#39;k_depth_decay&#39;)
+            ])
+            # Set RH from layers below the bedrock depth to zero
+            rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+            rh[~self._layer_mask] = 0
+            reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+            return reco0
+
+        def residuals(params, q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = reco(params, q_rh, q_k)
+            diff = np.subtract(self._reco_tower, reco0)
+            # Multiply by the tower weights
+            return (self._site_weights * diff)[np.isfinite(diff)]
+
+        self._model_name = &#39;reco_o2_limit&#39;
+        init_params = self._configure(
+            q_rh, q_k, fixed, model = self._model_name)
+        assert np.nanmax(self._drivers[1]) &lt;= 100
+        assert np.nanmin(self._drivers[1]) &gt;= 0
+        assert np.nanmax(self._drivers[2]) &lt;= 1
+        assert np.nanmax(self._drivers[2]) &gt;= 0
+        # Set defaults where needed
+        if np.isnan(init_params).any():
+            init_params[np.isnan(init_params)] = np.array(
+                [0.4, 270, 10, 50, 0.3, 0.1, 0.002])[np.isnan(init_params)]
+
+        # Optionally, instead of fitting d_gas and km_oxy, we can infer their
+        #   values based on the soil moisture distribution
+        if infer_diff_coefs:
+            _, _, soil_vwc = self._drivers
+            with warnings.catch_warnings():
+                warnings.simplefilter(&#39;ignore&#39;)
+                a = np.power(np.subtract(self._porosity, soil_vwc), 4/3)
+            nt, ns = a.shape[-2:]
+            soil_vwc_ptiles = np.percentile(
+                soil_vwc.reshape((self.depths.size, nt * ns)), (5, 50),
+                axis = 1)
+            # d_gas when soil is completely dry assuming soil [O2] = atm. [O2]
+            with warnings.catch_warnings():
+                warnings.simplefilter(&#39;ignore&#39;)
+                d_gas = np.median(
+                    1 / a[soil_vwc &lt;= soil_vwc_ptiles[0][:,None,None]])
+                km_oxy = np.nanmedian(
+                    d_gas * 0.2095 * np.power(
+                        self._porosity - soil_vwc_ptiles[1][:,None,None], 4/3))
+            print(&#39;Inferred coefficients: d_gas = %.2f; km_oxy = %.3f&#39; % (d_gas, km_oxy))
+            init_params[
+                self._parameters[self._model_name].index(&#39;d_gas&#39;)] = d_gas
+            init_params[
+                self._parameters[self._model_name].index(&#39;km_oxy&#39;)] = km_oxy
+            fixed = [] if fixed is None else fixed
+            fixed = set(fixed).union((&#39;d_gas&#39;, &#39;km_oxy&#39;))
+
+        self._tune( # Step sizes specified here
+            partial(reco, q_rh = q_rh, q_k = q_k),
+            partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+            (0.01, 1, 0.1, 0.1, 0.01, 0, 0), trials, optimize, nlopt)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.calibration.main.CLI" href="../main.html#pyl4c.apps.calibration.main.CLI">CLI</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.plot_reco"><code class="name flex">
+<span>def <span class="ident">plot_reco</span></span>(<span>self, driver, model='reco_z', q_rh=75, q_k=50, by_depth=True, ylim=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plots both the soil moisture (wetness) ramp function and the O2
+diffusion limitation curve (a function of soil volumetric water
+content). As the model is vertically stratified but the EC flux tower
+data have a single value for each site-day observation, we take the
+mean soil moisture and mean Cbar values; hence, the plot shows the
+predicted response to environmental conditions for the "average" soil
+layer.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>driver</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of environmental driver to plot</dd>
+<dt><strong><code>model</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the RECO model to use</dd>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+<dt><strong><code>by_depth</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to plot the RH/Cbar quantity separately for each soil layer</dd>
+<dt><strong><code>ylim</code></strong> :&ensp;<code>tuple</code> or <code>list</code> or <code>None</code></dt>
+<dd>Sequence of 2 values, the lower and upper limits for the vertical
+axis of the plot</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_reco(
+        self, driver, model = &#39;reco_z&#39;, q_rh = 75, q_k = 50,
+        by_depth = True, ylim = None, **kwargs):
+    &#39;&#39;&#39;
+    Plots both the soil moisture (wetness) ramp function and the O2
+    diffusion limitation curve (a function of soil volumetric water
+    content). As the model is vertically stratified but the EC flux tower
+    data have a single value for each site-day observation, we take the
+    mean soil moisture and mean Cbar values; hence, the plot shows the
+    predicted response to environmental conditions for the &#34;average&#34; soil
+    layer.
+
+    Parameters
+    ----------
+    driver : str
+        Name of environmental driver to plot
+    model : str
+        Name of the RECO model to use
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+    by_depth : bool
+        True to plot the RH/Cbar quantity separately for each soil layer
+    ylim : tuple or list or None
+        Sequence of 2 values, the lower and upper limits for the vertical
+        axis of the plot
+    &#39;&#39;&#39;
+    palette = [&#39;#6e016b&#39;, &#39;#88419d&#39;, &#39;#8c6bb1&#39;, &#39;#8c96c6&#39;, &#39;#9ebcda&#39;]
+    matplotlib.rcParams[&#39;text.usetex&#39;] = True
+    matplotlib.rc(&#39;font&#39;, **{
+        &#39;weight&#39; : &#39;bold&#39;,
+        &#39;size&#39;   : 14
+    })
+    params = self._configure(q_rh, q_k, None, model = model)
+    assert not np.isnan(params).any(),\
+        &#39;Some required parameters are undefined; run calibration first&#39;
+    if model == &#39;reco_z&#39;:
+        tsoil, sm = self._drivers
+        f_sm = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+        k_mult = f_sm(sm) * arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft])
+    else:
+        tsoil, sm, vwc = self._drivers
+        f_sm = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+        conc_O2 = self._concentration_O2(
+            self._parameters[self._model_name].index(&#39;d_gas&#39;), vwc)
+        mm_O2 = conc_O2 / (params[-1] + conc_O2) # km_oxy param
+        k_mult = arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft]) *\
+            np.nanmin(np.stack((f_sm(sm), mm_O2)), axis = 0)
+
+    # Calculate RH as (RECO - RA)
+    rh0 = self._reco_tower - ((1 - self.bplut[&#39;CUE&#39;][0,self._pft]) * self._gpp_tower)
+    # Set negative RH values to zero
+    rh0 = np.where(suppress_warnings(np.less)(rh0, 0), 0, rh0)
+    cbar0 = suppress_warnings(cbar)(rh0, k_mult, q_rh, q_k)
+    # Update plotting parameters
+    kwargs.setdefault(&#39;alpha&#39;, 0.08)
+    kwargs.setdefault(&#39;marker&#39;, &#39;.&#39;)
+    div = suppress_warnings(np.divide) # Quiet divide
+    if driver == &#39;vwc&#39;:
+        if by_depth:
+            for z in range(0, vwc.shape[0]):
+                points = pyplot.scatter(
+                    vwc[z], np.where(
+                        cbar0[z] == 0, np.nan, div(rh0, cbar0[z])),
+                    color = palette[z], label = &#39;%.2f m&#39; % self.depths[z],
+                    **kwargs)
+                points.set_alpha(1)
+        else:
+            pyplot.scatter(
+                vwc.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                **kwargs)
+        ramp = self._ramp(sm, &#39;smsf&#39;)
+        domain, y = ramp
+        pyplot.plot(domain / 100, y, &#39;k-&#39;, label = &#39;Substrate Limit&#39;)
+        conc_O2 = params[5] * 0.2095 *\
+            np.power(0.8 - np.multiply(domain / 100, 0.8), 4/3)
+        pyplot.plot(
+            domain / 100, conc_O2 / (params[6] + conc_O2), &#39;r-&#39;,
+            label = &#39;O2 Diffusion Limit&#39;)
+        pyplot.xlabel(r&#39;Soil Volumetric Water Content $(m^3 m^{-3})$&#39;)
+    elif driver in (&#39;smsf&#39;, &#39;sm&#39;):
+        if by_depth:
+            for z in range(0, sm.shape[0]):
+                points = pyplot.scatter(
+                    sm[z], np.where(
+                        cbar0[z] == 0, np.nan, div(rh0, cbar0[z])),
+                    color = palette[z], label = &#39;%.2f m&#39; % self.depths[z],
+                    **kwargs)
+                points.set_alpha(1)
+        else:
+            pyplot.scatter(
+                sm.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                **kwargs)
+        pyplot.plot(*self._ramp(sm, &#39;smsf&#39;), &#39;k-&#39;)
+        pyplot.xlabel(&#39;Soil Moisture Wetness (\%)&#39;)
+    elif driver == &#39;tsoil&#39;:
+        if by_depth:
+            for z in range(0, tsoil.shape[0]):
+                points = pyplot.scatter(
+                    tsoil[z], div(rh0, cbar0[z]), color = palette[z],
+                    label = &#39;%.2f m&#39; % self.depths[z], **kwargs)
+                points.set_alpha(1)
+        else:
+            pyplot.scatter(
+                tsoil.mean(axis = 0), div(rh0, np.nanmean(cbar0, axis = 0)),
+                **kwargs)
+        domain = np.arange(tsoil.min(), tsoil.max(), 0.1)
+        pyplot.plot(domain,
+            arrhenius(domain, self.bplut[&#39;tsoil&#39;][0,self._pft]), &#39;k-&#39;)
+        pyplot.xlabel(&#39;Soil Temperature (deg K)&#39;)
+    else:
+        raise NotImplementedError(
+            &#39;Can only plot the following drivers: &#34;vwc&#34;, &#34;sm&#34;, &#34;tsoil&#34;&#39;)
+    if by_depth:
+        pyplot.legend(markerscale = 2)
+    pyplot.ylabel(r&#39;$R_H$/$\bar{C}$&#39;)
+    pyplot.title(r&#39;Average $K_{mult}$ Response in PFT=%d&#39; % self._pft)
+    if ylim is not None:
+        pyplot.ylim(*ylim)
+    pyplot.show()</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.plot_reco_time_series"><code class="name flex">
+<span>def <span class="ident">plot_reco_time_series</span></span>(<span>self, model='reco_z', q_rh=75, q_k=50, q_nan=20, ylim=None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plots the observed tower RECO time series and the predicted (modeled)
+RECO time series, based on the current calibrated parameters. One of
+the tower sites with a long record is randomly chosen.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>model</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the RECO model to use</dd>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+<dt><strong><code>q_nan</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of total NaN count by site, above which a site will
+not be plotted</dd>
+<dt><strong><code>ylim</code></strong> :&ensp;<code>tuple</code> or <code>list</code> or <code>None</code></dt>
+<dd>Sequence of 2 values, the lower and upper limits for the vertical
+axis of the plot</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_reco_time_series(
+        self, model = &#39;reco_z&#39;, q_rh = 75, q_k = 50, q_nan = 20,
+        ylim = None, **kwargs):
+    &#39;&#39;&#39;
+    Plots the observed tower RECO time series and the predicted (modeled)
+    RECO time series, based on the current calibrated parameters. One of
+    the tower sites with a long record is randomly chosen.
+
+    Parameters
+    ----------
+    model : str
+        Name of the RECO model to use
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+    q_nan : int
+        The percentile of total NaN count by site, above which a site will
+        not be plotted
+    ylim : tuple or list or None
+        Sequence of 2 values, the lower and upper limits for the vertical
+        axis of the plot
+    &#39;&#39;&#39;
+    matplotlib.rcParams[&#39;text.usetex&#39;] = True
+    matplotlib.rc(&#39;font&#39;, **{
+        &#39;weight&#39; : &#39;bold&#39;,
+        &#39;size&#39;   : 14
+    })
+    params = self._configure(q_rh, q_k, None, model = model)
+    assert not np.isnan(params).any(),\
+        &#39;Some required parameters are undefined; run calibration first&#39;
+    # Randomly pick a site based on low missing-ness
+    missing = np.apply_along_axis(lambda x: np.isnan(x).sum(), 0, self._reco_tower)
+    idx = np.argwhere(missing &lt;= np.percentile(missing, q_nan)).ravel()
+    idx = idx[int(np.random.sample(1) * idx.size)]
+    with h5py.File(self._path_to_temp_profile, &#39;r&#39;) as hdf:
+        site_name = hdf[&#39;site_id&#39;][self._sites][idx]
+    # Get predicted, observed values
+    predicted = self._reco(params, q_rh, q_k)
+    # Update plotting parameters
+    kwargs.setdefault(&#39;alpha&#39;, 0.6)
+    pyplot.figure(figsize = (12, 6))
+    pyplot.plot(self._reco_tower[:,idx], &#39;k-&#39;, **kwargs)
+    pyplot.plot(predicted[:,idx], &#39;r-&#39;, **kwargs)
+    pyplot.ylabel(r&#39;RECO $(g\,C\,m^{-2}\,d^{-1})$&#39;)
+    pyplot.title(r&#39;Site &#34;%s&#34;, PFT=%d&#39; % (site_name, self._pft))
+    if ylim is not None:
+        pyplot.ylim(*ylim)
+    pyplot.show()</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco"><code class="name flex">
+<span>def <span class="ident">tune_reco</span></span>(<span>self, q_rh=75, q_k=50, fixed=None, optimize=True, nlopt=True, trials=1, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Optimizes RECO for the vertically stratified SOC model.
+Considerations:</p>
+<ol>
+<li>Negative RH values (i.e., NPP &gt; RECO) are set to zero.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+<dt><strong><code>fixed</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Zero or more parameters whose values should be fixed
+(i.e, NOT optimized)</dd>
+<dt><strong><code>optimize</code></strong> :&ensp;<code>bool</code></dt>
+<dd>False to only report parameters and their fit statistics instead
+of optimizing (Default: True)</dd>
+<dt><strong><code>nlopt</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use the nlopt library for optimization (Default: True)</dd>
+<dt><strong><code>trials</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of searches of the parameter space to perform; if &gt;1,
+initial parameters are randomized for each trial</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Any number of additional keyword arguments to
+scipy.optimize.least_squares()</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_reco(
+        self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+        nlopt = True, trials = 1, **kwargs):
+    &#39;&#39;&#39;
+    Optimizes RECO for the vertically stratified SOC model.
+    Considerations:
+
+    1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+    Parameters
+    ----------
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+    fixed : tuple or list
+        Zero or more parameters whose values should be fixed
+        (i.e, NOT optimized)
+    optimize : bool
+        False to only report parameters and their fit statistics instead
+        of optimizing (Default: True)
+    nlopt : bool
+        True to use the nlopt library for optimization (Default: True)
+    trials : int
+        Number of searches of the parameter space to perform; if &gt;1,
+        initial parameters are randomized for each trial
+    **kwargs
+        Any number of additional keyword arguments to
+        scipy.optimize.least_squares()
+    &#39;&#39;&#39;
+    def residuals(params, q_rh, q_k):
+        # Objective function: Difference between tower RECO and L4C RECO
+        reco0 = self._reco(params, q_rh, q_k)
+        diff = np.subtract(self._reco_tower, reco0)
+        # Multiply by the tower weights
+        return (self._site_weights * diff)[np.isfinite(diff)]
+
+    self._model_name = &#39;reco_z&#39;
+    init_params = self._configure(
+        q_rh, q_k, fixed, model = self._model_name)
+    # NaNs may be present because not every site has soil moisture
+    #   estimates in every layer (bedrock may be present in soil column)
+    assert np.nanmax(self._drivers[1]) &lt;= 100
+    assert np.nanmin(self._drivers[1]) &gt;= 0
+    # Set defaults where needed
+    if np.isnan(init_params).any():
+        init_params[np.isnan(init_params)] = np.array(
+            [0.4, 270, 10, 50, 0.3])[np.isnan(init_params)]
+    self._tune( # Step sizes specified here
+        partial(self._reco, q_rh = q_rh, q_k = q_k),
+        partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+        (0.01, 1, 0.1, 0.1, 0.005), trials, optimize, nlopt)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco_o2_limit"><code class="name flex">
+<span>def <span class="ident">tune_reco_o2_limit</span></span>(<span>self, q_rh=75, q_k=50, fixed=None, optimize=True, nlopt=True, trials=1, infer_diff_coefs=True, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Optimizes RECO for the vertically stratified SOC model.
+Considerations:</p>
+<ol>
+<li>Negative RH values (i.e., NPP &gt; RECO) are set to zero.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+<dt><strong><code>fixed</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Zero or more parameters whose values should be fixed
+(i.e, NOT optimized)</dd>
+<dt><strong><code>optimize</code></strong> :&ensp;<code>bool</code></dt>
+<dd>False to only report parameters and their fit statistics instead
+of optimizing (Default: True)</dd>
+<dt><strong><code>nlopt</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use the nlopt library for optimization (Default: True)</dd>
+<dt><strong><code>trials</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of searches of the parameter space to perform; if &gt;1,
+initial parameters are randomized for each trial</dd>
+<dt><strong><code>infer_diff_coefs</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to infer the diffusion coefficients based on characteristic
+soil moisture conditions (Default: True); if False, coefficients
+will be fit to the tower respiration data</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Any number of additional keyword arguments to
+scipy.optimize.least_squares()</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_reco_o2_limit(
+        self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+        nlopt = True, trials = 1, infer_diff_coefs = True, **kwargs):
+    &#39;&#39;&#39;
+    Optimizes RECO for the vertically stratified SOC model.
+    Considerations:
+
+    1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+    Parameters
+    ----------
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+    fixed : tuple or list
+        Zero or more parameters whose values should be fixed
+        (i.e, NOT optimized)
+    optimize : bool
+        False to only report parameters and their fit statistics instead
+        of optimizing (Default: True)
+    nlopt : bool
+        True to use the nlopt library for optimization (Default: True)
+    trials : int
+        Number of searches of the parameter space to perform; if &gt;1,
+        initial parameters are randomized for each trial
+    infer_diff_coefs : bool
+        True to infer the diffusion coefficients based on characteristic
+        soil moisture conditions (Default: True); if False, coefficients
+        will be fit to the tower respiration data
+    **kwargs
+        Any number of additional keyword arguments to
+        scipy.optimize.least_squares()
+    &#39;&#39;&#39;
+    def k_mult(params):
+        # Calculate K_mult* based on current parameters
+        #   *K_mult but including O2 diffusion limitation
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_sm  = linear_constraint(params[2], params[3])
+        # Note that f_z() is NOT included here, because we do not want
+        #   cbar() to decline with depth
+        tsoil, sm, soil_vwc = self._drivers
+        conc_O2 = self._concentration_O2(
+            self._parameters[self._model_name].index(&#39;d_gas&#39;), soil_vwc)
+        mm_O2 = conc_O2 / (params[-1] + conc_O2) # km_oxy param
+        return f_tsoil(tsoil) *\
+            np.nanmin(np.stack((f_sm(sm), mm_O2)), axis = 0)
+
+    @suppress_warnings
+    def reco(params, q_rh, q_k):
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+        ra = ((1 - params[0]) * self._gpp_tower)
+        rh0 = self._reco_tower - ra
+        rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+        # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+        kmult0 = k_mult(params)
+        cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+        # Extinction rate of heterotrophic respiration with depth, due to
+        #   factors OTHER THAN temperature, moisture (Koven et al. 2013)
+        f_z = np.exp(-np.abs(self.depths) / params[
+            self._parameters[self._model_name].index(&#39;k_depth_decay&#39;)
+        ])
+        # Set RH from layers below the bedrock depth to zero
+        rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+        rh[~self._layer_mask] = 0
+        reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+        return reco0
+
+    def residuals(params, q_rh, q_k):
+        # Objective function: Difference between tower RECO and L4C RECO
+        reco0 = reco(params, q_rh, q_k)
+        diff = np.subtract(self._reco_tower, reco0)
+        # Multiply by the tower weights
+        return (self._site_weights * diff)[np.isfinite(diff)]
+
+    self._model_name = &#39;reco_o2_limit&#39;
+    init_params = self._configure(
+        q_rh, q_k, fixed, model = self._model_name)
+    assert np.nanmax(self._drivers[1]) &lt;= 100
+    assert np.nanmin(self._drivers[1]) &gt;= 0
+    assert np.nanmax(self._drivers[2]) &lt;= 1
+    assert np.nanmax(self._drivers[2]) &gt;= 0
+    # Set defaults where needed
+    if np.isnan(init_params).any():
+        init_params[np.isnan(init_params)] = np.array(
+            [0.4, 270, 10, 50, 0.3, 0.1, 0.002])[np.isnan(init_params)]
+
+    # Optionally, instead of fitting d_gas and km_oxy, we can infer their
+    #   values based on the soil moisture distribution
+    if infer_diff_coefs:
+        _, _, soil_vwc = self._drivers
+        with warnings.catch_warnings():
+            warnings.simplefilter(&#39;ignore&#39;)
+            a = np.power(np.subtract(self._porosity, soil_vwc), 4/3)
+        nt, ns = a.shape[-2:]
+        soil_vwc_ptiles = np.percentile(
+            soil_vwc.reshape((self.depths.size, nt * ns)), (5, 50),
+            axis = 1)
+        # d_gas when soil is completely dry assuming soil [O2] = atm. [O2]
+        with warnings.catch_warnings():
+            warnings.simplefilter(&#39;ignore&#39;)
+            d_gas = np.median(
+                1 / a[soil_vwc &lt;= soil_vwc_ptiles[0][:,None,None]])
+            km_oxy = np.nanmedian(
+                d_gas * 0.2095 * np.power(
+                    self._porosity - soil_vwc_ptiles[1][:,None,None], 4/3))
+        print(&#39;Inferred coefficients: d_gas = %.2f; km_oxy = %.3f&#39; % (d_gas, km_oxy))
+        init_params[
+            self._parameters[self._model_name].index(&#39;d_gas&#39;)] = d_gas
+        init_params[
+            self._parameters[self._model_name].index(&#39;km_oxy&#39;)] = km_oxy
+        fixed = [] if fixed is None else fixed
+        fixed = set(fixed).union((&#39;d_gas&#39;, &#39;km_oxy&#39;))
+
+    self._tune( # Step sizes specified here
+        partial(reco, q_rh = q_rh, q_k = q_k),
+        partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+        (0.01, 1, 0.1, 0.1, 0.01, 0, 0), trials, optimize, nlopt)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco_power"><code class="name flex">
+<span>def <span class="ident">tune_reco_power</span></span>(<span>self, q_rh=75, q_k=50, fixed=None, optimize=True, nlopt=True, trials=1, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Optimizes RECO for the vertically stratified SOC model with a
+power-law RH extinction function. Considerations:</p>
+<ol>
+<li>Negative RH values (i.e., NPP &gt; RECO) are set to zero.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+<dt><strong><code>fixed</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Zero or more parameters whose values should be fixed
+(i.e, NOT optimized)</dd>
+<dt><strong><code>optimize</code></strong> :&ensp;<code>bool</code></dt>
+<dd>False to only report parameters and their fit statistics instead
+of optimizing (Default: True)</dd>
+<dt><strong><code>nlopt</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use the nlopt library for optimization (Default: True)</dd>
+<dt><strong><code>trials</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of searches of the parameter space to perform; if &gt;1,
+initial parameters are randomized for each trial</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Any number of additional keyword arguments to
+scipy.optimize.least_squares()</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_reco_power(
+        self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
+        nlopt = True, trials = 1, **kwargs):
+    &#39;&#39;&#39;
+    Optimizes RECO for the vertically stratified SOC model with a
+    power-law RH extinction function. Considerations:
+
+    1. Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+    Parameters
+    ----------
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+    fixed : tuple or list
+        Zero or more parameters whose values should be fixed
+        (i.e, NOT optimized)
+    optimize : bool
+        False to only report parameters and their fit statistics instead
+        of optimizing (Default: True)
+    nlopt : bool
+        True to use the nlopt library for optimization (Default: True)
+    trials : int
+        Number of searches of the parameter space to perform; if &gt;1,
+        initial parameters are randomized for each trial
+    **kwargs
+        Any number of additional keyword arguments to
+        scipy.optimize.least_squares()
+    &#39;&#39;&#39;
+    @suppress_warnings
+    def reco(params, q_rh, q_k):
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+        ra = ((1 - params[0]) * self._gpp_tower)
+        rh0 = self._reco_tower - ra
+        rh0 = np.where(rh0 &lt; 0, 0, rh0) # Mask out negative RH values
+        # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
+        kmult0 = self._k_mult(params)
+        cbar0 = cbar(rh0, kmult0, q_rh, q_k)
+        # Extinction rate of heterotrophic respiration with depth
+        #   factors OTHER THAN temperature, moisture
+        f_z = params[4] * np.power(np.abs(self.depths), -params[5]) *\
+            np.ones(cbar0.shape)
+        # Set RH from layers below the bedrock depth to zero
+        rh = (kmult0 * f_z[:,None,:] * cbar0[:,None,:]).swapaxes(1, 2)
+        rh[~self._layer_mask] = 0
+        reco0 = ra + rh.swapaxes(1, 2).sum(axis = 0)
+        return reco0
+
+    def residuals(params, q_rh, q_k):
+        # Objective function: Difference between tower RECO and L4C RECO
+        reco0 = reco(params, q_rh, q_k)
+        diff = np.subtract(self._reco_tower, reco0)
+        # Multiply by the tower weights
+        return (self._site_weights * diff)[np.isfinite(diff)]
+
+    self._model_name = &#39;reco_z_power&#39;
+    init_params = self._configure(
+        q_rh, q_k, fixed, model = self._model_name)
+    # NaNs may be present because not every site has soil moisture
+    #   estimates in every layer (bedrock may be present in soil column)
+    assert np.nanmax(self._drivers[1]) &lt;= 100
+    assert np.nanmin(self._drivers[1]) &gt;= 0
+    # Set defaults where needed
+    if np.isnan(init_params).any():
+        init_params[np.isnan(init_params)] = np.array(
+            [0.4, 270, 10, 50, 1, 0.5])[np.isnan(init_params)]
+    self._tune( # Step sizes specified here
+        partial(self._reco, q_rh = q_rh, q_k = q_k),
+        partial(residuals, q_rh = q_rh, q_k = q_k), init_params, fixed,
+        (0.01, 1, 0.1, 0.1, 0.01, 0.01), trials, optimize, nlopt)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.calibration.main.CLI" href="../main.html#pyl4c.apps.calibration.main.CLI">CLI</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.calibration.main.CLI.filter" href="../main.html#pyl4c.apps.calibration.main.CLI.filter">filter</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.filter_all" href="../main.html#pyl4c.apps.calibration.main.CLI.filter_all">filter_all</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.filter_preview" href="../main.html#pyl4c.apps.calibration.main.CLI.filter_preview">filter_preview</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.pft" href="../main.html#pyl4c.apps.calibration.main.CLI.pft">pft</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.plot_gpp" href="../main.html#pyl4c.apps.calibration.main.CLI.plot_gpp">plot_gpp</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.reset" href="../main.html#pyl4c.apps.calibration.main.CLI.reset">reset</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.set" href="../main.html#pyl4c.apps.calibration.main.CLI.set">set</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.setup" href="../main.html#pyl4c.apps.calibration.main.CLI.setup">setup</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.main.CLI.tune_gpp" href="../main.html#pyl4c.apps.calibration.main.CLI.tune_gpp">tune_gpp</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.apps.calibration.extensions" href="index.html">pyl4c.apps.calibration.extensions</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pyl4c.apps.calibration.extensions.hydrology.cbar" href="#pyl4c.apps.calibration.extensions.hydrology.cbar">cbar</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI" href="#pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI">StratifiedSoilCalibrationCLI</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.plot_reco" href="#pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.plot_reco">plot_reco</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.plot_reco_time_series" href="#pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.plot_reco_time_series">plot_reco_time_series</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco" href="#pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco">tune_reco</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco_o2_limit" href="#pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco_o2_limit">tune_reco_o2_limit</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco_power" href="#pyl4c.apps.calibration.extensions.hydrology.StratifiedSoilCalibrationCLI.tune_reco_power">tune_reco_power</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

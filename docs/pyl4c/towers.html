@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.towers API documentation</title>
+<meta name="description" content="Tools for representing flux tower sites and working with flux tower data …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.towers</code></h1>
+</header>
+<section id="section-intro">
+<p>Tools for representing flux tower sites and working with flux tower data.</p>
+<p>NOTE: Tower subgrid should accurately reflect the canonical EASE-Grid 2.0
+nesting, i.e., the 1-km cells returned correspond to those nested under the
+respective 9-km cell, which is apparent if we look at the subgrid of the
+top-left cell:</p>
+<pre><code>&gt;&gt;&gt; TowerSite('test', ease2_to_wgs84((0, 0)), validate = False).subgrid
+</code></pre>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Tools for representing flux tower sites and working with flux tower data.
+
+NOTE: Tower subgrid should accurately reflect the canonical EASE-Grid 2.0
+nesting, i.e., the 1-km cells returned correspond to those nested under the
+respective 9-km cell, which is apparent if we look at the subgrid of the
+top-left cell:
+
+    &gt;&gt;&gt; TowerSite(&#39;test&#39;, ease2_to_wgs84((0, 0)), validate = False).subgrid
+&#39;&#39;&#39;
+
+import csv
+import glob
+import h5py
+import numpy as np
+from cached_property import cached_property
+from pyl4c import haversine
+from pyl4c.ease2 import ease2_search_radius, ease2_to_wgs84, ease2_from_wgs84
+from pyl4c.utils import get_pft_array, index
+
+class MetaTowerSite(type):
+    &#39;&#39;&#39;
+    Prototype for Tower classes.
+    &#39;&#39;&#39;
+    @property
+    def pft_1km_map(cls):
+        if getattr(cls, &#39;_pft_1km_map&#39;, None) is None:
+            cls._pft_1km_map = get_pft_array(&#39;M01&#39;)
+        return cls._pft_1km_map
+
+    @property
+    def pft_9km_map(cls):
+        if getattr(cls, &#39;_pft_9km_map&#39;, None) is None:
+            cls._pft_9km_map = get_pft_array(&#39;M09&#39;)
+        return cls._pft_9km_map
+
+
+class TowerSite(object, metaclass = MetaTowerSite):
+    &#39;&#39;&#39;
+    Represents an eddy covariance tower site.
+
+    Parameters
+    ----------
+    id : str
+        Unique name for the TowerSite
+    coords : tuple | list
+        The site&#39;s (longitude, latitude) coordinates
+    validate : bool
+        True to validate the PFT of any mapped EASE-Grid 2.0 cell
+    &#39;&#39;&#39;
+    valid_pft_range = range(1, 9)
+
+    def __init__(self, id, coords, validate = True):
+        assert hasattr(coords[0], &#39;real&#39;) and hasattr(coords[1], &#39;real&#39;),\
+            &#39;Coordinates must be numbers, not strings or other types&#39;
+        self.id = id
+        self.coords = coords
+        self.idx_1km = ease2_from_wgs84(coords, &#39;M01&#39;, exact = True)
+        self.idx_9km = ease2_from_wgs84(coords, &#39;M09&#39;, exact = True)
+        self._subgrid_idx = None
+        self._subgrid_pft = None
+        self._validate = validate
+        if validate:
+            self.locate_ease2() # Fire it up!
+
+    @cached_property
+    def pft_9km(self):
+        &#39;The PFT class at 9-km scale&#39;
+        r, c = self.idx_9km
+        return self.__class__.pft_9km_map[int(r), int(c)]
+
+    @property
+    def subgrid(self):
+        &#39;Returns a list of 1-km subgrid indices&#39;
+        if self._subgrid_idx is None:
+            # A search radius of 4 pixels yields a width, height of 9 pixels
+            self._subgrid_idx = ease2_search_radius(self.coords, 4, &#39;M01&#39;)
+        return self._subgrid_idx
+
+    @property
+    def subgrid_pft(self):
+        &#39;Returns an 81-element array of the 1-km subgrid PFTs&#39;
+        if self._subgrid_pft is None:
+            self._subgrid_pft = index(
+                self.__class__.pft_1km_map,
+                np.array(self.subgrid).swapaxes(0, 1).tolist())
+        return np.array(self._subgrid_pft)
+
+    def locate_ease2(self):
+        &#39;&#39;&#39;
+        Finds the EASE-Grid 2.0 row, column indices for this site.
+
+        Returns
+        -------
+        list
+            A list of tuples, each a 2-element sequence of (row, column)
+            indices
+        &#39;&#39;&#39;
+        row, col = self.idx_9km
+        pft = self.__class__.pft_9km_map[int(row), int(col)] # Expensive
+        if self._validate and pft not in self.valid_pft_range:
+            # Get the closest valid EASE-Grid 2.0 cell instead
+            try:
+                row, col = self.locate_ease2_alternatives(self.coords)
+                # Chain forward and reverse transforms to get the grid
+                #   cell indices in floating point
+                row, col = ease2_from_wgs84(
+                    ease2_to_wgs84((row, col)), &#39;M09&#39;, exact = True)
+            except ValueError:
+                raise ValueError(&#39;Could not locate suitable EASE-Grid 2.0 cell&#39;)
+
+        # Update the 9-km grid coordinates, as needed
+        self.idx_9km = row, col
+        return self.idx_9km
+
+    def locate_ease2_alternatives(self, coords, grid = &#39;M09&#39;):
+        &#39;&#39;&#39;
+        Finds nearest EASE-Grid 2.0 cell w/ valid PFT up to 1 grid cell away.
+
+        Parameters
+        ----------
+        coords : tuple or list
+            2-element sequence of (longitude, latitude) coordinates
+        grid : str
+            EASE-Grid 2.0 cell size designation, e.g, &#34;M01&#34; or &#34;M09&#34;
+            (Default: &#34;M09&#34;)
+
+        Returns
+        -------
+        list
+            A list of tuples, each a 2-element sequence of (row, column)
+            indices
+        &#39;&#39;&#39;
+        # Round the row, column indices of this point so as to check for
+        #   collisions in haversine(), below
+        row, col = ease2_from_wgs84(coords, grid, exact = False)
+        indices = ease2_search_radius(coords, 1, grid)
+        indices_pfts = index(
+            self.__class__.pft_9km_map,
+            np.array(indices).swapaxes(0, 1).tolist())
+        options = [] # Make sure the choices also have valid PFTs
+        for i, idx in enumerate(indices):
+            if indices_pfts[i] in self.valid_pft_range:
+                options.append(idx)
+        dists = [ # Calculate great circle distance
+            haversine(
+                coords, ease2_to_wgs84((r,c), grid)
+            ) for r, c in options if not (r == row and c == col)
+        ]
+        return options[np.argmin(dists)]
+
+
+def consolidate_tower_data(
+        file_glob, output_hdf5_path, n_sites = 356, n_steps = 6575,
+        keys = (&#39;nee&#39;, &#39;gpp&#39;, &#39;reco&#39;)):
+    &#39;&#39;&#39;
+    Combines the CSVs from multiple calibration tower sites into a single HDF5
+    dataset, e.g.:
+
+        consolidate_tower_data(
+            &#34;/anx_lagr2/laj/smap/fluxnet2015/merged/*_smapMergedCalVal.csv&#34;,
+            &#34;/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/Fluxnet2015_LaThuile_tower_data_for_356_sites.h5&#34;)
+
+    Parameters
+    ----------
+    file_glob : str
+        GLOB expression targeting all input CSV files
+    output_hdf5_path : str
+        File path to output HDF5 file
+    n_sites : int
+        Number of tower sites
+    n_steps : int
+        Number of time steps
+    keys : tuple
+        Sequence of keys to extract from each CSV
+    &#39;&#39;&#39;
+    file_paths = glob.glob(file_glob)
+    assert len(file_paths) == n_sites, &#39;Should be one file per tower site&#39;
+    all_records = []
+    for path in file_paths:
+        site_records = []
+        with open(path, &#39;r&#39;) as stream:
+            reader = csv.DictReader(stream)
+            for each in reader:
+                site_records.append([
+                    np.float(each[k]) if each[k] != &#39;NaN&#39; else np.nan
+                    for k in keys
+                ])
+
+            all_records.append(site_records)
+            site_records = None
+
+    shp = (n_steps, n_sites) # Output a T x N array
+    arr = np.array(all_records) # Becomes an (N x T x k) array
+    all_records = None
+    with h5py.File(output_hdf5_path, &#39;a&#39;) as hdf:
+        for i, field in enumerate(keys):
+            hdf.create_dataset(field, shp, dtype = np.float32,
+                data = arr[...,i].swapaxes(0, 1))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pyl4c.towers.consolidate_tower_data"><code class="name flex">
+<span>def <span class="ident">consolidate_tower_data</span></span>(<span>file_glob, output_hdf5_path, n_sites=356, n_steps=6575, keys=('nee', 'gpp', 'reco'))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Combines the CSVs from multiple calibration tower sites into a single HDF5
+dataset, e.g.:</p>
+<pre><code>consolidate_tower_data(
+    "/anx_lagr2/laj/smap/fluxnet2015/merged/*_smapMergedCalVal.csv",
+    "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/Fluxnet2015_LaThuile_tower_data_for_356_sites.h5")
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_glob</code></strong> :&ensp;<code>str</code></dt>
+<dd>GLOB expression targeting all input CSV files</dd>
+<dt><strong><code>output_hdf5_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>File path to output HDF5 file</dd>
+<dt><strong><code>n_sites</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of tower sites</dd>
+<dt><strong><code>n_steps</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of time steps</dd>
+<dt><strong><code>keys</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Sequence of keys to extract from each CSV</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def consolidate_tower_data(
+        file_glob, output_hdf5_path, n_sites = 356, n_steps = 6575,
+        keys = (&#39;nee&#39;, &#39;gpp&#39;, &#39;reco&#39;)):
+    &#39;&#39;&#39;
+    Combines the CSVs from multiple calibration tower sites into a single HDF5
+    dataset, e.g.:
+
+        consolidate_tower_data(
+            &#34;/anx_lagr2/laj/smap/fluxnet2015/merged/*_smapMergedCalVal.csv&#34;,
+            &#34;/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/Fluxnet2015_LaThuile_tower_data_for_356_sites.h5&#34;)
+
+    Parameters
+    ----------
+    file_glob : str
+        GLOB expression targeting all input CSV files
+    output_hdf5_path : str
+        File path to output HDF5 file
+    n_sites : int
+        Number of tower sites
+    n_steps : int
+        Number of time steps
+    keys : tuple
+        Sequence of keys to extract from each CSV
+    &#39;&#39;&#39;
+    file_paths = glob.glob(file_glob)
+    assert len(file_paths) == n_sites, &#39;Should be one file per tower site&#39;
+    all_records = []
+    for path in file_paths:
+        site_records = []
+        with open(path, &#39;r&#39;) as stream:
+            reader = csv.DictReader(stream)
+            for each in reader:
+                site_records.append([
+                    np.float(each[k]) if each[k] != &#39;NaN&#39; else np.nan
+                    for k in keys
+                ])
+
+            all_records.append(site_records)
+            site_records = None
+
+    shp = (n_steps, n_sites) # Output a T x N array
+    arr = np.array(all_records) # Becomes an (N x T x k) array
+    all_records = None
+    with h5py.File(output_hdf5_path, &#39;a&#39;) as hdf:
+        for i, field in enumerate(keys):
+            hdf.create_dataset(field, shp, dtype = np.float32,
+                data = arr[...,i].swapaxes(0, 1))</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.towers.MetaTowerSite"><code class="flex name class">
+<span>class <span class="ident">MetaTowerSite</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Prototype for Tower classes.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MetaTowerSite(type):
+    &#39;&#39;&#39;
+    Prototype for Tower classes.
+    &#39;&#39;&#39;
+    @property
+    def pft_1km_map(cls):
+        if getattr(cls, &#39;_pft_1km_map&#39;, None) is None:
+            cls._pft_1km_map = get_pft_array(&#39;M01&#39;)
+        return cls._pft_1km_map
+
+    @property
+    def pft_9km_map(cls):
+        if getattr(cls, &#39;_pft_9km_map&#39;, None) is None:
+            cls._pft_9km_map = get_pft_array(&#39;M09&#39;)
+        return cls._pft_9km_map</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.type</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="pyl4c.towers.MetaTowerSite.pft_1km_map"><code class="name">var <span class="ident">pft_1km_map</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pft_1km_map(cls):
+    if getattr(cls, &#39;_pft_1km_map&#39;, None) is None:
+        cls._pft_1km_map = get_pft_array(&#39;M01&#39;)
+    return cls._pft_1km_map</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.towers.MetaTowerSite.pft_9km_map"><code class="name">var <span class="ident">pft_9km_map</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def pft_9km_map(cls):
+    if getattr(cls, &#39;_pft_9km_map&#39;, None) is None:
+        cls._pft_9km_map = get_pft_array(&#39;M09&#39;)
+    return cls._pft_9km_map</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="pyl4c.towers.TowerSite"><code class="flex name class">
+<span>class <span class="ident">TowerSite</span></span>
+<span>(</span><span>id, coords, validate=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an eddy covariance tower site.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Unique name for the TowerSite</dd>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple | list</code></dt>
+<dd>The site's (longitude, latitude) coordinates</dd>
+<dt><strong><code>validate</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to validate the PFT of any mapped EASE-Grid 2.0 cell</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TowerSite(object, metaclass = MetaTowerSite):
+    &#39;&#39;&#39;
+    Represents an eddy covariance tower site.
+
+    Parameters
+    ----------
+    id : str
+        Unique name for the TowerSite
+    coords : tuple | list
+        The site&#39;s (longitude, latitude) coordinates
+    validate : bool
+        True to validate the PFT of any mapped EASE-Grid 2.0 cell
+    &#39;&#39;&#39;
+    valid_pft_range = range(1, 9)
+
+    def __init__(self, id, coords, validate = True):
+        assert hasattr(coords[0], &#39;real&#39;) and hasattr(coords[1], &#39;real&#39;),\
+            &#39;Coordinates must be numbers, not strings or other types&#39;
+        self.id = id
+        self.coords = coords
+        self.idx_1km = ease2_from_wgs84(coords, &#39;M01&#39;, exact = True)
+        self.idx_9km = ease2_from_wgs84(coords, &#39;M09&#39;, exact = True)
+        self._subgrid_idx = None
+        self._subgrid_pft = None
+        self._validate = validate
+        if validate:
+            self.locate_ease2() # Fire it up!
+
+    @cached_property
+    def pft_9km(self):
+        &#39;The PFT class at 9-km scale&#39;
+        r, c = self.idx_9km
+        return self.__class__.pft_9km_map[int(r), int(c)]
+
+    @property
+    def subgrid(self):
+        &#39;Returns a list of 1-km subgrid indices&#39;
+        if self._subgrid_idx is None:
+            # A search radius of 4 pixels yields a width, height of 9 pixels
+            self._subgrid_idx = ease2_search_radius(self.coords, 4, &#39;M01&#39;)
+        return self._subgrid_idx
+
+    @property
+    def subgrid_pft(self):
+        &#39;Returns an 81-element array of the 1-km subgrid PFTs&#39;
+        if self._subgrid_pft is None:
+            self._subgrid_pft = index(
+                self.__class__.pft_1km_map,
+                np.array(self.subgrid).swapaxes(0, 1).tolist())
+        return np.array(self._subgrid_pft)
+
+    def locate_ease2(self):
+        &#39;&#39;&#39;
+        Finds the EASE-Grid 2.0 row, column indices for this site.
+
+        Returns
+        -------
+        list
+            A list of tuples, each a 2-element sequence of (row, column)
+            indices
+        &#39;&#39;&#39;
+        row, col = self.idx_9km
+        pft = self.__class__.pft_9km_map[int(row), int(col)] # Expensive
+        if self._validate and pft not in self.valid_pft_range:
+            # Get the closest valid EASE-Grid 2.0 cell instead
+            try:
+                row, col = self.locate_ease2_alternatives(self.coords)
+                # Chain forward and reverse transforms to get the grid
+                #   cell indices in floating point
+                row, col = ease2_from_wgs84(
+                    ease2_to_wgs84((row, col)), &#39;M09&#39;, exact = True)
+            except ValueError:
+                raise ValueError(&#39;Could not locate suitable EASE-Grid 2.0 cell&#39;)
+
+        # Update the 9-km grid coordinates, as needed
+        self.idx_9km = row, col
+        return self.idx_9km
+
+    def locate_ease2_alternatives(self, coords, grid = &#39;M09&#39;):
+        &#39;&#39;&#39;
+        Finds nearest EASE-Grid 2.0 cell w/ valid PFT up to 1 grid cell away.
+
+        Parameters
+        ----------
+        coords : tuple or list
+            2-element sequence of (longitude, latitude) coordinates
+        grid : str
+            EASE-Grid 2.0 cell size designation, e.g, &#34;M01&#34; or &#34;M09&#34;
+            (Default: &#34;M09&#34;)
+
+        Returns
+        -------
+        list
+            A list of tuples, each a 2-element sequence of (row, column)
+            indices
+        &#39;&#39;&#39;
+        # Round the row, column indices of this point so as to check for
+        #   collisions in haversine(), below
+        row, col = ease2_from_wgs84(coords, grid, exact = False)
+        indices = ease2_search_radius(coords, 1, grid)
+        indices_pfts = index(
+            self.__class__.pft_9km_map,
+            np.array(indices).swapaxes(0, 1).tolist())
+        options = [] # Make sure the choices also have valid PFTs
+        for i, idx in enumerate(indices):
+            if indices_pfts[i] in self.valid_pft_range:
+                options.append(idx)
+        dists = [ # Calculate great circle distance
+            haversine(
+                coords, ease2_to_wgs84((r,c), grid)
+            ) for r, c in options if not (r == row and c == col)
+        ]
+        return options[np.argmin(dists)]</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.towers.TowerSite.valid_pft_range"><code class="name">var <span class="ident">valid_pft_range</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="pyl4c.towers.TowerSite.pft_9km"><code class="name">var <span class="ident">pft_9km</span></code></dt>
+<dd>
+<div class="desc"><p>The PFT class at 9-km scale</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def __get__(self, obj, cls):
+    if obj is None:
+        return self
+
+    if asyncio and asyncio.iscoroutinefunction(self.func):
+        return self._wrap_in_coroutine(obj)
+
+    value = obj.__dict__[self.func.__name__] = self.func(obj)
+    return value</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.towers.TowerSite.subgrid"><code class="name">var <span class="ident">subgrid</span></code></dt>
+<dd>
+<div class="desc"><p>Returns a list of 1-km subgrid indices</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def subgrid(self):
+    &#39;Returns a list of 1-km subgrid indices&#39;
+    if self._subgrid_idx is None:
+        # A search radius of 4 pixels yields a width, height of 9 pixels
+        self._subgrid_idx = ease2_search_radius(self.coords, 4, &#39;M01&#39;)
+    return self._subgrid_idx</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.towers.TowerSite.subgrid_pft"><code class="name">var <span class="ident">subgrid_pft</span></code></dt>
+<dd>
+<div class="desc"><p>Returns an 81-element array of the 1-km subgrid PFTs</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def subgrid_pft(self):
+    &#39;Returns an 81-element array of the 1-km subgrid PFTs&#39;
+    if self._subgrid_pft is None:
+        self._subgrid_pft = index(
+            self.__class__.pft_1km_map,
+            np.array(self.subgrid).swapaxes(0, 1).tolist())
+    return np.array(self._subgrid_pft)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.towers.TowerSite.locate_ease2"><code class="name flex">
+<span>def <span class="ident">locate_ease2</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Finds the EASE-Grid 2.0 row, column indices for this site.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>A list of tuples, each a 2-element sequence of (row, column)
+indices</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def locate_ease2(self):
+    &#39;&#39;&#39;
+    Finds the EASE-Grid 2.0 row, column indices for this site.
+
+    Returns
+    -------
+    list
+        A list of tuples, each a 2-element sequence of (row, column)
+        indices
+    &#39;&#39;&#39;
+    row, col = self.idx_9km
+    pft = self.__class__.pft_9km_map[int(row), int(col)] # Expensive
+    if self._validate and pft not in self.valid_pft_range:
+        # Get the closest valid EASE-Grid 2.0 cell instead
+        try:
+            row, col = self.locate_ease2_alternatives(self.coords)
+            # Chain forward and reverse transforms to get the grid
+            #   cell indices in floating point
+            row, col = ease2_from_wgs84(
+                ease2_to_wgs84((row, col)), &#39;M09&#39;, exact = True)
+        except ValueError:
+            raise ValueError(&#39;Could not locate suitable EASE-Grid 2.0 cell&#39;)
+
+    # Update the 9-km grid coordinates, as needed
+    self.idx_9km = row, col
+    return self.idx_9km</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.towers.TowerSite.locate_ease2_alternatives"><code class="name flex">
+<span>def <span class="ident">locate_ease2_alternatives</span></span>(<span>self, coords, grid='M09')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Finds nearest EASE-Grid 2.0 cell w/ valid PFT up to 1 grid cell away.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>2-element sequence of (longitude, latitude) coordinates</dd>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>EASE-Grid 2.0 cell size designation, e.g, "M01" or "M09"
+(Default: "M09")</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>A list of tuples, each a 2-element sequence of (row, column)
+indices</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def locate_ease2_alternatives(self, coords, grid = &#39;M09&#39;):
+    &#39;&#39;&#39;
+    Finds nearest EASE-Grid 2.0 cell w/ valid PFT up to 1 grid cell away.
+
+    Parameters
+    ----------
+    coords : tuple or list
+        2-element sequence of (longitude, latitude) coordinates
+    grid : str
+        EASE-Grid 2.0 cell size designation, e.g, &#34;M01&#34; or &#34;M09&#34;
+        (Default: &#34;M09&#34;)
+
+    Returns
+    -------
+    list
+        A list of tuples, each a 2-element sequence of (row, column)
+        indices
+    &#39;&#39;&#39;
+    # Round the row, column indices of this point so as to check for
+    #   collisions in haversine(), below
+    row, col = ease2_from_wgs84(coords, grid, exact = False)
+    indices = ease2_search_radius(coords, 1, grid)
+    indices_pfts = index(
+        self.__class__.pft_9km_map,
+        np.array(indices).swapaxes(0, 1).tolist())
+    options = [] # Make sure the choices also have valid PFTs
+    for i, idx in enumerate(indices):
+        if indices_pfts[i] in self.valid_pft_range:
+            options.append(idx)
+    dists = [ # Calculate great circle distance
+        haversine(
+            coords, ease2_to_wgs84((r,c), grid)
+        ) for r, c in options if not (r == row and c == col)
+    ]
+    return options[np.argmin(dists)]</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c" href="index.html">pyl4c</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pyl4c.towers.consolidate_tower_data" href="#pyl4c.towers.consolidate_tower_data">consolidate_tower_data</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.towers.MetaTowerSite" href="#pyl4c.towers.MetaTowerSite">MetaTowerSite</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.towers.MetaTowerSite.pft_1km_map" href="#pyl4c.towers.MetaTowerSite.pft_1km_map">pft_1km_map</a></code></li>
+<li><code><a title="pyl4c.towers.MetaTowerSite.pft_9km_map" href="#pyl4c.towers.MetaTowerSite.pft_9km_map">pft_9km_map</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.towers.TowerSite" href="#pyl4c.towers.TowerSite">TowerSite</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.towers.TowerSite.locate_ease2" href="#pyl4c.towers.TowerSite.locate_ease2">locate_ease2</a></code></li>
+<li><code><a title="pyl4c.towers.TowerSite.locate_ease2_alternatives" href="#pyl4c.towers.TowerSite.locate_ease2_alternatives">locate_ease2_alternatives</a></code></li>
+<li><code><a title="pyl4c.towers.TowerSite.pft_9km" href="#pyl4c.towers.TowerSite.pft_9km">pft_9km</a></code></li>
+<li><code><a title="pyl4c.towers.TowerSite.subgrid" href="#pyl4c.towers.TowerSite.subgrid">subgrid</a></code></li>
+<li><code><a title="pyl4c.towers.TowerSite.subgrid_pft" href="#pyl4c.towers.TowerSite.subgrid_pft">subgrid_pft</a></code></li>
+<li><code><a title="pyl4c.towers.TowerSite.valid_pft_range" href="#pyl4c.towers.TowerSite.valid_pft_range">valid_pft_range</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

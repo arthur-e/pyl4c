@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.stats API documentation</title>
+<meta name="description" content="Various statistical functions. Note that many have an `add_intercept` argument
+and that this is True by default, which means the X matrix will have a …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.stats</code></h1>
+</header>
+<section id="section-intro">
+<p>Various statistical functions. Note that many have an <code>add_intercept</code> argument
+and that this is True by default, which means the X matrix will have a column
+of ones added for the calculation of the intercept. If you are already using
+a design/ model matrix with an intercept term, be sure to set
+<code>add_intercept = False</code>.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Various statistical functions. Note that many have an `add_intercept` argument
+and that this is True by default, which means the X matrix will have a column
+of ones added for the calculation of the intercept. If you are already using
+a design/ model matrix with an intercept term, be sure to set
+`add_intercept = False`.
+&#39;&#39;&#39;
+
+from collections import Counter
+import math
+import numpy as np
+
+summary_statistics = {
+    &#39;boxplot&#39;: {
+        &#39;nanmin&#39;: np.nanmin,
+        &#39;nanmax&#39;: np.nanmax,
+        &#39;nanmedian&#39;: np.nanmedian,
+        &#39;q1&#39;: lambda x: np.percentile(x[~np.isnan(x)], 25),
+        &#39;q2&#39;: lambda x: np.percentile(x[~np.isnan(x)], 75)
+    }
+}
+
+def detrend(y, x = None, fill = False):
+    &#39;&#39;&#39;
+    Detrends a 1D series (linearly). Equivalently, returns the residuals
+    of an OLS regression where the (transpose of the) design matrix is:
+
+        1 1 1 1 ... 1
+        0 1 2 3 ... N
+
+    This removes the linear (straight line) component, e.g., of a time
+    series with equal-size time steps.
+
+    Parameters
+    ----------
+    y : numpy.ndarray
+        The 1D series to detrend
+    x : numpy.ndarray
+        (Optional) The linear series describing the trend; usually a series
+        of consecutive integers, e.g.: 1, 2, 3, ...
+    fill : bool
+        (Optional) True to fill NaNs with mean value (Default: False)
+
+    Returns
+    -------
+    numpy.ndarray
+        The detrended y values
+    &#39;&#39;&#39;
+    assert y.ndim == 1, &#39;Series to detrend must be a 1D vector&#39;
+    n, m = (y.size, 1)
+    if x is not None:
+        if x.ndim == 2:
+            n, m = x.shape
+
+    # Return all NaNs if the input array is all NaNs
+    if np.all(np.isnan(y)):
+        return np.repeat(np.nan, n, axis = 0)
+
+    # Optionally, fill NaNs with the mean
+    if fill:
+        y = y.copy()
+        nan_mask = np.isnan(y)
+        y[np.isnan(y)] = np.nanmean(y)
+
+    x = np.arange(0, n) if x is None else x
+    beta = ols(x, y, add_intercept = True)
+    yhat = np.hstack(
+        (np.ones((n,)).reshape((n, 1)), x.reshape((n, m)))) @ beta
+    if fill:
+        return np.where(nan_mask, np.nan, np.subtract(y, yhat))
+    return np.subtract(y, yhat)
+
+
+def entropy(seq, base = 2):
+    &#39;&#39;&#39;
+    Returns the Shannon entropy of an input sequence of elements. Default
+    units are bits but other units can be returned by changing the base.
+    All calculations are with base-2 logarithms; change in base is done
+    through multiplying by the constant factor `log_b(a)`` to change from
+    base `a` to base `b`. Adapted from [1].
+
+    NOTE: An estimate of the upper limit or &#34;optimal&#34; entropy for base `b`
+    with `N` possible symbols can be obtained:
+
+            math.log(n, b)
+
+    1. http://rosettacode.org/wiki/Entropy#Python
+
+    Parameters
+    ----------
+    seq : list or tuple or str
+        Sequence of elements over which entropy is calculated
+    base : int or float
+        Base of the output units, e.g., 2 for &#34;bits,&#34; e (2.718...) for &#34;nats,&#34;
+        and 10 for &#34;bans&#34; (Default: 2)
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    # Trivial case, all symbols are the same
+    if np.all(np.equal(seq[0], seq)):
+        return 0.0 # Avoid a &#34;-0.0&#34; return
+    p, lns = Counter(seq), float(len(seq))
+    e = -sum( count / lns * np.log2(count / lns) for count in p.values())
+    return e if base == 2 else e * math.log(2, base)
+
+
+def harmonic_ols(x, y, period = 12):
+    r&#39;&#39;&#39;
+    Returns OLS estimates for harmonic series of X, i.e., the matrix `A` of
+    the equation `y = Ax + b` is a linear combination of sines and cosines.
+    $$
+    y_{i,t} = \alpha_i +
+    \beta_{i,1}\, \mathrm{cos}\left(\frac{2\pi}{T}x_{i,t}\right) +
+    \beta_{i,2}\,\mathrm{sin}\left(\frac{2\pi}{T}x_{i,t}\right) + \varepsilon_{i,t}
+    $$
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable, must be 1D
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+
+    Returns
+    -------
+    numpy.ndarray
+        The solution to the least-squares problem
+    &#39;&#39;&#39;
+    assert x.ndim == 1, &#39;Array x must be 1D&#39;
+    x0 = x.reshape((x.shape[0], 1))
+    # Create initial design/ model matrix (without intercept), as this is
+    #   augmented by ols()
+    a = ((2 * np.pi) / period) # Harmonic coefficient
+    xm = np.hstack((x0, np.cos(a * x0), np.sin(a * x0)))
+    return ols(xm, y, add_intercept = True)
+
+
+def linear_constraint(xmin, xmax, form = None):
+    &#39;&#39;&#39;
+    Returns a linear ramp function, for deriving a value on [0, 1] from
+    an input value `x`:
+
+        if x &gt;= xmax:
+            return 1
+        if x &lt;= xmin:
+            return 0
+        return (x - xmin) / (xmax - xmin)
+
+    Parameters
+    ----------
+    xmin : int or float
+        Lower bound of the linear ramp function
+    xmax : int or float
+        Upper bound of the linear ramp function
+    form : str
+        Type of ramp function: &#34;reversed&#34; decreases as x increases;
+        &#34;binary&#34; returns xmax when x == 1; default (None) is increasing
+        as x increases.
+
+    Returns
+    -------
+    function
+    &#39;&#39;&#39;
+    assert form == &#39;binary&#39; or np.any(xmax &gt;= xmin),\
+        &#39;xmax must be greater than/ equal to xmin&#39;
+    if form == &#39;reversed&#39;:
+        return lambda x: np.where(x &gt;= xmax, 0,
+            np.where(x &lt; xmin, 1, 1 - np.divide(
+                np.subtract(x, xmin), xmax - xmin)))
+
+    if form == &#39;binary&#39;:
+        return lambda x: np.where(x == 1, xmax, xmin)
+
+    return lambda x: np.where(x &gt;= xmax, 1,
+        np.where(x &lt; xmin, 0,
+            np.divide(np.subtract(x, xmin), xmax - xmin)))
+
+
+def ols(x, y, add_intercept = True, use_qr_decomp = True):
+    &#39;&#39;&#39;
+    Returns ordinary least squares (OLS) estimates for X. If X is univariate
+    (1D), returns the slope of the line between Y and X as well as the
+    &#34;y-intercept&#34; or the intersection of this line with the vertical axis.
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable(s); should N x M where M is the number of
+        variables
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+    add_intercept : bool
+        True to add a y-intercept term (Default: True)
+    use_qr_decomp : bool
+        True to use QR decomposition to obtain solution (Default: True)
+
+    Returns
+    -------
+    numpy.ndarray
+        The solution to the least-squares problem
+    &#39;&#39;&#39;
+    assert y.ndim == 1, &#39;Array y must be 1D&#39;
+    n = x.shape[0] # Num. of samples
+    m = 1 if x.ndim == 1 else x.shape[1] # Num. of covariates
+    # Create design/ model matrix
+    xm = x.reshape((n, m)) # Without y-intercept term, unless...
+    if add_intercept:
+        xm = np.hstack((np.ones((n,)).reshape((n, 1)), x.reshape((n, m))))
+    if xm.shape[1] &gt; n:
+        raise ValueError(&#39;System of equations is rank deficient&#39;)
+    # Generally better to use QR decomposition to obtain \hat{\beta}
+    if use_qr_decomp:
+        q, r = np.linalg.qr(xm)
+        fit = np.linalg.inv(r) @ q.T @ y
+    else:
+        fit = np.linalg.inv(xm.T @ xm) @ xm.T @ y
+    return fit
+
+
+def ols_variance(x, y, beta = None, add_intercept = True):
+    r&#39;&#39;&#39;
+    Returns the unbiased estimate of OLS model variance:
+    $$
+    SSE / (n - p)
+    $$
+
+    Where:
+    $$
+    SSE = (y - X\beta )&#39; (y - X\beta )
+    $$
+
+    SSE is known as the sum of squared errors of prediction and is equivalent
+    to the residual sum of squares (RSS).
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable(s); should be N x M where M is the number of
+        variables
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+    beta : numpy.ndarray
+        (Optional) Coefficient estimates, an M-dimensional vector
+    add_intercept : bool
+        True to add a y-intercept term (Default: True)
+
+    Returns
+    -------
+    float
+        The sum-of-squared-errors of prediction
+    &#39;&#39;&#39;
+    n = x.shape[0] # Num. of samples
+    p = 1 if x.ndim == 1 else x.shape[1] # Num. of covariates
+    p += 1 if add_intercept else 0
+    # Alternatively, use xm and beta calculated in sum_of_squares()...
+    # return ((y - xm @ beta).T @ (y - xm @ beta)) / (n - p)
+    return sum_of_squares(x, y, beta, add_intercept, which = &#39;sse&#39;) / (n - p)
+
+
+def rmsd(x1, x2, n = None, weights = None):
+    r&#39;&#39;&#39;
+    Returns the root mean-squared deviation (RMSD) between two continuously
+    varying random quantities:
+    $$
+    RMSD(\hat{x}, x) = \sqrt{n^{-1}\sum_i^N (\hat{x}_i - x_i)^2}
+    $$
+
+    Where `N` (or `n`) is the number of samples (e.g., model cells or time
+    steps).
+
+    NOTE: `NoData` should be filled with `np.nan` prior to calling this
+    function; it is assumed that both vectors have the same missingness.
+
+    Parameters
+    ----------
+    x1 : numpy.ndarray
+        A 1D or 2D numeric vector
+    x2 : numpy.ndarray
+        A 1D or 2D numeric vector
+    n : int
+        (Optional) The number of samples, for normalizing; if not provided,
+        calculated as the number of non-NaN samples
+    weights : numpy.ndarray
+        Weights array of a shape that can be broadcast to match both x1 and x2
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    assert isinstance(n, int) or n is None, &#39;Argument &#34;n&#34; must be of integer type&#39;
+    assert x1.ndim &lt;= 2 and x2.ndim &lt;= 2, &#39;No support for more than 2 axes&#39;
+    diffs = np.subtract(x1, x2)
+    # Optionally weight the residuals first
+    if weights is not None:
+        if weights.ndim == 1:
+            weights = weights.reshape((1, *weights.shape))
+        diffs = diffs * weights
+    diffs = diffs[~np.isnan(diffs)]
+    n = n if n is not None else diffs.shape[0]
+    return np.sqrt(np.divide(np.sum(np.power(diffs, 2)), n))
+
+
+def sum_of_squares(x, y, beta = None, add_intercept = True, which = &#39;ssr&#39;):
+    &#39;&#39;&#39;
+    Calculates the sum-of-squared errors, sum-of-squared regressors, or
+    total sum-of-squared errors based on the observed and predicted responses.
+    Will calculate sum-of-squares for univariate linear regression if vector
+    &#34;x&#34; is the independent variable and &#34;y&#34; is the dependent variable.
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Observed response or independent variable;
+    y : numpy.ndarray
+        Predicted response or dependent variable;
+    beta : numpy.ndarray
+        (Optional) To avoid re-fitting (or fitting incorrectly) the OLS
+        regression, can provide the coefficients of the OLS regression
+    add_intercept : bool
+        True to add an intercept term when fitting OLS regression
+    which : str
+        Which sum-of-squares quantity to calculate (Default: &#39;ssr&#39;);
+        should be one of: (&#39;sse&#39;, &#39;ssr&#39;, &#39;sst&#39;)
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    assert y.ndim == 1, &#39;Array y must be 1D&#39;
+    if beta is None:
+        beta = ols(x, y, add_intercept)
+    n = x.shape[0] # Num. of samples
+    m = p = 1 if x.ndim == 1 else x.shape[1] # Num. of covariates
+    # Create design/ model matrix
+    xm = x.reshape((n, m)) # Without y-intercept term, unless...
+    if add_intercept:
+        p += 1
+        xm = np.hstack((np.ones((n,)).reshape((n, 1)), x.reshape((n, m))))
+
+    yhat = xm @ beta # Calculate predicted values
+    if which == &#39;sse&#39;:
+        # Alternatively: ((y - xm @ beta).T @ (y - xm @ beta))
+        return np.sum(np.power(np.subtract(y, yhat), 2))
+
+    elif which == &#39;ssr&#39;:
+        return np.sum(np.power(np.subtract(yhat, np.nanmean(y)), 2))
+
+    elif which == &#39;sst&#39;:
+        if add_intercept:
+            return np.sum(np.power(np.subtract(y, np.nanmean(y)), 2))
+        else:
+            return np.sum(np.power(y, 2))
+
+    else:
+        raise NotImplementedError(&#39;Argument &#34;which&#34; not understood&#39;)
+
+
+def t_statistic(x, y, beta_hat, beta = 0, add_intercept = True):
+    r&#39;&#39;&#39;
+    Calculates t-statistics for each of the predictors of beta_hat; by
+    default, the true value of beta is assumed to be zero (i.e., null
+    hypothesis is true). Calculated as:
+    $$
+    T_{n-p} = \frac{\hat{\beta }_j - \beta_j}{\mathrm{s.e.}(\hat{\beta }_j)}\sim t_{n-p}
+    $$
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable(s); should be N x M where M is the number
+        of variables
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+    beta_hat : numpy.ndarray
+        The estimated value(s) for beta
+    beta : numpy.ndarray
+        (Optional) The true value(s) for beta
+    add_intercept : bool
+        True to add a y-intercept term (Default: True)
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    assert x.ndim &lt;= 2, &#39;Array x must be 1D or 2D only&#39;
+    model_var = ols_variance(x, y, beta_hat, add_intercept = add_intercept) # Var(beta)
+    beta_hat_se = np.sqrt(np.diag(np.linalg.inv(x.T @ x) * model_var))
+    return np.subtract(beta_hat, beta) / beta_hat_se</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pyl4c.stats.detrend"><code class="name flex">
+<span>def <span class="ident">detrend</span></span>(<span>y, x=None, fill=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Detrends a 1D series (linearly). Equivalently, returns the residuals
+of an OLS regression where the (transpose of the) design matrix is:</p>
+<pre><code>1 1 1 1 ... 1
+0 1 2 3 ... N
+</code></pre>
+<p>This removes the linear (straight line) component, e.g., of a time
+series with equal-size time steps.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>y</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The 1D series to detrend</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Optional) The linear series describing the trend; usually a series
+of consecutive integers, e.g.: 1, 2, 3, &hellip;</dd>
+<dt><strong><code>fill</code></strong> :&ensp;<code>bool</code></dt>
+<dd>(Optional) True to fill NaNs with mean value (Default: False)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>The detrended y values</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def detrend(y, x = None, fill = False):
+    &#39;&#39;&#39;
+    Detrends a 1D series (linearly). Equivalently, returns the residuals
+    of an OLS regression where the (transpose of the) design matrix is:
+
+        1 1 1 1 ... 1
+        0 1 2 3 ... N
+
+    This removes the linear (straight line) component, e.g., of a time
+    series with equal-size time steps.
+
+    Parameters
+    ----------
+    y : numpy.ndarray
+        The 1D series to detrend
+    x : numpy.ndarray
+        (Optional) The linear series describing the trend; usually a series
+        of consecutive integers, e.g.: 1, 2, 3, ...
+    fill : bool
+        (Optional) True to fill NaNs with mean value (Default: False)
+
+    Returns
+    -------
+    numpy.ndarray
+        The detrended y values
+    &#39;&#39;&#39;
+    assert y.ndim == 1, &#39;Series to detrend must be a 1D vector&#39;
+    n, m = (y.size, 1)
+    if x is not None:
+        if x.ndim == 2:
+            n, m = x.shape
+
+    # Return all NaNs if the input array is all NaNs
+    if np.all(np.isnan(y)):
+        return np.repeat(np.nan, n, axis = 0)
+
+    # Optionally, fill NaNs with the mean
+    if fill:
+        y = y.copy()
+        nan_mask = np.isnan(y)
+        y[np.isnan(y)] = np.nanmean(y)
+
+    x = np.arange(0, n) if x is None else x
+    beta = ols(x, y, add_intercept = True)
+    yhat = np.hstack(
+        (np.ones((n,)).reshape((n, 1)), x.reshape((n, m)))) @ beta
+    if fill:
+        return np.where(nan_mask, np.nan, np.subtract(y, yhat))
+    return np.subtract(y, yhat)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.entropy"><code class="name flex">
+<span>def <span class="ident">entropy</span></span>(<span>seq, base=2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the Shannon entropy of an input sequence of elements. Default
+units are bits but other units can be returned by changing the base.
+All calculations are with base-2 logarithms; change in base is done
+through multiplying by the constant factor `log_b(a)`` to change from
+base <code>a</code> to base <code>b</code>. Adapted from [1].</p>
+<p>NOTE: An estimate of the upper limit or "optimal" entropy for base <code>b</code>
+with <code>N</code> possible symbols can be obtained:</p>
+<pre><code>    math.log(n, b)
+</code></pre>
+<ol>
+<li><a href="http://rosettacode.org/wiki/Entropy#Python">http://rosettacode.org/wiki/Entropy#Python</a></li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>seq</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>str</code></dt>
+<dd>Sequence of elements over which entropy is calculated</dd>
+<dt><strong><code>base</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Base of the output units, e.g., 2 for "bits," e (2.718&hellip;) for "nats,"
+and 10 for "bans" (Default: 2)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def entropy(seq, base = 2):
+    &#39;&#39;&#39;
+    Returns the Shannon entropy of an input sequence of elements. Default
+    units are bits but other units can be returned by changing the base.
+    All calculations are with base-2 logarithms; change in base is done
+    through multiplying by the constant factor `log_b(a)`` to change from
+    base `a` to base `b`. Adapted from [1].
+
+    NOTE: An estimate of the upper limit or &#34;optimal&#34; entropy for base `b`
+    with `N` possible symbols can be obtained:
+
+            math.log(n, b)
+
+    1. http://rosettacode.org/wiki/Entropy#Python
+
+    Parameters
+    ----------
+    seq : list or tuple or str
+        Sequence of elements over which entropy is calculated
+    base : int or float
+        Base of the output units, e.g., 2 for &#34;bits,&#34; e (2.718...) for &#34;nats,&#34;
+        and 10 for &#34;bans&#34; (Default: 2)
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    # Trivial case, all symbols are the same
+    if np.all(np.equal(seq[0], seq)):
+        return 0.0 # Avoid a &#34;-0.0&#34; return
+    p, lns = Counter(seq), float(len(seq))
+    e = -sum( count / lns * np.log2(count / lns) for count in p.values())
+    return e if base == 2 else e * math.log(2, base)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.harmonic_ols"><code class="name flex">
+<span>def <span class="ident">harmonic_ols</span></span>(<span>x, y, period=12)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns OLS estimates for harmonic series of X, i.e., the matrix <code>A</code> of
+the equation <code>y = Ax + b</code> is a linear combination of sines and cosines.
+<span><span class="MathJax_Preview">
+y_{i,t} = \alpha_i +
+\beta_{i,1}\, \mathrm{cos}\left(\frac{2\pi}{T}x_{i,t}\right) +
+\beta_{i,2}\,\mathrm{sin}\left(\frac{2\pi}{T}x_{i,t}\right) + \varepsilon_{i,t}
+</span><script type="math/tex; mode=display">
+y_{i,t} = \alpha_i +
+\beta_{i,1}\, \mathrm{cos}\left(\frac{2\pi}{T}x_{i,t}\right) +
+\beta_{i,2}\,\mathrm{sin}\left(\frac{2\pi}{T}x_{i,t}\right) + \varepsilon_{i,t}
+</script></span></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The independent variable, must be 1D</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The dependent variable, must be 1D</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>The solution to the least-squares problem</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def harmonic_ols(x, y, period = 12):
+    r&#39;&#39;&#39;
+    Returns OLS estimates for harmonic series of X, i.e., the matrix `A` of
+    the equation `y = Ax + b` is a linear combination of sines and cosines.
+    $$
+    y_{i,t} = \alpha_i +
+    \beta_{i,1}\, \mathrm{cos}\left(\frac{2\pi}{T}x_{i,t}\right) +
+    \beta_{i,2}\,\mathrm{sin}\left(\frac{2\pi}{T}x_{i,t}\right) + \varepsilon_{i,t}
+    $$
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable, must be 1D
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+
+    Returns
+    -------
+    numpy.ndarray
+        The solution to the least-squares problem
+    &#39;&#39;&#39;
+    assert x.ndim == 1, &#39;Array x must be 1D&#39;
+    x0 = x.reshape((x.shape[0], 1))
+    # Create initial design/ model matrix (without intercept), as this is
+    #   augmented by ols()
+    a = ((2 * np.pi) / period) # Harmonic coefficient
+    xm = np.hstack((x0, np.cos(a * x0), np.sin(a * x0)))
+    return ols(xm, y, add_intercept = True)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.linear_constraint"><code class="name flex">
+<span>def <span class="ident">linear_constraint</span></span>(<span>xmin, xmax, form=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a linear ramp function, for deriving a value on [0, 1] from
+an input value <code>x</code>:</p>
+<pre><code>if x &gt;= xmax:
+    return 1
+if x &lt;= xmin:
+    return 0
+return (x - xmin) / (xmax - xmin)
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xmin</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Lower bound of the linear ramp function</dd>
+<dt><strong><code>xmax</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Upper bound of the linear ramp function</dd>
+<dt><strong><code>form</code></strong> :&ensp;<code>str</code></dt>
+<dd>Type of ramp function: "reversed" decreases as x increases;
+"binary" returns xmax when x == 1; default (None) is increasing
+as x increases.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>function</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def linear_constraint(xmin, xmax, form = None):
+    &#39;&#39;&#39;
+    Returns a linear ramp function, for deriving a value on [0, 1] from
+    an input value `x`:
+
+        if x &gt;= xmax:
+            return 1
+        if x &lt;= xmin:
+            return 0
+        return (x - xmin) / (xmax - xmin)
+
+    Parameters
+    ----------
+    xmin : int or float
+        Lower bound of the linear ramp function
+    xmax : int or float
+        Upper bound of the linear ramp function
+    form : str
+        Type of ramp function: &#34;reversed&#34; decreases as x increases;
+        &#34;binary&#34; returns xmax when x == 1; default (None) is increasing
+        as x increases.
+
+    Returns
+    -------
+    function
+    &#39;&#39;&#39;
+    assert form == &#39;binary&#39; or np.any(xmax &gt;= xmin),\
+        &#39;xmax must be greater than/ equal to xmin&#39;
+    if form == &#39;reversed&#39;:
+        return lambda x: np.where(x &gt;= xmax, 0,
+            np.where(x &lt; xmin, 1, 1 - np.divide(
+                np.subtract(x, xmin), xmax - xmin)))
+
+    if form == &#39;binary&#39;:
+        return lambda x: np.where(x == 1, xmax, xmin)
+
+    return lambda x: np.where(x &gt;= xmax, 1,
+        np.where(x &lt; xmin, 0,
+            np.divide(np.subtract(x, xmin), xmax - xmin)))</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.ols"><code class="name flex">
+<span>def <span class="ident">ols</span></span>(<span>x, y, add_intercept=True, use_qr_decomp=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns ordinary least squares (OLS) estimates for X. If X is univariate
+(1D), returns the slope of the line between Y and X as well as the
+"y-intercept" or the intersection of this line with the vertical axis.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The independent variable(s); should N x M where M is the number of
+variables</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The dependent variable, must be 1D</dd>
+<dt><strong><code>add_intercept</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to add a y-intercept term (Default: True)</dd>
+<dt><strong><code>use_qr_decomp</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use QR decomposition to obtain solution (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>The solution to the least-squares problem</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ols(x, y, add_intercept = True, use_qr_decomp = True):
+    &#39;&#39;&#39;
+    Returns ordinary least squares (OLS) estimates for X. If X is univariate
+    (1D), returns the slope of the line between Y and X as well as the
+    &#34;y-intercept&#34; or the intersection of this line with the vertical axis.
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable(s); should N x M where M is the number of
+        variables
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+    add_intercept : bool
+        True to add a y-intercept term (Default: True)
+    use_qr_decomp : bool
+        True to use QR decomposition to obtain solution (Default: True)
+
+    Returns
+    -------
+    numpy.ndarray
+        The solution to the least-squares problem
+    &#39;&#39;&#39;
+    assert y.ndim == 1, &#39;Array y must be 1D&#39;
+    n = x.shape[0] # Num. of samples
+    m = 1 if x.ndim == 1 else x.shape[1] # Num. of covariates
+    # Create design/ model matrix
+    xm = x.reshape((n, m)) # Without y-intercept term, unless...
+    if add_intercept:
+        xm = np.hstack((np.ones((n,)).reshape((n, 1)), x.reshape((n, m))))
+    if xm.shape[1] &gt; n:
+        raise ValueError(&#39;System of equations is rank deficient&#39;)
+    # Generally better to use QR decomposition to obtain \hat{\beta}
+    if use_qr_decomp:
+        q, r = np.linalg.qr(xm)
+        fit = np.linalg.inv(r) @ q.T @ y
+    else:
+        fit = np.linalg.inv(xm.T @ xm) @ xm.T @ y
+    return fit</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.ols_variance"><code class="name flex">
+<span>def <span class="ident">ols_variance</span></span>(<span>x, y, beta=None, add_intercept=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the unbiased estimate of OLS model variance:
+<span><span class="MathJax_Preview">
+SSE / (n - p)
+</span><script type="math/tex; mode=display">
+SSE / (n - p)
+</script></span></p>
+<p>Where:
+<span><span class="MathJax_Preview">
+SSE = (y - X\beta )' (y - X\beta )
+</span><script type="math/tex; mode=display">
+SSE = (y - X\beta )' (y - X\beta )
+</script></span></p>
+<p>SSE is known as the sum of squared errors of prediction and is equivalent
+to the residual sum of squares (RSS).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The independent variable(s); should be N x M where M is the number of
+variables</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The dependent variable, must be 1D</dd>
+<dt><strong><code>beta</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Optional) Coefficient estimates, an M-dimensional vector</dd>
+<dt><strong><code>add_intercept</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to add a y-intercept term (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>The sum-of-squared-errors of prediction</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def ols_variance(x, y, beta = None, add_intercept = True):
+    r&#39;&#39;&#39;
+    Returns the unbiased estimate of OLS model variance:
+    $$
+    SSE / (n - p)
+    $$
+
+    Where:
+    $$
+    SSE = (y - X\beta )&#39; (y - X\beta )
+    $$
+
+    SSE is known as the sum of squared errors of prediction and is equivalent
+    to the residual sum of squares (RSS).
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable(s); should be N x M where M is the number of
+        variables
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+    beta : numpy.ndarray
+        (Optional) Coefficient estimates, an M-dimensional vector
+    add_intercept : bool
+        True to add a y-intercept term (Default: True)
+
+    Returns
+    -------
+    float
+        The sum-of-squared-errors of prediction
+    &#39;&#39;&#39;
+    n = x.shape[0] # Num. of samples
+    p = 1 if x.ndim == 1 else x.shape[1] # Num. of covariates
+    p += 1 if add_intercept else 0
+    # Alternatively, use xm and beta calculated in sum_of_squares()...
+    # return ((y - xm @ beta).T @ (y - xm @ beta)) / (n - p)
+    return sum_of_squares(x, y, beta, add_intercept, which = &#39;sse&#39;) / (n - p)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.rmsd"><code class="name flex">
+<span>def <span class="ident">rmsd</span></span>(<span>x1, x2, n=None, weights=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the root mean-squared deviation (RMSD) between two continuously
+varying random quantities:
+<span><span class="MathJax_Preview">
+RMSD(\hat{x}, x) = \sqrt{n^{-1}\sum_i^N (\hat{x}_i - x_i)^2}
+</span><script type="math/tex; mode=display">
+RMSD(\hat{x}, x) = \sqrt{n^{-1}\sum_i^N (\hat{x}_i - x_i)^2}
+</script></span></p>
+<p>Where <code>N</code> (or <code>n</code>) is the number of samples (e.g., model cells or time
+steps).</p>
+<p>NOTE: <code>NoData</code> should be filled with <code>np.nan</code> prior to calling this
+function; it is assumed that both vectors have the same missingness.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x1</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A 1D or 2D numeric vector</dd>
+<dt><strong><code>x2</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A 1D or 2D numeric vector</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) The number of samples, for normalizing; if not provided,
+calculated as the number of non-NaN samples</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Weights array of a shape that can be broadcast to match both x1 and x2</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rmsd(x1, x2, n = None, weights = None):
+    r&#39;&#39;&#39;
+    Returns the root mean-squared deviation (RMSD) between two continuously
+    varying random quantities:
+    $$
+    RMSD(\hat{x}, x) = \sqrt{n^{-1}\sum_i^N (\hat{x}_i - x_i)^2}
+    $$
+
+    Where `N` (or `n`) is the number of samples (e.g., model cells or time
+    steps).
+
+    NOTE: `NoData` should be filled with `np.nan` prior to calling this
+    function; it is assumed that both vectors have the same missingness.
+
+    Parameters
+    ----------
+    x1 : numpy.ndarray
+        A 1D or 2D numeric vector
+    x2 : numpy.ndarray
+        A 1D or 2D numeric vector
+    n : int
+        (Optional) The number of samples, for normalizing; if not provided,
+        calculated as the number of non-NaN samples
+    weights : numpy.ndarray
+        Weights array of a shape that can be broadcast to match both x1 and x2
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    assert isinstance(n, int) or n is None, &#39;Argument &#34;n&#34; must be of integer type&#39;
+    assert x1.ndim &lt;= 2 and x2.ndim &lt;= 2, &#39;No support for more than 2 axes&#39;
+    diffs = np.subtract(x1, x2)
+    # Optionally weight the residuals first
+    if weights is not None:
+        if weights.ndim == 1:
+            weights = weights.reshape((1, *weights.shape))
+        diffs = diffs * weights
+    diffs = diffs[~np.isnan(diffs)]
+    n = n if n is not None else diffs.shape[0]
+    return np.sqrt(np.divide(np.sum(np.power(diffs, 2)), n))</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.sum_of_squares"><code class="name flex">
+<span>def <span class="ident">sum_of_squares</span></span>(<span>x, y, beta=None, add_intercept=True, which='ssr')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the sum-of-squared errors, sum-of-squared regressors, or
+total sum-of-squared errors based on the observed and predicted responses.
+Will calculate sum-of-squares for univariate linear regression if vector
+"x" is the independent variable and "y" is the dependent variable.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Observed response or independent variable;</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Predicted response or dependent variable;</dd>
+<dt><strong><code>beta</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Optional) To avoid re-fitting (or fitting incorrectly) the OLS
+regression, can provide the coefficients of the OLS regression</dd>
+<dt><strong><code>add_intercept</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to add an intercept term when fitting OLS regression</dd>
+<dt><strong><code>which</code></strong> :&ensp;<code>str</code></dt>
+<dd>Which sum-of-squares quantity to calculate (Default: 'ssr');
+should be one of: ('sse', 'ssr', 'sst')</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sum_of_squares(x, y, beta = None, add_intercept = True, which = &#39;ssr&#39;):
+    &#39;&#39;&#39;
+    Calculates the sum-of-squared errors, sum-of-squared regressors, or
+    total sum-of-squared errors based on the observed and predicted responses.
+    Will calculate sum-of-squares for univariate linear regression if vector
+    &#34;x&#34; is the independent variable and &#34;y&#34; is the dependent variable.
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Observed response or independent variable;
+    y : numpy.ndarray
+        Predicted response or dependent variable;
+    beta : numpy.ndarray
+        (Optional) To avoid re-fitting (or fitting incorrectly) the OLS
+        regression, can provide the coefficients of the OLS regression
+    add_intercept : bool
+        True to add an intercept term when fitting OLS regression
+    which : str
+        Which sum-of-squares quantity to calculate (Default: &#39;ssr&#39;);
+        should be one of: (&#39;sse&#39;, &#39;ssr&#39;, &#39;sst&#39;)
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    assert y.ndim == 1, &#39;Array y must be 1D&#39;
+    if beta is None:
+        beta = ols(x, y, add_intercept)
+    n = x.shape[0] # Num. of samples
+    m = p = 1 if x.ndim == 1 else x.shape[1] # Num. of covariates
+    # Create design/ model matrix
+    xm = x.reshape((n, m)) # Without y-intercept term, unless...
+    if add_intercept:
+        p += 1
+        xm = np.hstack((np.ones((n,)).reshape((n, 1)), x.reshape((n, m))))
+
+    yhat = xm @ beta # Calculate predicted values
+    if which == &#39;sse&#39;:
+        # Alternatively: ((y - xm @ beta).T @ (y - xm @ beta))
+        return np.sum(np.power(np.subtract(y, yhat), 2))
+
+    elif which == &#39;ssr&#39;:
+        return np.sum(np.power(np.subtract(yhat, np.nanmean(y)), 2))
+
+    elif which == &#39;sst&#39;:
+        if add_intercept:
+            return np.sum(np.power(np.subtract(y, np.nanmean(y)), 2))
+        else:
+            return np.sum(np.power(y, 2))
+
+    else:
+        raise NotImplementedError(&#39;Argument &#34;which&#34; not understood&#39;)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.stats.t_statistic"><code class="name flex">
+<span>def <span class="ident">t_statistic</span></span>(<span>x, y, beta_hat, beta=0, add_intercept=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates t-statistics for each of the predictors of beta_hat; by
+default, the true value of beta is assumed to be zero (i.e., null
+hypothesis is true). Calculated as:
+<span><span class="MathJax_Preview">
+T_{n-p} = \frac{\hat{\beta }_j - \beta_j}{\mathrm{s.e.}(\hat{\beta }_j)}\sim t_{n-p}
+</span><script type="math/tex; mode=display">
+T_{n-p} = \frac{\hat{\beta }_j - \beta_j}{\mathrm{s.e.}(\hat{\beta }_j)}\sim t_{n-p}
+</script></span></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The independent variable(s); should be N x M where M is the number
+of variables</dd>
+<dt><strong><code>y</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The dependent variable, must be 1D</dd>
+<dt><strong><code>beta_hat</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The estimated value(s) for beta</dd>
+<dt><strong><code>beta</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Optional) The true value(s) for beta</dd>
+<dt><strong><code>add_intercept</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to add a y-intercept term (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def t_statistic(x, y, beta_hat, beta = 0, add_intercept = True):
+    r&#39;&#39;&#39;
+    Calculates t-statistics for each of the predictors of beta_hat; by
+    default, the true value of beta is assumed to be zero (i.e., null
+    hypothesis is true). Calculated as:
+    $$
+    T_{n-p} = \frac{\hat{\beta }_j - \beta_j}{\mathrm{s.e.}(\hat{\beta }_j)}\sim t_{n-p}
+    $$
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        The independent variable(s); should be N x M where M is the number
+        of variables
+    y : numpy.ndarray
+        The dependent variable, must be 1D
+    beta_hat : numpy.ndarray
+        The estimated value(s) for beta
+    beta : numpy.ndarray
+        (Optional) The true value(s) for beta
+    add_intercept : bool
+        True to add a y-intercept term (Default: True)
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    assert x.ndim &lt;= 2, &#39;Array x must be 1D or 2D only&#39;
+    model_var = ols_variance(x, y, beta_hat, add_intercept = add_intercept) # Var(beta)
+    beta_hat_se = np.sqrt(np.diag(np.linalg.inv(x.T @ x) * model_var))
+    return np.subtract(beta_hat, beta) / beta_hat_se</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c" href="index.html">pyl4c</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="pyl4c.stats.detrend" href="#pyl4c.stats.detrend">detrend</a></code></li>
+<li><code><a title="pyl4c.stats.entropy" href="#pyl4c.stats.entropy">entropy</a></code></li>
+<li><code><a title="pyl4c.stats.harmonic_ols" href="#pyl4c.stats.harmonic_ols">harmonic_ols</a></code></li>
+<li><code><a title="pyl4c.stats.linear_constraint" href="#pyl4c.stats.linear_constraint">linear_constraint</a></code></li>
+<li><code><a title="pyl4c.stats.ols" href="#pyl4c.stats.ols">ols</a></code></li>
+<li><code><a title="pyl4c.stats.ols_variance" href="#pyl4c.stats.ols_variance">ols_variance</a></code></li>
+<li><code><a title="pyl4c.stats.rmsd" href="#pyl4c.stats.rmsd">rmsd</a></code></li>
+<li><code><a title="pyl4c.stats.sum_of_squares" href="#pyl4c.stats.sum_of_squares">sum_of_squares</a></code></li>
+<li><code><a title="pyl4c.stats.t_statistic" href="#pyl4c.stats.t_statistic">t_statistic</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

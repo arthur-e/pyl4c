@@ -1,0 +1,2340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.utils API documentation</title>
+<meta name="description" content="Convenience functions for working with SMAP L4C data in HDF5 arrays.
+NOTE: All of the functions beginning with `get_` require access to ancillary
+data …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.utils</code></h1>
+</header>
+<section id="section-intro">
+<p>Convenience functions for working with SMAP L4C data in HDF5 arrays.
+NOTE: All of the functions beginning with <code>get_</code> require access to ancillary
+data files.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Convenience functions for working with SMAP L4C data in HDF5 arrays.
+NOTE: All of the functions beginning with `get_` require access to ancillary
+data files.
+&#39;&#39;&#39;
+
+import csv
+import glob
+import io
+import os
+import h5py
+import numpy as np
+from functools import partial
+from concurrent.futures import ProcessPoolExecutor
+from pyl4c import haversine
+from pyl4c.data.fixtures import ANCILLARY_DATA_PATHS, HDF_PATHS, EASE2_GRID_PARAMS, SUBSETS_BBOX
+from pyl4c.ease2 import ease2_coords, ease2_from_wgs84, ease2_search_radius
+
+class MockL4CGranule(h5py.File):
+    &#39;&#39;&#39;
+    A mock for a typical L4C Ops granule. Should have all the right data
+    fields at the right sizes for a typical L4C Ops granule read in as
+    an h5py.File instance.
+
+    Parameters
+    ----------
+    file : file
+        (Optional) The File object to write; defaults to an in-memory
+        `BytesIO` instance
+    grid : str
+        (Optional) The EASE-Grid 2.0 size: &#34;M01&#34; or &#34;M09&#34;
+    mode : str
+        (Optional) The file access mode (Default: &#34;w&#34;)
+    coords : tuple
+        (Optional) 2D coordinate arrays to set on the granule&#39;s
+        &#34;GEO/longitude&#34; and &#34;GEO/latitude&#34; fields
+    data : dict
+        (Optional) If provided, should be a Dictionary with keys for each
+        desired dataset (e.g., &#34;NEE&#34; or &#34;SOC&#34;) and any correctly shaped
+        2D array as values
+    pft_mean_fields : tuple or list
+        Sequence of field names (e.g., `[&#39;RH&#39;, &#39;GPP&#39;]`) for which the PFT mean
+        fields (e.g., `RH/rh_pft1_mean`) should be created
+    &#39;&#39;&#39;
+    def __init__(
+            self, file = None, grid = &#39;M09&#39;, mode = &#39;w&#39;, coords = None,
+            data = None, pft_mean_fields = list()):
+        # Although file = io.BytesIO() in the function signature, above,
+        #   should accomplish the same thing, it generates an OSError that
+        #   cannot be reproduced in interactive mode unless the &#34;file&#34;
+        #   is explicitly set here and io.BytesIO() is *not* invoked above
+        if file is None:
+            file = io.BytesIO()
+
+        super(MockL4CGranule, self).__init__(file, mode)
+
+        # Create a field for each L4C variable
+        shp = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
+        for field in (&#39;NEE&#39;, &#39;GPP&#39;, &#39;RH&#39;, &#39;SOC&#39;):
+            key = &#39;%s/%s_mean&#39; % (field, field.lower()) # e.g., &#34;SOC/soc_mean&#34;
+            if data is None:
+                init_data = np.ones(shp) * np.nan
+            else:
+                # Generate a NaN-valued array if no data provided
+                init_data = data.get(key, np.ones(shp) * np.nan)
+
+            # Create, e.g., &#34;SOC/soc_mean&#34; field
+            self.create_dataset(key, shp, dtype = &#39;float32&#39;, data = init_data)
+            # Optionally, create, e.g., &#34;SOC/soc_pft1_mean&#34; field
+            if field in pft_mean_fields:
+                for pft in range(1, 9):
+                    key = &#39;%s/%s_pft%d_mean&#39; % (field, field.lower(), pft)
+                    init_data = data.get(key, np.ones(shp) * np.nan)
+                    self.create_dataset(
+                        key, shp, dtype = &#39;float32&#39;, data = init_data)
+
+        if coords is None:
+            x_coords, y_coords = ease2_coords(grid = &#39;M09&#39;, in_1d = False)
+        else:
+            x_coords, y_coords = coords
+            assert x_coords.ndim == 2 and y_coords.ndim == 2, &#39;Must provide 2D coordinate arrays&#39;
+        self.create_dataset(&#39;GEO/longitude&#39;, shp, dtype = &#39;float32&#39;,
+            data = x_coords)
+        self.create_dataset(&#39;GEO/latitude&#39;, shp, dtype = &#39;float32&#39;,
+            data = y_coords)
+
+
+def composite(
+        *arrays, reducer = &#39;mean&#39;, target_band = 0, nodata = -9999.0,
+        dtype = np.float32, processes = 1):
+    &#39;&#39;&#39;
+    Composites multiple raster arrays in a single band; is extremely fast when
+    used with a Process Pool, but does not support normalization and will not
+    composite more than one band at a time.
+
+    NOTE: This function does NOT calculate memory use and will NOT guard
+    against memory overflow.
+
+    Parameters
+    ----------
+    arrays : *numpy.ndarray
+        The input arrays to composite
+    reducer : str
+        The name of the reducer function, either: &#34;median&#34;, &#34;min&#34;, &#34;max&#34;,
+        &#34;mean&#34;, or &#34;std&#34;
+    target_band : int
+        The index of the band to composite
+    nodata : int or float
+        The NoData value to ignore in compositing
+    dtype : type
+        The data type to enforce in the output
+    processes : int
+        (Optional) Number of processes to use
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    if reducer not in (&#39;sum&#39;, &#39;median&#39;, &#39;min&#39;, &#39;max&#39;, &#39;mean&#39;, &#39;std&#39;):
+        raise ValueError(&#39;Invalid reducer name&#39;)
+
+    assert all([isinstance(a, np.ndarray) for a in arrays]), &#39;Every element of &#34;arrays&#34; must be an instance of np.ndarray&#39;
+    shp = arrays[0].shape
+    assert all(map(lambda x: x == shp, [r.shape for r in arrays])), &#39;Raster arrays must have the same shape&#39;
+    # For single-band arrays...
+    if arrays[0].ndim &lt; 3:
+        shp = (1, shp[0], shp[1])
+        arrays = list(map(lambda r: r.reshape(shp), arrays))
+
+    # Stack the arrays in a continuous, single-band &#34;tapestry&#34; using
+    #   vstack(), then cut out the arrays concatenated in this way into
+    #   separate bands using reshape()
+    b = target_band
+    stack = np.vstack(list(map(
+        lambda r: r[b,...].reshape((1, shp[1], shp[2])), arrays)))
+    # Insert nan into NoData locations
+    stack = np.where(stack == nodata, np.nan, stack)
+    # Find the reducer function based on its name (should be a &#34;nan&#34; version)
+    reducer_func = partial(getattr(np, &#39;nan%s&#39; % reducer), axis = 0)
+    # Avoid traceback masking and memory errors with ProcessPoolExecutor
+    #   when only a single process is requested
+    if processes == 1:
+        all_results = reducer_func(stack)
+    else:
+        # Get index ranges for each process to work on
+        work = partition(stack, num_processes = processes, axis = 1)
+        with ProcessPoolExecutor(max_workers = processes) as executor:
+            all_results = executor.map(
+                reducer_func, [stack[:,i:j] for i, j in work])
+
+    # Stack each reduced band (and reshape to multi-band image)
+    result = np.concatenate(list(all_results), axis = 0)\
+        .reshape((1, shp[1], shp[2]))
+    return np.where(np.isnan(result), nodata, result)
+
+
+def composite_hdf(hdf_file_glob, field, subset_id = &#39;CONUS&#39;, **kwargs):
+    &#39;&#39;&#39;
+    A convenience wrapper for `composite()`, enabling its use with HDF5 files
+    specified by path names. Accepts additional `**kwargs` as keywoard arguments
+    to `pyl4c.utils.composite()`.
+
+    NOTE: This function does NOT calculate memory use and will NOT guard
+    against memory overflow.
+
+    Parameters
+    ----------
+    hdf_file_glob : str
+        A file path expression for glob.glob()
+    field : str
+        The hierarchical path to a variable within each HDF5 file
+    subset_id : str
+        A well-known identifier for a bounding-box subset
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    assert subset_id in SUBSETS_BBOX.keys()
+    assert len(glob.glob(hdf_file_glob)) &gt; 0, &#39;No files found matching GLOB regular expression&#39;
+    arrays = []
+    for path in glob.glob(hdf_file_glob):
+        with h5py.File(path, &#39;r&#39;) as hdf:
+            assert field in hdf.keys(), &#39;Variable &#34;%s&#34; not found in HDF5 file&#39; % field
+            arrays.append(subset(hdf, field, subset_id = subset_id)[0])
+    return composite(*arrays, **kwargs)
+
+
+def get_ease2_coords(grid, in_1d = True):
+    &#39;&#39;&#39;
+    DEPRECATED: Use `pyl4c.ease2.ease2_coords()` instead.
+    Returns a tuple of 1D arrays, the X- and Y-coordinates of the desired
+    EASE-Grid 2.0, from reading the ancillary data file.
+
+    Parameters
+    ----------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    in_1d : bool
+        True to return only 1D arrays, avoiding redundant rows/ columns
+        (Default)
+
+    Returns
+    -------
+    tuple
+        X- and Y-coordinate arrays: (numpy.ndarray, numpy.ndarray)
+    &#39;&#39;&#39;
+    return ease2_coords(grid, in_1d)
+
+
+def get_ease2_slice_idx(grid, subset_id):
+    &#39;&#39;&#39;
+    Returns a tuple `((xmin, xmax), (ymin, ymax))` of the indices that can be
+    used to slice a corresponding EASE-Grid 2.0 in order to extract the
+    desired bounding box.
+
+    Parameters
+    ----------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    subset_id : str
+        Keyword designating the desired subset and its corresponding bounding
+        box
+
+    Returns
+    -------
+    tuple
+        Tuple of tuples: `((xmin, xmax), (ymin, ymax))`
+    &#39;&#39;&#39;
+    assert grid in EASE2_GRID_PARAMS.keys(),\
+        &#39;Could not understand grid argument; must be one of: %s&#39; % &#39;, &#39;.join(EASE2_GRID_PARAMS.keys())
+    x_coords, y_coords = ease2_coords(grid, in_1d = True)
+    return get_slice_idx_by_bbox(x_coords, y_coords, subset_id)
+
+
+def get_ease2_slice_offsets(grid, subset_id):
+    &#39;&#39;&#39;
+    Returns the X and Y offsets of an EASE-Grid 2.0 subset, so that an output
+    raster array can be aligned properly; see
+    `pyl4c.spatial.array_to_raster()`.
+
+    Parameters
+    ----------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    subset_id : str
+        Keyword designating the desired subset and its corresponding bounding box
+
+    Returns
+    -------
+    tuple
+        The X- and Y-offset `(xoff, yoff)`
+    &#39;&#39;&#39;
+    assert grid in EASE2_GRID_PARAMS.keys(),\
+        &#39;Could not understand grid argument; must be one of: %s&#39; % &#39;, &#39;.join(EASE2_GRID_PARAMS.keys())
+    slice_idx = get_ease2_slice_idx(grid = grid, subset_id = subset_id)
+    return (slice_idx[0][0], slice_idx[1][0])
+
+
+def get_pft_array(grid, subset_id = None, subset_bbox = None):
+    &#39;&#39;&#39;
+    Returns an array of PFT codes on the given EASE-Grid 2.0 for the entire
+    globe or a specified subset.
+
+    Arguments
+    ---------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    subset_id : str
+        (Optional) Instead of `subset_bbox`, can provide keyword designating
+        the desired subset area
+    subset_bbox : tuple
+        (Optional) Instead of `subset_id`, can provide any arbitrary bounding
+        box, i.e., sequence of coordinates: `&lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;`
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    assert grid in EASE2_GRID_PARAMS.keys(),\
+        &#39;Could not understand grid argument; must be one of: %s&#39; % &#39;, &#39;.join(EASE2_GRID_PARAMS.keys())
+    assert (subset_id is None and subset_bbox is None) or (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None),\
+        &#39;Should provide only one argument: Either subset_id or subset_bbox&#39;
+    m = int(grid[-1]) # Pop off the grid size in km
+    anc_hdf_path = ANCILLARY_DATA_PATHS[&#39;smap_l4c_ancillary_data_file_path&#39;]
+    field = ANCILLARY_DATA_PATHS[&#39;smap_l4c_%dkm_ancillary_data_lc_path&#39; % m]
+    xf = ANCILLARY_DATA_PATHS[&#39;smap_l4c_%dkm_ancillary_data_x_coord_path&#39; % m]
+    yf = ANCILLARY_DATA_PATHS[&#39;smap_l4c_%dkm_ancillary_data_y_coord_path&#39; % m]
+    with h5py.File(anc_hdf_path, &#39;r&#39;) as hdf:
+        if subset_id is not None:
+            pft_array, _, _ = subset(
+                hdf, field, hdf[xf][0,:], hdf[yf][:,0], subset_id = subset_id)
+        elif subset_bbox is not None:
+            pft_array, _, _ = subset(
+                hdf, field, hdf[xf][0,:], hdf[yf][:,0], subset_bbox = subset_bbox)
+        else:
+            pft_array = hdf[field][:]
+    return pft_array
+
+
+def get_slice_idx_by_bbox(
+        x_coords, y_coords, subset_id = None, subset_bbox = None):
+    &#39;&#39;&#39;
+    Returns a tuple `((xmin, xmax), (ymin, ymax))` of the indices that can be
+    used to slice a corresponding EASE2 grid in order to extract the
+    desired bounding box. The returned indices correspond to the approximate
+    locations of the bounding box (defined in geographic space) in array
+    index space; i.e., if `array` is the EASE2 grid of interest, then the
+    following slice will extract an area within the bounding box (bbox):
+
+        array[ymin:ymax, xmin:xmax]
+
+    NOTE: Coordinate arrays (`x_coords`, `y_coords`) must be given in the same
+    units as the BBOX definition in `SUBSET_BBOX`, i.e., decimal degrees.
+
+    Parameters
+    ----------
+    x_coords : numpy.ndarray
+        A 1D array of X coordinate values
+    y_coords : numpy.ndarray
+        A 1D array of Y coordinate values
+    subset_id : str
+        (Optional) Instead of subset_bbox, can provide keyword designating
+        the desired subset area
+    subset_bbox : tuple
+        (Optional) Instead of subset_id, can provide any arbitrary bounding
+        box, i.e., sequence of coordinates: &lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;
+    &#39;&#39;&#39;
+    assert (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None), &#39;Should provide only one argument: Either subset_id or subset_bbox&#39;
+    assert x_coords.ndim == 1 and y_coords.ndim == 1, &#39;Must provide 1D coordinate arrays only&#39;
+
+    bb = subset_bbox
+    if subset_id is not None:
+        bb = SUBSETS_BBOX[subset_id]
+
+    # Get min, max indices of X coords within bbox; note that we +1 because
+    #   ending slice indices are non-inclusive in Python
+    if x_coords[-1] &gt; x_coords[0]:
+        # If X-coordinates are sorted smallest to largest...
+        x_slice_idx = [
+            np.where(x_coords &gt;= bb[0])[0].min(),
+            np.where(x_coords &lt;= bb[2])[0].max() + 1
+        ]
+    else:
+        x_slice_idx = [
+            np.where(x_coords &lt;= bb[0])[0].min(),
+            np.where(x_coords &gt;= bb[2])[0].max() + 1
+        ]
+
+    # Get min, max indices of Y coords within bbox
+    if y_coords[-1] &gt; y_coords[0]:
+        # If Y-coordinates are sorted smallest to largest...
+        y_slice_idx = [
+            np.where(y_coords &lt;= bb[3])[0].max() + 1,
+            np.where(y_coords &gt;= bb[1])[0].min()
+        ]
+    else:
+        y_slice_idx = [
+            np.where(y_coords &lt;= bb[3])[0].min(),
+            np.where(y_coords &gt;= bb[1])[0].max() + 1
+        ]
+
+    x_slice_idx.sort() # Necessary b/c slicing is always small:large number
+    y_slice_idx.sort()
+    return (tuple(x_slice_idx), tuple(y_slice_idx))
+
+
+def get_xy_coords(hdf_or_nc, in_1d = True):
+    &#39;&#39;&#39;
+    Returns a tuple (longitude, latitude) where the elements are coordinate
+    arrays of longitude and latitude. These are needed for, e.g., plotting
+    the geophysical data on a global geographic grid. This is convenience
+    function for extracting the longitude-latitude coordinates based on the
+    filename and our knowledge of where these data are stored. NOTE: This may
+    seem like a hack, but is the easiest solution to the fundamental problem
+    of inconsistent variable paths; inconsistent naming between dataset IDs
+    and filenames; and incomplete documentation of each within the HDF5 file.
+
+    Parameters
+    ----------
+    hdf_or_nc : h4py.File or netcdf4.Dataset
+        Either: an HDF5 file / h5py.File object OR a NetCDF file
+    in_1d : bool
+        True (Default) to return 1D arrays; if False, returns 2D arrays where
+        the coordinates are duplicated along one axis
+    &#39;&#39;&#39;
+    try:
+        # HDF5 files
+        if hasattr(hdf_or_nc, &#39;keys&#39;) and hasattr(hdf_or_nc, &#39;filename&#39;):
+            if &#39;GPP&#39; in hdf_or_nc.keys() and &#39;NEE&#39; in hdf_or_nc.keys():
+                d = HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;] # NOTE: We assume Version 4
+            elif &#39;Geophysical_Data&#39; in hdf_or_nc.keys():
+                if not &#39;sm_surface&#39; in hdf_or_nc[&#39;Geophysical_Data&#39;].keys():
+                    raise ValueError()
+                d = HDF_PATHS[&#39;SPL4SMGP&#39;][&#39;4&#39;]
+            else:
+                raise ValueError()
+            x = hdf_or_nc[d[&#39;longitude&#39;]]
+            y = hdf_or_nc[d[&#39;latitude&#39;]]
+        # NetCDF files
+        else:
+            assert hasattr(hdf_or_nc, &#39;variables&#39;), &#39;Assumed NetCDF file has no variables&#39;
+            if &#39;lon&#39; in hdf_or_nc.variables and &#39;lat&#39; in hdf_or_nc.variables:
+                x = hdf_or_nc.variables[&#39;lon&#39;]
+                y = hdf_or_nc.variables[&#39;lat&#39;]
+
+    except ValueError:
+        # Let&#39;s assume we know what the X-Y coordinate array keys are
+        if &#39;cell_lon&#39; in hdf_or_nc.keys() and &#39;cell_lat&#39; in hdf_or_nc.keys():
+            x = hdf_or_nc[&#39;cell_lon&#39;]
+            y = hdf_or_nc[&#39;cell_lat&#39;]
+        else:
+            raise NotImplementedError(&#39;The filename was not recognized as a product with known longitude-latitude data&#39;)
+
+    x = x[0,:] if in_1d and len(x.shape) &gt; 1 else x[:]
+    y = y[:,0] if in_1d and len(y.shape) &gt; 1 else y[:]
+    return (x, y)
+
+
+def index(array, indices):
+    &#39;&#39;&#39;
+    Fast array indexing by subsetting the array first. If there are multiple
+    indices, anywhere in the array, that need to be returned, this provides
+    a speed-up by creating a smaller array to index.
+
+    Parameters
+    ----------
+    array : numpy.ndarray
+        Array containing data at (row, column) indices
+    indices : tuple or list
+        2-element sequence of (row, column) indices, in order
+
+    Returns
+    -------
+    list
+        List of indexed values
+    &#39;&#39;&#39;
+    assert len(indices) == 2,\
+        &#39;Must provide 2-element sequence of (row coordinates, column coordinates)&#39;
+    assert len(indices[0]) == len(indices[1]),\
+        &#39;Array indices must be the same length!&#39;
+    assert array.ndim &lt;= 2, &#39;Array must have 2 or fewer axes&#39;
+    midx = np.ravel_multi_index(indices, array.shape)
+    return array.ravel()[midx]
+
+
+def partition_generator(n_elements, n_parts = 1):
+    &#39;&#39;&#39;
+    A Generator that yields slice indices for equal-sized partitions of a
+    1D array or sequence. See also: `partition()`.
+
+    Parameters
+    ----------
+    n_elements : int
+        The number of elements in array/ sequence
+    n_parts : int
+        The number of partitions desired
+
+    Returns
+    -------
+    generator
+    &#39;&#39;&#39;
+    p = 0
+    parts = np.linspace(0, n_elements, n_parts + 1, dtype = int)
+    while p &lt; n_parts:
+        yield (
+            int(parts[p]),
+            # If it is the final index, add 1
+            int(parts[p+1] if (p != n_parts - 1) else (parts[p+1] + 1))
+        )
+        p += 1
+
+
+def partition(array, num_processes, axis = 0):
+    &#39;&#39;&#39;
+    Creates index ranges for partitioning an array to work on over multiple
+    processes.
+
+    Parameters
+    ----------
+    array : numpy.ndarray
+        The 2-dimensional array to paritition
+    num_processes : int
+        The number of processes desired
+    axis : int
+        The axis to break apart into chunks
+
+    Returns
+    -------
+    list
+    &#39;&#39;&#39;
+    N = array.shape[axis]
+    return list(partition_generator(N, num_processes))
+
+
+def subset(
+        hdf_or_nc, field, x_coords = None, y_coords = None, subset_id = None,
+        subset_bbox = None):
+    &#39;&#39;&#39;
+    Returns a subset array from the HDF, for the desired variable, where the
+    array corresponds to an area defined by a known bounding box, e.g., the
+    continental United States (CONUS).
+
+    NOTE: `x_coords` and `y_coords` (hierarchical paths) will be inferred from
+    the filename if not provided at all.
+
+    Parameters
+    ----------
+    hdf_or_nc : h5py.File or netcdf4.Dataset
+        Either: an HDF5 file / h5py.File object OR a NetCDF file
+    field : str
+        Hierarchical path to the desired variable
+    x_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of X coordinates OR hierarchical path to
+        the variable representing X coordinates, e.g., longitude values
+    y_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of Y coordinates OR hierarchical path to
+        the variable representing Y coordinates, e.g., latitude values
+    subset_id : str
+        (Optional) Instead of subset_bbox, can provide keyword designating
+        the desired subset area
+    subset_bbox : tuple or list
+        (Optional) Instead of subset_id, can provide any arbitrary bounding
+        box, i.e., sequence of coordinates: &lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;
+
+    Returns
+    -------
+    tuple
+        Tuple of: subset array, xoff, yoff; (numpy.ndarray, Int, Int)
+    &#39;&#39;&#39;
+    assert (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None), &#39;Should provide only one argument: Either subset_id or subset_bbox&#39;
+    assert isinstance(hdf_or_nc, h5py.File) or hasattr(hdf_or_nc, &#39;variables&#39;), &#39;An HDF5 or NetCDF file is required; cannot subset a stand-alone array&#39;
+    assert (x_coords is None and y_coords is None) or (isinstance(x_coords, str) and isinstance(y_coords, str)) or (isinstance(x_coords, np.ndarray) and isinstance(y_coords, np.ndarray)), &#39;The x_coords and y_coords arguments must have matching type&#39;
+    assert (not isinstance(x_coords, np.ndarray)) or (x_coords.ndim == 1), &#39;The x_coords and y_coords arguments must be 1D arrays, otherwise pass a String or None&#39;
+
+    # Check that we have a 2D array to work with
+    if hasattr(hdf_or_nc, &#39;variables&#39;):
+        shp = hdf_or_nc.variables[field].shape
+    else:
+        assert field in hdf_or_nc.keys(), &#39;Field name &#34;%s&#34; not found&#39; % field
+        shp = hdf_or_nc[field].shape
+    assert len(shp) == 2, &#39;HDF5 or NetCDF data array indexed by &#34;%s&#34; must be a 2D array&#39; % field
+
+    # If a hierarchical path to the X and Y coordinate variables was not
+    #   given, then infer the paths from the filename
+    if x_coords is None:
+        x_coords, y_coords = get_xy_coords(hdf_or_nc, in_1d = True)
+    if isinstance(x_coords, str):
+        # NOTE: Only need first row of X-coordinate array, first column of
+        #   Y-coordinate array, because they are duplicated thereafter
+        if hasattr(hdf_or_nc, &#39;variables&#39;):
+            x_coords = hdf_or_nc.variables[x_coords][0,:] # NetCDF
+            y_coords = hdf_or_nc.variables[y_coords][0,:]
+        else:
+            x_coords = hdf_or_nc[x_coords][0,:] # HDF5
+            y_coords = hdf_or_nc[y_coords][:,0]
+
+    x_idx, y_idx = get_slice_idx_by_bbox(
+        x_coords, y_coords, subset_id, subset_bbox)
+    xmin, xmax = x_idx # Unpack the slice range indexes
+    ymin, ymax = y_idx
+    if hasattr(hdf_or_nc, &#39;variables&#39;):
+        return (hdf_or_nc.variables[field][ymin:ymax, xmin:xmax], xmin, ymin)
+    return (hdf_or_nc[field][ymin:ymax, xmin:xmax], xmin, ymin)
+
+
+def sample(array, indices):
+    &#39;&#39;&#39;
+    Samples the value in an array at each (row, column) position in a sequence
+    of row-column index pairs.
+
+    Parameters
+    ----------
+    array : numpy.ndarray
+    indices : tuple
+        Tuple of (x, y) coordinate pairs; no z-level should be be provided
+        (2D coordinate pairs only)
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    indices_by_axis = [
+        int(i[0]) for i in indices], [int(i[1]) for i in indices
+    ]
+    # If row, colum indices are not sorted, we&#39;ll need another list comprehension
+    try:
+        return array[indices_by_axis]
+    except TypeError:
+        return [array[idx[0], idx[1]] for idx in indices]
+
+
+def summarize(
+        data_array, summaries, scale = 1, data_mask = None, nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array over all values.
+
+    Parameters
+    ----------
+    data_array : numpy.ndarray
+        Array of data values that we wish to summarize, e.g., gridded land
+        surface temperatures
+    summaries : dict
+        A Dictionary of `{name: function}` where function is some vectorized
+        function that acts over the values associated with a class label,
+        including NaNs, and returns a single number
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    nodata : int or float
+        NoData or Fill value(s) to ignore; can pass a sequence of multiple
+        values (Default: -9999)
+
+    Returns
+    -------
+    dict
+    &#39;&#39;&#39;
+    assert data_array.ndim &lt;= 2 or (data_array.ndim == 3 and data_array.shape[0] == 1), &#39;Can only work with 1-band raster arrays&#39;
+    if data_array.ndim == 3:
+        data_array = data_array[0,...] # Unwrap 1-band raster arrays
+
+    # Fill in NaN where there is NoData
+    data_array = np.where(np.isin(data_array, nodata), np.nan, data_array)
+    stats = dict([(k, None) for k in summaries.keys()])
+    for stat_name, func in summaries.items():
+        # NOTE: Runs faster if dtype of accumulator is *not* set
+        stats[stat_name] = func(np.multiply(data_array, scale))
+    return stats
+
+
+def summarize_by_class(
+        data_array, class_array, summaries, scale = 1, ignore = (0,),
+        nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array for each class
+    label in an input class array.
+
+    Parameters
+    ----------
+    data_array : numpy.ndarray
+        Array of data values that we wish to summarize, e.g., gridded land
+        surface temperatures
+    class_array : numpy.ndarray
+        Array of class labels that will be used to summarize input data,
+        e.g., watersheds or ecoregions; should NOT contain any NaNs as this
+        will cause the function to hang
+    summaries : dict
+        A Dictionary of `{name: function}` where function is some vectorized
+        function that acts over the values associated with a class label,
+        including NaNs, and returns a single number
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    ignore : tuple
+        Class labels (values in the class_array) to ignore
+    nodata : int or float
+        NoData or Fill value to ignore (Default: -9999)
+
+    Returns
+    -------
+    dict
+        A nested Python dictionary with a key-value pair for each class,
+        where the value is another dictionary with a key-value pair for each
+        summary statistic.
+    &#39;&#39;&#39;
+    assert data_array.ndim &lt;= 2 or (data_array.ndim == 3 and data_array.shape[0] == 1), &#39;Can only work with 1-band raster arrays&#39;
+    if data_array.ndim == 3:
+        data_array = data_array[0,...] # Unwrap 1-band raster arrays
+    assert data_array.shape == class_array.shape, &#39;Input data_array does not match shape of the class_array&#39;
+    # Fill in NaN where there is NoData
+    data_array = np.where(np.isin(data_array, nodata), np.nan, data_array)
+    # In case None was passed to &#34;ignore,&#34; replace with empty list
+    ignore = ignore if ignore is not None else []
+    assert not np.any(np.isnan(class_array)),\
+        &#39;Class array should not contain NaNs; use &#34;ignore&#34; argument instead&#39;
+    classes = set(np.unique(class_array[~np.isnan(class_array)])) # Create, e.g., {1: {}, 2: {}, ...}
+    stats = dict([(k, dict()) for k in classes.difference(ignore)])
+    for code in classes.difference(ignore):
+        query = np.where(np.isin(class_array, code), data_array, np.nan)
+        stats[code] = summarize(query, summaries, scale, nodata = nodata)
+    return stats
+
+
+def summarize_hdf_by_pft(
+        hdf, field, summaries, scale = 1, pft_codes = range(1, 9),
+        subset_id = &#39;CONUS&#39;, x_coords = None, y_coords = None,
+        nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array for each Plant
+    Functional Type (PFT) class.
+
+    Parameters
+    ----------
+    hdf : h5py.File
+        The HDF5 file / h5py.File object
+    field : str
+        One of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;
+    summaries : dict
+        A Dictionary of `{name: function}` where function is some vectorized
+        function that acts over the values associated with a class label,
+        including NaNs, and returns a single number
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    pft_codes   The PFT codes to create summaries for; defaults to all
+                of them, (i.e. Default: 1-8 inclusive)
+    subset_id   Keyword designating the desired subset area
+                (Default: CONUS)
+    x_coords    (Optional) A 1D NumPy array of X coordinate values, used
+                in subsetting and can be automatically discovered
+    y_coords    (Optional) A 1D NumPy array of Y coordinate values, used
+                in subsetting and can be automatically discovered
+    nodata      NoData or Fill value to ignore (Default: -9999)
+    &#39;&#39;&#39;
+    assert field in (&#39;SOC&#39;, &#39;NEE&#39;, &#39;GPP&#39;, &#39;RH&#39;), &#39;Only possible to summarize one of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;&#39;
+    assert (subset_id in SUBSETS_BBOX.keys()) or (subset_id is None), &#39;Named subset_id not a recognized geographic subset; see SUBSETS_BBOX in this module&#39;
+    # Warn user against using nansum() or sum() functions
+    if any([k.rfind(&#39;sum&#39;) &gt; 0 for k in summaries.keys()]):
+        print(&#39;WARNING: Totals or sums may be biased low because subgrid heterogeneity is not recognized; use total_hdf_by_pft() instead&#39;)
+
+    field_names = [
+        &#39;%s/%s_pft%d_mean&#39; % (field, field.lower(), p) for p in pft_codes
+    ]
+    stats = dict([(p, dict()) for p in field_names])
+    for name in field_names:
+        if subset_id is not None:
+            array, x, y = subset(
+                hdf, name, x_coords, y_coords, subset_id)
+        else:
+            array = hdf[name][:]
+
+        stats[name] = summarize(array, summaries, scale, nodata = nodata)
+
+    return stats
+
+
+def total_hdf_by_pft(
+        hdf, counts, field, scale = 1, pft_codes = range(1, 9),
+        max_count = 81, subset_id = &#39;CONUS&#39;, x_coords = None, y_coords = None,
+        nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array for each Plant
+    Functional Type (PFT) class. The problem with calculating *totals* for
+    PFT means is that we need to know the area proportion of a given PFT
+    within each 9-km cell in order to correctly sum over that area. This
+    function correctly scales the 9-km PFT mean value by the provided `scale`
+    argument and then scales this value by the proportion of 1-km subgrid
+    cells that match the given PFT. This produces accurate sums of spatial
+    rates; i.e., the `scale` parameter converts a PFT mean to a (biased)
+    total, then the `counts` are used to scale that total by the area
+    proportion of the given PFT. The summary function used is np.nansum.
+
+    Parameters
+    ----------
+    hdf : h5py.File
+        The HDF5 file / h5py.File object
+    counts : tuple or list
+        A sequence of NumPy arrays, each array corresponding to the count of
+        1-km subcells matching a certain PFT; these should be provided in
+        order, i.e., first element is the count of PFT 1 subcells, second
+        element for PFT 2, and on.
+    field : str
+        One of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    pft_codes : tuple or list
+        The PFT codes to create summaries for; defaults to all of them,
+        (i.e. Default: 1-8 inclusive)
+    max_count : int
+        The maximum number of 1-km subcells that any given PFT can total
+        within a 9-km area; no reason why this shouldn&#39;t be 81 (9 x 9),
+        probably.
+    subset_id : str
+        (Optional) Instead of subset_bbox, can provide keyword designating
+        the desired subset area
+    x_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of X coordinates OR hierarchical path to
+        the variable representing X coordinates, e.g., longitude values
+    y_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of Y coordinates OR hierarchical path to
+        the variable representing Y coordinates, e.g., latitude values
+    nodata : int or float
+        NoData or Fill value to ignore (Default: -9999)
+    &#39;&#39;&#39;
+    assert len(counts) == len(pft_codes),\
+        &#39;Length of counts and pft_codes must be equal&#39;
+    assert field in (&#39;SOC&#39;, &#39;NEE&#39;, &#39;GPP&#39;, &#39;RH&#39;),\
+        &#39;Only possible to summarize one of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;&#39;
+    assert (subset_id in SUBSETS_BBOX.keys()) or (subset_id is None),\
+        &#39;Named subset_id not a recognized geographic subset; see SUBSETS_BBOX in this module&#39;
+    summaries = {&#39;nansum&#39;: np.nansum}
+    stats = dict()
+    for i, pft in enumerate(pft_codes):
+        # Get the name of the target field; set up summary stats dict()
+        fieldname = &#39;%s/%s_pft%d_mean&#39; % (field, field.lower(), pft)
+        stats[fieldname] = dict()
+
+        if subset_id is not None:
+            array, _, _ = subset(
+                hdf, fieldname, x_coords, y_coords, subset_id)
+        else:
+            array = hdf[fieldname][:]
+
+        assert array.shape == counts[i].shape, &#39;Counts array must be the same size as data array&#39;
+        # Scale the data array by the proportion of the subgrid cells that
+        #   match the given PFT class
+        stats[fieldname] = summarize(
+            np.multiply( # NOTE: We scale data array ahead of time...
+                np.divide(counts[i], max_count),
+                np.multiply(array, scale)),
+            # ...So scale must be fixed at 1
+            summaries, scale = 1, nodata = nodata)
+
+    return stats</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pyl4c.utils.composite"><code class="name flex">
+<span>def <span class="ident">composite</span></span>(<span>*arrays, reducer='mean', target_band=0, nodata=-9999.0, dtype=numpy.float32, processes=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Composites multiple raster arrays in a single band; is extremely fast when
+used with a Process Pool, but does not support normalization and will not
+composite more than one band at a time.</p>
+<p>NOTE: This function does NOT calculate memory use and will NOT guard
+against memory overflow.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>arrays</code></strong> :&ensp;<code>*numpy.ndarray</code></dt>
+<dd>The input arrays to composite</dd>
+<dt><strong><code>reducer</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the reducer function, either: "median", "min", "max",
+"mean", or "std"</dd>
+<dt><strong><code>target_band</code></strong> :&ensp;<code>int</code></dt>
+<dd>The index of the band to composite</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>The NoData value to ignore in compositing</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt>
+<dd>The data type to enforce in the output</dd>
+<dt><strong><code>processes</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) Number of processes to use</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def composite(
+        *arrays, reducer = &#39;mean&#39;, target_band = 0, nodata = -9999.0,
+        dtype = np.float32, processes = 1):
+    &#39;&#39;&#39;
+    Composites multiple raster arrays in a single band; is extremely fast when
+    used with a Process Pool, but does not support normalization and will not
+    composite more than one band at a time.
+
+    NOTE: This function does NOT calculate memory use and will NOT guard
+    against memory overflow.
+
+    Parameters
+    ----------
+    arrays : *numpy.ndarray
+        The input arrays to composite
+    reducer : str
+        The name of the reducer function, either: &#34;median&#34;, &#34;min&#34;, &#34;max&#34;,
+        &#34;mean&#34;, or &#34;std&#34;
+    target_band : int
+        The index of the band to composite
+    nodata : int or float
+        The NoData value to ignore in compositing
+    dtype : type
+        The data type to enforce in the output
+    processes : int
+        (Optional) Number of processes to use
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    if reducer not in (&#39;sum&#39;, &#39;median&#39;, &#39;min&#39;, &#39;max&#39;, &#39;mean&#39;, &#39;std&#39;):
+        raise ValueError(&#39;Invalid reducer name&#39;)
+
+    assert all([isinstance(a, np.ndarray) for a in arrays]), &#39;Every element of &#34;arrays&#34; must be an instance of np.ndarray&#39;
+    shp = arrays[0].shape
+    assert all(map(lambda x: x == shp, [r.shape for r in arrays])), &#39;Raster arrays must have the same shape&#39;
+    # For single-band arrays...
+    if arrays[0].ndim &lt; 3:
+        shp = (1, shp[0], shp[1])
+        arrays = list(map(lambda r: r.reshape(shp), arrays))
+
+    # Stack the arrays in a continuous, single-band &#34;tapestry&#34; using
+    #   vstack(), then cut out the arrays concatenated in this way into
+    #   separate bands using reshape()
+    b = target_band
+    stack = np.vstack(list(map(
+        lambda r: r[b,...].reshape((1, shp[1], shp[2])), arrays)))
+    # Insert nan into NoData locations
+    stack = np.where(stack == nodata, np.nan, stack)
+    # Find the reducer function based on its name (should be a &#34;nan&#34; version)
+    reducer_func = partial(getattr(np, &#39;nan%s&#39; % reducer), axis = 0)
+    # Avoid traceback masking and memory errors with ProcessPoolExecutor
+    #   when only a single process is requested
+    if processes == 1:
+        all_results = reducer_func(stack)
+    else:
+        # Get index ranges for each process to work on
+        work = partition(stack, num_processes = processes, axis = 1)
+        with ProcessPoolExecutor(max_workers = processes) as executor:
+            all_results = executor.map(
+                reducer_func, [stack[:,i:j] for i, j in work])
+
+    # Stack each reduced band (and reshape to multi-band image)
+    result = np.concatenate(list(all_results), axis = 0)\
+        .reshape((1, shp[1], shp[2]))
+    return np.where(np.isnan(result), nodata, result)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.composite_hdf"><code class="name flex">
+<span>def <span class="ident">composite_hdf</span></span>(<span>hdf_file_glob, field, subset_id='CONUS', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A convenience wrapper for <code><a title="pyl4c.utils.composite" href="#pyl4c.utils.composite">composite()</a></code>, enabling its use with HDF5 files
+specified by path names. Accepts additional <code>**kwargs</code> as keywoard arguments
+to <code><a title="pyl4c.utils.composite" href="#pyl4c.utils.composite">composite()</a></code>.</p>
+<p>NOTE: This function does NOT calculate memory use and will NOT guard
+against memory overflow.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf_file_glob</code></strong> :&ensp;<code>str</code></dt>
+<dd>A file path expression for glob.glob()</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>The hierarchical path to a variable within each HDF5 file</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>A well-known identifier for a bounding-box subset</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def composite_hdf(hdf_file_glob, field, subset_id = &#39;CONUS&#39;, **kwargs):
+    &#39;&#39;&#39;
+    A convenience wrapper for `composite()`, enabling its use with HDF5 files
+    specified by path names. Accepts additional `**kwargs` as keywoard arguments
+    to `pyl4c.utils.composite()`.
+
+    NOTE: This function does NOT calculate memory use and will NOT guard
+    against memory overflow.
+
+    Parameters
+    ----------
+    hdf_file_glob : str
+        A file path expression for glob.glob()
+    field : str
+        The hierarchical path to a variable within each HDF5 file
+    subset_id : str
+        A well-known identifier for a bounding-box subset
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    assert subset_id in SUBSETS_BBOX.keys()
+    assert len(glob.glob(hdf_file_glob)) &gt; 0, &#39;No files found matching GLOB regular expression&#39;
+    arrays = []
+    for path in glob.glob(hdf_file_glob):
+        with h5py.File(path, &#39;r&#39;) as hdf:
+            assert field in hdf.keys(), &#39;Variable &#34;%s&#34; not found in HDF5 file&#39; % field
+            arrays.append(subset(hdf, field, subset_id = subset_id)[0])
+    return composite(*arrays, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.get_ease2_coords"><code class="name flex">
+<span>def <span class="ident">get_ease2_coords</span></span>(<span>grid, in_1d=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>DEPRECATED: Use <code><a title="pyl4c.ease2.ease2_coords" href="ease2.html#pyl4c.ease2.ease2_coords">ease2_coords()</a></code> instead.
+Returns a tuple of 1D arrays, the X- and Y-coordinates of the desired
+EASE-Grid 2.0, from reading the ancillary data file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+<dt><strong><code>in_1d</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to return only 1D arrays, avoiding redundant rows/ columns
+(Default)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>X- and Y-coordinate arrays: (numpy.ndarray, numpy.ndarray)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ease2_coords(grid, in_1d = True):
+    &#39;&#39;&#39;
+    DEPRECATED: Use `pyl4c.ease2.ease2_coords()` instead.
+    Returns a tuple of 1D arrays, the X- and Y-coordinates of the desired
+    EASE-Grid 2.0, from reading the ancillary data file.
+
+    Parameters
+    ----------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    in_1d : bool
+        True to return only 1D arrays, avoiding redundant rows/ columns
+        (Default)
+
+    Returns
+    -------
+    tuple
+        X- and Y-coordinate arrays: (numpy.ndarray, numpy.ndarray)
+    &#39;&#39;&#39;
+    return ease2_coords(grid, in_1d)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.get_ease2_slice_idx"><code class="name flex">
+<span>def <span class="ident">get_ease2_slice_idx</span></span>(<span>grid, subset_id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a tuple <code>((xmin, xmax), (ymin, ymax))</code> of the indices that can be
+used to slice a corresponding EASE-Grid 2.0 in order to extract the
+desired bounding box.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Keyword designating the desired subset and its corresponding bounding
+box</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>Tuple of tuples: <code>((xmin, xmax), (ymin, ymax))</code></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ease2_slice_idx(grid, subset_id):
+    &#39;&#39;&#39;
+    Returns a tuple `((xmin, xmax), (ymin, ymax))` of the indices that can be
+    used to slice a corresponding EASE-Grid 2.0 in order to extract the
+    desired bounding box.
+
+    Parameters
+    ----------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    subset_id : str
+        Keyword designating the desired subset and its corresponding bounding
+        box
+
+    Returns
+    -------
+    tuple
+        Tuple of tuples: `((xmin, xmax), (ymin, ymax))`
+    &#39;&#39;&#39;
+    assert grid in EASE2_GRID_PARAMS.keys(),\
+        &#39;Could not understand grid argument; must be one of: %s&#39; % &#39;, &#39;.join(EASE2_GRID_PARAMS.keys())
+    x_coords, y_coords = ease2_coords(grid, in_1d = True)
+    return get_slice_idx_by_bbox(x_coords, y_coords, subset_id)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.get_ease2_slice_offsets"><code class="name flex">
+<span>def <span class="ident">get_ease2_slice_offsets</span></span>(<span>grid, subset_id)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the X and Y offsets of an EASE-Grid 2.0 subset, so that an output
+raster array can be aligned properly; see
+<code><a title="pyl4c.spatial.array_to_raster" href="spatial.html#pyl4c.spatial.array_to_raster">array_to_raster()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>Keyword designating the desired subset and its corresponding bounding box</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>The X- and Y-offset <code>(xoff, yoff)</code></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_ease2_slice_offsets(grid, subset_id):
+    &#39;&#39;&#39;
+    Returns the X and Y offsets of an EASE-Grid 2.0 subset, so that an output
+    raster array can be aligned properly; see
+    `pyl4c.spatial.array_to_raster()`.
+
+    Parameters
+    ----------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    subset_id : str
+        Keyword designating the desired subset and its corresponding bounding box
+
+    Returns
+    -------
+    tuple
+        The X- and Y-offset `(xoff, yoff)`
+    &#39;&#39;&#39;
+    assert grid in EASE2_GRID_PARAMS.keys(),\
+        &#39;Could not understand grid argument; must be one of: %s&#39; % &#39;, &#39;.join(EASE2_GRID_PARAMS.keys())
+    slice_idx = get_ease2_slice_idx(grid = grid, subset_id = subset_id)
+    return (slice_idx[0][0], slice_idx[1][0])</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.get_pft_array"><code class="name flex">
+<span>def <span class="ident">get_pft_array</span></span>(<span>grid, subset_id=None, subset_bbox=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns an array of PFT codes on the given EASE-Grid 2.0 for the entire
+globe or a specified subset.</p>
+<h2 id="arguments">Arguments</h2>
+<dl>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Instead of <code>subset_bbox</code>, can provide keyword designating
+the desired subset area</dd>
+<dt><strong><code>subset_bbox</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>(Optional) Instead of <code>subset_id</code>, can provide any arbitrary bounding
+box, i.e., sequence of coordinates: <code>&lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;</code></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_pft_array(grid, subset_id = None, subset_bbox = None):
+    &#39;&#39;&#39;
+    Returns an array of PFT codes on the given EASE-Grid 2.0 for the entire
+    globe or a specified subset.
+
+    Arguments
+    ---------
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+    subset_id : str
+        (Optional) Instead of `subset_bbox`, can provide keyword designating
+        the desired subset area
+    subset_bbox : tuple
+        (Optional) Instead of `subset_id`, can provide any arbitrary bounding
+        box, i.e., sequence of coordinates: `&lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;`
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    assert grid in EASE2_GRID_PARAMS.keys(),\
+        &#39;Could not understand grid argument; must be one of: %s&#39; % &#39;, &#39;.join(EASE2_GRID_PARAMS.keys())
+    assert (subset_id is None and subset_bbox is None) or (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None),\
+        &#39;Should provide only one argument: Either subset_id or subset_bbox&#39;
+    m = int(grid[-1]) # Pop off the grid size in km
+    anc_hdf_path = ANCILLARY_DATA_PATHS[&#39;smap_l4c_ancillary_data_file_path&#39;]
+    field = ANCILLARY_DATA_PATHS[&#39;smap_l4c_%dkm_ancillary_data_lc_path&#39; % m]
+    xf = ANCILLARY_DATA_PATHS[&#39;smap_l4c_%dkm_ancillary_data_x_coord_path&#39; % m]
+    yf = ANCILLARY_DATA_PATHS[&#39;smap_l4c_%dkm_ancillary_data_y_coord_path&#39; % m]
+    with h5py.File(anc_hdf_path, &#39;r&#39;) as hdf:
+        if subset_id is not None:
+            pft_array, _, _ = subset(
+                hdf, field, hdf[xf][0,:], hdf[yf][:,0], subset_id = subset_id)
+        elif subset_bbox is not None:
+            pft_array, _, _ = subset(
+                hdf, field, hdf[xf][0,:], hdf[yf][:,0], subset_bbox = subset_bbox)
+        else:
+            pft_array = hdf[field][:]
+    return pft_array</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.get_slice_idx_by_bbox"><code class="name flex">
+<span>def <span class="ident">get_slice_idx_by_bbox</span></span>(<span>x_coords, y_coords, subset_id=None, subset_bbox=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a tuple <code>((xmin, xmax), (ymin, ymax))</code> of the indices that can be
+used to slice a corresponding EASE2 grid in order to extract the
+desired bounding box. The returned indices correspond to the approximate
+locations of the bounding box (defined in geographic space) in array
+index space; i.e., if <code>array</code> is the EASE2 grid of interest, then the
+following slice will extract an area within the bounding box (bbox):</p>
+<pre><code>array[ymin:ymax, xmin:xmax]
+</code></pre>
+<p>NOTE: Coordinate arrays (<code>x_coords</code>, <code>y_coords</code>) must be given in the same
+units as the BBOX definition in <code>SUBSET_BBOX</code>, i.e., decimal degrees.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x_coords</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A 1D array of X coordinate values</dd>
+<dt><strong><code>y_coords</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A 1D array of Y coordinate values</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Instead of subset_bbox, can provide keyword designating
+the desired subset area</dd>
+<dt><strong><code>subset_bbox</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>(Optional) Instead of subset_id, can provide any arbitrary bounding
+box, i.e., sequence of coordinates: <xmin>, <ymin>, <xmax>, <ymax></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_slice_idx_by_bbox(
+        x_coords, y_coords, subset_id = None, subset_bbox = None):
+    &#39;&#39;&#39;
+    Returns a tuple `((xmin, xmax), (ymin, ymax))` of the indices that can be
+    used to slice a corresponding EASE2 grid in order to extract the
+    desired bounding box. The returned indices correspond to the approximate
+    locations of the bounding box (defined in geographic space) in array
+    index space; i.e., if `array` is the EASE2 grid of interest, then the
+    following slice will extract an area within the bounding box (bbox):
+
+        array[ymin:ymax, xmin:xmax]
+
+    NOTE: Coordinate arrays (`x_coords`, `y_coords`) must be given in the same
+    units as the BBOX definition in `SUBSET_BBOX`, i.e., decimal degrees.
+
+    Parameters
+    ----------
+    x_coords : numpy.ndarray
+        A 1D array of X coordinate values
+    y_coords : numpy.ndarray
+        A 1D array of Y coordinate values
+    subset_id : str
+        (Optional) Instead of subset_bbox, can provide keyword designating
+        the desired subset area
+    subset_bbox : tuple
+        (Optional) Instead of subset_id, can provide any arbitrary bounding
+        box, i.e., sequence of coordinates: &lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;
+    &#39;&#39;&#39;
+    assert (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None), &#39;Should provide only one argument: Either subset_id or subset_bbox&#39;
+    assert x_coords.ndim == 1 and y_coords.ndim == 1, &#39;Must provide 1D coordinate arrays only&#39;
+
+    bb = subset_bbox
+    if subset_id is not None:
+        bb = SUBSETS_BBOX[subset_id]
+
+    # Get min, max indices of X coords within bbox; note that we +1 because
+    #   ending slice indices are non-inclusive in Python
+    if x_coords[-1] &gt; x_coords[0]:
+        # If X-coordinates are sorted smallest to largest...
+        x_slice_idx = [
+            np.where(x_coords &gt;= bb[0])[0].min(),
+            np.where(x_coords &lt;= bb[2])[0].max() + 1
+        ]
+    else:
+        x_slice_idx = [
+            np.where(x_coords &lt;= bb[0])[0].min(),
+            np.where(x_coords &gt;= bb[2])[0].max() + 1
+        ]
+
+    # Get min, max indices of Y coords within bbox
+    if y_coords[-1] &gt; y_coords[0]:
+        # If Y-coordinates are sorted smallest to largest...
+        y_slice_idx = [
+            np.where(y_coords &lt;= bb[3])[0].max() + 1,
+            np.where(y_coords &gt;= bb[1])[0].min()
+        ]
+    else:
+        y_slice_idx = [
+            np.where(y_coords &lt;= bb[3])[0].min(),
+            np.where(y_coords &gt;= bb[1])[0].max() + 1
+        ]
+
+    x_slice_idx.sort() # Necessary b/c slicing is always small:large number
+    y_slice_idx.sort()
+    return (tuple(x_slice_idx), tuple(y_slice_idx))</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.get_xy_coords"><code class="name flex">
+<span>def <span class="ident">get_xy_coords</span></span>(<span>hdf_or_nc, in_1d=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a tuple (longitude, latitude) where the elements are coordinate
+arrays of longitude and latitude. These are needed for, e.g., plotting
+the geophysical data on a global geographic grid. This is convenience
+function for extracting the longitude-latitude coordinates based on the
+filename and our knowledge of where these data are stored. NOTE: This may
+seem like a hack, but is the easiest solution to the fundamental problem
+of inconsistent variable paths; inconsistent naming between dataset IDs
+and filenames; and incomplete documentation of each within the HDF5 file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf_or_nc</code></strong> :&ensp;<code>h4py.File</code> or <code>netcdf4.Dataset</code></dt>
+<dd>Either: an HDF5 file / h5py.File object OR a NetCDF file</dd>
+<dt><strong><code>in_1d</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True (Default) to return 1D arrays; if False, returns 2D arrays where
+the coordinates are duplicated along one axis</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_xy_coords(hdf_or_nc, in_1d = True):
+    &#39;&#39;&#39;
+    Returns a tuple (longitude, latitude) where the elements are coordinate
+    arrays of longitude and latitude. These are needed for, e.g., plotting
+    the geophysical data on a global geographic grid. This is convenience
+    function for extracting the longitude-latitude coordinates based on the
+    filename and our knowledge of where these data are stored. NOTE: This may
+    seem like a hack, but is the easiest solution to the fundamental problem
+    of inconsistent variable paths; inconsistent naming between dataset IDs
+    and filenames; and incomplete documentation of each within the HDF5 file.
+
+    Parameters
+    ----------
+    hdf_or_nc : h4py.File or netcdf4.Dataset
+        Either: an HDF5 file / h5py.File object OR a NetCDF file
+    in_1d : bool
+        True (Default) to return 1D arrays; if False, returns 2D arrays where
+        the coordinates are duplicated along one axis
+    &#39;&#39;&#39;
+    try:
+        # HDF5 files
+        if hasattr(hdf_or_nc, &#39;keys&#39;) and hasattr(hdf_or_nc, &#39;filename&#39;):
+            if &#39;GPP&#39; in hdf_or_nc.keys() and &#39;NEE&#39; in hdf_or_nc.keys():
+                d = HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;] # NOTE: We assume Version 4
+            elif &#39;Geophysical_Data&#39; in hdf_or_nc.keys():
+                if not &#39;sm_surface&#39; in hdf_or_nc[&#39;Geophysical_Data&#39;].keys():
+                    raise ValueError()
+                d = HDF_PATHS[&#39;SPL4SMGP&#39;][&#39;4&#39;]
+            else:
+                raise ValueError()
+            x = hdf_or_nc[d[&#39;longitude&#39;]]
+            y = hdf_or_nc[d[&#39;latitude&#39;]]
+        # NetCDF files
+        else:
+            assert hasattr(hdf_or_nc, &#39;variables&#39;), &#39;Assumed NetCDF file has no variables&#39;
+            if &#39;lon&#39; in hdf_or_nc.variables and &#39;lat&#39; in hdf_or_nc.variables:
+                x = hdf_or_nc.variables[&#39;lon&#39;]
+                y = hdf_or_nc.variables[&#39;lat&#39;]
+
+    except ValueError:
+        # Let&#39;s assume we know what the X-Y coordinate array keys are
+        if &#39;cell_lon&#39; in hdf_or_nc.keys() and &#39;cell_lat&#39; in hdf_or_nc.keys():
+            x = hdf_or_nc[&#39;cell_lon&#39;]
+            y = hdf_or_nc[&#39;cell_lat&#39;]
+        else:
+            raise NotImplementedError(&#39;The filename was not recognized as a product with known longitude-latitude data&#39;)
+
+    x = x[0,:] if in_1d and len(x.shape) &gt; 1 else x[:]
+    y = y[:,0] if in_1d and len(y.shape) &gt; 1 else y[:]
+    return (x, y)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.index"><code class="name flex">
+<span>def <span class="ident">index</span></span>(<span>array, indices)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Fast array indexing by subsetting the array first. If there are multiple
+indices, anywhere in the array, that need to be returned, this provides
+a speed-up by creating a smaller array to index.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Array containing data at (row, column) indices</dd>
+<dt><strong><code>indices</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>2-element sequence of (row, column) indices, in order</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>List of indexed values</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def index(array, indices):
+    &#39;&#39;&#39;
+    Fast array indexing by subsetting the array first. If there are multiple
+    indices, anywhere in the array, that need to be returned, this provides
+    a speed-up by creating a smaller array to index.
+
+    Parameters
+    ----------
+    array : numpy.ndarray
+        Array containing data at (row, column) indices
+    indices : tuple or list
+        2-element sequence of (row, column) indices, in order
+
+    Returns
+    -------
+    list
+        List of indexed values
+    &#39;&#39;&#39;
+    assert len(indices) == 2,\
+        &#39;Must provide 2-element sequence of (row coordinates, column coordinates)&#39;
+    assert len(indices[0]) == len(indices[1]),\
+        &#39;Array indices must be the same length!&#39;
+    assert array.ndim &lt;= 2, &#39;Array must have 2 or fewer axes&#39;
+    midx = np.ravel_multi_index(indices, array.shape)
+    return array.ravel()[midx]</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.partition"><code class="name flex">
+<span>def <span class="ident">partition</span></span>(<span>array, num_processes, axis=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates index ranges for partitioning an array to work on over multiple
+processes.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The 2-dimensional array to paritition</dd>
+<dt><strong><code>num_processes</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of processes desired</dd>
+<dt><strong><code>axis</code></strong> :&ensp;<code>int</code></dt>
+<dd>The axis to break apart into chunks</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def partition(array, num_processes, axis = 0):
+    &#39;&#39;&#39;
+    Creates index ranges for partitioning an array to work on over multiple
+    processes.
+
+    Parameters
+    ----------
+    array : numpy.ndarray
+        The 2-dimensional array to paritition
+    num_processes : int
+        The number of processes desired
+    axis : int
+        The axis to break apart into chunks
+
+    Returns
+    -------
+    list
+    &#39;&#39;&#39;
+    N = array.shape[axis]
+    return list(partition_generator(N, num_processes))</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.partition_generator"><code class="name flex">
+<span>def <span class="ident">partition_generator</span></span>(<span>n_elements, n_parts=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A Generator that yields slice indices for equal-sized partitions of a
+1D array or sequence. See also: <code><a title="pyl4c.utils.partition" href="#pyl4c.utils.partition">partition()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>n_elements</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of elements in array/ sequence</dd>
+<dt><strong><code>n_parts</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of partitions desired</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>generator</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def partition_generator(n_elements, n_parts = 1):
+    &#39;&#39;&#39;
+    A Generator that yields slice indices for equal-sized partitions of a
+    1D array or sequence. See also: `partition()`.
+
+    Parameters
+    ----------
+    n_elements : int
+        The number of elements in array/ sequence
+    n_parts : int
+        The number of partitions desired
+
+    Returns
+    -------
+    generator
+    &#39;&#39;&#39;
+    p = 0
+    parts = np.linspace(0, n_elements, n_parts + 1, dtype = int)
+    while p &lt; n_parts:
+        yield (
+            int(parts[p]),
+            # If it is the final index, add 1
+            int(parts[p+1] if (p != n_parts - 1) else (parts[p+1] + 1))
+        )
+        p += 1</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.sample"><code class="name flex">
+<span>def <span class="ident">sample</span></span>(<span>array, indices)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Samples the value in an array at each (row, column) position in a sequence
+of row-column index pairs.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>indices</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Tuple of (x, y) coordinate pairs; no z-level should be be provided
+(2D coordinate pairs only)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sample(array, indices):
+    &#39;&#39;&#39;
+    Samples the value in an array at each (row, column) position in a sequence
+    of row-column index pairs.
+
+    Parameters
+    ----------
+    array : numpy.ndarray
+    indices : tuple
+        Tuple of (x, y) coordinate pairs; no z-level should be be provided
+        (2D coordinate pairs only)
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    indices_by_axis = [
+        int(i[0]) for i in indices], [int(i[1]) for i in indices
+    ]
+    # If row, colum indices are not sorted, we&#39;ll need another list comprehension
+    try:
+        return array[indices_by_axis]
+    except TypeError:
+        return [array[idx[0], idx[1]] for idx in indices]</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.subset"><code class="name flex">
+<span>def <span class="ident">subset</span></span>(<span>hdf_or_nc, field, x_coords=None, y_coords=None, subset_id=None, subset_bbox=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a subset array from the HDF, for the desired variable, where the
+array corresponds to an area defined by a known bounding box, e.g., the
+continental United States (CONUS).</p>
+<p>NOTE: <code>x_coords</code> and <code>y_coords</code> (hierarchical paths) will be inferred from
+the filename if not provided at all.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf_or_nc</code></strong> :&ensp;<code>h5py.File</code> or <code>netcdf4.Dataset</code></dt>
+<dd>Either: an HDF5 file / h5py.File object OR a NetCDF file</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>Hierarchical path to the desired variable</dd>
+<dt><strong><code>x_coords</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>str</code></dt>
+<dd>(Optional) 1D NumPy array of X coordinates OR hierarchical path to
+the variable representing X coordinates, e.g., longitude values</dd>
+<dt><strong><code>y_coords</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>str</code></dt>
+<dd>(Optional) 1D NumPy array of Y coordinates OR hierarchical path to
+the variable representing Y coordinates, e.g., latitude values</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Instead of subset_bbox, can provide keyword designating
+the desired subset area</dd>
+<dt><strong><code>subset_bbox</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>(Optional) Instead of subset_id, can provide any arbitrary bounding
+box, i.e., sequence of coordinates: <xmin>, <ymin>, <xmax>, <ymax></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>Tuple of: subset array, xoff, yoff; (numpy.ndarray, Int, Int)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def subset(
+        hdf_or_nc, field, x_coords = None, y_coords = None, subset_id = None,
+        subset_bbox = None):
+    &#39;&#39;&#39;
+    Returns a subset array from the HDF, for the desired variable, where the
+    array corresponds to an area defined by a known bounding box, e.g., the
+    continental United States (CONUS).
+
+    NOTE: `x_coords` and `y_coords` (hierarchical paths) will be inferred from
+    the filename if not provided at all.
+
+    Parameters
+    ----------
+    hdf_or_nc : h5py.File or netcdf4.Dataset
+        Either: an HDF5 file / h5py.File object OR a NetCDF file
+    field : str
+        Hierarchical path to the desired variable
+    x_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of X coordinates OR hierarchical path to
+        the variable representing X coordinates, e.g., longitude values
+    y_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of Y coordinates OR hierarchical path to
+        the variable representing Y coordinates, e.g., latitude values
+    subset_id : str
+        (Optional) Instead of subset_bbox, can provide keyword designating
+        the desired subset area
+    subset_bbox : tuple or list
+        (Optional) Instead of subset_id, can provide any arbitrary bounding
+        box, i.e., sequence of coordinates: &lt;xmin&gt;, &lt;ymin&gt;, &lt;xmax&gt;, &lt;ymax&gt;
+
+    Returns
+    -------
+    tuple
+        Tuple of: subset array, xoff, yoff; (numpy.ndarray, Int, Int)
+    &#39;&#39;&#39;
+    assert (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None), &#39;Should provide only one argument: Either subset_id or subset_bbox&#39;
+    assert isinstance(hdf_or_nc, h5py.File) or hasattr(hdf_or_nc, &#39;variables&#39;), &#39;An HDF5 or NetCDF file is required; cannot subset a stand-alone array&#39;
+    assert (x_coords is None and y_coords is None) or (isinstance(x_coords, str) and isinstance(y_coords, str)) or (isinstance(x_coords, np.ndarray) and isinstance(y_coords, np.ndarray)), &#39;The x_coords and y_coords arguments must have matching type&#39;
+    assert (not isinstance(x_coords, np.ndarray)) or (x_coords.ndim == 1), &#39;The x_coords and y_coords arguments must be 1D arrays, otherwise pass a String or None&#39;
+
+    # Check that we have a 2D array to work with
+    if hasattr(hdf_or_nc, &#39;variables&#39;):
+        shp = hdf_or_nc.variables[field].shape
+    else:
+        assert field in hdf_or_nc.keys(), &#39;Field name &#34;%s&#34; not found&#39; % field
+        shp = hdf_or_nc[field].shape
+    assert len(shp) == 2, &#39;HDF5 or NetCDF data array indexed by &#34;%s&#34; must be a 2D array&#39; % field
+
+    # If a hierarchical path to the X and Y coordinate variables was not
+    #   given, then infer the paths from the filename
+    if x_coords is None:
+        x_coords, y_coords = get_xy_coords(hdf_or_nc, in_1d = True)
+    if isinstance(x_coords, str):
+        # NOTE: Only need first row of X-coordinate array, first column of
+        #   Y-coordinate array, because they are duplicated thereafter
+        if hasattr(hdf_or_nc, &#39;variables&#39;):
+            x_coords = hdf_or_nc.variables[x_coords][0,:] # NetCDF
+            y_coords = hdf_or_nc.variables[y_coords][0,:]
+        else:
+            x_coords = hdf_or_nc[x_coords][0,:] # HDF5
+            y_coords = hdf_or_nc[y_coords][:,0]
+
+    x_idx, y_idx = get_slice_idx_by_bbox(
+        x_coords, y_coords, subset_id, subset_bbox)
+    xmin, xmax = x_idx # Unpack the slice range indexes
+    ymin, ymax = y_idx
+    if hasattr(hdf_or_nc, &#39;variables&#39;):
+        return (hdf_or_nc.variables[field][ymin:ymax, xmin:xmax], xmin, ymin)
+    return (hdf_or_nc[field][ymin:ymax, xmin:xmax], xmin, ymin)</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.summarize"><code class="name flex">
+<span>def <span class="ident">summarize</span></span>(<span>data_array, summaries, scale=1, data_mask=None, nodata=-9999)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates statistical summar[ies] of an input data array over all values.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Array of data values that we wish to summarize, e.g., gridded land
+surface temperatures</dd>
+<dt><strong><code>summaries</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A Dictionary of <code>{name: function}</code> where function is some vectorized
+function that acts over the values associated with a class label,
+including NaNs, and returns a single number</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Optional scaling parameter to apply to the input array values, e.g.,
+if the array values are (spatial) rates and should be scaled by the
+(equal) area of the grid cell</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>NoData or Fill value(s) to ignore; can pass a sequence of multiple
+values (Default: -9999)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def summarize(
+        data_array, summaries, scale = 1, data_mask = None, nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array over all values.
+
+    Parameters
+    ----------
+    data_array : numpy.ndarray
+        Array of data values that we wish to summarize, e.g., gridded land
+        surface temperatures
+    summaries : dict
+        A Dictionary of `{name: function}` where function is some vectorized
+        function that acts over the values associated with a class label,
+        including NaNs, and returns a single number
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    nodata : int or float
+        NoData or Fill value(s) to ignore; can pass a sequence of multiple
+        values (Default: -9999)
+
+    Returns
+    -------
+    dict
+    &#39;&#39;&#39;
+    assert data_array.ndim &lt;= 2 or (data_array.ndim == 3 and data_array.shape[0] == 1), &#39;Can only work with 1-band raster arrays&#39;
+    if data_array.ndim == 3:
+        data_array = data_array[0,...] # Unwrap 1-band raster arrays
+
+    # Fill in NaN where there is NoData
+    data_array = np.where(np.isin(data_array, nodata), np.nan, data_array)
+    stats = dict([(k, None) for k in summaries.keys()])
+    for stat_name, func in summaries.items():
+        # NOTE: Runs faster if dtype of accumulator is *not* set
+        stats[stat_name] = func(np.multiply(data_array, scale))
+    return stats</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.summarize_by_class"><code class="name flex">
+<span>def <span class="ident">summarize_by_class</span></span>(<span>data_array, class_array, summaries, scale=1, ignore=(0,), nodata=-9999)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates statistical summar[ies] of an input data array for each class
+label in an input class array.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>data_array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Array of data values that we wish to summarize, e.g., gridded land
+surface temperatures</dd>
+<dt><strong><code>class_array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Array of class labels that will be used to summarize input data,
+e.g., watersheds or ecoregions; should NOT contain any NaNs as this
+will cause the function to hang</dd>
+<dt><strong><code>summaries</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A Dictionary of <code>{name: function}</code> where function is some vectorized
+function that acts over the values associated with a class label,
+including NaNs, and returns a single number</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Optional scaling parameter to apply to the input array values, e.g.,
+if the array values are (spatial) rates and should be scaled by the
+(equal) area of the grid cell</dd>
+<dt><strong><code>ignore</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Class labels (values in the class_array) to ignore</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>NoData or Fill value to ignore (Default: -9999)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>A nested Python dictionary with a key-value pair for each class,
+where the value is another dictionary with a key-value pair for each
+summary statistic.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def summarize_by_class(
+        data_array, class_array, summaries, scale = 1, ignore = (0,),
+        nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array for each class
+    label in an input class array.
+
+    Parameters
+    ----------
+    data_array : numpy.ndarray
+        Array of data values that we wish to summarize, e.g., gridded land
+        surface temperatures
+    class_array : numpy.ndarray
+        Array of class labels that will be used to summarize input data,
+        e.g., watersheds or ecoregions; should NOT contain any NaNs as this
+        will cause the function to hang
+    summaries : dict
+        A Dictionary of `{name: function}` where function is some vectorized
+        function that acts over the values associated with a class label,
+        including NaNs, and returns a single number
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    ignore : tuple
+        Class labels (values in the class_array) to ignore
+    nodata : int or float
+        NoData or Fill value to ignore (Default: -9999)
+
+    Returns
+    -------
+    dict
+        A nested Python dictionary with a key-value pair for each class,
+        where the value is another dictionary with a key-value pair for each
+        summary statistic.
+    &#39;&#39;&#39;
+    assert data_array.ndim &lt;= 2 or (data_array.ndim == 3 and data_array.shape[0] == 1), &#39;Can only work with 1-band raster arrays&#39;
+    if data_array.ndim == 3:
+        data_array = data_array[0,...] # Unwrap 1-band raster arrays
+    assert data_array.shape == class_array.shape, &#39;Input data_array does not match shape of the class_array&#39;
+    # Fill in NaN where there is NoData
+    data_array = np.where(np.isin(data_array, nodata), np.nan, data_array)
+    # In case None was passed to &#34;ignore,&#34; replace with empty list
+    ignore = ignore if ignore is not None else []
+    assert not np.any(np.isnan(class_array)),\
+        &#39;Class array should not contain NaNs; use &#34;ignore&#34; argument instead&#39;
+    classes = set(np.unique(class_array[~np.isnan(class_array)])) # Create, e.g., {1: {}, 2: {}, ...}
+    stats = dict([(k, dict()) for k in classes.difference(ignore)])
+    for code in classes.difference(ignore):
+        query = np.where(np.isin(class_array, code), data_array, np.nan)
+        stats[code] = summarize(query, summaries, scale, nodata = nodata)
+    return stats</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.summarize_hdf_by_pft"><code class="name flex">
+<span>def <span class="ident">summarize_hdf_by_pft</span></span>(<span>hdf, field, summaries, scale=1, pft_codes=range(1, 9), subset_id='CONUS', x_coords=None, y_coords=None, nodata=-9999)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates statistical summar[ies] of an input data array for each Plant
+Functional Type (PFT) class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dd>The HDF5 file / h5py.File object</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>One of: "SOC", "NEE", "GPP", or "RH"</dd>
+<dt><strong><code>summaries</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A Dictionary of <code>{name: function}</code> where function is some vectorized
+function that acts over the values associated with a class label,
+including NaNs, and returns a single number</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Optional scaling parameter to apply to the input array values, e.g.,
+if the array values are (spatial) rates and should be scaled by the
+(equal) area of the grid cell</dd>
+</dl>
+<p>pft_codes
+The PFT codes to create summaries for; defaults to all
+of them, (i.e. Default: 1-8 inclusive)
+subset_id
+Keyword designating the desired subset area
+(Default: CONUS)
+x_coords
+(Optional) A 1D NumPy array of X coordinate values, used
+in subsetting and can be automatically discovered
+y_coords
+(Optional) A 1D NumPy array of Y coordinate values, used
+in subsetting and can be automatically discovered
+nodata
+NoData or Fill value to ignore (Default: -9999)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def summarize_hdf_by_pft(
+        hdf, field, summaries, scale = 1, pft_codes = range(1, 9),
+        subset_id = &#39;CONUS&#39;, x_coords = None, y_coords = None,
+        nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array for each Plant
+    Functional Type (PFT) class.
+
+    Parameters
+    ----------
+    hdf : h5py.File
+        The HDF5 file / h5py.File object
+    field : str
+        One of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;
+    summaries : dict
+        A Dictionary of `{name: function}` where function is some vectorized
+        function that acts over the values associated with a class label,
+        including NaNs, and returns a single number
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    pft_codes   The PFT codes to create summaries for; defaults to all
+                of them, (i.e. Default: 1-8 inclusive)
+    subset_id   Keyword designating the desired subset area
+                (Default: CONUS)
+    x_coords    (Optional) A 1D NumPy array of X coordinate values, used
+                in subsetting and can be automatically discovered
+    y_coords    (Optional) A 1D NumPy array of Y coordinate values, used
+                in subsetting and can be automatically discovered
+    nodata      NoData or Fill value to ignore (Default: -9999)
+    &#39;&#39;&#39;
+    assert field in (&#39;SOC&#39;, &#39;NEE&#39;, &#39;GPP&#39;, &#39;RH&#39;), &#39;Only possible to summarize one of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;&#39;
+    assert (subset_id in SUBSETS_BBOX.keys()) or (subset_id is None), &#39;Named subset_id not a recognized geographic subset; see SUBSETS_BBOX in this module&#39;
+    # Warn user against using nansum() or sum() functions
+    if any([k.rfind(&#39;sum&#39;) &gt; 0 for k in summaries.keys()]):
+        print(&#39;WARNING: Totals or sums may be biased low because subgrid heterogeneity is not recognized; use total_hdf_by_pft() instead&#39;)
+
+    field_names = [
+        &#39;%s/%s_pft%d_mean&#39; % (field, field.lower(), p) for p in pft_codes
+    ]
+    stats = dict([(p, dict()) for p in field_names])
+    for name in field_names:
+        if subset_id is not None:
+            array, x, y = subset(
+                hdf, name, x_coords, y_coords, subset_id)
+        else:
+            array = hdf[name][:]
+
+        stats[name] = summarize(array, summaries, scale, nodata = nodata)
+
+    return stats</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.utils.total_hdf_by_pft"><code class="name flex">
+<span>def <span class="ident">total_hdf_by_pft</span></span>(<span>hdf, counts, field, scale=1, pft_codes=range(1, 9), max_count=81, subset_id='CONUS', x_coords=None, y_coords=None, nodata=-9999)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates statistical summar[ies] of an input data array for each Plant
+Functional Type (PFT) class. The problem with calculating <em>totals</em> for
+PFT means is that we need to know the area proportion of a given PFT
+within each 9-km cell in order to correctly sum over that area. This
+function correctly scales the 9-km PFT mean value by the provided <code>scale</code>
+argument and then scales this value by the proportion of 1-km subgrid
+cells that match the given PFT. This produces accurate sums of spatial
+rates; i.e., the <code>scale</code> parameter converts a PFT mean to a (biased)
+total, then the <code>counts</code> are used to scale that total by the area
+proportion of the given PFT. The summary function used is np.nansum.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dd>The HDF5 file / h5py.File object</dd>
+<dt><strong><code>counts</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>A sequence of NumPy arrays, each array corresponding to the count of
+1-km subcells matching a certain PFT; these should be provided in
+order, i.e., first element is the count of PFT 1 subcells, second
+element for PFT 2, and on.</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>One of: "SOC", "NEE", "GPP", or "RH"</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Optional scaling parameter to apply to the input array values, e.g.,
+if the array values are (spatial) rates and should be scaled by the
+(equal) area of the grid cell</dd>
+<dt><strong><code>pft_codes</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>The PFT codes to create summaries for; defaults to all of them,
+(i.e. Default: 1-8 inclusive)</dd>
+<dt><strong><code>max_count</code></strong> :&ensp;<code>int</code></dt>
+<dd>The maximum number of 1-km subcells that any given PFT can total
+within a 9-km area; no reason why this shouldn't be 81 (9 x 9),
+probably.</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Instead of subset_bbox, can provide keyword designating
+the desired subset area</dd>
+<dt><strong><code>x_coords</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>str</code></dt>
+<dd>(Optional) 1D NumPy array of X coordinates OR hierarchical path to
+the variable representing X coordinates, e.g., longitude values</dd>
+<dt><strong><code>y_coords</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>str</code></dt>
+<dd>(Optional) 1D NumPy array of Y coordinates OR hierarchical path to
+the variable representing Y coordinates, e.g., latitude values</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>NoData or Fill value to ignore (Default: -9999)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def total_hdf_by_pft(
+        hdf, counts, field, scale = 1, pft_codes = range(1, 9),
+        max_count = 81, subset_id = &#39;CONUS&#39;, x_coords = None, y_coords = None,
+        nodata = -9999):
+    &#39;&#39;&#39;
+    Calculates statistical summar[ies] of an input data array for each Plant
+    Functional Type (PFT) class. The problem with calculating *totals* for
+    PFT means is that we need to know the area proportion of a given PFT
+    within each 9-km cell in order to correctly sum over that area. This
+    function correctly scales the 9-km PFT mean value by the provided `scale`
+    argument and then scales this value by the proportion of 1-km subgrid
+    cells that match the given PFT. This produces accurate sums of spatial
+    rates; i.e., the `scale` parameter converts a PFT mean to a (biased)
+    total, then the `counts` are used to scale that total by the area
+    proportion of the given PFT. The summary function used is np.nansum.
+
+    Parameters
+    ----------
+    hdf : h5py.File
+        The HDF5 file / h5py.File object
+    counts : tuple or list
+        A sequence of NumPy arrays, each array corresponding to the count of
+        1-km subcells matching a certain PFT; these should be provided in
+        order, i.e., first element is the count of PFT 1 subcells, second
+        element for PFT 2, and on.
+    field : str
+        One of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;
+    scale : int or float
+        Optional scaling parameter to apply to the input array values, e.g.,
+        if the array values are (spatial) rates and should be scaled by the
+        (equal) area of the grid cell
+    pft_codes : tuple or list
+        The PFT codes to create summaries for; defaults to all of them,
+        (i.e. Default: 1-8 inclusive)
+    max_count : int
+        The maximum number of 1-km subcells that any given PFT can total
+        within a 9-km area; no reason why this shouldn&#39;t be 81 (9 x 9),
+        probably.
+    subset_id : str
+        (Optional) Instead of subset_bbox, can provide keyword designating
+        the desired subset area
+    x_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of X coordinates OR hierarchical path to
+        the variable representing X coordinates, e.g., longitude values
+    y_coords : numpy.ndarray or str
+        (Optional) 1D NumPy array of Y coordinates OR hierarchical path to
+        the variable representing Y coordinates, e.g., latitude values
+    nodata : int or float
+        NoData or Fill value to ignore (Default: -9999)
+    &#39;&#39;&#39;
+    assert len(counts) == len(pft_codes),\
+        &#39;Length of counts and pft_codes must be equal&#39;
+    assert field in (&#39;SOC&#39;, &#39;NEE&#39;, &#39;GPP&#39;, &#39;RH&#39;),\
+        &#39;Only possible to summarize one of: &#34;SOC&#34;, &#34;NEE&#34;, &#34;GPP&#34;, or &#34;RH&#34;&#39;
+    assert (subset_id in SUBSETS_BBOX.keys()) or (subset_id is None),\
+        &#39;Named subset_id not a recognized geographic subset; see SUBSETS_BBOX in this module&#39;
+    summaries = {&#39;nansum&#39;: np.nansum}
+    stats = dict()
+    for i, pft in enumerate(pft_codes):
+        # Get the name of the target field; set up summary stats dict()
+        fieldname = &#39;%s/%s_pft%d_mean&#39; % (field, field.lower(), pft)
+        stats[fieldname] = dict()
+
+        if subset_id is not None:
+            array, _, _ = subset(
+                hdf, fieldname, x_coords, y_coords, subset_id)
+        else:
+            array = hdf[fieldname][:]
+
+        assert array.shape == counts[i].shape, &#39;Counts array must be the same size as data array&#39;
+        # Scale the data array by the proportion of the subgrid cells that
+        #   match the given PFT class
+        stats[fieldname] = summarize(
+            np.multiply( # NOTE: We scale data array ahead of time...
+                np.divide(counts[i], max_count),
+                np.multiply(array, scale)),
+            # ...So scale must be fixed at 1
+            summaries, scale = 1, nodata = nodata)
+
+    return stats</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.utils.MockL4CGranule"><code class="flex name class">
+<span>class <span class="ident">MockL4CGranule</span></span>
+<span>(</span><span>file=None, grid='M09', mode='w', coords=None, data=None, pft_mean_fields=[])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A mock for a typical L4C Ops granule. Should have all the right data
+fields at the right sizes for a typical L4C Ops granule read in as
+an h5py.File instance.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>file</code></dt>
+<dd>(Optional) The File object to write; defaults to an in-memory
+<code>BytesIO</code> instance</dd>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The EASE-Grid 2.0 size: "M01" or "M09"</dd>
+<dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The file access mode (Default: "w")</dd>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>(Optional) 2D coordinate arrays to set on the granule's
+"GEO/longitude" and "GEO/latitude" fields</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>(Optional) If provided, should be a Dictionary with keys for each
+desired dataset (e.g., "NEE" or "SOC") and any correctly shaped
+2D array as values</dd>
+<dt><strong><code>pft_mean_fields</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Sequence of field names (e.g., <code>['RH', 'GPP']</code>) for which the PFT mean
+fields (e.g., <code>RH/rh_pft1_mean</code>) should be created</dd>
+</dl>
+<p>Create a new file object.</p>
+<p>See the h5py user guide for a detailed explanation of the options.</p>
+<dl>
+<dt><strong><code>name</code></strong></dt>
+<dd>Name of the file on disk, or file-like object.
+Note: for files
+created with the 'core' driver, HDF5 still requires this be
+non-empty.</dd>
+<dt><strong><code>mode</code></strong></dt>
+<dd>r
+Readonly, file must exist
+r+
+Read/write, file must exist
+w
+Create file, truncate if exists
+w- or x
+Create file, fail if exists
+a
+Read/write if exists, create otherwise (default)</dd>
+<dt><strong><code>driver</code></strong></dt>
+<dd>Name of the driver to use.
+Legal values are None (default,
+recommended), 'core', 'sec2', 'stdio', 'mpio'.</dd>
+<dt><strong><code>libver</code></strong></dt>
+<dd>Library version bounds.
+Supported values: 'earliest', 'v108',
+'v110',
+and 'latest'. The 'v108' and 'v110' options can only be
+specified with the HDF5 1.10.2 library or later.</dd>
+<dt><strong><code>userblock</code></strong></dt>
+<dd>Desired size of user block.
+Only allowed when creating a new
+file (mode w, w- or x).</dd>
+<dt><strong><code>swmr</code></strong></dt>
+<dd>Open the file in SWMR read mode. Only used when mode = 'r'.</dd>
+<dt><strong><code>rdcc_nbytes</code></strong></dt>
+<dd>Total size of the raw data chunk cache in bytes. The default size
+is 1024**2 (1 MB) per dataset.</dd>
+<dt><strong><code>rdcc_w0</code></strong></dt>
+<dd>The chunk preemption policy for all datasets.
+This must be
+between 0 and 1 inclusive and indicates the weighting according to
+which chunks which have been fully read or written are penalized
+when determining which chunks to flush from cache.
+A value of 0
+means fully read or written chunks are treated no differently than
+other chunks (the preemption is strictly LRU) while a value of 1
+means fully read or written chunks are always preempted before
+other chunks.
+If your application only reads or writes data once,
+this can be safely set to 1.
+Otherwise, this should be set lower
+depending on how often you re-read or re-write the same data.
+The
+default value is 0.75.</dd>
+<dt><strong><code>rdcc_nslots</code></strong></dt>
+<dd>The number of chunk slots in the raw data chunk cache for this
+file. Increasing this value reduces the number of cache collisions,
+but slightly increases the memory used. Due to the hashing
+strategy, this value should ideally be a prime number. As a rule of
+thumb, this value should be at least 10 times the number of chunks
+that can fit in rdcc_nbytes bytes. For maximum performance, this
+value should be set approximately 100 times that number of
+chunks. The default value is 521.</dd>
+<dt><strong><code>track_order</code></strong></dt>
+<dd>Track dataset/group/attribute creation order under root group
+if True. If None use global default h5.get_config().track_order.</dd>
+</dl>
+<p>Additional keywords
+Passed on to the selected file driver.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MockL4CGranule(h5py.File):
+    &#39;&#39;&#39;
+    A mock for a typical L4C Ops granule. Should have all the right data
+    fields at the right sizes for a typical L4C Ops granule read in as
+    an h5py.File instance.
+
+    Parameters
+    ----------
+    file : file
+        (Optional) The File object to write; defaults to an in-memory
+        `BytesIO` instance
+    grid : str
+        (Optional) The EASE-Grid 2.0 size: &#34;M01&#34; or &#34;M09&#34;
+    mode : str
+        (Optional) The file access mode (Default: &#34;w&#34;)
+    coords : tuple
+        (Optional) 2D coordinate arrays to set on the granule&#39;s
+        &#34;GEO/longitude&#34; and &#34;GEO/latitude&#34; fields
+    data : dict
+        (Optional) If provided, should be a Dictionary with keys for each
+        desired dataset (e.g., &#34;NEE&#34; or &#34;SOC&#34;) and any correctly shaped
+        2D array as values
+    pft_mean_fields : tuple or list
+        Sequence of field names (e.g., `[&#39;RH&#39;, &#39;GPP&#39;]`) for which the PFT mean
+        fields (e.g., `RH/rh_pft1_mean`) should be created
+    &#39;&#39;&#39;
+    def __init__(
+            self, file = None, grid = &#39;M09&#39;, mode = &#39;w&#39;, coords = None,
+            data = None, pft_mean_fields = list()):
+        # Although file = io.BytesIO() in the function signature, above,
+        #   should accomplish the same thing, it generates an OSError that
+        #   cannot be reproduced in interactive mode unless the &#34;file&#34;
+        #   is explicitly set here and io.BytesIO() is *not* invoked above
+        if file is None:
+            file = io.BytesIO()
+
+        super(MockL4CGranule, self).__init__(file, mode)
+
+        # Create a field for each L4C variable
+        shp = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
+        for field in (&#39;NEE&#39;, &#39;GPP&#39;, &#39;RH&#39;, &#39;SOC&#39;):
+            key = &#39;%s/%s_mean&#39; % (field, field.lower()) # e.g., &#34;SOC/soc_mean&#34;
+            if data is None:
+                init_data = np.ones(shp) * np.nan
+            else:
+                # Generate a NaN-valued array if no data provided
+                init_data = data.get(key, np.ones(shp) * np.nan)
+
+            # Create, e.g., &#34;SOC/soc_mean&#34; field
+            self.create_dataset(key, shp, dtype = &#39;float32&#39;, data = init_data)
+            # Optionally, create, e.g., &#34;SOC/soc_pft1_mean&#34; field
+            if field in pft_mean_fields:
+                for pft in range(1, 9):
+                    key = &#39;%s/%s_pft%d_mean&#39; % (field, field.lower(), pft)
+                    init_data = data.get(key, np.ones(shp) * np.nan)
+                    self.create_dataset(
+                        key, shp, dtype = &#39;float32&#39;, data = init_data)
+
+        if coords is None:
+            x_coords, y_coords = ease2_coords(grid = &#39;M09&#39;, in_1d = False)
+        else:
+            x_coords, y_coords = coords
+            assert x_coords.ndim == 2 and y_coords.ndim == 2, &#39;Must provide 2D coordinate arrays&#39;
+        self.create_dataset(&#39;GEO/longitude&#39;, shp, dtype = &#39;float32&#39;,
+            data = x_coords)
+        self.create_dataset(&#39;GEO/latitude&#39;, shp, dtype = &#39;float32&#39;,
+            data = y_coords)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>h5py._hl.files.File</li>
+<li>h5py._hl.group.Group</li>
+<li>h5py._hl.base.HLObject</li>
+<li>h5py._hl.base.CommonStateObject</li>
+<li>h5py._hl.base.MutableMappingHDF5</li>
+<li>h5py._hl.base.MappingHDF5</li>
+<li>collections.abc.MutableMapping</li>
+<li>collections.abc.Mapping</li>
+<li>collections.abc.Collection</li>
+<li>collections.abc.Sized</li>
+<li>collections.abc.Iterable</li>
+<li>collections.abc.Container</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c" href="index.html">pyl4c</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pyl4c.utils.composite" href="#pyl4c.utils.composite">composite</a></code></li>
+<li><code><a title="pyl4c.utils.composite_hdf" href="#pyl4c.utils.composite_hdf">composite_hdf</a></code></li>
+<li><code><a title="pyl4c.utils.get_ease2_coords" href="#pyl4c.utils.get_ease2_coords">get_ease2_coords</a></code></li>
+<li><code><a title="pyl4c.utils.get_ease2_slice_idx" href="#pyl4c.utils.get_ease2_slice_idx">get_ease2_slice_idx</a></code></li>
+<li><code><a title="pyl4c.utils.get_ease2_slice_offsets" href="#pyl4c.utils.get_ease2_slice_offsets">get_ease2_slice_offsets</a></code></li>
+<li><code><a title="pyl4c.utils.get_pft_array" href="#pyl4c.utils.get_pft_array">get_pft_array</a></code></li>
+<li><code><a title="pyl4c.utils.get_slice_idx_by_bbox" href="#pyl4c.utils.get_slice_idx_by_bbox">get_slice_idx_by_bbox</a></code></li>
+<li><code><a title="pyl4c.utils.get_xy_coords" href="#pyl4c.utils.get_xy_coords">get_xy_coords</a></code></li>
+<li><code><a title="pyl4c.utils.index" href="#pyl4c.utils.index">index</a></code></li>
+<li><code><a title="pyl4c.utils.partition" href="#pyl4c.utils.partition">partition</a></code></li>
+<li><code><a title="pyl4c.utils.partition_generator" href="#pyl4c.utils.partition_generator">partition_generator</a></code></li>
+<li><code><a title="pyl4c.utils.sample" href="#pyl4c.utils.sample">sample</a></code></li>
+<li><code><a title="pyl4c.utils.subset" href="#pyl4c.utils.subset">subset</a></code></li>
+<li><code><a title="pyl4c.utils.summarize" href="#pyl4c.utils.summarize">summarize</a></code></li>
+<li><code><a title="pyl4c.utils.summarize_by_class" href="#pyl4c.utils.summarize_by_class">summarize_by_class</a></code></li>
+<li><code><a title="pyl4c.utils.summarize_hdf_by_pft" href="#pyl4c.utils.summarize_hdf_by_pft">summarize_hdf_by_pft</a></code></li>
+<li><code><a title="pyl4c.utils.total_hdf_by_pft" href="#pyl4c.utils.total_hdf_by_pft">total_hdf_by_pft</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.utils.MockL4CGranule" href="#pyl4c.utils.MockL4CGranule">MockL4CGranule</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pyl4c.lib.horizon API documentation</title>
+<meta name="description" content="Module for calculating sunrise and sunset times and, more importantly, for the
+length of a day (in hours). The core algorithm is `sunrise_sunset()`." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.lib.horizon</code></h1>
+</header>
+<section id="section-intro">
+<p>Module for calculating sunrise and sunset times and, more importantly, for the
+length of a day (in hours). The core algorithm is <code><a title="pyl4c.lib.horizon.sunrise_sunset" href="#pyl4c.lib.horizon.sunrise_sunset">sunrise_sunset()</a></code>.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Module for calculating sunrise and sunset times and, more importantly, for the
+length of a day (in hours). The core algorithm is `sunrise_sunset()`.
+&#39;&#39;&#39;
+
+import datetime
+import numpy as np
+
+# The sunrise_sunset() algorithm was written for degrees, not radians
+_sine = lambda x: np.sin(np.deg2rad(x))
+_cosine = lambda x: np.cos(np.deg2rad(x))
+_tan = lambda x: np.tan(np.deg2rad(x))
+_arcsin = lambda x: np.rad2deg(np.arcsin(x))
+_arccos = lambda x: np.rad2deg(np.arccos(x))
+_arctan = lambda x: np.rad2deg(np.arctan(x))
+
+def julian_day(year, month, day):
+    &#39;&#39;&#39;
+    Returns the Julian day using the January 1, 2000 epoch. Taken from
+    Equation 7.1 in Meeus (1991).
+
+    Parameters
+    ----------
+    year : int
+    month : int
+    day : int
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    # Dates in January, February are considered to be on 13th, 14th month
+    #   of preceding year
+    if month &lt; 3:
+        year -= 1
+        month += 12
+    a = np.floor(year / 100)
+    b = 2 - a + np.floor(a / 4)
+    return np.floor(365.25 * (year + 4716)) +\
+        np.floor(30.6001 * (month + 1)) + day + b - 1524.5
+
+
+def obliquity(t_solar):
+    &#39;&#39;&#39;
+    Obliquity of the ecliptic as a function of mean solar time; valid only for
+    years in 2000 +/- 10,000 years. Taken from Equation 21.2 in Meeus (1991).
+
+    Parameters
+    ----------
+    t_solar : float
+        Mean solar time
+    &#39;&#39;&#39;
+    return 23.43929 - (0.01300416 * t_solar) -\
+        (1.638e-7 * np.power(t_solar, 2)) +\
+        (5.0361e-7 * np.power(t_solar, 3))
+
+
+def sunrise_sunset(coords, dt, zenith = -0.83):
+    r&#39;&#39;&#39;
+    Returns the hour of sunrise and sunset for a given date. Hours are on the
+    closed interval [0, 23] because Python starts counting at zero; i.e., if
+    we want to index an array of hourly data, 23 is the last hour of the day.
+    Recommended solar zenith angles for sunrise and sunset are -6 degrees for
+    civil sunrise/ sunset; -0.5 degrees for &#34;official&#34; sunrise/sunset; and
+    -0.83 degrees to account for the effects of refraction. A zenith angle of
+    -0.5 degrees produces results closest to those of pyephem&#39;s
+    Observer.next_rising() and Observer.next_setting(). This calculation does
+    not include corrections for elevation or nutation nor does it explicitly
+    correct for atmospheric refraction. Source:
+
+    - U.S. Naval Observatory. &#34;Almanac for Computers.&#34; 1990. Reproduced by
+      Ed Williams. https://www.edwilliams.org/sunrise_sunset_algorithm.htm
+
+    The algorithm is based on the derivation of the approximate hour angle of
+    sunrise and sunset, as described by Jean Meeus (1991) in *Astronomical
+    Algorithms*, based on the observer&#39;s latitude, `phi`, and the declination
+    of the sun, `delta`:
+
+    $$
+    \mathrm{cos}(H_0) =
+    \frac{\mathrm{sin}(h_0) -
+    \mathrm{sin}(\phi)\mathrm{sin}(\delta)}{\mathrm{cos}(\phi)\mathrm{cos}(\delta)}
+    $$
+
+    Parameters
+    ----------
+    coords : list or tuple
+        The (latitude, longitude) coordinates of interest; coordinates can
+        be scalars or arrays (for times at multiple locations on same date)
+    dt : datetime.date
+        The date on which sunrise and sunset times are desired
+    zenith : float
+        The sun zenith angle to use in calculation, i.e., the angle of the
+        sun with respect to its highest point in the sky (90 is solar noon)
+        (Default: -0.83)
+
+    Returns
+    -------
+    tuple
+        2-element tuple of (sunrise hour, sunset hour)
+    &#39;&#39;&#39;
+    lat, lng = coords
+    assert -90 &lt;= lat &lt;= 90, &#39;Latitude error&#39;
+    assert -180 &lt;= lng &lt;= 180, &#39;Longitude error&#39;
+    doy = int(dt.strftime(&#39;%j&#39;))
+    # Calculate longitude hour (Earth turns 15 degrees longitude per hour)
+    lng_hour = lng / 15.0
+    # Appoximate transit time (longitudinal average)
+    tmean = doy + ((12 - lng_hour) / 24)
+    # Solar mean anomaly at rising, setting time
+    anomaly = (0.98560028 * tmean) - 3.289
+    # Calculate sun&#39;s true longitude by calculating the true anomaly
+    #   (anomaly + equation of the center), then add (180 + omega)
+    #   where omega = 102.634 is the longitude of the perihelion
+    lng_sun = (anomaly + (1.916 * _sine(anomaly)) +\
+        (0.02 * _sine(2 * anomaly)) + 282.634) % 360
+    # Sun&#39;s right ascension (by 0.91747 = cosine of Earth&#39;s obliquity)
+    ra = _arctan(0.91747 * _tan(lng_sun)) % 360
+    # Adjust RA to be in the same quadrant as the sun&#39;s true longitude, then
+    #   convert to hours by dividing by 15 degrees
+    ra += np.subtract(
+        np.floor(lng_sun / 90) * 90, np.floor(ra / 90) * 90)
+    ra_hours = ra / 15
+    # Sun&#39;s declination&#39;s (using 0.39782 = sine of Earth&#39;s obliquity)
+    #   retained as sine and cosine
+    dec_sin = 0.39782 * _sine(lng_sun)
+    dec_cos = _cosine(_arcsin(dec_sin))
+    # Cosine of the sun&#39;s local hour angle
+    hour_angle_cos = (
+        _sine(zenith) - (dec_sin * _sine(lat))) / (dec_cos * _cosine(lat))
+    # Correct for polar summer or winter, i.e., when the sun is always
+    #   above or below the horizon
+    if hour_angle_cos &gt; 1 or hour_angle_cos &lt; -1:
+        if hour_angle_cos &gt; 1:
+            return (-1, -1) # Sun is always down
+        elif hour_angle_cos &lt; -1:
+            return (0, 23) # Sun is always up
+    hour_angle = _arccos(hour_angle_cos)
+    # Local mean time of rising or setting (converting hour angle to hours)
+    hour_rise = ((360 - hour_angle) / 15) + ra_hours -\
+    (0.06571 * (tmean - 0.25)) - 6.622
+    hour_sets = (hour_angle / 15) + ra_hours -\
+    (0.06571 * (tmean + 0.25)) - 6.622
+    # Round to nearest hour, convert to UTC
+    return (
+        np.floor((hour_rise - lng_hour) % 24),
+        np.floor((hour_sets - lng_hour) % 24))</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pyl4c.lib.horizon.julian_day"><code class="name flex">
+<span>def <span class="ident">julian_day</span></span>(<span>year, month, day)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the Julian day using the January 1, 2000 epoch. Taken from
+Equation 7.1 in Meeus (1991).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>year</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>month</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>day</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>float</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def julian_day(year, month, day):
+    &#39;&#39;&#39;
+    Returns the Julian day using the January 1, 2000 epoch. Taken from
+    Equation 7.1 in Meeus (1991).
+
+    Parameters
+    ----------
+    year : int
+    month : int
+    day : int
+
+    Returns
+    -------
+    float
+    &#39;&#39;&#39;
+    # Dates in January, February are considered to be on 13th, 14th month
+    #   of preceding year
+    if month &lt; 3:
+        year -= 1
+        month += 12
+    a = np.floor(year / 100)
+    b = 2 - a + np.floor(a / 4)
+    return np.floor(365.25 * (year + 4716)) +\
+        np.floor(30.6001 * (month + 1)) + day + b - 1524.5</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.lib.horizon.obliquity"><code class="name flex">
+<span>def <span class="ident">obliquity</span></span>(<span>t_solar)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Obliquity of the ecliptic as a function of mean solar time; valid only for
+years in 2000 +/- 10,000 years. Taken from Equation 21.2 in Meeus (1991).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>t_solar</code></strong> :&ensp;<code>float</code></dt>
+<dd>Mean solar time</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def obliquity(t_solar):
+    &#39;&#39;&#39;
+    Obliquity of the ecliptic as a function of mean solar time; valid only for
+    years in 2000 +/- 10,000 years. Taken from Equation 21.2 in Meeus (1991).
+
+    Parameters
+    ----------
+    t_solar : float
+        Mean solar time
+    &#39;&#39;&#39;
+    return 23.43929 - (0.01300416 * t_solar) -\
+        (1.638e-7 * np.power(t_solar, 2)) +\
+        (5.0361e-7 * np.power(t_solar, 3))</code></pre>
+</details>
+</dd>
+<dt id="pyl4c.lib.horizon.sunrise_sunset"><code class="name flex">
+<span>def <span class="ident">sunrise_sunset</span></span>(<span>coords, dt, zenith=-0.83)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the hour of sunrise and sunset for a given date. Hours are on the
+closed interval [0, 23] because Python starts counting at zero; i.e., if
+we want to index an array of hourly data, 23 is the last hour of the day.
+Recommended solar zenith angles for sunrise and sunset are -6 degrees for
+civil sunrise/ sunset; -0.5 degrees for "official" sunrise/sunset; and
+-0.83 degrees to account for the effects of refraction. A zenith angle of
+-0.5 degrees produces results closest to those of pyephem's
+Observer.next_rising() and Observer.next_setting(). This calculation does
+not include corrections for elevation or nutation nor does it explicitly
+correct for atmospheric refraction. Source:</p>
+<ul>
+<li>U.S. Naval Observatory. "Almanac for Computers." 1990. Reproduced by
+Ed Williams. <a href="https://www.edwilliams.org/sunrise_sunset_algorithm.htm">https://www.edwilliams.org/sunrise_sunset_algorithm.htm</a></li>
+</ul>
+<p>The algorithm is based on the derivation of the approximate hour angle of
+sunrise and sunset, as described by Jean Meeus (1991) in <em>Astronomical
+Algorithms</em>, based on the observer's latitude, <code>phi</code>, and the declination
+of the sun, <code>delta</code>:</p>
+<p><span><span class="MathJax_Preview">
+\mathrm{cos}(H_0) =
+\frac{\mathrm{sin}(h_0) -
+\mathrm{sin}(\phi)\mathrm{sin}(\delta)}{\mathrm{cos}(\phi)\mathrm{cos}(\delta)}
+</span><script type="math/tex; mode=display">
+\mathrm{cos}(H_0) =
+\frac{\mathrm{sin}(h_0) -
+\mathrm{sin}(\phi)\mathrm{sin}(\delta)}{\mathrm{cos}(\phi)\mathrm{cos}(\delta)}
+</script></span></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>The (latitude, longitude) coordinates of interest; coordinates can
+be scalars or arrays (for times at multiple locations on same date)</dd>
+<dt><strong><code>dt</code></strong> :&ensp;<code>datetime.date</code></dt>
+<dd>The date on which sunrise and sunset times are desired</dd>
+<dt><strong><code>zenith</code></strong> :&ensp;<code>float</code></dt>
+<dd>The sun zenith angle to use in calculation, i.e., the angle of the
+sun with respect to its highest point in the sky (90 is solar noon)
+(Default: -0.83)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>2-element tuple of (sunrise hour, sunset hour)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sunrise_sunset(coords, dt, zenith = -0.83):
+    r&#39;&#39;&#39;
+    Returns the hour of sunrise and sunset for a given date. Hours are on the
+    closed interval [0, 23] because Python starts counting at zero; i.e., if
+    we want to index an array of hourly data, 23 is the last hour of the day.
+    Recommended solar zenith angles for sunrise and sunset are -6 degrees for
+    civil sunrise/ sunset; -0.5 degrees for &#34;official&#34; sunrise/sunset; and
+    -0.83 degrees to account for the effects of refraction. A zenith angle of
+    -0.5 degrees produces results closest to those of pyephem&#39;s
+    Observer.next_rising() and Observer.next_setting(). This calculation does
+    not include corrections for elevation or nutation nor does it explicitly
+    correct for atmospheric refraction. Source:
+
+    - U.S. Naval Observatory. &#34;Almanac for Computers.&#34; 1990. Reproduced by
+      Ed Williams. https://www.edwilliams.org/sunrise_sunset_algorithm.htm
+
+    The algorithm is based on the derivation of the approximate hour angle of
+    sunrise and sunset, as described by Jean Meeus (1991) in *Astronomical
+    Algorithms*, based on the observer&#39;s latitude, `phi`, and the declination
+    of the sun, `delta`:
+
+    $$
+    \mathrm{cos}(H_0) =
+    \frac{\mathrm{sin}(h_0) -
+    \mathrm{sin}(\phi)\mathrm{sin}(\delta)}{\mathrm{cos}(\phi)\mathrm{cos}(\delta)}
+    $$
+
+    Parameters
+    ----------
+    coords : list or tuple
+        The (latitude, longitude) coordinates of interest; coordinates can
+        be scalars or arrays (for times at multiple locations on same date)
+    dt : datetime.date
+        The date on which sunrise and sunset times are desired
+    zenith : float
+        The sun zenith angle to use in calculation, i.e., the angle of the
+        sun with respect to its highest point in the sky (90 is solar noon)
+        (Default: -0.83)
+
+    Returns
+    -------
+    tuple
+        2-element tuple of (sunrise hour, sunset hour)
+    &#39;&#39;&#39;
+    lat, lng = coords
+    assert -90 &lt;= lat &lt;= 90, &#39;Latitude error&#39;
+    assert -180 &lt;= lng &lt;= 180, &#39;Longitude error&#39;
+    doy = int(dt.strftime(&#39;%j&#39;))
+    # Calculate longitude hour (Earth turns 15 degrees longitude per hour)
+    lng_hour = lng / 15.0
+    # Appoximate transit time (longitudinal average)
+    tmean = doy + ((12 - lng_hour) / 24)
+    # Solar mean anomaly at rising, setting time
+    anomaly = (0.98560028 * tmean) - 3.289
+    # Calculate sun&#39;s true longitude by calculating the true anomaly
+    #   (anomaly + equation of the center), then add (180 + omega)
+    #   where omega = 102.634 is the longitude of the perihelion
+    lng_sun = (anomaly + (1.916 * _sine(anomaly)) +\
+        (0.02 * _sine(2 * anomaly)) + 282.634) % 360
+    # Sun&#39;s right ascension (by 0.91747 = cosine of Earth&#39;s obliquity)
+    ra = _arctan(0.91747 * _tan(lng_sun)) % 360
+    # Adjust RA to be in the same quadrant as the sun&#39;s true longitude, then
+    #   convert to hours by dividing by 15 degrees
+    ra += np.subtract(
+        np.floor(lng_sun / 90) * 90, np.floor(ra / 90) * 90)
+    ra_hours = ra / 15
+    # Sun&#39;s declination&#39;s (using 0.39782 = sine of Earth&#39;s obliquity)
+    #   retained as sine and cosine
+    dec_sin = 0.39782 * _sine(lng_sun)
+    dec_cos = _cosine(_arcsin(dec_sin))
+    # Cosine of the sun&#39;s local hour angle
+    hour_angle_cos = (
+        _sine(zenith) - (dec_sin * _sine(lat))) / (dec_cos * _cosine(lat))
+    # Correct for polar summer or winter, i.e., when the sun is always
+    #   above or below the horizon
+    if hour_angle_cos &gt; 1 or hour_angle_cos &lt; -1:
+        if hour_angle_cos &gt; 1:
+            return (-1, -1) # Sun is always down
+        elif hour_angle_cos &lt; -1:
+            return (0, 23) # Sun is always up
+    hour_angle = _arccos(hour_angle_cos)
+    # Local mean time of rising or setting (converting hour angle to hours)
+    hour_rise = ((360 - hour_angle) / 15) + ra_hours -\
+    (0.06571 * (tmean - 0.25)) - 6.622
+    hour_sets = (hour_angle / 15) + ra_hours -\
+    (0.06571 * (tmean + 0.25)) - 6.622
+    # Round to nearest hour, convert to UTC
+    return (
+        np.floor((hour_rise - lng_hour) % 24),
+        np.floor((hour_sets - lng_hour) % 24))</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.lib" href="index.html">pyl4c.lib</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pyl4c.lib.horizon.julian_day" href="#pyl4c.lib.horizon.julian_day">julian_day</a></code></li>
+<li><code><a title="pyl4c.lib.horizon.obliquity" href="#pyl4c.lib.horizon.obliquity">obliquity</a></code></li>
+<li><code><a title="pyl4c.lib.horizon.sunrise_sunset" href="#pyl4c.lib.horizon.sunrise_sunset">sunrise_sunset</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
