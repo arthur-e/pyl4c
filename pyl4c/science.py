@@ -4,13 +4,14 @@ processes.
 '''
 
 import numpy as np
+from functools import partial
 from scipy.ndimage import generic_filter
 from scipy.linalg import solve_banded
 from scipy.sparse import dia_matrix
 from pyl4c import suppress_warnings
 from pyl4c.data.fixtures import HDF_PATHS, BPLUT
 from pyl4c.utils import get_pft_array, subset
-from pyl4c.stats import ols, ols_variance
+from pyl4c.stats import ols, ols_variance, linear_constraint
 
 def arrhenius(
         tsoil, beta0: float, beta1: float = 66.02, beta2: float = 227.13):
@@ -19,7 +20,7 @@ def arrhenius(
     constrained to lie on the closed interval [0, 1].
 
     $$
-    f(T_{SOIL}) = \mathrm{exp}\left[\beta_0}\left( \frac{1}{\beta_1} -
+    f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
         \frac{1}{T_{SOIL} - \beta_2} \right) \right]
     $$
 
@@ -207,26 +208,6 @@ def climatology365(series, dates):
     return calc_climatology(series)
 
 
-def cue(pft_array):
-    '''
-    DEPRECATED. `Use pyl4c.data.fixtures.parameter_mapped("CUE")` instead.
-    Returns an array with carbon use efficiency (CUE) corresponding to the
-    PFT array provided. CUE is equivalent to the NPP/GPP ratio.
-
-    Parameters
-    ----------
-    pft_array : numpy.ndarray
-        The PFT class array
-
-    Returns
-    -------
-    numpy.ndarray
-    '''
-    cue_param = BPLUT['CUE']
-    # Basically, index the CUE array, in PFT order, by the PFT numeric codes
-    return np.asarray(cue_param)[np.ravel(pft_array)].reshape(pft_array.shape)
-
-
 def daynight_partition(arr_24hr, updown, reducer = 'mean'):
     '''
     Partitions a 24-hour time series array into daytime and nighttime values,
@@ -295,52 +276,72 @@ def daynight_partition(arr_24hr, updown, reducer = 'mean'):
     return np.stack((arr_daytime, arr_nighttime))
 
 
-def interpolate_8day_fpar(series, n_years):
+def e_mult(params, tmin, vpd, smrz, ft):
     '''
-    Interpolates an 8-day fPAR record to daily.
+    Calculate environmental constraint multiplier for gross primary
+    productivity (GPP), E_mult, based on current model parameters. The
+    expected parameter names are "LUE" for the maximum light-use
+    efficiency; "smrz0" and "smrz1" for the lower and upper bounds on root-
+    zone soil moisture; "vpd0" and "vpd1" for the lower and upper bounds on
+    vapor pressure deficity (VPD); "tmin0" and "tmin1" for the lower and
+    upper bounds on minimum temperature; and "ft0" for the multiplier during
+    frozen ground conditions.
 
     Parameters
     ----------
-    series : numpy.ndarray
-        A (T x 81 x N) array of fPAR data, for T 8-day time steps and N sites
-    n_years : int
-        Number of years the 8-day composites span
+    params : dict
+        A dict-like data structure with named model parameters
+    tmin : numpy.ndarray
+        (T x N) vector of minimum air temperature (deg K), where T is the
+        number of time steps, N the number of sites
+    vpd : numpy.ndarray
+        (T x N) vector of vapor pressure deficit (Pa), where T is the number
+        of time steps, N the number of sites
+    smrz : numpy.ndarray
+        (T x N) vector of root-zone soil moisture wetness (%), where T is the
+        number of time steps, N the number of sites
+    ft : numpy.ndarray
+        (T x N) vector of the (binary) freeze-thaw status, where T is the
+        number of time steps, N the number of sites (Frozen = 0, Thawed = 1)
 
     Returns
     -------
     numpy.ndarray
     '''
-    # NOTE: It's unclear why Lucas' code is this complicated...
-    #   Presumably the 828 8-day composites are a continuous record
-    #   starting from January 1, 2000, therefore there should be no
-    #   need to "toss" extra days at the end of a year; instead, just
-    #   repeat every 8-day composite value for 8 days.
-    #   With: from skimage.transform import resize
-    t, p, n = series.shape # Expects input T x 81 x N array
-    # int(n_composites / n_years) corresponds to the number of 8-day
-    #   composites or 8-day time steps in a year
-    series_mod = series.transpose((2, 1, 0))\
-        .reshape((n, p, int(t / n_years), n_years), order = 'f')\
-        .transpose((0, 1, 3, 2))\
-        .reshape((n, p, n_years, int(t / n_years), 1), order = 'f')\
-        .repeat(8, 4)\
-        .transpose((0, 1, 2, 4, 3))\
-        .reshape((n, p, n_years, 8 * int(t / n_years)), order = 'f')\
-        .astype(np.float32) # For inserting NaNs
-    # At this point, the last axis is > 366; the 8-day composites for
-    #   a year span a greater range than 365 or 366 days, so we need
-    #   to throw away the extra
-    series_mod[...,np.arange(0, n_years) % 4 == 0,366:] = np.nan
-    series_mod[...,~(np.arange(0, n_years) % 4 == 0),365:] = np.nan
-    # Get ready to drop those NaNs
-    series_mod.transpose((0, 1, 3, 2))\
-        .reshape(n, p, n_years * 8 * int(t / n_years), order = 'f')\
-        .transpose((2, 1, 0))
-    # Finally, drop the NaNs and reshape the array back to T x 81 x N
-    n_leap_years = sum(np.arange(0, n_years) % 4 == 0).astype(np.uint8)
-    return series_mod[~np.isnan(series_mod)]\
-        .reshape(((365 * n_years) + n_leap_years, p, n), order = 'f')\
-        .astype(series.dtype)
+    # Calculate E_mult based on current parameters
+    f_tmin = linear_constraint(params['tmin0'], params['tmin1'])
+    f_vpd  = linear_constraint(params['vpd0'], params['vpd1'], 'reversed')
+    f_smrz = linear_constraint(params['smrz0'], params['smrz1'])
+    f_ft   = linear_constraint(params['ft0'], 1.0, 'binary')
+    return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
+
+
+def k_mult(params, tsoil, smsf):
+    '''
+    Calculate environmental constraint multiplier for soil heterotrophic
+    respiration (RH), K_mult, based on current model parameters. The expected
+    parameter names are "tsoil" for the Arrhenius function of soil temperature
+    and "smsf0" and "smsf1" for the lower and upper bounds of the ramp
+    function on surface soil moisture.
+
+    Parameters
+    ----------
+    params : dict
+        A dict-like data structure with named model parameters
+    tsoil : numpy.ndarray
+        (T x N) vector of soil temperature (deg K), where T is the number of
+        time steps, N the number of sites
+    smsf : numpy.ndarray
+        (T x N) vector of surface soil wetness (%), where T is the number of
+        time steps, N the number of sites
+
+    Returns
+    -------
+    numpy.ndarray
+    '''
+    f_tsoil = partial(arrhenius, beta0 = params['tsoil'])
+    f_smsf  = linear_constraint(params['smsf0'], params['smsf1'])
+    return f_tsoil(tsoil) * f_smsf(smsf)
 
 
 def litterfall_casa(lai, years, dt = 1/365):
