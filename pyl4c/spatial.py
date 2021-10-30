@@ -21,6 +21,7 @@ and `dump_raster()` are copied from my (MIT-licensed) `unmixing` library [4].
 4. https://github.com/arthur-e/unmixing/
 '''
 
+import tempfile
 import numpy as np
 import pyproj
 from osgeo import gdal, gdalconst, gdalnumeric, gdal_array, ogr, osr
@@ -302,7 +303,9 @@ def crs_transform(from_epsg, to_epsg):
     return osr.CoordinateTransformation(source, target)
 
 
-def dump_raster(rast, rast_path, driver = 'GTiff', gdt = None, nodata = None):
+def dump_raster(
+        rast, rast_path, driver = 'GTiff', gdt = None, nodata = None,
+        compress = False):
     '''
     Creates a raster file from a given `gdal.Dataset` instance.
 
@@ -319,10 +322,17 @@ def dump_raster(rast, rast_path, driver = 'GTiff', gdt = None, nodata = None):
         The GDAL data type to use, e.g., see gdal.GDT_Float32
     nodata : int or float
         The NoData value; defaults to -9999.
+    compress : bool
+        True to apply lossless compression to the output; requires that the
+        "GTiff" driver is used (GeoTIFF output)
     '''
     if gdt is None:
         gdt = rast.GetRasterBand(1).DataType
     driver = gdal.GetDriverByName(driver)
+    if compress and driver.ShortName == 'GTiff':
+        _rast_path = rast_path
+        tmp = tempfile.NamedTemporaryFile()
+        rast_path = tmp.name
     sink = driver.Create(
         rast_path, rast.RasterXSize, rast.RasterYSize, rast.RasterCount, int(gdt))
     assert sink is not None,\
@@ -340,6 +350,13 @@ def dump_raster(rast, rast_path, driver = 'GTiff', gdt = None, nodata = None):
                 nodata = -9999
         sink.GetRasterBand(b).SetNoDataValue(np.float64(nodata))
     sink.FlushCache()
+    if not compress or driver.ShortName != 'GTiff':
+        return # Done
+    # Optionally, compress the output file
+    opts = gdal.TranslateOptions(
+        format = 'GTiff', creationOptions = ['COMPRESS=LZW'])
+    # Note that "_rast_path" is the true output path, "rast_path" just temp
+    gdal.Translate(_rast_path, rast_path, options = opts)
 
 
 def ease2_coords_approx(grid, in_1d = True, srs_epsg = 4326, precision = 8):
@@ -399,7 +416,7 @@ def ease2_coords_approx(grid, in_1d = True, srs_epsg = 4326, precision = 8):
 
 def ease2_to_geotiff(
         array, output_path, grid, xoff = None, yoff = None, dtype = None,
-        nodata = -9999):
+        nodata = -9999, compress = False):
     '''
     Convenience function for writing an EASE-Grid 2.0 data array to a
     GeoTIFF raster file.
@@ -420,6 +437,8 @@ def ease2_to_geotiff(
         The NumPy data type to enforce, e.g., np.int32
     nodata : int or float
         The NoData or Fill value
+    compress : bool
+        True to apply lossless compression to the output (Default: False)
     '''
     # Check that the provided array size/shape makes sense
     expected = EASE2_GRID_PARAMS[grid]['shape']
@@ -429,7 +448,9 @@ def ease2_to_geotiff(
     gt = EASE2_GRID_PARAMS[grid]['geotransform']
     wkt = EPSG[EASE2_GRID_PARAMS[grid]['epsg']]
     rast = array_to_raster(array, gt, wkt, xoff, yoff, dtype = dtype)
-    dump_raster(rast, output_path, nodata = nodata)
+    dump_raster(
+        rast, output_path, driver = 'GTiff', nodata = nodata,
+        compress = compress)
 
 
 def ease2_hdf_to_geotiff(
