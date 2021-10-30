@@ -20,6 +20,12 @@ import pyl4c
 
 ---------------
 
+## Documentation
+
+[Read the online documentation here.](https://arthur-e.github.io/pyl4c/)
+
+---------------
+
 ## Setup and Installation
 
 Because this project is highly modular, it must be installed as a package in order to resolve module references/ paths.
@@ -88,65 +94,3 @@ sudo apt install libnlopt0
 ```sh
 pip install git+https://github.com/matplotlib/basemap.git
 ```
-
----------------
-
-## Documentation
-
-Documentation can be generated with [pdoc3](https://pdoc3.github.io/pdoc/), which can be installed:
-
-```sh
-pip install pyl4c[docs]
-```
-
-Or simply:
-
-```sh
-pip install pdoc3
-```
-
-Then, see the `build.sh` script in the `docs/` folder for a hint about how to generate the documentation.
-
----------------
-
-## Contents
-
-```
-__init__.py             --- Essential basics: haversine() function
-ease2.py                --- EASE-Grid 2.0 affine transformations
-epsg.py                 --- EPSG spatial reference system information
-science.py              --- Derived quantities related to scientific objectives
-spatial.py              --- Geospatial/ GIS tools
-stats.py                --- Various statistical functions
-towers.py               --- For working with eddy covariance (EC) flux tower data
-utils.py                --- Subsets, compositing, and summary stats of L4C grids
-
-data/
-    fixtures.py         --- See NOTE [1]
-
-apps/
-    resample.py         --- Downscale L4C variables from 9-km to 1-km EASE-Grid 2.0
-    calibration/
-        __init__.py     
-        main.py         --- CLI for compiling L4C calibration data
-        nature.py       --- NatureRunNetCDF4 class, for SMAP L4SM Nature Run data
-        legacy.py
-    l4c/
-        __init__.py     --- L4CForwardProcessPoint class for running L4C simulations
-        io.py           --- Data storage abstractions for running the L4C model
-        main.py         --- CLI for running L4C point simulations
-
-lib/
-    cli.py              --- Classes for building command line interfaces (CLI)
-    modis.py            --- For working with MODIS MOD15 and VIIRS VNP15
-    netcdf.py           --- Tools for working with NetCDF version 3 or 4 data
-    nsidc_download.py   --- Download data from NSIDC
-    tcf.py              --- Tools for working with legacy TCF or "land" format data
-    transcom.py         --- Work with TransCom regions
-    visualize.py        --- Programmatic plotting of L4C data
-
-scripts/                --- See NOTE [2]
-```
-
-- NOTE [1]: You can change `ANCILLARY_DATA_PATHS` and `HDF_PATHS` here, as needed. The ancillary products should be stored in `/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/`
-- NOTE [2]: Various scripts for convenience. They are intended merely as examples of more comprehensive workflows; no guarantee about their function is made.
