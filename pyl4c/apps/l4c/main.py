@@ -72,7 +72,9 @@ class L4CForwardProcessPoint(object):
     }
     CONSTANTS_INDEX = (
         'CUE', 'LUE', 'f_metabolic', 'f_structural', 'decay_rates')
-    # These MUST be listed in a fixed order
+    # These MUST be listed in a fixed order...
+    CONSTRAINTS_INDEX = ( # Constraints on GPP or RECO
+        'tmin', 'vpd', 'ft', 'smrz', 'tsoil', 'smsf')
     DIAGNOSTICS_INDEX = (
         'f_tmin', 'f_vpd', 'f_ft', 'f_smrz', 'f_tsoil', 'f_smsf', 'apar')
     DRIVERS_INDEX = ('apar', 'tmin', 'vpd', 'ft', 'smrz', 'tsoil', 'smsf')
@@ -303,8 +305,7 @@ class L4CForwardProcessPoint(object):
 
         # INITIALIZE CONSTRAINT FUNCTIONS
         self._print('Creating linear constraint functions...')
-        self._load_constraints(
-            self._pft, filter(lambda x: x not in ('apar',), self.DRIVERS_INDEX))
+        self._load_constraints(self._pft, self.CONSTRAINTS_INDEX)
 
     def _setup_data_storage(self, config, hdf):
         'Initialize containers for various datasets'
@@ -445,7 +446,7 @@ class L4CForwardProcessPoint(object):
         dc3 = (self.constants.f_structural * rh[1,...]) - rh[2,...]
         return (dc1, dc2, dc3)
 
-    def run(self, steps = None):
+    def run(self, steps = None, fields_gpp = None, fields_rh = None):
         '''
         A forward run in serial over multiple time steps; currently works in
         streaming mode ONLY.
@@ -455,6 +456,12 @@ class L4CForwardProcessPoint(object):
         steps : int
             Number of time steps to run or None to run through the end of the
             available time steps (exhaust driver data) (Default: `None`)
+        fields_gpp : list or tuple or None
+            (Optional) Sequence of field names that are used to drive the
+            GPP model
+        fields_rh : list or tuple or None
+            (Optional) Sequence of field names that are used to drive the
+            RH model
         '''
         @suppress_warnings
         def step(t, fields_gpp, fields_rh):
@@ -523,10 +530,12 @@ class L4CForwardProcessPoint(object):
                     self.state.advance(
                         'soc%d' % p, t, d_soc[p-1], bounds = (0, np.inf))
 
+        if fields_gpp is None:
+            fields_gpp = ['apar', 'tmin', 'vpd', 'ft', 'smrz']
+        if fields_rh is None:
+            fields_rh = ['tsoil', 'smsf']
         with L4CStreamingInputDataset(
                 self.file_path, self.CONSTANTS, self.BOUNDS) as hdf:
-            fields_gpp = ['apar', 'tmin', 'vpd', 'ft', 'smrz']
-            fields_rh = ['tsoil', 'smsf']
             num_steps = self.config['time_steps'] if steps is None else steps
             with ProgressBar(num_steps, 'Running...') as progress:
                 for t in range(self._time_idx + 1, num_steps):

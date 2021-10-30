@@ -43,6 +43,8 @@ Can optionally filter flux tower data for all PFTs:
 
 Possible improvements:
 
+- Replace parameter vectors with a
+    `pyl4c.apps.calibration.ModelParameters` instance.
 - Tower HDF5 file has upper-case field names (e.g., "APAR") while
     driver HDF5 file has lower-case field names (e.g., "par")
 '''
@@ -60,7 +62,7 @@ from collections import Counter
 from functools import partial
 from scipy import signal
 from matplotlib import pyplot
-from pyl4c import suppress_warnings
+from pyl4c import pft_selector, suppress_warnings
 from pyl4c.data.fixtures import PFT, restore_bplut
 from pyl4c.science import arrhenius, climatology365
 from pyl4c.stats import linear_constraint, detrend, rmsd
@@ -302,17 +304,7 @@ class CLI(object):
         Deciduous Needleleaf (DNF) in their 1-km subgrid are considered to
         represent the DNF PFT class.
         '''
-        idx = np.arange(0, self._nsites)
-        if self._pft == 3:
-            return np.apply_along_axis(
-                lambda x: x == 3, 1, self._pft_map).any(axis = 1)
-        return np.equal(self._pft, [ # Skip invalid PFT codes
-            count[1][0] if count[0][0] not in range(1, 9) else count[0][0]
-            for count in [ # Count 1-km cells by PFT
-                a.most_common() for a in np.apply_along_axis(
-                    lambda x: Counter(x.tolist()), 1, self._pft_map)
-            ]
-        ])
+        return pft_selector(self._pft_map, self._pft)
 
     def pft(self, pft):
         '''
@@ -405,19 +397,6 @@ class CLI(object):
         pyplot.ylabel('Tower %s (g C m-2 day-1)' % flux.upper())
         pyplot.title('Window Size = %d days' % size)
         pyplot.show()
-
-    def pickle_parameters(self, output_path, version_id = 'UNKNOWN'):
-        '''
-        Dumps the current BPLUT, as a dictionary, to a pickle file.
-
-        Parameters
-        ----------
-        output_path : str
-            The output path for the pickle file (*.pickle)
-        version_id : str
-            (Optional) The version identifier for this BPLUT
-        '''
-        self.bplut.pickle(output_path, version_id)
 
     def plot_gpp(
             self, driver, coefs = None, xlim = None, ylim = None, alpha = 0.1,
@@ -662,7 +641,7 @@ class CLI(object):
         self._climatology()
 
     def tune_gpp(
-            self, fixed = None, optimize = True, nlopt = False, trials = 1):
+            self, fixed = None, optimize = True, nlopt = True, trials = 1):
         '''
         Optimizes GPP. The 9-km mean L4C GPP is fit to the tower-observed GPP
         using constrained, non-linear least-squares optimization.
@@ -676,7 +655,7 @@ class CLI(object):
             False to only report parameters and their fit statistics instead
             of optimizing (Default: True)
         nlopt : bool
-            True to use the nlopt library for optimization (Default: False)
+            True to use the nlopt library for optimization (Default: True)
         '''
         def e_mult(params):
             # Calculate E_mult based on current parameters
@@ -718,13 +697,13 @@ class CLI(object):
         with h5py.File(self._path_to_drivers, 'r') as hdf:
             drivers = []
             for field in ('tmin', 'vpd', 'smrz'):
-                drivers.append(hdf['drivers/%s' % field][t0:t1,self._sites])
+                drivers.append(hdf['drivers/%s' % field][t0:t1][:,self._sites])
 
         with h5py.File(self._path_to_scratch, 'r') as hdf:
-            drivers.append(hdf['ft'][t0:t1,self._sites])
-            apar = hdf['APAR'][t0:t1,self._sites,:]
-            gpp_tower = hdf['tower/GPP'][t0:t1,self._sites,:].mean(axis = 2)
-            weights = hdf['site_weights'][:,self._sites]
+            drivers.append(hdf['ft'][t0:t1][:,self._sites])
+            apar = hdf['APAR'][t0:t1][:,self._sites,:]
+            gpp_tower = hdf['tower/GPP'][t0:t1][:,self._sites,:].mean(axis = 2)
+            weights = hdf['site_weights'][:][:,self._sites]
 
         # L4C drivers should have no NaNs, based on how they were sourced;
         #   BUT this is not the case for fPAR, which does have NaNs; not sure
@@ -787,7 +766,7 @@ class CLI(object):
 
     def tune_reco(
             self, q_rh = 75, q_k = 50, fixed = None, optimize = True,
-            nlopt = False, trials = 1):
+            nlopt = True, trials = 1):
         '''
         Optimizes RECO. The 9-km mean L4C RECO is fit to the tower-observed
         RECO using constrained, non-linear least-squares optimization.
@@ -807,7 +786,7 @@ class CLI(object):
             False to only report parameters and their fit statistics instead
             of optimizing (Default: True)
         nlopt : bool
-            True to use the nlopt library for optimization (Default: False)
+            True to use the nlopt library for optimization (Default: True)
         trials : int
             Number of searches of the parameter space to perform; if >1,
             initial parameters are randomized for each trial
@@ -847,19 +826,19 @@ class CLI(object):
                 'Arguments to "fixed" should be in: [%s]' % ', '.join(self._parameters['reco'])
         init_params = [self.bplut['CUE'][0,self._pft]]
         for field in ('tsoil', 'smsf'):
-            init_params.extend(self.bplut[field][self._pft,:].tolist())
+            init_params.extend(self.bplut[field][:,self._pft].tolist())
 
         # Read in data, with optional subsetting of the time axis
         t0 = self._time_start if self._time_start is not None else 0
         t1 = self._time_end if self._time_end is not None else self._nsteps
         with h5py.File(self._path_to_drivers, 'r') as hdf:
             drivers = [
-                hdf['drivers/%s' % field][t0:t1,self._sites]
+                hdf['drivers/%s' % field][t0:t1][:,self._sites]
                 for field in ('tsoil', 'smsf')
             ]
         with h5py.File(self._path_to_scratch, 'r') as hdf:
-            gpp_tower = hdf['tower/GPP'][t0:t1,self._sites,:].mean(axis = 2)
-            reco_tower = hdf['tower/RECO'][t0:t1,self._sites,:].mean(axis = 2)
+            gpp_tower = hdf['tower/GPP'][t0:t1][:,self._sites,:].mean(axis = 2)
+            reco_tower = hdf['tower/RECO'][t0:t1][:,self._sites,:].mean(axis = 2)
             weights = hdf['site_weights'][:,self._sites]
 
         # L4C drivers should have no NaNs, based on how they were sourced

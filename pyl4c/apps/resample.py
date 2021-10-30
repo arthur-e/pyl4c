@@ -22,6 +22,7 @@ and GPP).**
 '''
 
 import os
+import tempfile
 import h5py
 import numpy as np
 from osgeo import gdal
@@ -199,8 +200,8 @@ class CLI(CommandLineInterface):
         xoff, yoff = nested.offsets
         output_path = self._output_path
         if compress:
-            output_path = os.path.join(
-                os.path.dirname(self._output_path), 'temp.tiff')
+            tmp = tempfile.NamedTemporaryFile()
+            output_path = tmp.name
         # Write initial file
         ease2_to_geotiff(arr, output_path, 'M01', xoff = xoff, yoff = yoff)
         if not compress:
@@ -210,8 +211,6 @@ class CLI(CommandLineInterface):
             format = 'GTiff', creationOptions = ['COMPRESS=LZW'])
         # Note that "output_path" is the temporary file
         gdal.Translate(self._output_path, output_path, options = opts)
-        # Delete the temporary file
-        os.remove(output_path)
 
 
 if __name__ == '__main__':

@@ -16,13 +16,17 @@ class NatureRunNetCDF4(object):
 
     Would have liked to subclass netCDF4.Dataset directly, but it is part of
     a Cython library so I can't interrogate its class structure.
+
+    Parameters
+    ----------
+    file_path : str
+        The NetCDF4 file path
     '''
-    def __init__(self, file_path):
+    def __init__(self, file_path: str):
         self._dataset_file_path = file_path
         self._grid = 'M09'
         try:
             self.dataset = netCDF4.Dataset(file_path)
-
         except OSError:
             raise OSError('Due to a bug in netCDF4, you MUST import netCDF4 BEFORE h5py; import this module (calibration) first if using in a script')
 

@@ -55,12 +55,13 @@ from collections import OrderedDict
 from scipy import optimize
 from pyl4c import suppress_warnings
 from pyl4c.stats import detrend, rmsd, sum_of_squares
+from pyl4c.science import k_mult
 
 # Constrained optimization bounds
 OPT_BOUNDS = {
     'gpp': ( # lue, tmin0, tmin1, vpd0, vpd1, smrz0, smrz1, ft0
-        np.array((0.5, 230, 276,    0, 1501,  0,  30.1, 0.)), # Lower bound
-        np.array((4.0, 275, 320, 1500, 7000, 30, 100,   1.))), # Upper bound
+        np.array((0.5, 230, 276,    0,  1501,  0,  30.1, 0.)), # Lower bound
+        np.array((4.0, 275, 320, 1500, 10000, 30, 100,   1.))), # Upper bound
     'reco': ( # CUE, beta_tsoil, smsf0, smsf1
         np.array((0.0,   1,    0,  25)),
         np.array((0.7, 800, 24.9, 100)))
@@ -347,34 +348,23 @@ class BPLUT(object):
             hdf.close()
 
 
-def cbar(rh, k_mult, q_rh = 75, q_k = 50):
+class ModelParameters(OrderedDict):
     '''
-    Calculates "Cbar," the time-constant upper quantile of the RH/Kmult
-    ratio. Where Kmult is >/= `q_k`, return the `q_rh` quantile of RH/Kmult;
-    intended for T x N arrays where T is the number of time steps and
-    N is the number of (flux tower) sites.
+    Convenience wrapper for an OrderedDict, allowing both vectorized and
+    keyword access to model parameters.
 
     Parameters
     ----------
-    rh : numpy.ndarray
-        T x N vector of heterotrophic respiration
-    k_mult : numpy.ndarray
-        T x N vector of Kmult
-    q_rh : float
-        Percentile of RH/Kmult to return
-    q_k : float
-        Percentile of Kmult below which RH/Kmult values are masked
-
-    Returns
-    -------
-    numpy.float64
+    group : str
+        Name of this model parameters group, usually the name of the model or
+        sub-model to which they belong
+    *params : spotpy.parameter
+        One or more parameters
     '''
-    cutoff = np.apply_along_axis(
-        np.percentile, 0, k_mult, q = q_k).reshape((1, k_mult.shape[1]))
-    return np.nanpercentile(
-        np.where(k_mult >= cutoff,
-            np.divide(rh, np.where(k_mult == 0, np.nan, k_mult)), np.nan),
-        q = q_rh, axis = 0)
+    def __init__(self, group, *params):
+        self._group = group
+        # Create {name: spotpy.parameter, ...} dictionary
+        super().__init__(**dict([(p.name, p) for p in params]))
 
 
 class GenericOptimization(object):
@@ -464,6 +454,78 @@ class GenericOptimization(object):
         if self._verbose:
             print('Solving...')
         return opt.optimize(init_params)
+
+
+def cbar(rh, k_mult, q_rh = 75, q_k = 50):
+    '''
+    Calculates "Cbar," the time-constant upper quantile of the RH/Kmult
+    ratio. Where Kmult is >/= `q_k`, return the `q_rh` quantile of RH/Kmult;
+    intended for T x N arrays where T is the number of time steps and
+    N is the number of (flux tower) sites.
+
+    Parameters
+    ----------
+    rh : numpy.ndarray
+        (T x N) vector of heterotrophic respiration
+    k_mult : numpy.ndarray
+        (T x N) vector of Kmult
+    q_rh : float
+        Percentile of RH/Kmult to return
+    q_k : float
+        Percentile of Kmult below which RH/Kmult values are masked
+
+    Returns
+    -------
+    numpy.float64
+    '''
+    cutoff = np.apply_along_axis(
+        np.percentile, 0, k_mult, q = q_k).reshape((1, k_mult.shape[1]))
+    return np.nanpercentile(
+        np.where(k_mult >= cutoff,
+            np.divide(rh, np.where(k_mult == 0, np.nan, k_mult)), np.nan),
+        q = q_rh, axis = 0)
+
+
+def reco(params, tsoil, smsf, reco_tower, gpp_tower, q_rh = 75, q_k = 50):
+    '''
+    Calculate empirical ecosystem respiration, RECO, based on current model
+    parameters and the inferred soil organic carbon (SOC) storage; i.e., this
+    calculation should be used in model calibration when SOC is not a priori
+    known, see `pyl4c.apps.calibration.cbar()`. The expected model parameter
+    names are "CUE" for the carbon use efficiency of plants.
+
+    Parameters
+    ----------
+    params : dict
+        A dict-like data structure with named model parameters
+    tsoil : numpy.ndarray
+        (T x N) vector of soil temperature (deg K), where T is the number of
+        time steps, N the number of sites
+    smsf : numpy.ndarray
+        (T x N) vector of surface soil wetness (%), where T is the number of
+        time steps, N the number of sites
+    reco_tower : numpy.ndarray
+        (T x N) vector of observed RECO from eddy covariance tower sites
+    gpp_tower : numpy.ndarray
+        (T x N) vector of observed GPP from eddy covariance tower sites
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+
+    Returns
+    -------
+    numpy.ndarray
+    '''
+    # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
+    #   globals "reco_tower", "gpp_tower"
+    ra = ((1 - params['CUE']) * gpp_tower)
+    rh = reco_tower - ra
+    rh = np.where(rh < 0, 0, rh) # Mask out negative RH values
+    # Compute Cbar with globals "q_rh" and "q_k"
+    kmult0 = k_mult(params, tsoil, smsf)
+    cbar0 = cbar(rh, kmult0, q_rh, q_k)
+    return ra + (kmult0 * cbar0)
 
 
 def report_fit_stats(obs, pred, weights = np.array([1]), verbose = True):
