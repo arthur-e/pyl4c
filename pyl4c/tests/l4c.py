@@ -9,7 +9,6 @@ import numpy as np
 import warnings
 import pyl4c
 from pyl4c.data.fixtures import BPLUT, restore_bplut
-from pyl4c.apps.l4c.extensions.hydrology import L4CStratifiedModel
 from pyl4c.apps.l4c.main import L4CForwardProcessPoint
 
 INPUTS_FILE_PATH = '/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v5_Y2020/L4_C_tower_site_drivers_NRv8-3_for_356_sites.h5'

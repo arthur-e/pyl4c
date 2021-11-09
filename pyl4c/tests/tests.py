@@ -4,6 +4,7 @@ import os
 import unittest
 import h5py
 import numpy as np
+import pyl4c
 from scipy.linalg import solve_banded
 from scipy.sparse import dia_matrix
 from pyl4c import haversine, pft_dominant, equal_or_nan
@@ -12,12 +13,15 @@ from pyl4c.science import arrhenius, bias_correction_parameters, rescale_smrz, v
 from pyl4c.spatial import ease2_coords_approx
 from pyl4c.utils import MockL4CGranule, composite, get_ease2_coords, get_ease2_slice_idx, get_ease2_slice_offsets, get_pft_array, get_slice_idx_by_bbox, index, partition, partition_generator, subset, summarize, summarize_by_class
 from pyl4c.data.fixtures import ANCILLARY_DATA_PATHS as PATHS, restore_bplut
-from calibration import CalibrationTestSuite, BPLUT_PATH, BPLUT_CSV_FOUND
 from l4c import L4CForwardProcessPointTestSuite
 from transpiration import TranspirationTestSuite
 
 ANCILLARY_DATA_FOUND = os.path.exists(
     PATHS['smap_l4c_ancillary_data_file_path'])
+BPLUT_PATH = os.path.join(
+    os.path.dirname(pyl4c.__file__),
+    'data/files/SMAP_BPLUT_2020-07-31.csv')
+BPLUT_CSV_FOUND = os.path.exists(BPLUT_PATH)
 BBOX_CONUS = [-124.5, 24.4, -66.7, 50.0]
 
 class CoordinateTransformations(unittest.TestCase):
