@@ -93,8 +93,17 @@ class SparseArray(object, metaclass = MetaSparseArray):
         (assumes that the filename incorporates the data type, e.g.,
         `foo.flt32` or `foo.uint8`) or an extant `numpy.ndarray` (either
         sparse or not).
+    grid : str
+        The EASE-Grid 2.0 designation, e.g., "M09" for a 9-km grid or "M01"
+        for a 1-km grid
+    dtype : type
+        The NumPy data type used to represent numbers (Default: None); must
+        be specified when reading a NumPy or HDF5 array
+    field : str
+        Name of the HDF5 field to read
     '''
-    def __init__(self, source, grid, field = None):
+    def __init__(self, source, grid, dtype = None, field = None):
+        self._dtype = dtype
         self._grid = grid
         self._field = field
         self._nodata = None
@@ -112,6 +121,8 @@ class SparseArray(object, metaclass = MetaSparseArray):
             self.filename = None
             self._deflated = source.ndim == 1
             self._ftype = None
+            assert self._dtype is not None,\
+                'Must indicate the data type when reading an array!'
             assert source.ndim <= 2, 'No support for more than 2 axes'
             self.data = source
         elif isinstance(source, h5py.File):
@@ -124,6 +135,8 @@ class SparseArray(object, metaclass = MetaSparseArray):
             self._ftype = None
             self.data = source[self._field][:]
             self._deflated = self.data.ndim == 1
+            assert self._dtype is not None,\
+                'Must indicate the data type when reading an array!'
         else:
             raise TypeError('Must provide either a binary file path or a numpy.ndarray instance')
 
@@ -247,7 +260,6 @@ class SparseArray(object, metaclass = MetaSparseArray):
                 return datetime.date(year, 2, 29)
                 if ordinal > 60:
                     ordinal -= 1
-
                     d = datetime.date.fromordinal(ordinal)
                     return datetime.date(year, d.month, d.day)
 
@@ -271,7 +283,8 @@ class SparseArray(object, metaclass = MetaSparseArray):
                 return None # Otherwise, return nothing
 
         # Initialize an empty array (fill with NoData)
-        result = np.ones(self.__class__.sparse_row_idx.shape) * nodata
+        result = np.ones(
+            self.__class__.sparse_row_idx.shape, self._dtype) * nodata
         for i in range(0, self.__class__.sparse_row_idx.shape[0]):
             row = self.__class__.sparse_row_idx[i]
             col = self.__class__.sparse_col_idx[i]
@@ -303,7 +316,7 @@ class SparseArray(object, metaclass = MetaSparseArray):
 
         # Initialize an empty array (fill with NoData)
         shp = EASE2_GRID_PARAMS[self._grid]['shape']
-        result = np.ones(shp) * nodata
+        result = np.ones(shp, self._dtype) * nodata
         for i in range(0, self.__class__.sparse_row_idx.shape[0]):
             row = self.__class__.sparse_row_idx[i]
             col = self.__class__.sparse_col_idx[i]
