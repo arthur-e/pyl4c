@@ -339,7 +339,7 @@ class Subsetting(unittest.TestCase):
             self.y_coords[::-1][sey0:sey1], np.arange(-10.5, -20, -1))))
 
     def test_partition_etc(self):
-        'Should parition an array of positive indices into n pieces'
+        'Should partition an array of positive indices into n pieces'
         self.assertEqual(
         partition(np.arange(1e3), 1), [(0, 1e3 + 1)])
         self.assertEqual(

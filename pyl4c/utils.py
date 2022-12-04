@@ -479,7 +479,7 @@ def partition(array, num_processes, axis = 0):
     Parameters
     ----------
     array : numpy.ndarray
-        The 2-dimensional array to paritition
+        The 2-dimensional array to partition
     num_processes : int
         The number of processes desired
     axis : int
@@ -583,7 +583,7 @@ def sample(array, indices):
     indices_by_axis = [
         int(i[0]) for i in indices], [int(i[1]) for i in indices
     ]
-    # If row, colum indices are not sorted, we'll need another list comprehension
+    # If row, column indices are not sorted, we'll need another list comprehension
     try:
         return array[indices_by_axis]
     except TypeError:

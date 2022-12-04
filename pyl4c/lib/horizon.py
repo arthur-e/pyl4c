@@ -105,7 +105,7 @@ def sunrise_sunset(coords, dt, zenith = -0.83):
     doy = int(dt.strftime('%j'))
     # Calculate longitude hour (Earth turns 15 degrees longitude per hour)
     lng_hour = lng / 15.0
-    # Appoximate transit time (longitudinal average)
+    # Approximate transit time (longitudinal average)
     tmean = doy + ((12 - lng_hour) / 24)
     # Solar mean anomaly at rising, setting time
     anomaly = (0.98560028 * tmean) - 3.289

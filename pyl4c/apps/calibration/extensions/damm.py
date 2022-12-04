@@ -75,7 +75,7 @@ class CLI(object):
         model : AbstractDAMM
             The version of the DAMM model to use, indicated by its class
         trials : int
-            The number of randomized trials (randomized intial parameter values).
+            The number of randomized trials (randomized initial parameter values).
             If trials=0, the model will NOT be fit and instead goodness-of-fit
             metrics for the last (saved) fit will be shown.
         fit_cue : bool
