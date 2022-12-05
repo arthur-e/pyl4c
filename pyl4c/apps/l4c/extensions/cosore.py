@@ -200,7 +200,7 @@ class L4CPrescribedGPPModel(L4CForwardProcessPoint):
         def step(t, gpp, fields_rh):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -293,7 +293,7 @@ class L4CPrescribedGPPModelWithKokEffect(L4CPrescribedGPPModel):
         def step(t, gpp, fields_rh):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -403,7 +403,7 @@ class L4CPrescribedGPPModelWithO2Limit(
         def step(t, gpp, fields_rh):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -575,7 +575,7 @@ class L4CPrescribedGPPModelWithSoilProfile(
         def step(t, gpp, fields_rh, soil_t, soil_m, litterfall):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step

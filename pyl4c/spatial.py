@@ -497,7 +497,7 @@ def intersect_rasters(
     alignment.
 
     NOTE: If the reference raster's top-left corner is far left and/or above
-    that of the source raster, the interesect raster may contain no data
+    that of the source raster, the intersect raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
     NOTE: If the ref_raster and src_raster have different projections, the
@@ -599,7 +599,7 @@ def intersect_rasters2(
     Will need to test performance.
 
     NOTE: If the reference raster's top-left corner is far left and/or above
-    that of the source raster, the interesect raster may contain no data
+    that of the source raster, the intersect raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
     NOTE: If the ref_raster and src_raster have different projections, the
