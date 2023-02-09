@@ -15,6 +15,7 @@
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -27,8 +28,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">__pdoc__ = {}
-__pdoc__[&#39;nsidc_download&#39;] = False</code></pre>
+<pre><code class="python">__pdoc__ = {}</code></pre>
 </details>
 </section>
 <section>
@@ -39,11 +39,6 @@ __pdoc__[&#39;nsidc_download&#39;] = False</code></pre>
 <div class="desc"><p>Classes for building command line interface (CLI) tools, such as for bulk
 processing data at the command line.</p></div>
 </dd>
-<dt><code class="name"><a title="pyl4c.lib.horizon" href="horizon.html">pyl4c.lib.horizon</a></code></dt>
-<dd>
-<div class="desc"><p>Module for calculating sunrise and sunset times and, more importantly, for the
-length of a day (in hours). The core algorithm is <code>sunrise_sunset()</code>.</p></div>
-</dd>
 <dt><code class="name"><a title="pyl4c.lib.modis" href="modis.html">pyl4c.lib.modis</a></code></dt>
 <dd>
 <div class="desc"><p>MODIS sinusoidal projection forward and backward coordinate transformations,
@@ -53,11 +48,6 @@ courtesy of Giglio et al. (2018), Collection 6 MODIS Burned Area Product
 <dt><code class="name"><a title="pyl4c.lib.netcdf" href="netcdf.html">pyl4c.lib.netcdf</a></code></dt>
 <dd>
 <div class="desc"><p>Utilities for working with NetCDF files.</p></div>
-</dd>
-<dt><code class="name"><a title="pyl4c.lib.richards" href="richards.html">pyl4c.lib.richards</a></code></dt>
-<dd>
-<div class="desc"><p>Soil water infiltration model based on the modified Richards equation from
-the Community Land Model (CLM), version 5.0, with some equations from CLM …</p></div>
 </dd>
 <dt><code class="name"><a title="pyl4c.lib.tcf" href="tcf.html">pyl4c.lib.tcf</a></code></dt>
 <dd>
@@ -85,6 +75,11 @@ from the MODIS MOD16 framework, but the goal is not to reproduce
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>
@@ -98,10 +93,8 @@ from the MODIS MOD16 framework, but the goal is not to reproduce
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
 <li><code><a title="pyl4c.lib.cli" href="cli.html">pyl4c.lib.cli</a></code></li>
-<li><code><a title="pyl4c.lib.horizon" href="horizon.html">pyl4c.lib.horizon</a></code></li>
 <li><code><a title="pyl4c.lib.modis" href="modis.html">pyl4c.lib.modis</a></code></li>
 <li><code><a title="pyl4c.lib.netcdf" href="netcdf.html">pyl4c.lib.netcdf</a></code></li>
-<li><code><a title="pyl4c.lib.richards" href="richards.html">pyl4c.lib.richards</a></code></li>
 <li><code><a title="pyl4c.lib.tcf" href="tcf.html">pyl4c.lib.tcf</a></code></li>
 <li><code><a title="pyl4c.lib.transcom" href="transcom.html">pyl4c.lib.transcom</a></code></li>
 <li><code><a title="pyl4c.lib.transpiration" href="transpiration.html">pyl4c.lib.transpiration</a></code></li>

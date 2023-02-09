@@ -39,8 +39,7 @@ class Namespace(object):
         Parameters
         ----------
         label : str
-            The name of the attribute; will be accessed, e.g.:
-            `Namespace.label`
+            The name of the attribute
         value : None
             Any kind of value to be stored
         '''

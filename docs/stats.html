@@ -16,6 +16,7 @@ and that this is True by default, which means the X matrix will have a …" />
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -203,14 +204,11 @@ def linear_constraint(xmin, xmax, form = None):
     if form == &#39;reversed&#39;:
         return lambda x: np.where(x &gt;= xmax, 0,
             np.where(x &lt; xmin, 1, 1 - np.divide(
-                np.subtract(x, xmin), xmax - xmin)))
-
+                x - xmin, xmax - xmin)))
     if form == &#39;binary&#39;:
         return lambda x: np.where(x == 1, xmax, xmin)
-
     return lambda x: np.where(x &gt;= xmax, 1,
-        np.where(x &lt; xmin, 0,
-            np.divide(np.subtract(x, xmin), xmax - xmin)))
+        np.where(x &lt; xmin, 0, np.divide(x - xmin, xmax - xmin)))
 
 
 def ols(x, y, add_intercept = True, use_qr_decomp = True):
@@ -706,14 +704,11 @@ as x increases.</dd>
     if form == &#39;reversed&#39;:
         return lambda x: np.where(x &gt;= xmax, 0,
             np.where(x &lt; xmin, 1, 1 - np.divide(
-                np.subtract(x, xmin), xmax - xmin)))
-
+                x - xmin, xmax - xmin)))
     if form == &#39;binary&#39;:
         return lambda x: np.where(x == 1, xmax, xmin)
-
     return lambda x: np.where(x &gt;= xmax, 1,
-        np.where(x &lt; xmin, 0,
-            np.divide(np.subtract(x, xmin), xmax - xmin)))</code></pre>
+        np.where(x &lt; xmin, 0, np.divide(x - xmin, xmax - xmin)))</code></pre>
 </details>
 </dd>
 <dt id="pyl4c.stats.ols"><code class="name flex">
@@ -1104,6 +1099,11 @@ of variables</dd>
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

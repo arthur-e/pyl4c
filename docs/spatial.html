@@ -16,6 +16,7 @@ data from its native HDF5 format into or out of various GIS-friendly …" />
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -73,7 +74,7 @@ and `dump_raster()` are copied from my (MIT-licensed) `unmixing` library [4].
 import tempfile
 import numpy as np
 import pyproj
-from osgeo import gdal, gdalconst, gdalnumeric, gdal_array, ogr, osr
+from osgeo import gdal, gdalconst, gdal_array, osr
 from affine import Affine
 from pyl4c.data.fixtures import EASE2_GRID_PARAMS
 from pyl4c.epsg import EPSG
@@ -112,13 +113,14 @@ def array_to_raster(
         rast = gdal_array.OpenNumPyArray(a)
     except AttributeError:
         # For backwards compatibility with older version of GDAL
-        rast = gdal.Open(gdalnumeric.GetArrayFilename(a))
+        rast = gdal.Open(gdal_array.GetArrayFilename(a))
     except:
         rast = gdal_array.OpenArray(a)
     rast.SetGeoTransform(gt)
     rast.SetProjection(wkt)
     if nodata is not None:
-        rast.GetRasterBand(1).SetNoDataValue(nodata)
+        for band in range(1, rast.RasterCount + 1):
+            rast.GetRasterBand(band).SetNoDataValue(nodata)
     if xoff is not None and yoff is not None:
         # Bit of a hack; essentially, re-create the raster but with the
         #   correct X and Y offsets (don&#39;t know how to do this without the
@@ -151,7 +153,7 @@ def array_to_raster_clone(a, proto, xoff = None, yoff = None):
         rast = gdal_array.OpenNumPyArray(a)
     except AttributeError:
         # For backwards compatibility with older version of GDAL
-        rast = gdal.Open(gdalnumeric.GetArrayFilename(a))
+        rast = gdal.Open(gdal_array.GetArrayFilename(a))
     except:
         rast = gdal_array.OpenArray(a)
     kwargs = dict()
@@ -160,7 +162,7 @@ def array_to_raster_clone(a, proto, xoff = None, yoff = None):
     # Copy the projection info and metadata from a prototype dataset
     if type(proto) == str:
         proto = gdal.Open(proto)
-    gdalnumeric.CopyDatasetInfo(proto, rast, **kwargs)
+    gdal_array.CopyDatasetInfo(proto, rast, **kwargs)
     return rast
 
 
@@ -318,6 +320,7 @@ def bounds(rast):
     Returns
     -------
     tuple
+        The bounds of the raster, i.e., `(xmin, ymin, xmax, ymax)`
     &#39;&#39;&#39;
     gt = rast.GetGeoTransform()
     xsize = rast.RasterXSize # Size in the x-direction
@@ -546,12 +549,14 @@ def intersect_rasters(
     alignment.
 
     NOTE: If the reference raster&#39;s top-left corner is far left and/or above
-    that of the source raster, the interesect raster may contain no data
+    that of the source raster, the intersected raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
-    NOTE: If the ref_raster and src_raster have different projections, the
+    NOTE: If the `ref_raster` and `src_raster` have different projections, the
     result may contain no data (i.e., all `NoData`). Not sure why, as here we
-    are projecting the data to match the reference raster.
+    are projecting the data to match the reference raster. This method should
+    be used with rasters that are &#34;close&#34; but not an exact match for SRS,
+    resolution, and extent.
 
     Parameters
     ----------
@@ -648,10 +653,10 @@ def intersect_rasters2(
     Will need to test performance.
 
     NOTE: If the reference raster&#39;s top-left corner is far left and/or above
-    that of the source raster, the interesect raster may contain no data
+    that of the source raster, the intersected raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
-    NOTE: If the ref_raster and src_raster have different projections, the
+    NOTE: If the `ref_raster` and `src_raster` have different projections, the
     result may contain no data (i.e., all `NoData`). Not sure why, as here we
     are projecting the data to match the reference raster.
 
@@ -697,7 +702,11 @@ def project_equirectangular(
     (GCS) based on the WGS84 datum. Thanks to J. Gómez-Dans for the more
     general solution to calculating output raster size [1].
 
-    - https://jgomezdans.github.io/gdal_notes/reprojection.html
+    NOTE: This will not work well for very small cell sizes, around 0.1
+    degress on a side or less. It should generally be used for down-sampling
+    (scaling up) only.
+
+    1. https://jgomezdans.github.io/gdal_notes/reprojection.html
 
     Parameters
     ----------
@@ -987,13 +996,14 @@ if the array was clipped.</p>
         rast = gdal_array.OpenNumPyArray(a)
     except AttributeError:
         # For backwards compatibility with older version of GDAL
-        rast = gdal.Open(gdalnumeric.GetArrayFilename(a))
+        rast = gdal.Open(gdal_array.GetArrayFilename(a))
     except:
         rast = gdal_array.OpenArray(a)
     rast.SetGeoTransform(gt)
     rast.SetProjection(wkt)
     if nodata is not None:
-        rast.GetRasterBand(1).SetNoDataValue(nodata)
+        for band in range(1, rast.RasterCount + 1):
+            rast.GetRasterBand(band).SetNoDataValue(nodata)
     if xoff is not None and yoff is not None:
         # Bit of a hack; essentially, re-create the raster but with the
         #   correct X and Y offsets (don&#39;t know how to do this without the
@@ -1052,7 +1062,7 @@ optional x- and y-offsets if the array was clipped.</p>
         rast = gdal_array.OpenNumPyArray(a)
     except AttributeError:
         # For backwards compatibility with older version of GDAL
-        rast = gdal.Open(gdalnumeric.GetArrayFilename(a))
+        rast = gdal.Open(gdal_array.GetArrayFilename(a))
     except:
         rast = gdal_array.OpenArray(a)
     kwargs = dict()
@@ -1061,7 +1071,7 @@ optional x- and y-offsets if the array was clipped.</p>
     # Copy the projection info and metadata from a prototype dataset
     if type(proto) == str:
         proto = gdal.Open(proto)
-    gdalnumeric.CopyDatasetInfo(proto, rast, **kwargs)
+    gdal_array.CopyDatasetInfo(proto, rast, **kwargs)
     return rast</code></pre>
 </details>
 </dd>
@@ -1317,7 +1327,7 @@ by, e.g., the <code>-te</code> switch in various GDAL utiltiies:
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>tuple</code></dt>
-<dd>&nbsp;</dd>
+<dd>The bounds of the raster, i.e., <code>(xmin, ymin, xmax, ymax)</code></dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -1337,6 +1347,7 @@ by, e.g., the <code>-te</code> switch in various GDAL utiltiies:
     Returns
     -------
     tuple
+        The bounds of the raster, i.e., `(xmin, ymin, xmax, ymax)`
     &#39;&#39;&#39;
     gt = rast.GetGeoTransform()
     xsize = rast.RasterXSize # Size in the x-direction
@@ -1702,11 +1713,13 @@ same grid resolution) as the reference raster. Can also "nudge" a raster
 in one or both directions, which can help fix small differences in
 alignment.</p>
 <p>NOTE: If the reference raster's top-left corner is far left and/or above
-that of the source raster, the interesect raster may contain no data
+that of the source raster, the intersected raster may contain no data
 from the original raster, i.e., an empty raster will result.</p>
-<p>NOTE: If the ref_raster and src_raster have different projections, the
+<p>NOTE: If the <code>ref_raster</code> and <code>src_raster</code> have different projections, the
 result may contain no data (i.e., all <code>NoData</code>). Not sure why, as here we
-are projecting the data to match the reference raster.</p>
+are projecting the data to match the reference raster. This method should
+be used with rasters that are "close" but not an exact match for SRS,
+resolution, and extent.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>ref_raster</code></strong> :&ensp;<code>gdal.Dataset</code></dt>
@@ -1746,12 +1759,14 @@ in the X and Y directions, respectively</dd>
     alignment.
 
     NOTE: If the reference raster&#39;s top-left corner is far left and/or above
-    that of the source raster, the interesect raster may contain no data
+    that of the source raster, the intersected raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
-    NOTE: If the ref_raster and src_raster have different projections, the
+    NOTE: If the `ref_raster` and `src_raster` have different projections, the
     result may contain no data (i.e., all `NoData`). Not sure why, as here we
-    are projecting the data to match the reference raster.
+    are projecting the data to match the reference raster. This method should
+    be used with rasters that are &#34;close&#34; but not an exact match for SRS,
+    resolution, and extent.
 
     Parameters
     ----------
@@ -1847,9 +1862,9 @@ in the X and Y directions, respectively</dd>
 considerably shorter as it uses a wrapper for the command-line <code>gdalwarp</code>.
 Will need to test performance.</p>
 <p>NOTE: If the reference raster's top-left corner is far left and/or above
-that of the source raster, the interesect raster may contain no data
+that of the source raster, the intersected raster may contain no data
 from the original raster, i.e., an empty raster will result.</p>
-<p>NOTE: If the ref_raster and src_raster have different projections, the
+<p>NOTE: If the <code>ref_raster</code> and <code>src_raster</code> have different projections, the
 result may contain no data (i.e., all <code>NoData</code>). Not sure why, as here we
 are projecting the data to match the reference raster.</p>
 <h2 id="parameters">Parameters</h2>
@@ -1885,10 +1900,10 @@ are projecting the data to match the reference raster.</p>
     Will need to test performance.
 
     NOTE: If the reference raster&#39;s top-left corner is far left and/or above
-    that of the source raster, the interesect raster may contain no data
+    that of the source raster, the intersected raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
-    NOTE: If the ref_raster and src_raster have different projections, the
+    NOTE: If the `ref_raster` and `src_raster` have different projections, the
     result may contain no data (i.e., all `NoData`). Not sure why, as here we
     are projecting the data to match the reference raster.
 
@@ -1933,9 +1948,12 @@ are projecting the data to match the reference raster.</p>
 <div class="desc"><p>Projects a raster into an equirectangular geographic coordinate system
 (GCS) based on the WGS84 datum. Thanks to J. Gómez-Dans for the more
 general solution to calculating output raster size [1].</p>
-<ul>
+<p>NOTE: This will not work well for very small cell sizes, around 0.1
+degress on a side or less. It should generally be used for down-sampling
+(scaling up) only.</p>
+<ol>
 <li><a href="https://jgomezdans.github.io/gdal_notes/reprojection.html">https://jgomezdans.github.io/gdal_notes/reprojection.html</a></li>
-</ul>
+</ol>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>src_raster</code></strong> :&ensp;<code>gdal.Dataset</code></dt>
@@ -1965,7 +1983,11 @@ general solution to calculating output raster size [1].</p>
     (GCS) based on the WGS84 datum. Thanks to J. Gómez-Dans for the more
     general solution to calculating output raster size [1].
 
-    - https://jgomezdans.github.io/gdal_notes/reprojection.html
+    NOTE: This will not work well for very small cell sizes, around 0.1
+    degress on a side or less. It should generally be used for down-sampling
+    (scaling up) only.
+
+    1. https://jgomezdans.github.io/gdal_notes/reprojection.html
 
     Parameters
     ----------
@@ -2275,6 +2297,11 @@ that contains that point.</p>
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

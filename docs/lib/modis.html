@@ -17,6 +17,7 @@ courtesy of Giglio et al. (2018), Collection 6 MODIS Burned Area Product
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -49,7 +50,7 @@ SPHERE_RADIUS = 6371007.181 # Radius of ideal sphere, meters
 TILE_LINES = {250: 5000, 500: 2400, 1000: 1200} # Num. lines by nominal res.
 TILE_SIZE = 1111950 # Width and height of MODIS tile in projection plane
 XMIN = -20015109 # Western limit of projection plane, meters
-YMAX = 10007555 # Nothern limit of projection plane, meters
+YMAX = 10007555 # Northern limit of projection plane, meters
 VIIRS_METADATA = re.compile(
     r&#39;.*XDim=(?P&lt;xdim&gt;\d+)&#39;
     r&#39;.*YDim=(?P&lt;ydim&gt;\d+)&#39;
@@ -838,6 +839,11 @@ number 80:</p>
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

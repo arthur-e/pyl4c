@@ -17,6 +17,7 @@ data …" />
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -513,7 +514,7 @@ def partition(array, num_processes, axis = 0):
     Parameters
     ----------
     array : numpy.ndarray
-        The 2-dimensional array to paritition
+        The 2-dimensional array to partition
     num_processes : int
         The number of processes desired
     axis : int
@@ -617,7 +618,7 @@ def sample(array, indices):
     indices_by_axis = [
         int(i[0]) for i in indices], [int(i[1]) for i in indices
     ]
-    # If row, colum indices are not sorted, we&#39;ll need another list comprehension
+    # If row, column indices are not sorted, we&#39;ll need another list comprehension
     try:
         return array[indices_by_axis]
     except TypeError:
@@ -1464,7 +1465,7 @@ processes.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The 2-dimensional array to paritition</dd>
+<dd>The 2-dimensional array to partition</dd>
 <dt><strong><code>num_processes</code></strong> :&ensp;<code>int</code></dt>
 <dd>The number of processes desired</dd>
 <dt><strong><code>axis</code></strong> :&ensp;<code>int</code></dt>
@@ -1487,7 +1488,7 @@ processes.</p>
     Parameters
     ----------
     array : numpy.ndarray
-        The 2-dimensional array to paritition
+        The 2-dimensional array to partition
     num_processes : int
         The number of processes desired
     axis : int
@@ -1592,7 +1593,7 @@ of row-column index pairs.</p>
     indices_by_axis = [
         int(i[0]) for i in indices], [int(i[1]) for i in indices
     ]
-    # If row, colum indices are not sorted, we&#39;ll need another list comprehension
+    # If row, column indices are not sorted, we&#39;ll need another list comprehension
     try:
         return array[indices_by_axis]
     except TypeError:
@@ -2140,7 +2141,7 @@ created with the 'core' driver, HDF5 still requires this be
 non-empty.</dd>
 <dt><strong><code>mode</code></strong></dt>
 <dd>r
-Readonly, file must exist
+Readonly, file must exist (default)
 r+
 Read/write, file must exist
 w
@@ -2148,18 +2149,18 @@ Create file, truncate if exists
 w- or x
 Create file, fail if exists
 a
-Read/write if exists, create otherwise (default)</dd>
+Read/write if exists, create otherwise</dd>
 <dt><strong><code>driver</code></strong></dt>
 <dd>Name of the driver to use.
 Legal values are None (default,
-recommended), 'core', 'sec2', 'stdio', 'mpio'.</dd>
+recommended), 'core', 'sec2', 'direct', 'stdio', 'mpio', 'ros3'.</dd>
 <dt><strong><code>libver</code></strong></dt>
 <dd>Library version bounds.
 Supported values: 'earliest', 'v108',
-'v110',
-and 'latest'. The 'v108' and 'v110' options can only be
-specified with the HDF5 1.10.2 library or later.</dd>
-<dt><strong><code>userblock</code></strong></dt>
+'v110', 'v112'
+and 'latest'. The 'v108', 'v110' and 'v112'
+options can only be specified with the HDF5 1.10.2 library or later.</dd>
+<dt><strong><code>userblock_size</code></strong></dt>
 <dd>Desired size of user block.
 Only allowed when creating a new
 file (mode w, w- or x).</dd>
@@ -2197,6 +2198,71 @@ chunks. The default value is 521.</dd>
 <dt><strong><code>track_order</code></strong></dt>
 <dd>Track dataset/group/attribute creation order under root group
 if True. If None use global default h5.get_config().track_order.</dd>
+<dt><strong><code>fs_strategy</code></strong></dt>
+<dd>The file space handling strategy to be used.
+Only allowed when
+creating a new file (mode w, w- or x).
+Defined as:
+"fsm"
+FSM, Aggregators, VFD
+"page"
+Paged FSM, VFD
+"aggregate"
+Aggregators, VFD
+"none"
+VFD
+If None use HDF5 defaults.</dd>
+<dt><strong><code>fs_page_size</code></strong></dt>
+<dd>File space page size in bytes. Only used when fs_strategy="page". If
+None use the HDF5 default (4096 bytes).</dd>
+<dt><strong><code>fs_persist</code></strong></dt>
+<dd>A boolean value to indicate whether free space should be persistent
+or not.
+Only allowed when creating a new file.
+The default value
+is False.</dd>
+<dt><strong><code>fs_threshold</code></strong></dt>
+<dd>The smallest free-space section size that the free space manager
+will track.
+Only allowed when creating a new file.
+The default
+value is 1.</dd>
+<dt><strong><code>page_buf_size</code></strong></dt>
+<dd>Page buffer size in bytes. Only allowed for HDF5 files created with
+fs_strategy="page". Must be a power of two value and greater or
+equal than the file space page size when creating the file. It is
+not used by default.</dd>
+<dt><strong><code>min_meta_keep</code></strong></dt>
+<dd>Minimum percentage of metadata to keep in the page buffer before
+allowing pages containing metadata to be evicted. Applicable only if
+page_buf_size is set. Default value is zero.</dd>
+<dt><strong><code>min_raw_keep</code></strong></dt>
+<dd>Minimum percentage of raw data to keep in the page buffer before
+allowing pages containing raw data to be evicted. Applicable only if
+page_buf_size is set. Default value is zero.</dd>
+<dt><strong><code>locking</code></strong></dt>
+<dd>The file locking behavior. Defined as:
+False (or "false")
+Disable file locking
+True (or "true")
+Enable file locking
+"best-effort"
+Enable file locking but ignore some errors
+None
+Use HDF5 defaults
+Warning: The HDF5_USE_FILE_LOCKING environment variable can override
+this parameter.
+Only available with HDF5 &gt;= 1.12.1 or 1.10.x &gt;= 1.10.7.</dd>
+<dt><strong><code>alignment_threshold</code></strong></dt>
+<dd>Together with <code>alignment_interval</code>, this property ensures that
+any file object greater than or equal in size to the alignement
+threshold (in bytes) will be aligned on an address which is a
+multiple of alignment interval.</dd>
+<dt><strong><code>alignment_interval</code></strong></dt>
+<dd>This property should be used in conjunction with
+<code>alignment_threshold</code>. See the description above. For more
+details, see
+<a href="https://portal.hdfgroup.org/display/HDF5/H5P_SET_ALIGNMENT">https://portal.hdfgroup.org/display/HDF5/H5P_SET_ALIGNMENT</a></dd>
 </dl>
 <p>Additional keywords
 Passed on to the selected file driver.</p></div>
@@ -2292,6 +2358,11 @@ Passed on to the selected file driver.</p></div>
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

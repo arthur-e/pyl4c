@@ -17,6 +17,7 @@ extensions; see corresponding calibration code in the module:
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -211,7 +212,7 @@ class L4CWithO2Diffusion(L4CPhenologyProcess):
         k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
         k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
         # NOTE: These are true decay rates for 2nd and 3rd pools, so it
-        #   is straightfoward to multiply them against SOC
+        #   is straightforward to multiply them against SOC
         rh = k_mult * self.constants.decay_rates * state
         # &#34;the adjustment...to account for material transferred into the
         #   slow pool during humification&#34; (Jones et al. 2017 TGARS, p.5)
@@ -234,7 +235,7 @@ class L4CWithO2Diffusion(L4CPhenologyProcess):
         def step(t, fields_gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -322,7 +323,7 @@ class L4CWithKokEffect(L4CPhenologyProcess):
         def step(t, fields_gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -638,7 +639,7 @@ data; this reduces memory use but increases I/O</dd>
         def step(t, fields_gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -742,7 +743,7 @@ available time steps (exhaust driver data) (Default: None)</dd>
     def step(t, fields_gpp, fields_rh):
         &#39;Calculate fluxes, new states for the next time step t&#39;
         if t == 0:
-            # Retrieve intial SOC pool sizes
+            # Retrieve initial SOC pool sizes
             state = self.state_initial[0:3,0,...]
         else:
             # Retrieve SOC in each pool from prior step
@@ -1022,7 +1023,7 @@ data; this reduces memory use but increases I/O</dd>
         k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
         k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
         # NOTE: These are true decay rates for 2nd and 3rd pools, so it
-        #   is straightfoward to multiply them against SOC
+        #   is straightforward to multiply them against SOC
         rh = k_mult * self.constants.decay_rates * state
         # &#34;the adjustment...to account for material transferred into the
         #   slow pool during humification&#34; (Jones et al. 2017 TGARS, p.5)
@@ -1045,7 +1046,7 @@ data; this reduces memory use but increases I/O</dd>
         def step(t, fields_gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -1184,7 +1185,7 @@ is an (N x M) array</dd>
     k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
     k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
     # NOTE: These are true decay rates for 2nd and 3rd pools, so it
-    #   is straightfoward to multiply them against SOC
+    #   is straightforward to multiply them against SOC
     rh = k_mult * self.constants.decay_rates * state
     # &#34;the adjustment...to account for material transferred into the
     #   slow pool during humification&#34; (Jones et al. 2017 TGARS, p.5)
@@ -1224,7 +1225,7 @@ available time steps (exhaust driver data) (Default: <code>None</code>)</dd>
     def step(t, fields_gpp, fields_rh):
         &#39;Calculate fluxes, new states for the next time step t&#39;
         if t == 0:
-            # Retrieve intial SOC pool sizes
+            # Retrieve initial SOC pool sizes
             state = self.state_initial[0:3,0,...]
         else:
             # Retrieve SOC in each pool from prior step
@@ -1285,6 +1286,11 @@ available time steps (exhaust driver data) (Default: <code>None</code>)</dd>
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

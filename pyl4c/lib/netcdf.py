@@ -11,7 +11,7 @@ from osgeo import osr
 from osgeo import gdal
 from osgeo import gdalconst
 from bisect import bisect_left
-from scipy.io.netcdf import netcdf_file
+from scipy.io import netcdf_file
 from pyl4c.epsg import EPSG
 from pyl4c.spatial import EASE2_GRID_PARAMS, array_to_raster, dump_raster
 from pyl4c.utils import get_slice_idx_by_bbox

@@ -15,6 +15,7 @@
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -229,7 +230,7 @@ class L4CPrescribedGPPModel(L4CForwardProcessPoint):
         def step(t, gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -322,7 +323,7 @@ class L4CPrescribedGPPModelWithKokEffect(L4CPrescribedGPPModel):
         def step(t, gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -432,7 +433,7 @@ class L4CPrescribedGPPModelWithO2Limit(
         def step(t, gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -604,7 +605,7 @@ class L4CPrescribedGPPModelWithSoilProfile(
         def step(t, gpp, fields_rh, soil_t, soil_m, litterfall):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -983,7 +984,7 @@ data; this reduces memory use but increases I/O</dd>
         def step(t, gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -1104,7 +1105,7 @@ available time steps (exhaust driver data) (Default: <code>None</code>)</dd>
     def step(t, gpp, fields_rh):
         &#39;Calculate fluxes, new states for the next time step t&#39;
         if t == 0:
-            # Retrieve intial SOC pool sizes
+            # Retrieve initial SOC pool sizes
             state = self.state_initial[0:3,0,...]
         else:
             # Retrieve SOC in each pool from prior step
@@ -1235,7 +1236,7 @@ data; this reduces memory use but increases I/O</dd>
         def step(t, gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -1480,7 +1481,7 @@ data; this reduces memory use but increases I/O</dd>
         def step(t, gpp, fields_rh):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -1775,7 +1776,7 @@ data; this reduces memory use but increases I/O</dd>
         def step(t, gpp, fields_rh, soil_t, soil_m, litterfall):
             &#39;Calculate fluxes, new states for the next time step t&#39;
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -2210,6 +2211,11 @@ data; this reduces memory use but increases I/O</dd>
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>

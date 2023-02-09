@@ -17,6 +17,7 @@ running an L4C forward simulation. A point (site-level) version of the L4C
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
 <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
 <main>
@@ -548,8 +549,8 @@ class L4CStratifiedState(L4CState):
         if new is None:
             self._data = None
         elif hasattr(new, &#39;ndim&#39;):
-            assert new.ndim == 5,\
-                &#39;New data array must have 4 axes; should be (M x T x Z x N x 81)&#39;
+            assert new.ndim &gt;= 4,\
+                &#39;New data array must have at least 4 axes; should be (T x Z x N x 81)&#39;
             self._data = new.astype(self._dtype)
         else:
             # Otherwise, concat the sequence of arrays, once made conformable
@@ -606,7 +607,7 @@ class L4CStratifiedState(L4CState):
             ), axis = 1)
 
 
-def report(hdf, config):
+def report(hdf):
     &#39;&#39;&#39;
     Check that we have everything needed to run L4C, print a report to the
     screen.
@@ -614,8 +615,6 @@ def report(hdf, config):
     Parameters
     ----------
     hdf : h5py.File
-    config : dict
-        Configuration for running L4C
     &#39;&#39;&#39;
     KEYS = (&#39;apar&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;tmin&#39;, &#39;tsoil&#39;, &#39;smrz&#39;, &#39;smsf&#39;)
 
@@ -658,7 +657,7 @@ def report(hdf, config):
         )
 
     print(&#39;\nL4C: Validating configuration and input datasets for file:&#39;)
-    print(&#39;  %s&#39; % config[&#39;inputs_file_path&#39;])
+    print(&#39;  %s&#39; % hdf.filename)
     print(&#39;\nL4C: Checking for required driver variables...&#39;)
     for key in KEYS:
         if key == &#39;ft&#39; and key not in hdf[&#39;drivers&#39;].keys():
@@ -710,7 +709,7 @@ geographic point locations. This is a "point" version, similar to the Matlab
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="pyl4c.apps.l4c.report"><code class="name flex">
-<span>def <span class="ident">report</span></span>(<span>hdf, config)</span>
+<span>def <span class="ident">report</span></span>(<span>hdf)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Check that we have everything needed to run L4C, print a report to the
@@ -719,14 +718,12 @@ screen.</p>
 <dl>
 <dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
 <dd>&nbsp;</dd>
-<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
-<dd>Configuration for running L4C</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def report(hdf, config):
+<pre><code class="python">def report(hdf):
     &#39;&#39;&#39;
     Check that we have everything needed to run L4C, print a report to the
     screen.
@@ -734,8 +731,6 @@ screen.</p>
     Parameters
     ----------
     hdf : h5py.File
-    config : dict
-        Configuration for running L4C
     &#39;&#39;&#39;
     KEYS = (&#39;apar&#39;, &#39;vpd&#39;, &#39;ft&#39;, &#39;tmin&#39;, &#39;tsoil&#39;, &#39;smrz&#39;, &#39;smsf&#39;)
 
@@ -778,7 +773,7 @@ screen.</p>
         )
 
     print(&#39;\nL4C: Validating configuration and input datasets for file:&#39;)
-    print(&#39;  %s&#39; % config[&#39;inputs_file_path&#39;])
+    print(&#39;  %s&#39; % hdf.filename)
     print(&#39;\nL4C: Checking for required driver variables...&#39;)
     for key in KEYS:
         if key == &#39;ft&#39; and key not in hdf[&#39;drivers&#39;].keys():
@@ -1894,8 +1889,8 @@ the same length as the first axis of the <code>state</code> of array</dd>
         if new is None:
             self._data = None
         elif hasattr(new, &#39;ndim&#39;):
-            assert new.ndim == 5,\
-                &#39;New data array must have 4 axes; should be (M x T x Z x N x 81)&#39;
+            assert new.ndim &gt;= 4,\
+                &#39;New data array must have at least 4 axes; should be (T x Z x N x 81)&#39;
             self._data = new.astype(self._dtype)
         else:
             # Otherwise, concat the sequence of arrays, once made conformable
@@ -2060,6 +2055,11 @@ def data(self):
 </section>
 </article>
 <nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
 <h1>Index</h1>
 <div class="toc">
 <ul></ul>
