@@ -418,7 +418,9 @@ class L4CForwardProcessPoint(object):
         #   is straightforward to multiply them against SOC
         rh = k_mult * self.constants.decay_rates * state
         # "the adjustment...to account for material transferred into the
-        #   slow pool during humification" (Jones et al. 2017 TGARS, p.5)
+        #   slow pool during humification" (Jones et al. 2017 TGARS, p.5);
+        #   note that this is a loss FROM the "medium" (structural) pool,
+        #   see tcfModFunc.c Lines 54-55
         rh[1,...] = rh[1,...] * (1 - self.constants.f_structural)
         # T_mult, W_mult same for each pool
         return (rh, (f_tsoil, f_smsf))
