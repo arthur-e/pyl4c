@@ -2,8 +2,8 @@
 Functions for affine transformations between geographic coordinates (WGS84)
 and EASE-Grid 2.0 row-column coordinates.
 
-NOTE: The ease2_from_wgs84() and ease2_to_wgs84() functions should refer to
-the center of a grid cell, which can be confirmed by:
+NOTE: The `ease2_from_wgs84()` and `ease2_to_wgs84()` functions should refer
+to the center of a grid cell, which can be confirmed by:
 
     >>> ease2_from_wgs84(ease2_to_wgs84((0, 0), 'M09'), 'M01')
     (4, 4)
@@ -17,19 +17,6 @@ from pyl4c.data.fixtures import EASE2_GRID_PARAMS
 
 EARTH_RADIUS = 6378137.0 # WGS84 sphere
 WGS84_ECCENTRICITY = 0.081819190843
-
-def validate(func):
-    'Decorator for validating the requested EASE-Grid 2.0'
-    supported_grids = ('M01', 'M03', 'M09', 'M36')
-    def inner(*args, **kwargs):
-        grid = func.__defaults__[0]
-        if 'grid' in kwargs:
-            grid = kwargs['grid']
-        if grid not in supported_grids:
-            raise NotImplementedError('Unsupported EASE-Grid 2.0 identifier; requires one of: %s', ', '.join(supported_grids))
-
-        return func(*args, **kwargs)
-    return inner
 
 
 def ease2_coords(grid: str, in_1d: bool = True):
@@ -63,15 +50,12 @@ def ease2_coords(grid: str, in_1d: bool = True):
         np.repeat(y_coords.reshape((nrows, 1)), ncols, axis = 1))
 
 
-@validate
-def ease2_search_radius(coords, k: int, grid = 'M09'):
+def ease2_nested_cells(coords, k: int, grid = 'M01'):
     '''
-    Finds the nearest EASE-Grid 2.0 grid cells using a search radius of k grid
-    cells; returns a list of grid cell indices sorted by distance ascending.
-    The row-column indices that correspond to the affine transformation of the
-    given coordinates will always be the nearest, but this can be useful for
-    finding the next-nearest row-column coordinates.
-    NOTE: See pyl4c.utils.get_ease2_nearest_cell()
+    Finds the row-column coordinates of all EASE-Grid 2.0 cells nested within
+    a larger cell. The finer or target grid resolution is specified by `grid`;
+    it is assumed that the WGS84 `coords` provided refer to the center of a
+    larger cell.
 
     Parameters
     ----------
@@ -91,7 +75,33 @@ def ease2_search_radius(coords, k: int, grid = 'M09'):
     row, col = ease2_from_wgs84(coords, grid)
     potential_rows = np.arange(row - k, row + k + 1, 1)
     potential_cols = np.arange(col - k, col + k + 1, 1)
-    choices_idx = list(product(potential_rows, potential_cols))
+    return list(product(potential_rows, potential_cols))
+
+
+def ease2_search_radius(coords, k: int, grid = 'M09'):
+    '''
+    Finds the nearest EASE-Grid 2.0 grid cells using a search radius of k grid
+    cells; returns a list of grid cell indices sorted by distance ascending.
+    The row-column indices that correspond to the affine transformation of the
+    given coordinates will always be the nearest, but this can be useful for
+    finding the next-nearest row-column coordinates. See
+    `pyl4c.utils.get_ease2_nearest_cell()`.
+
+    Parameters
+    ----------
+    coords : list or tuple
+        The longitude-latitude pair for which to find the nearest grid cells
+    k : int
+        The search radius; corresponds to the number of rows and
+            columns away from the defined coordinates
+    grid : str
+        The EASE-Grid 2.0 designation: M01, M09, etc.
+
+    Returns
+    -------
+    list
+    '''
+    choices_idx = ease2_nested_cells(coords, k, grid)
     choices_wgs84 = [ # Convert from row-column to longitude-latitude
         ease2_to_wgs84(pair, grid) for pair in choices_idx
     ]
@@ -102,15 +112,14 @@ def ease2_search_radius(coords, k: int, grid = 'M09'):
     return np.array(choices_idx)[np.argsort(dists),:].tolist()
 
 
-@validate
 def ease2_from_wgs84(coords, grid: str = 'M09', exact: bool = False):
     '''
     Given a longitude-latitude coordinate pair, derive EASE-Grid 2.0
     row-column coordinates. This is translated directly from the gridutil C
     code (easegrid_wgs84_transforms.c) which, in turn, was translated from
     Brodzik's IDL code. NOTE: Only supports the global EASE-Grid 2.0
-    projection for now. NOTE: The ease2_from_wgs84() and ease2_to_wgs84()
-    functions are only consistent (i.e., reversible) if exact=True is used.
+    projection for now. NOTE: The `ease2_from_wgs84()` and `ease2_to_wgs84()`
+    functions are only consistent (i.e., reversible) if `exact=True` is used.
 
     Parameters
     ----------
@@ -170,16 +179,15 @@ def ease2_from_wgs84(coords, grid: str = 'M09', exact: bool = False):
     return tuple(map(lambda c: int(round(c)), result))
 
 
-@validate
 def ease2_to_wgs84(coords, grid = 'M09'):
     '''
     Given a row-column coordinate pair from an EASE-Grid 2.0, derive the
     corresponding WGS84 longitude-latitude coordinates. This is translated
     directly from the gridutil C code (easegrid_wgs84_transforms.c) which, in
     turn, was translated from Brodzik's IDL code. NOTE: Only supports the
-    global EASE-Grid 2.0 projection for now. NOTE: The ease2_from_wgs84() and
-    ease2_to_wgs84() functions are only consistent (i.e., reversible) if
-    exact=True is used (in ease2_from_wgs84()).
+    global EASE-Grid 2.0 projection for now. NOTE: The `ease2_from_wgs84()`
+    and `ease2_to_wgs84()` functions are only consistent (i.e., reversible) if
+    `exact=True` is used (in `ease2_from_wgs84()`).
 
     Parameters
     ----------

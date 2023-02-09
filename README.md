@@ -1,4 +1,5 @@
-# pyl4c
+pyl4c
+========================
 
 [![DOI](https://zenodo.org/badge/392401528.svg)](https://zenodo.org/badge/latestdoi/392401528)
 
@@ -8,6 +9,7 @@ This is a collection of Python tools for managing, analyzing, and visualizing SM
 - Converting HDF5 geophysical variables to GeoTIFF format (`spatial.py`);
 - Creating statistical summaries of SMAP L4C variables or other raster arrays (`utils.py`);
 - Reproducing L4C operational model logic (`science.py`);
+- Down-scaling 9-km SMAP fields to 1-km resolution (`/apps/resample.py`)
 - Calibrating the L4C model (`apps/calibration`);
 - Running the L4C model (`apps/l4c`);
 - Aligning and summarizing SMAP L4C variables with TransCom regions (`lib/transcom.py`);
@@ -18,15 +20,14 @@ The entire project is contained in the `pyl4c` module. Once installed:
 import pyl4c
 ```
 
----------------
-
-## Documentation
+Documentation
+-------------
 
 [Read the online documentation here.](https://arthur-e.github.io/pyl4c/)
 
----------------
 
-## Setup and Installation
+Setup and Installation
+----------------------
 
 Because this project is highly modular, it must be installed as a package in order to resolve module references/ paths.
 Check out `setup.sh` for an example of setting up the virtual environment prior to installation with `pip`.
