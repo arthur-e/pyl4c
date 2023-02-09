@@ -24,7 +24,7 @@ and `dump_raster()` are copied from my (MIT-licensed) `unmixing` library [4].
 import tempfile
 import numpy as np
 import pyproj
-from osgeo import gdal, gdalconst, gdalnumeric, gdal_array, ogr, osr
+from osgeo import gdal, gdalconst, gdalnumeric, gdal_array, osr
 from affine import Affine
 from pyl4c.data.fixtures import EASE2_GRID_PARAMS
 from pyl4c.epsg import EPSG
@@ -69,7 +69,8 @@ def array_to_raster(
     rast.SetGeoTransform(gt)
     rast.SetProjection(wkt)
     if nodata is not None:
-        rast.GetRasterBand(1).SetNoDataValue(nodata)
+        for band in range(1, rast.RasterCount + 1):
+            rast.GetRasterBand(band).SetNoDataValue(nodata)
     if xoff is not None and yoff is not None:
         # Bit of a hack; essentially, re-create the raster but with the
         #   correct X and Y offsets (don't know how to do this without the
@@ -269,6 +270,7 @@ def bounds(rast):
     Returns
     -------
     tuple
+        The bounds of the raster, i.e., `(xmin, ymin, xmax, ymax)`
     '''
     gt = rast.GetGeoTransform()
     xsize = rast.RasterXSize # Size in the x-direction
@@ -497,12 +499,14 @@ def intersect_rasters(
     alignment.
 
     NOTE: If the reference raster's top-left corner is far left and/or above
-    that of the source raster, the intersect raster may contain no data
+    that of the source raster, the intersected raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
-    NOTE: If the ref_raster and src_raster have different projections, the
+    NOTE: If the `ref_raster` and `src_raster` have different projections, the
     result may contain no data (i.e., all `NoData`). Not sure why, as here we
-    are projecting the data to match the reference raster.
+    are projecting the data to match the reference raster. This method should
+    be used with rasters that are "close" but not an exact match for SRS,
+    resolution, and extent.
 
     Parameters
     ----------
@@ -599,10 +603,10 @@ def intersect_rasters2(
     Will need to test performance.
 
     NOTE: If the reference raster's top-left corner is far left and/or above
-    that of the source raster, the intersect raster may contain no data
+    that of the source raster, the intersected raster may contain no data
     from the original raster, i.e., an empty raster will result.
 
-    NOTE: If the ref_raster and src_raster have different projections, the
+    NOTE: If the `ref_raster` and `src_raster` have different projections, the
     result may contain no data (i.e., all `NoData`). Not sure why, as here we
     are projecting the data to match the reference raster.
 
@@ -648,7 +652,11 @@ def project_equirectangular(
     (GCS) based on the WGS84 datum. Thanks to J. Gómez-Dans for the more
     general solution to calculating output raster size [1].
 
-    - https://jgomezdans.github.io/gdal_notes/reprojection.html
+    NOTE: This will not work well for very small cell sizes, around 0.1
+    degress on a side or less. It should generally be used for down-sampling
+    (scaling up) only.
+
+    1. https://jgomezdans.github.io/gdal_notes/reprojection.html
 
     Parameters
     ----------

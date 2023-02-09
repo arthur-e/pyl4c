@@ -168,14 +168,11 @@ def linear_constraint(xmin, xmax, form = None):
     if form == 'reversed':
         return lambda x: np.where(x >= xmax, 0,
             np.where(x < xmin, 1, 1 - np.divide(
-                np.subtract(x, xmin), xmax - xmin)))
-
+                x - xmin, xmax - xmin)))
     if form == 'binary':
         return lambda x: np.where(x == 1, xmax, xmin)
-
     return lambda x: np.where(x >= xmax, 1,
-        np.where(x < xmin, 0,
-            np.divide(np.subtract(x, xmin), xmax - xmin)))
+        np.where(x < xmin, 0, np.divide(x - xmin, xmax - xmin)))
 
 
 def ols(x, y, add_intercept = True, use_qr_decomp = True):
