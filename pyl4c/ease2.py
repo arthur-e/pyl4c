@@ -85,7 +85,7 @@ def ease2_search_radius(coords, k: int, grid = 'M09'):
     The row-column indices that correspond to the affine transformation of the
     given coordinates will always be the nearest, but this can be useful for
     finding the next-nearest row-column coordinates. See
-    `pyl4c.utils.get_ease2_nearest_cell()`.
+    `pyl4c.ease2.ease2_nested_cells()`.
 
     Parameters
     ----------

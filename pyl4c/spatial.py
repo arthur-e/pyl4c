@@ -24,7 +24,7 @@ and `dump_raster()` are copied from my (MIT-licensed) `unmixing` library [4].
 import tempfile
 import numpy as np
 import pyproj
-from osgeo import gdal, gdalconst, gdalnumeric, gdal_array, osr
+from osgeo import gdal, gdalconst, gdal_array, osr
 from affine import Affine
 from pyl4c.data.fixtures import EASE2_GRID_PARAMS
 from pyl4c.epsg import EPSG
@@ -63,7 +63,7 @@ def array_to_raster(
         rast = gdal_array.OpenNumPyArray(a)
     except AttributeError:
         # For backwards compatibility with older version of GDAL
-        rast = gdal.Open(gdalnumeric.GetArrayFilename(a))
+        rast = gdal.Open(gdal_array.GetArrayFilename(a))
     except:
         rast = gdal_array.OpenArray(a)
     rast.SetGeoTransform(gt)
@@ -103,7 +103,7 @@ def array_to_raster_clone(a, proto, xoff = None, yoff = None):
         rast = gdal_array.OpenNumPyArray(a)
     except AttributeError:
         # For backwards compatibility with older version of GDAL
-        rast = gdal.Open(gdalnumeric.GetArrayFilename(a))
+        rast = gdal.Open(gdal_array.GetArrayFilename(a))
     except:
         rast = gdal_array.OpenArray(a)
     kwargs = dict()
@@ -112,7 +112,7 @@ def array_to_raster_clone(a, proto, xoff = None, yoff = None):
     # Copy the projection info and metadata from a prototype dataset
     if type(proto) == str:
         proto = gdal.Open(proto)
-    gdalnumeric.CopyDatasetInfo(proto, rast, **kwargs)
+    gdal_array.CopyDatasetInfo(proto, rast, **kwargs)
     return rast
 
 

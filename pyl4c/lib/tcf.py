@@ -469,7 +469,7 @@ class TCFArray(SparseArray, metaclass = MetaSparseArray):
         `foo.flt32` or `foo.uint8`.
     '''
     file_regex = re.compile(r'^tcf_.*_(?P<field>Ctot|gpp|nee|rhtot)_avg_(?P<pft>pft\d{1})?_?.*\.(?P<ftype>%s$)' % '|'.join(TYPE_MAP.keys()))
-    date_regex = re.compile('.*/Y(?P<year>\d{4})/D(?P<day>\d{3})/?$')
+    date_regex = re.compile(r'.*/Y(?P<year>\d{4})/D(?P<day>\d{3})/?$')
 
     def __init__(self, file_path, grid = 'M09'):
         super(TCFArray, self).__init__(file_path, grid)
