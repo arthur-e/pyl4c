@@ -108,7 +108,7 @@ class L4CEnhancedDecomposition(L4CPhenologyProcess):
         k_mult = f_tsoil * np.min(np.stack((f_smsf, mm_O2)), axis = 0)
         k_mult = k_mult[np.newaxis,...].repeat(3, axis = 0)
         # NOTE: These are true decay rates for 2nd and 3rd pools, so it
-        #   is straightfoward to multiply them against SOC
+        #   is straightforward to multiply them against SOC
         rh = k_mult * self.constants.decay_rates * state
         # "the adjustment...to account for material transferred into the
         #   slow pool during humification" (Jones et al. 2017 TGARS, p.5)
@@ -131,7 +131,7 @@ class L4CEnhancedDecomposition(L4CPhenologyProcess):
         def step(t, fields_gpp, fields_rh):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
@@ -338,7 +338,7 @@ class L4CDAMM(L4CForwardProcessPoint):
         def step(t, fields_gpp, fields_rh):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step

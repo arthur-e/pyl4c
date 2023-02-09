@@ -514,8 +514,8 @@ class L4CStratifiedState(L4CState):
         if new is None:
             self._data = None
         elif hasattr(new, 'ndim'):
-            assert new.ndim == 5,\
-                'New data array must have 4 axes; should be (M x T x Z x N x 81)'
+            assert new.ndim >= 4,\
+                'New data array must have at least 4 axes; should be (T x Z x N x 81)'
             self._data = new.astype(self._dtype)
         else:
             # Otherwise, concat the sequence of arrays, once made conformable
@@ -572,7 +572,7 @@ class L4CStratifiedState(L4CState):
             ), axis = 1)
 
 
-def report(hdf, config):
+def report(hdf):
     '''
     Check that we have everything needed to run L4C, print a report to the
     screen.
@@ -580,8 +580,6 @@ def report(hdf, config):
     Parameters
     ----------
     hdf : h5py.File
-    config : dict
-        Configuration for running L4C
     '''
     KEYS = ('apar', 'vpd', 'ft', 'tmin', 'tsoil', 'smrz', 'smsf')
 
@@ -624,7 +622,7 @@ def report(hdf, config):
         )
 
     print('\nL4C: Validating configuration and input datasets for file:')
-    print('  %s' % config['inputs_file_path'])
+    print('  %s' % hdf.filename)
     print('\nL4C: Checking for required driver variables...')
     for key in KEYS:
         if key == 'ft' and key not in hdf['drivers'].keys():

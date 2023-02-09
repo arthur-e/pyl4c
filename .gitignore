@@ -1,10 +1,11 @@
 syntax: glob
 __pycache__
+virtualenv.sh
 *.h5
 *.h5.iso.xml
 *.png
 pyl4c.egg-info/
-docs/html
+dist/
 
 # Cython stuff
 *.c

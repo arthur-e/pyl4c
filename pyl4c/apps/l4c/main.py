@@ -415,10 +415,12 @@ class L4CForwardProcessPoint(object):
         ]
         k_mult = (f_tsoil * f_smsf)[np.newaxis,...].repeat(3, axis = 0)
         # NOTE: These are true decay rates for 2nd and 3rd pools, so it
-        #   is straightfoward to multiply them against SOC
+        #   is straightforward to multiply them against SOC
         rh = k_mult * self.constants.decay_rates * state
         # "the adjustment...to account for material transferred into the
-        #   slow pool during humification" (Jones et al. 2017 TGARS, p.5)
+        #   slow pool during humification" (Jones et al. 2017 TGARS, p.5);
+        #   note that this is a loss FROM the "medium" (structural) pool,
+        #   see tcfModFunc.c Lines 54-55
         rh[1,...] = rh[1,...] * (1 - self.constants.f_structural)
         # T_mult, W_mult same for each pool
         return (rh, (f_tsoil, f_smsf))
@@ -467,7 +469,7 @@ class L4CForwardProcessPoint(object):
         def step(t, fields_gpp, fields_rh):
             'Calculate fluxes, new states for the next time step t'
             if t == 0:
-                # Retrieve intial SOC pool sizes
+                # Retrieve initial SOC pool sizes
                 state = self.state_initial[0:3,0,...]
             else:
                 # Retrieve SOC in each pool from prior step
