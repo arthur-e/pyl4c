@@ -64,7 +64,13 @@ class NestedGrid(object):
     ----------
     pft : tuple
         PFT values to use in downscaling
-
+    shape : Sequence
+        (Optional) The intended shape (at 9-km resolution) of the L4C data
+        that will be downscaled. If not provided, should the shape of the
+        data not match the PFT map, an error will be raised.
+    subset_bbox : Sequence
+        (Optional) An optional bounding box, `(xmin, ymin, xmax, ymax)`,
+        specifying a spatial subset that will be downscaled
     '''
     def __init__(self, pft = range(1, 9), shape = None, subset_bbox = None):
         self._offsets = (0, 0)
