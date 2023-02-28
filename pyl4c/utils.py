@@ -257,7 +257,7 @@ def get_ease2_slice_offsets(grid, subset_id):
     return (slice_idx[0][0], slice_idx[1][0])
 
 
-def get_pft_array(grid, subset_id = None, subset_bbox = None):
+def get_pft_array(grid, subset_id = None, subset_bbox = None, slice_idx = None):
     '''
     Returns an array of PFT codes on the given EASE-Grid 2.0 for the entire
     globe or a specified subset.
@@ -271,7 +271,12 @@ def get_pft_array(grid, subset_id = None, subset_bbox = None):
         the desired subset area
     subset_bbox : tuple
         (Optional) Instead of `subset_id`, can provide any arbitrary bounding
-        box, i.e., sequence of coordinates: `<xmin>, <ymin>, <xmax>, <ymax>`
+        box, i.e., sequence of coordinates: `<xmin>, <ymin>, <xmax>, <ymax>`;
+        these should be in WGS84 (longitude-latitude) coordinates
+    slice_idx : list
+        (Optional) Sequence of row-column slice indices to use, for subsetting
+        the array; provide as: `[(row1, row2), (col1, col2)]` where the array
+        is to be subset as: `array[row1:row2,col1:col2]`
 
     Returns
     -------
@@ -279,8 +284,9 @@ def get_pft_array(grid, subset_id = None, subset_bbox = None):
     '''
     assert grid in EASE2_GRID_PARAMS.keys(),\
         'Could not understand grid argument; must be one of: %s' % ', '.join(EASE2_GRID_PARAMS.keys())
-    assert (subset_id is None and subset_bbox is None) or (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None),\
-        'Should provide only one argument: Either subset_id or subset_bbox'
+    msg = 'Expected only one of the following arguments: subset_id, subset_bbox, slice_idx'
+    assert not all((subset_id is not None, subset_bbox is not None)), msg
+    assert not all((subset_bbox is not None, slice_idx is not None)), msg
     m = int(grid[-1]) # Pop off the grid size in km
     anc_hdf_path = ANCILLARY_DATA_PATHS['smap_l4c_ancillary_data_file_path']
     field = ANCILLARY_DATA_PATHS['smap_l4c_%dkm_ancillary_data_lc_path' % m]
@@ -290,12 +296,17 @@ def get_pft_array(grid, subset_id = None, subset_bbox = None):
         if subset_id is not None:
             pft_array, _, _ = subset(
                 hdf, field, hdf[xf][0,:], hdf[yf][:,0], subset_id = subset_id)
+            return pft_array
         elif subset_bbox is not None:
             pft_array, _, _ = subset(
                 hdf, field, hdf[xf][0,:], hdf[yf][:,0], subset_bbox = subset_bbox)
+            return pft_array
+        elif slice_idx is not None:
+            y0, y1 = slice_idx[0]
+            x0, x1 = slice_idx[1]
+            return hdf[field][y0:y1,x0:x1]
         else:
-            pft_array = hdf[field][:]
-    return pft_array
+            return hdf[field][:]
 
 
 def get_slice_idx_by_bbox(
@@ -324,9 +335,11 @@ def get_slice_idx_by_bbox(
         the desired subset area
     subset_bbox : tuple
         (Optional) Instead of subset_id, can provide any arbitrary bounding
-        box, i.e., sequence of coordinates: <xmin>, <ymin>, <xmax>, <ymax>
+        box, i.e., sequence of coordinates: `<xmin>, <ymin>, <xmax>, <ymax>`;
+        these should be in WGS84 (longitude-latitude) coordinates
     '''
-    assert (subset_id is None and subset_bbox is not None) or (subset_id is not None and subset_bbox is None), 'Should provide only one argument: Either subset_id or subset_bbox'
+    if subset_id is not None and subset_bbox is not None:
+        raise ValueError('Should provide only one argument: Either subset_id or subset_bbox')
     assert x_coords.ndim == 1 and y_coords.ndim == 1, 'Must provide 1D coordinate arrays only'
 
     bb = subset_bbox
@@ -521,7 +534,8 @@ def subset(
         the desired subset area
     subset_bbox : tuple or list
         (Optional) Instead of subset_id, can provide any arbitrary bounding
-        box, i.e., sequence of coordinates: <xmin>, <ymin>, <xmax>, <ymax>
+        box, i.e., sequence of coordinates: `<xmin>, <ymin>, <xmax>, <ymax>`;
+        these should be in WGS84 (longitude-latitude) coordinates
 
     Returns
     -------
