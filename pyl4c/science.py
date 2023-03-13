@@ -496,47 +496,6 @@ def mean_residence_time(
     return (mrt, xoff, yoff)
 
 
-def npp(
-        hdf, use_subgrid = False, subset_id = None, subset_bbox = None,
-        nodata = -9999):
-    '''
-    Calculates net primary productivity (NPP), based on the carbon use
-    efficiency (CUE) of each plant functional type (PFT). NPP is derived
-    as: `NPP = GPP * CUE`, where `CUE = NPP/GPP`.
-
-    Parameters
-    ----------
-    hdf : h5py.File
-        The HDF5 file / h5py.File object
-    use_subgrid : bool
-        True to use the 1-km subgrid; requires iterating through the PFT means
-    subset_id : str
-        (Optional) Can provide keyword designating the desired subset area
-    subset_bbox : list or tuple
-        (Optional) Can provide a bounding box to define a desired subset area
-    nodata : float
-        The NoData value to mask (Default: -9999)
-
-    Returns
-    -------
-    numpy.ndarray
-        NPP values on an EASE-Grid 2.0 array
-    '''
-    grid = 'M01' if use_subgrid else 'M09'
-    cue_array = cue(get_pft_array(grid, subset_id, subset_bbox))
-    if not use_subgrid:
-        if subset_id is not None or subset_bbox is not None:
-            gpp, _, _ = subset(
-                hdf, 'GPP/gpp_mean', subset_id = subset_id,
-                subset_bbox = subset_bbox)
-        else:
-            gpp = hdf['GPP/gpp_mean'][:]
-    else:
-        raise NotImplementedError('No support for the 1-km subgrid')
-    gpp[gpp == nodata] = np.nan
-    return np.multiply(gpp, cue_array)
-
-
 def ordinals365(dates):
     '''
     Returns a length-T sequence of ordinals on [1,365]. Can be used for
