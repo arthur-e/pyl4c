@@ -202,7 +202,7 @@ def parameter_mapped(name, pft_array, bplut = BPLUT):
     '''
     param = bplut[name]
     # Basically, index the <name> array, in PFT order, by PFT numeric codes
-    return np.asarray(param)[np.ravel(pft_array)].reshape(pft_array.shape)
+    return np.asarray(param)[:,np.ravel(pft_array)].reshape(pft_array.shape)
 
 
 def restore_bplut(csv_file_path, version_id = None):
@@ -306,3 +306,32 @@ def restore_bplut(csv_file_path, version_id = None):
     result['decay_rates'][2,:] = np.multiply(
         result['decay_rates'][0,:], result['decay_rates'][2,:])
     return result
+
+
+def restore_bplut_flat(csv_file_path, version_id = None):
+    '''
+    Translates a BPLUT CSV file to a Python internal representation
+    (OrderedDict instance). Compare to `restore_bplut()`, this version
+    sets parameter values as flat lists instead of n-dimensional NumPy
+    arrays.
+
+    Parameters
+    ----------
+    csv_file_path : str
+        File path to the CSV representation of the BPLUT
+    version_id : str
+        (Optional) Version identifier for the BPLUT
+
+    Returns
+    -------
+    OrderedDict
+    '''
+    params = restore_bplut(csv_file_path, version_id)
+    result = dict()
+    for key, value in params.items():
+        if key not in ('tmin', 'vpd', 'smsf', 'smrz', 'ft'):
+            result[key] = value
+            continue
+        for i, array in enumerate(value.tolist()):
+            result[f'{key}{i}'] = array
+    return OrderedDict(result)
