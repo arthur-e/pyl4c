@@ -333,5 +333,5 @@ def restore_bplut_flat(csv_file_path, version_id = None):
             result[key] = value
             continue
         for i, array in enumerate(value.tolist()):
-            result[f'{key}{i}'] = array
+            result[f'{key}{i}'] = np.array(array).reshape((1,len(array)))
     return OrderedDict(result)
