@@ -616,7 +616,8 @@ def report(hdf):
         'Get summary statistics for a field'
         if str(data.dtype).startswith('int'):
             return (None for i in range(0, 3))
-        data[data == -9999] = np.nan
+        if data.dtype in (np.float32, np.float64):
+            data[data == -9999] = np.nan
         return (
             getattr(np, f)(data) for f in ('nanmin', 'nanmean', 'nanmax')
         )

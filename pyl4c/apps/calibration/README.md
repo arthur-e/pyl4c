@@ -75,17 +75,17 @@ coords/
     lng_lat                   (N x 2)
 
 drivers/
-    fpar      (T x N x 81)
-    par       (T x N)
-    smrz      (T x N)       SMRZ re-scaled using srmz_min
+    fpar      (T x N x 81)  fPAR, as a proportion on [0, 1]
+    par       (T x N)       [MJ m-2 day-1]
+    smrz      (T x N)       Wetness (%) units, re-scaled using srmz_min and smrz_max = 100
     smrz0     (T x N)       (Optional) Original SMRZ before re-scaling
     smrz_min  (N)           (Optional) Site-level minimum SMRZ
     smrz_max  (N)           (Optional) Site-level maximum SMRZ
-    smsf      (T x N)
-    tmin      (T x N)
-    tsoil     (T x N)
-    tsurf     (T x N)
-    vpd       (T X N)
+    smsf      (T x N)       Wetness (%) units
+    tmin      (T x N)       [deg K]
+    tsoil     (T x N)       [deg K]
+    tsurf     (T x N)       [deg K]
+    vpd       (T X N)       [Pascals]
 
 legacy/                 (Optional) Any data from prior versions goes here
     lc_dom
@@ -94,8 +94,11 @@ site_id       (N)       Site names/ unique identifiers
 site_pft_9km  (N)       Dominant PFT class in 9-km pixel
 
 state/
-    PFT       (N x 81)  1-km PFT classes
-    porosity  (N)       (Optional) Porosity from L4SM land model
+    PFT       (N x 81)      1-km PFT classes
+    porosity  (N)           (Optional) Porosity from L4SM land model
+    npp_sum   (N x 81)      Annual sum of net primary production (NPP)
+    soil_organic_carbon
+              (3 x N x 81)  SOC content (g C m-2) for each of 3 SOC pools
 
 time          (T x 4)   Where T is the number of time steps
 ```
