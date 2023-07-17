@@ -19,8 +19,8 @@ Required drivers and units:
 ```
 PAR     MJ m-2 day-1
 fPAR    Dimensionless, on range: [0, 1]
-SMRZ    m^3/m^3, on range: [0, 1]
-SMSF    m^3/m^3, on range: [0, 1]
+SMRZ    Wetness, on range: [0, 100]
+SMSF    Wetness, on range: [0, 100]
 Tsurf   degrees K
 Tmin    degrees K
 Tsoil   degrees K
