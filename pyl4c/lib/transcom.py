@@ -37,6 +37,7 @@ from osgeo import osr
 from cached_property import cached_property
 from scipy.io import netcdf_file
 from scipy.ndimage import zoom
+from skimage.transform import resize
 from pyl4c.data.fixtures import ANCILLARY_DATA_PATHS
 from pyl4c.epsg import EPSG
 from pyl4c.spatial import EASE2_GRID_PARAMS, array_to_raster, as_array
