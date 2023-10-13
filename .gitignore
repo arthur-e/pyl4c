@@ -6,6 +6,7 @@ virtualenv.sh
 *.png
 pyl4c.egg-info/
 dist/
+build/
 
 # Cython stuff
 *.c

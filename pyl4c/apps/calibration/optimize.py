@@ -2,7 +2,7 @@
 Calibration procedure for SMAP Level-4 Carbon (L4C). For a list of all
 commands, type:
 
-    python main.py
+    python optimize.py
 
 **You must create a configuration JSON file before calibrating L4C.** This
 file tells the calibration tool where on your file system the data files
@@ -12,32 +12,32 @@ are located. There is a template available in the directory:
 
 The scratch data must be set-up before doing anything else:
 
-    python main.py setup
+    python optimize.py setup
 
 Some commands can be chained together, for example, setting the PFT class to
 calibrate is REQUIRED before most other commands; it can be set in one of
 two ways:
 
-    python main.py --pft=<pft> <command>
-    python main.py pft <pft> <command>
+    python optimize.py --pft=<pft> <command>
+    python optimize.py pft <pft> <command>
 
 Generally, the workflow for calibrating a single PFT is as follows:
 
-    python main.py setup
-    python main.py pft <pft> filter-preview gpp <window_size>
-    python main.py pft <pft> filter         gpp <window_size>
-    python main.py pft <pft> plot-gpp <driver>
-    python main.py pft <pft> tune-gpp
-    python main.py pft <pft> filter-preview reco <window_size>
-    python main.py pft <pft> filter         reco <window_size>
-    python main.py pft <pft> plot-reco <driver>
-    python main.py pft <pft> tune-reco
+    python optimize.py setup
+    python optimize.py pft <pft> filter-preview gpp <window_size>
+    python optimize.py pft <pft> filter         gpp <window_size>
+    python optimize.py pft <pft> plot-gpp <driver>
+    python optimize.py pft <pft> tune-gpp
+    python optimize.py pft <pft> filter-preview reco <window_size>
+    python optimize.py pft <pft> filter         reco <window_size>
+    python optimize.py pft <pft> plot-reco <driver>
+    python optimize.py pft <pft> tune-reco
 
 Can optionally filter flux tower data for all PFTs:
 
-    python main.py setup --reset
-    python main.py filter-all gpp <window_size>
-    python main.py filter-all reco <window_size>
+    python optimize.py setup --reset
+    python optimize.py filter-all gpp <window_size>
+    python optimize.py filter-all reco <window_size>
 
 **See the docstring on the CLI in this module for more information.**
 
@@ -78,23 +78,23 @@ class CLI(object):
     To plot the response function of, e.g., Tmin, with (optional) suggested
     parameters (lower, upper bounds):
 
-        python main.py pft <pft> plot-gpp <driver> [xmin, xmax]
+        python optimize.py pft <pft> plot-gpp <driver> [xmin, xmax]
 
     To optimize all of the GPP parameters:
 
-        python main.py pft <pft> tune-gpp
+        python optimize.py pft <pft> tune-gpp
 
     To optimize some of the GPP parameters, keeping named parameters fixed:
 
-        python main.py pft <pft> tune-gpp --fixed="(LUE,ft0)"
+        python optimize.py pft <pft> tune-gpp --fixed="(LUE,ft0)"
 
     To optimize GPP with the best match for previous calibrations:
 
-        python main.py pft <pft> tune-gpp --end="2014-12-31"
+        python optimize.py pft <pft> tune-gpp --end="2014-12-31"
 
     To optimize GPP, first setting the initial value of a parameter:
 
-        python main.py pft <pft> set <param> <value> tune-gpp
+        python optimize.py pft <pft> set <param> <value> tune-gpp
 
     Parameters
     ----------
