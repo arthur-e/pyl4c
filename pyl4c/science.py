@@ -516,6 +516,28 @@ def ordinals365(dates):
     ]
 
 
+def par(sw_rad, period_hrs = 1):
+    '''
+    Calculates daily total photosynthetically active radiation (PAR) from
+    (hourly) incoming short-wave radiation (`sw_rad`). PAR is assumed to
+    be 45% of `sw_rad`.
+
+    Parameters
+    ----------
+    swrad : int or float or numpy.ndarray
+        Incoming short-wave radiation (W m-2)
+    period_hrs : int
+        Period over which radiation is measured, in hours (Default: 1)
+
+    Returns
+    -------
+    int or float or numpy.ndarray
+    '''
+    # Convert SW_rad from [W m-2] to [MJ m-2], then take 45%;
+    #   3600 secs hr-1 times (1 MJ / 1e6 Joules) == 0.0036
+    return 0.45 * (0.0036 * (24 / period_hrs) * sw_rad)
+
+
 def rescale_smrz(smrz0, smrz_min, smrz_max = 100):
     '''
     Rescales root-zone soil-moisture (SMRZ); original SMRZ is in percent

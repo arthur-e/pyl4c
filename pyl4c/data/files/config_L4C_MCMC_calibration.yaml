@@ -1,0 +1,46 @@
+---
+description: "Template for L4C calibration using Markov Chain Monte Carlo (MCMC)"
+BPLUT: "/usr/local/dev/pyl4c/pyl4c/data/files/SMAP_BPLUT_2020-07-31.csv"
+data:
+  file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v7_Y2022/L4_C_tower_site_drivers_NRv10_for_356_sites.h5"
+  # The supplemental file is used when the observed fluxes are not contained in the main "file" above
+  supplemental_file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_new_AmeriFlux-FLUXNET-ICOS_towers_v6.h5"
+  # These are our Core Validation Sites
+  sites_blacklisted: [
+    FI-Sod, CA-Oas, US-ICt, US-ICh, US-ICs, US-PFa, US-BZs, US-BZb, US-BZf,
+    US-Atq, US-Ivo, US-SRM, US-Wkg, US-Whs, US-Ton, US-Var, AU-Whr, AU-Rig,
+    AU-Ync, AU-Stp, AU-Dry, AU-DaS, AU-How, AU-GWW, AU-ASM, AU-TTE
+  ]
+optimization:
+  backend_template: "/home/arthur/20231014_L4C_{model}_calibration_PFT{pft}.nc4"
+  prior: "/usr/local/dev/pyl4c/pyl4c/data/files/prior_L4C_V7_GPP.json"
+  chains: 3
+  draws: 100000
+  tune: scaling
+  scaling: 0.001
+  objective: RMSE
+  bounds:
+    LUE:
+    - 0
+    - 0.005
+    tmin0:
+    - -35
+    - 0
+    tmin1:
+    - 0
+    - 25
+    vpd0:
+    - 0
+    - 1000
+    vpd1:
+    - 1000
+    - 8000
+    smrz0:
+    - 0
+    - 30
+    smrz1:
+    - 30
+    - 100
+    ft0:
+    - 0
+    - 1

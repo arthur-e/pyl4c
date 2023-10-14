@@ -19,6 +19,7 @@ from pathlib import Path
 from matplotlib import pyplot
 from scipy import signal
 from pyl4c.data.fixtures import restore_bplut
+from pyl4c.science import vpd, par
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -509,12 +510,13 @@ class L4CStochasticSampler(StochasticSampler):
     # NOTE: This is different than for mod17.MOD17 because we haven't yet
     #   figured out how the respiration terms are calculated
     required_parameters = {
-        'GPP': ['LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'],
+        'GPP':  ['LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'],
         'RECO': ['CUE', 'tsoil', 'smsf0', 'smsf1'],
     }
     required_drivers = {
-        'GPP': ['fpar', 'par', 'smrz', 'tmin', 'vpd', 'tsurf'],
-        'NPP': ['smsf', 'tsoil']
+        # TS = Surface skin temperature; Tmin = Minimum daily temperature
+        'GPP':  ['fPAR', 'PAR', 'SMRZ', 'Tmin', 'VPD', 'TS'],
+        'RECO': ['SMSF', 'Tsoil']
     }
 
     def compile_gpp_model(
@@ -574,7 +576,7 @@ class CalibrationAPI(object):
         config_file = config
         if config_file is None:
             config_file = os.path.join(
-                L4C_DIR, 'data/files/L4C_MCMC_calibration_config.yaml')
+                L4C_DIR, 'data/files/config_L4C_MCMC_calibration.yaml')
         with open(config_file, 'r') as file:
             self.config = json.load(file)
         self.hdf5 = self.config['data']['file']
@@ -662,7 +664,6 @@ class CalibrationAPI(object):
         # Load blacklisted sites (if any)
         blacklist = self.config['data']['sites_blacklisted']
         params_dict = dict([(k, v[pft]) for k, v in params_dict.items()])
-        model = MOD17(params_dict)
         objective = self.config['optimization']['objective'].lower()
 
         print('Loading driver datasets...')
@@ -672,29 +673,51 @@ class CalibrationAPI(object):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
             # Get dominant PFT
             pft_map = pft_dominant(hdf['state/PFT'][:], site_list = sites)
-            # TODO Blacklist validation site-days
+            # Blacklist validation sites
             pft_mask = np.logical_and(pft_map == pft, ~np.in1d(sites, blacklist))
+
+            import ipdb
+            ipdb.set_trace()#FIXME
+
+            drivers = []
+            for field in L4CStochasticSampler.required_drivers['GPP']:
+                if field in hdf['MERRA2'].keys():
+                    drivers.append(hdf[f'MERRA2/{field}'][:])
+                elif field.lower() in hdf['drivers'].keys():
+                    drivers.append(hdf[f'drivers/{field.lower()}'])
+                elif field == 'PAR':
+                    drivers.append(par(hdf['MERRA2/SWGDN'][:]))
+                elif field == 'VPD':
+                    qv2m = hdf['MERRA2/QV2M'][:]
+                    ps   = hdf['MERRA2/PS'][:]
+                    t2m  = hdf['MERRA2/T2M'][:]
+                    drivers.append(vpd(qv2m, ps, t2m))
+                elif field == 'fPAR':
+                    pass # TODO
+
+            # TODO Compute weights
             # If RMSE is used, then we want to pay attention to weighting
-            weights = None
-            if objective in ('rmsd', 'rmse'):
-                weights = hdf['weights'][pft_mask][np.newaxis,:]\
-                    .repeat(tday.shape[0], axis = 0)
+            # weights = None
+            # if objective in ('rmsd', 'rmse'):
+            #     weights = hdf['weights'][pft_mask][np.newaxis,:]\
+            #         .repeat(tday.shape[0], axis = 0)
+
             # TODO Check that driver data do not contain NaNs
             # for d, each in enumerate(drivers):
             #     name = ('fPAR', 'Tmin', 'VPD', 'PAR')[d]
             #     assert not np.isnan(each).any(),\
             #         f'Driver dataset "{name}" contains NaNs'
-            tower_gpp = hdf['FLUXNET/GPP'][:][:,pft_mask]
-            # Read the validation mask; mask out observations that are
-            #   reserved for validation
-            print('Masking out validation data...')
-            mask = hdf['FLUXNET/validation_mask'][pft]
-            tower_gpp[mask] = np.nan
+
+            if 'GPP' not in hdf.keys():
+                with h5py.File(self.config['supplemental_file'], 'r') as _hdf:
+                    tower_gpp = _hdf['GPP'][:][:,pft_mask]
+            else:
+                tower_gpp = hdf['GPP'][:][:,pft_mask]
 
         # Clean observations, then mask out driver data where the are no
         #   observations
         tower_gpp = self.clean_observed(
-            tower_gpp, drivers, MOD17StochasticSampler.required_drivers['GPP'],
+            tower_gpp, drivers, L4CStochasticSampler.required_drivers['GPP'],
             protocol = 'GPP')
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
