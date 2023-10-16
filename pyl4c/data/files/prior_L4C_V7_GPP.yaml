@@ -1,0 +1,5 @@
+---
+name: "GPP" # Should be upper-case of "name" in "compile_{name}_model()" function
+LUE_max: # Prior from Madani et al. (2017, JGR: Biogeosciences)
+  mu: [null, 0.98, 1.40, 1.23, 1.68, 0.80, 1.19, 1.94, 1.94]
+  sigma: [null, 0.32, 0.20, 0.20, 0.35, 0.38, 0.45, 0.55, 0.55]

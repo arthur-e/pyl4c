@@ -1,4 +1,7 @@
 '''
+Calibration of L4C using Markov Chain Monte Carlo (MCMC). Example use:
+
+    python mcmc.py tune-gpp <pft>
 '''
 
 import datetime
@@ -21,6 +24,7 @@ from scipy import signal
 from pyl4c import pft_dominant
 from pyl4c.data.fixtures import restore_bplut_flat
 from pyl4c.science import vpd, par
+from pyl4c.stats import linear_constraint
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -249,9 +253,18 @@ class AbstractSampler(object):
                 **kwargs)
         pyplot.show()
 
-    def plot_forest(self, **kwargs):
+    def plot_forest(self, thin: int = None, burn: int = None, **kwargs):
         '''
         Forest plot for an MCMC sample.
+
+        Parameters
+        ----------
+        thin : int
+            Thinning rate
+        burn : int
+            The burn-in (i.e., first N samples to discard)
+        **kwargs
+            Additional keyword arguments to `arviz.plot_forest()`.
 
         In particular:
 
@@ -261,7 +274,13 @@ class AbstractSampler(object):
         assert os.path.exists(self.backend),\
             'Could not find file backend!'
         trace = az.from_netcdf(self.backend)
-        az.plot_forest(trace, **kwargs)
+        if thin is None:
+            az.plot_forest(trace, **kwargs)
+        else:
+            burn = 0 if burn is None else burn
+            az.plot_forest(
+                trace.sel(draw = slice(burn, None, thin))['posterior'],
+                **kwargs)
         pyplot.show()
 
     def plot_pair(self, **kwargs):
@@ -524,7 +543,11 @@ class L4CStochasticSampler(StochasticSampler):
         # Calculate E_mult based on current parameters:
         #   'LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'
         f_tmin = linear_constraint(params[1], params[2])
-        f_vpd  = linear_constraint(params[3], params[4], 'reversed')
+        try:
+            f_vpd  = linear_constraint(params[3], params[4], 'reversed')
+        except:
+            import ipdb
+            ipdb.set_trace()#FIXME
         f_smrz = linear_constraint(params[5], params[6])
         f_ft   = linear_constraint(params[7], 1.0, 'binary')
         e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
@@ -559,7 +582,7 @@ class L4CStochasticSampler(StochasticSampler):
         #   code block...are added to the model behind the scenes."
         with pm.Model() as model:
             # (Stochstic) Priors for unknown model parameters
-            LUE_max = pm.TruncatedNormal('LUE',
+            LUE = pm.TruncatedNormal('LUE',
                 **self.prior['LUE'], **self.bounds['LUE'])
             tmin0 = pm.Uniform('tmin0', **self.bounds['tmin0'])
             tmin1 = pm.Uniform('tmin1', **self.bounds['tmin1'])
@@ -567,7 +590,7 @@ class L4CStochasticSampler(StochasticSampler):
             vpd0 = pm.Uniform('vpd0', **self.bounds['vpd0'])
             vpd1 = pm.Uniform('vpd1',
                 lower = self.bounds['vpd1']['lower'],
-                upper = drivers[2].max().round(0))
+                upper = np.nanmax(drivers[3]).round(0))
             smrz0 = pm.Uniform('smrz0', **self.bounds['smrz0'])
             smrz1 = pm.Uniform('smrz1', **self.bounds['smrz1'])
             ft0 = pm.Uniform('ft0', **self.bounds['ft0'])
