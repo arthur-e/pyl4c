@@ -18,7 +18,8 @@ from typing import Callable, Sequence
 from pathlib import Path
 from matplotlib import pyplot
 from scipy import signal
-from pyl4c.data.fixtures import restore_bplut
+from pyl4c import pft_dominant
+from pyl4c.data.fixtures import restore_bplut_flat
 from pyl4c.science import vpd, par
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
@@ -578,7 +579,7 @@ class CalibrationAPI(object):
             config_file = os.path.join(
                 L4C_DIR, 'data/files/config_L4C_MCMC_calibration.yaml')
         with open(config_file, 'r') as file:
-            self.config = json.load(file)
+            self.config = yaml.safe_load(file)
         self.hdf5 = self.config['data']['file']
 
     def _clean(self, raw: Sequence, drivers: Sequence, protocol: str = 'GPP'):
@@ -598,49 +599,22 @@ class CalibrationAPI(object):
                 lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
         return raw # Or, revert to the raw data
 
-    def clean_observed(
-            self, raw: Sequence, drivers: Sequence, driver_labels: Sequence,
-            protocol: str = 'GPP', filter_length: int = 2) -> Sequence:
+    def tune_gpp(
+            self, pft: int, filter_length: int = 2, plot_trace: bool = False,
+            ipdb: bool = False, save_fig: bool = False, **kwargs):
         '''
-        Cleans observed tower flux data according to a prescribed protocol.
+        Run the L4C GPP calibration.
 
         - For GPP data: Removes observations where GPP < 0 or where APAR is
             < 0.1 MJ m-2 day-1
 
         Parameters
         ----------
-        raw : Sequence
-        drivers : Sequence
-        driver_labels : Sequence
-        protocol : str
+        pft : int
+            The Plant Functional Type (PFT) to calibrate
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
-
-        Returns
-        -------
-        Sequence
-        '''
-        if protocol != 'GPP':
-            raise NotImplementedError('"protocol" must be one of: "GPP"')
-        # Read in the observed data and apply smoothing filter
-        obs = self._filter(raw, filter_length)
-        obs = self._clean(obs, dict([
-            (driver_labels[i], data)
-            for i, data in enumerate(drivers)
-        ]), protocol = 'GPP')
-        return obs
-
-    def tune_gpp(
-            self, pft: int, plot_trace: bool = False, ipdb: bool = False,
-            save_fig: bool = False, **kwargs):
-        '''
-        Run the L4C GPP calibration.
-
-        Parameters
-        ----------
-        pft : int
-            The Plant Functional Type (PFT) to calibrate
         plot_trace : bool
             True to plot the trace for a previous calibration run; this will
             also NOT start a new calibration (Default: False)
@@ -660,10 +634,13 @@ class CalibrationAPI(object):
             if key in self.config['optimization'].keys() and not key in kwargs.keys():
                 kwargs[key] = self.config['optimization'][key]
         # Filter the parameters to just those for the PFT of interest
-        params_dict = restore_bplut(self.config['BPLUT'])
+        params_dict = restore_bplut_flat(self.config['BPLUT'])
         # Load blacklisted sites (if any)
         blacklist = self.config['data']['sites_blacklisted']
-        params_dict = dict([(k, v[pft]) for k, v in params_dict.items()])
+        params_dict = dict([
+            (k, params_dict[k].ravel()[pft])
+            for k in L4CStochasticSampler.required_parameters['GPP']
+        ])
         objective = self.config['optimization']['objective'].lower()
 
         print('Loading driver datasets...')
@@ -672,58 +649,68 @@ class CalibrationAPI(object):
             if hasattr(sites[0], 'decode'):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
             # Get dominant PFT
-            pft_map = pft_dominant(hdf['state/PFT'][:], site_list = sites)
+            pft_map = pft_dominant(hdf['state/PFT'][:])
             # Blacklist validation sites
-            pft_mask = np.logical_and(pft_map == pft, ~np.in1d(sites, blacklist))
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, pft), ~np.in1d(sites, blacklist))
 
-            import ipdb
-            ipdb.set_trace()#FIXME
-
-            drivers = []
+            drivers = dict()
             for field in L4CStochasticSampler.required_drivers['GPP']:
-                if field in hdf['MERRA2'].keys():
-                    drivers.append(hdf[f'MERRA2/{field}'][:])
+                # For backwards compatibility
+                group = 'MERRA2' if 'MERRA2' in hdf.keys() else 'drivers'
+                if field in hdf[group].keys():
+                    drivers[field] = hdf[f'{group}/{field}'][:]
                 elif field.lower() in hdf['drivers'].keys():
-                    drivers.append(hdf[f'drivers/{field.lower()}'])
+                    drivers[field] = hdf[f'drivers/{field.lower()}'][:]
                 elif field == 'PAR':
-                    drivers.append(par(hdf['MERRA2/SWGDN'][:]))
+                    drivers[field] = par(hdf['MERRA2/SWGDN'][:])
                 elif field == 'VPD':
                     qv2m = hdf['MERRA2/QV2M'][:]
                     ps   = hdf['MERRA2/PS'][:]
                     t2m  = hdf['MERRA2/T2M'][:]
-                    drivers.append(vpd(qv2m, ps, t2m))
-                elif field == 'fPAR':
-                    pass # TODO
+                    drivers[field] = vpd(qv2m, ps, t2m)
+                elif field == 'TS':
+                    drivers[field] = hdf['drivers/tsurf'][:]
 
-            # TODO Compute weights
+            # Check units on fPAR, average sub-grid heterogeneity
+            if np.nanmax(drivers['fPAR'][:]) > 10:
+                drivers['fPAR'] /= 100
+            if drivers['fPAR'].ndim == 3 and drivers['fPAR'].shape[-1] == 81:
+                drivers['fPAR'] = np.nanmean(drivers['fPAR'], axis = -1)
+            assert len(set(L4CStochasticSampler.required_drivers['GPP'])\
+                .difference(set(drivers.keys()))) == 0
             # If RMSE is used, then we want to pay attention to weighting
-            # weights = None
-            # if objective in ('rmsd', 'rmse'):
-            #     weights = hdf['weights'][pft_mask][np.newaxis,:]\
-            #         .repeat(tday.shape[0], axis = 0)
-
-            # TODO Check that driver data do not contain NaNs
-            # for d, each in enumerate(drivers):
-            #     name = ('fPAR', 'Tmin', 'VPD', 'PAR')[d]
-            #     assert not np.isnan(each).any(),\
-            #         f'Driver dataset "{name}" contains NaNs'
-
+            weights = None
+            if objective in ('rmsd', 'rmse'):
+                if 'weights' in hdf.keys():
+                    weights = hdf['weights'][pft_mask][np.newaxis,:]\
+                        .repeat(tday.shape[0], axis = 0)
+                else:
+                    print('WARNING - "weights" not found in HDF5 file!')
             if 'GPP' not in hdf.keys():
-                with h5py.File(self.config['supplemental_file'], 'r') as _hdf:
+                with h5py.File(
+                        self.config['data']['supplemental_file'], 'r') as _hdf:
                     tower_gpp = _hdf['GPP'][:][:,pft_mask]
             else:
                 tower_gpp = hdf['GPP'][:][:,pft_mask]
 
-        # Clean observations, then mask out driver data where the are no
-        #   observations
-        tower_gpp = self.clean_observed(
-            tower_gpp, drivers, L4CStochasticSampler.required_drivers['GPP'],
-            protocol = 'GPP')
+        # Check that driver data do not contain NaNs
+        for field in drivers.keys():
+            assert not np.isnan(drivers[field]).any(),\
+                f'Driver dataset "{field}" contains NaNs'
+            drivers[field] = drivers[field][:,pft_mask]
+
+        # Subset all datasets to just the valid observation site-days
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
-        for d, _ in enumerate(drivers):
-            drivers[d] = drivers[d][~np.isnan(tower_gpp)]
+        for field in drivers.keys():
+            drivers[field] = drivers[field][~np.isnan(tower_gpp)]
         tower_gpp = tower_gpp[~np.isnan(tower_gpp)]
+
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_gpp = self._filter(tower_gpp, filter_length)
+        tower_gpp = self._clean(tower_gpp, drivers, protocol = 'GPP')
 
         print('Initializing sampler...')
         backend = self.config['optimization']['backend_template'] % ('GPP', pft)
@@ -740,7 +727,7 @@ class CalibrationAPI(object):
             return
         # Get (informative) priors for just those parameters that have them
         with open(self.config['optimization']['prior'], 'r') as file:
-            prior = json.load(file)
+            prior = yaml.safe_load(file)
         prior_params = filter(
             lambda p: p in prior.keys(), sampler.required_parameters['GPP'])
         prior = dict([

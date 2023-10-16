@@ -2,9 +2,9 @@
 description: "Template for L4C calibration using Markov Chain Monte Carlo (MCMC)"
 BPLUT: "/usr/local/dev/pyl4c/pyl4c/data/files/SMAP_BPLUT_2020-07-31.csv"
 data:
-  file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v7_Y2022/L4_C_tower_site_drivers_NRv10_for_356_sites.h5"
+  file: "/home/arthur/L4_C_tower_site_drivers_NRv10_for_356_sites.h5"
   # The supplemental file is used when the observed fluxes are not contained in the main "file" above
-  supplemental_file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_new_AmeriFlux-FLUXNET-ICOS_towers_v6.h5"
+  supplemental_file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/Fluxnet2015_LaThuile_tower_data_for_356_sites.h5"
   # These are our Core Validation Sites
   sites_blacklisted: [
     FI-Sod, CA-Oas, US-ICt, US-ICh, US-ICs, US-PFa, US-BZs, US-BZb, US-BZf,

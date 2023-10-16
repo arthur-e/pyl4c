@@ -348,25 +348,6 @@ class BPLUT(object):
             hdf.close()
 
 
-class ModelParameters(OrderedDict):
-    '''
-    Convenience wrapper for an OrderedDict, allowing both vectorized and
-    keyword access to model parameters.
-
-    Parameters
-    ----------
-    group : str
-        Name of this model parameters group, usually the name of the model or
-        sub-model to which they belong
-    *params : spotpy.parameter
-        One or more parameters
-    '''
-    def __init__(self, group, *params):
-        self._group = group
-        # Create {name: spotpy.parameter, ...} dictionary
-        super().__init__(**dict([(p.name, p) for p in params]))
-
-
 class GenericOptimization(object):
     '''
     A more generic and expansive tool for optimization; includes many more

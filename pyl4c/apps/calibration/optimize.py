@@ -43,8 +43,6 @@ Can optionally filter flux tower data for all PFTs:
 
 Possible improvements:
 
-- Replace parameter vectors with a
-    `pyl4c.apps.calibration.ModelParameters` instance.
 - Tower HDF5 file has upper-case field names (e.g., "APAR") while
     driver HDF5 file has lower-case field names (e.g., "par")
 '''
