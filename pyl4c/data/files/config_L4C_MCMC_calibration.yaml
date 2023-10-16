@@ -1,5 +1,6 @@
 ---
-description: "Template for L4C calibration using Markov Chain Monte Carlo (MCMC)"
+name: "GPP" # Should be upper-case of "name" in "compile_{name}_model()" function
+description: "Template for L4C GPP calibration using Markov Chain Monte Carlo (MCMC)"
 BPLUT: "/usr/local/dev/pyl4c/pyl4c/data/files/SMAP_BPLUT_2020-07-31.csv"
 data:
   file: "/home/arthur/L4_C_tower_site_drivers_NRv10_for_356_sites.h5"

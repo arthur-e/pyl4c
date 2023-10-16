@@ -336,24 +336,17 @@ class StochasticSampler(AbstractSampler):
     described by Ter Braak (2008), though the implementation is specific to
     the PyMC3 library.
 
-    NOTE: The `model` (a function) should be named "_name" where "name" is
-    some uniquely identifiable model name. This helps `StochasticSampler.run()`
-    to find the correct compiler for the model. The compiler function should
-    be named `compiled_name_model()` (where "name" is the model name) and be
-    defined on a subclass of `StochasticSampler`.
-
     Parameters
     ----------
     config : dict
         Dictionary of configuration parameters
-    model : Callable
+    model : Callable or None
         The function to call (with driver data and parameters); this function
-        should take driver data as positional arguments and the model
-        parameters as a `*Sequence`; it should require no external state.
-    observed : Sequence
-        Sequence of observed values that will be used to calibrate the model;
-        i.e., model is scored by how close its predicted values are to the
-        observed values
+        should have a Sequence of model parameters as its first argument and
+        then each driver dataset as a following positional argument; it should
+        require no external state. If `None`, will look for a static method
+        defined on this class called `_name()` where `name` is the model name
+        defined in the configuration file.
     params_dict : dict or None
         Dictionary of model parameters, to be used as initial values and as
         the basis for constructing a new dictionary of optimized parameters
@@ -364,9 +357,9 @@ class StochasticSampler(AbstractSampler):
         weighted least squares)
     '''
     def __init__(
-            self, config: dict, model: Callable, params_dict: dict = None,
-            backend: str = None, weights: Sequence = None,
-            model_name: str = None):
+            self, config: dict, model: Callable = None,
+            params_dict: dict = None, backend: str = None,
+            weights: Sequence = None):
         self.backend = backend
         # Convert the BOUNDS into nested dicts for easy use
         self.bounds = dict([
@@ -375,20 +368,8 @@ class StochasticSampler(AbstractSampler):
         ])
         self.config = config
         self.model = model
-        if hasattr(model, '__name__'):
-            self.name = model.__name__.strip('_').upper() # "_gpp" = "GPP"
-        else:
-            self.name = model_name
+        self.name = config['name']
         self.params = params_dict
-        # Set the model's prior distribution assumptions
-        self.prior = dict()
-        for key in self.required_parameters[self.name]:
-            # NOTE: This is the default only for LUE_max; other parameters,
-            #   with Uniform distributions, don't use anything here
-            self.prior.setdefault(key, {
-                'mu': params_dict[key],
-                'sigma': 2e-4
-            })
         self.weights = weights
         assert os.path.exists(os.path.dirname(backend))
 
@@ -408,7 +389,9 @@ class StochasticSampler(AbstractSampler):
         Parameters
         ----------
         observed : Sequence
-            The observed data the model will be calibrated against
+            Sequence of observed values that will be used to calibrate the model;
+            i.e., model is scored by how close its predicted values are to the
+            observed values
         drivers : list or tuple
             Sequence of driver datasets to be supplied, in order, to the
             model's run function
@@ -439,9 +422,10 @@ class StochasticSampler(AbstractSampler):
         # Update prior assumptions
         self.prior.update(prior)
         # Generate an initial goodness-of-fit score
-        predicted = self.model([
-            self.params[p] for p in self.required_parameters[self.name]
-        ], *drivers)
+        if self.params is not None:
+            predicted = self.model([
+                self.params[p] for p in self.required_parameters[self.name]
+            ], *drivers)
         if self.weights is not None:
             score = np.sqrt(
                 np.nanmean(((predicted - observed) * self.weights) ** 2))
@@ -491,14 +475,13 @@ class L4CStochasticSampler(StochasticSampler):
     ----------
     config : dict
         Dictionary of configuration parameters
-    model : Callable
+    model : Callable or None
         The function to call (with driver data and parameters); this function
-        should take driver data as positional arguments and the model
-        parameters as a `*Sequence`; it should require no external state.
-    observed : Sequence
-        Sequence of observed values that will be used to calibrate the model;
-        i.e., model is scored by how close its predicted values are to the
-        observed values
+        should have a Sequence of model parameters as its first argument and
+        then each driver dataset as a following positional argument; it should
+        require no external state. If `None`, will look for a static method
+        defined on this class called `_name()` where `name` is the model name
+        defined in the configuration file.
     params_dict : dict or None
         Dictionary of model parameters, to be used as initial values and as
         the basis for constructing a new dictionary of optimized parameters
@@ -516,9 +499,37 @@ class L4CStochasticSampler(StochasticSampler):
     }
     required_drivers = {
         # TS = Surface skin temperature; Tmin = Minimum daily temperature
-        'GPP':  ['fPAR', 'PAR', 'SMRZ', 'Tmin', 'VPD', 'TS'],
+        'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'TS'],
         'RECO': ['SMSF', 'Tsoil']
     }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.model is None:
+            self.model = getattr(self, f'_{self.name}')
+        # Set the model's prior distribution assumptions
+        self.prior = dict()
+        if self.params is not None:
+            for key in self.required_parameters[self.name]:
+                # NOTE: This is the default only for LUE_max; other parameters,
+                #   with Uniform distributions, don't use anything here
+                self.prior.setdefault(key, {
+                    'mu': self.params[key],
+                    'sigma': 2e-4
+                })
+
+    @staticmethod
+    def _gpp(params, fpar, par, tmin, vpd, smrz, ft):
+        'L4C GPP function'
+        # Calculate E_mult based on current parameters:
+        #   'LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'
+        f_tmin = linear_constraint(params[1], params[2])
+        f_vpd  = linear_constraint(params[3], params[4], 'reversed')
+        f_smrz = linear_constraint(params[5], params[6])
+        f_ft   = linear_constraint(params[7], 1.0, 'binary')
+        e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
+        # Calculate GPP based on the provided BPLUT parameters
+        return fpar * par * params[0] * e_mult
 
     def compile_gpp_model(
             self, observed: Sequence, drivers: Sequence) -> pm.Model:
@@ -713,16 +724,18 @@ class CalibrationAPI(object):
         tower_gpp = self._clean(tower_gpp, drivers, protocol = 'GPP')
 
         print('Initializing sampler...')
-        backend = self.config['optimization']['backend_template'] % ('GPP', pft)
+        backend = self.config['optimization']['backend_template'].format(
+            model = 'GPP', pft = pft)
         sampler = L4CStochasticSampler(
-            self.config, MOD17._gpp, params_dict, backend = backend,
-            weights = weights)
+            self.config, L4CStochasticSampler._gpp, params_dict,
+            backend = backend, weights = weights)
         if plot_trace or ipdb:
             if ipdb:
                 import ipdb
                 ipdb.set_trace()
             trace = sampler.get_trace()
-            az.plot_trace(trace, var_names = MOD17.required_parameters[0:5])
+            az.plot_trace(
+                trace, var_names = sampler.required_parameters['GPP'])
             pyplot.show()
             return
         # Get (informative) priors for just those parameters that have them
@@ -734,6 +747,8 @@ class CalibrationAPI(object):
             (p, {'mu': prior[p]['mu'][pft], 'sigma': prior[p]['sigma'][pft]})
             for p in prior_params
         ])
+        # Convert drivers from a dict to a sequence, then run sampler
+        drivers = [drivers[d] for d in sampler.required_drivers['GPP']]
         sampler.run(
             tower_gpp, drivers, prior = prior, save_fig = save_fig, **kwargs)
 
