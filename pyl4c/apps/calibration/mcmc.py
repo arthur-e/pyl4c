@@ -601,6 +601,42 @@ class L4CStochasticSampler(StochasticSampler):
             pm.Potential('likelihood', log_likelihood(params))
         return model
 
+    def compile_reco_model(
+            self, observed: Sequence, drivers: Sequence) -> pm.Model:
+        '''
+        Creates a new RECO model based on the prior distribution. Model can be
+        re-compiled multiple times, e.g., for cross validation.
+
+        Parameters
+        ----------
+        observed : Sequence
+            Sequence of observed values that will be used to calibrate the model;
+            i.e., model is scored by how close its predicted values are to the
+            observed values
+        drivers : list or tuple
+            Sequence of driver datasets to be supplied, in order, to the
+            model's run function
+
+        Returns
+        -------
+        pm.Model
+        '''
+        log_likelihood = BlackBoxLikelihood(
+            self.model, observed, x = drivers, weights = self.weights,
+            objective = self.config['optimization']['objective'].lower())
+        with pm.Model() as model:
+            # (Stochstic) Priors for unknown model parameters
+            LUE = pm.Beta('CUE', **self.prior['CUE'])
+            tsoil = pm.Uniform('tsoil', **self.bounds['tsoil'])
+            smsf0 = pm.Uniform('smsf0', **self.bounds['smsf0'])
+            smsf1 = pm.Uniform('smsf1', **self.bounds['smsf1'])
+            # Convert model parameters to a tensor vector
+            params_list = [CUE, tsoil, smsf0, smsf1]
+            params = at.as_tensor_variable(params_list)
+            # Key step: Define the log-likelihood as an added potential
+            pm.Potential('likelihood', log_likelihood(params))
+        return model
+
 
 class CalibrationAPI(object):
     '''
