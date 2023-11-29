@@ -184,7 +184,7 @@ def modis_row_col_from_wgs84(coords, nominal = 500):
     Parameters
     ----------
     coords : tuple or list
-        (X, Y) coordinate pair in MODIS sinusoidal projection
+        (X, Y) coordinate pair in WGS84 (longitude, latitude)
     nominal : int
         Nominal resolution of MODIS raster: 250 (meters), 500, or 1000
 
