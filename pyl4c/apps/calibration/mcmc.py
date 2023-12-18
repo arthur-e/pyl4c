@@ -641,7 +641,13 @@ class L4CStochasticSampler(StochasticSampler):
 class CalibrationAPI(object):
     '''
     Convenience class for calibrating the L4C GPP and RECO models. Meant to
-    be used with `fire.Fire()`.
+    be used with `fire.Fire()`. Uses:
+
+        # Run the calibration for a specific PFT
+        python mcmc.py tune-gpp <pft>
+
+        # Get access to the sampler (and debugger), after calibration is run
+        python mcmc.py tune-gpp <pft> --ipdb
     '''
     def __init__(self, config = None):
         config_file = config
