@@ -15,15 +15,14 @@ import pymc as pm
 import aesara.tensor as at
 import pyl4c
 from functools import partial
-from multiprocessing import get_context, set_start_method
+from multiprocessing import get_context
 from numbers import Number
 from typing import Callable, Sequence
-from pathlib import Path
 from matplotlib import pyplot
 from scipy import signal
 from pyl4c import pft_dominant
 from pyl4c.data.fixtures import restore_bplut_flat
-from pyl4c.science import vpd, par
+from pyl4c.science import vpd, par, rescale_smrz
 from pyl4c.stats import linear_constraint
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
@@ -103,6 +102,8 @@ class BlackBoxLikelihood(at.Op):
             The (negative) root-mean squared deviation (RMSD) between the
             predicted and observed values
         '''
+        import ipdb
+        ipdb.set_trace()#FIXME
         predicted = self.model(params, *x)
         if self.weights is not None:
             return -np.sqrt(
@@ -332,7 +333,7 @@ class AbstractSampler(object):
             Sequence of posterior parameter sets (i.e., nested sequence); each
             nested sequence will be scored
         method : str
-            The method for generating a goodness-of-git score
+            The method for generating a goodness-of-fit score
             (Default: "rmsd")
 
         Returns
@@ -457,7 +458,7 @@ class StochasticSampler(AbstractSampler):
         except AttributeError:
             raise AttributeError('''Could not find a compiler for model named
             "%s"; make sure that a function "compile_%s_model()" is defined on
-             this class''' % (model_name, model_name))
+             this class''' % (self.name, self.name))
         with compiler(observed, drivers) as model:
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')
@@ -591,7 +592,8 @@ class L4CStochasticSampler(StochasticSampler):
             vpd1 = pm.Uniform('vpd1',
                 lower = self.bounds['vpd1']['lower'],
                 upper = np.nanmax(drivers[3]).round(0))
-            smrz0 = pm.Uniform('smrz0', **self.bounds['smrz0'])
+            # NOTE: Fixing lower-bound on SMRZ at zero
+            smrz0 = 0
             smrz1 = pm.Uniform('smrz1', **self.bounds['smrz1'])
             ft0 = pm.Uniform('ft0', **self.bounds['ft0'])
             # Convert model parameters to a tensor vector
@@ -626,7 +628,7 @@ class L4CStochasticSampler(StochasticSampler):
             objective = self.config['optimization']['objective'].lower())
         with pm.Model() as model:
             # (Stochstic) Priors for unknown model parameters
-            LUE = pm.Beta('CUE', **self.prior['CUE'])
+            CUE = pm.Beta('CUE', **self.prior['CUE'])
             tsoil = pm.Uniform('tsoil', **self.bounds['tsoil'])
             smsf0 = pm.Uniform('smsf0', **self.bounds['smsf0'])
             smsf1 = pm.Uniform('smsf1', **self.bounds['smsf1'])
@@ -745,22 +747,32 @@ class CalibrationAPI(object):
                     ps   = hdf['MERRA2/PS'][:]
                     t2m  = hdf['MERRA2/T2M'][:]
                     drivers[field] = vpd(qv2m, ps, t2m)
+                elif field == 'SMRZ':
+                    smrz = hdf['drivers/smrz0'][:]
+                    smrz_min = smrz.min(axis = 0)
+                    drivers[field] = rescale_smrz(smrz, smrz_min)
                 elif field == 'TS':
                     drivers[field] = hdf['drivers/tsurf'][:]
+
+            # Read fPAR in a backwards-compatible fashion
+            group = 'MODIS' if 'MODIS' in hdf.keys() else 'drivers'
+            key = 'fPAR' if 'fPAR' in hdf[group].keys() else 'MOD15A2H_fPAR_interpolated'
+            drivers['fPAR'] = hdf[f'{group}/{key}'][:]
 
             # Check units on fPAR, average sub-grid heterogeneity
             if np.nanmax(drivers['fPAR'][:]) > 10:
                 drivers['fPAR'] /= 100
             if drivers['fPAR'].ndim == 3 and drivers['fPAR'].shape[-1] == 81:
-                drivers['fPAR'] = np.nanmean(drivers['fPAR'], axis = -1)
+                drivers['fPAR'] = np.nanmean(drivers[f'fPAR'], axis = -1)
             assert len(set(L4CStochasticSampler.required_drivers['GPP'])\
                 .difference(set(drivers.keys()))) == 0
+            
             # If RMSE is used, then we want to pay attention to weighting
             weights = None
             if objective in ('rmsd', 'rmse'):
                 if 'weights' in hdf.keys():
                     weights = hdf['weights'][pft_mask][np.newaxis,:]\
-                        .repeat(tday.shape[0], axis = 0)
+                        .repeat(t2m.shape[0], axis = 0)
                 else:
                     print('WARNING - "weights" not found in HDF5 file!')
             if 'GPP' not in hdf.keys():
@@ -771,6 +783,9 @@ class CalibrationAPI(object):
                 tower_gpp = hdf['GPP'][:][:,pft_mask]
 
         # Check that driver data do not contain NaNs
+        import ipdb
+        ipdb.set_trace()#FIXME
+
         for field in drivers.keys():
             assert not np.isnan(drivers[field]).any(),\
                 f'Driver dataset "{field}" contains NaNs'

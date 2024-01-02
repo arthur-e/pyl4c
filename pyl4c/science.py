@@ -478,13 +478,13 @@ def mean_residence_time(
     if subset_id is not None:
         # Get X- and Y-offsets while we're at it
         soc, xoff, yoff = subset(
-            hdf, soc_path, None, None, subset_id = subset_id)
+            hdf, soc_field, None, None, subset_id = subset_id)
         rh, _, _ = subset(
-            hdf, rh_path, None, None, subset_id = subset_id)
+            hdf, rh_field, None, None, subset_id = subset_id)
     else:
         xoff = yoff = 0
-        soc = hdf[soc_path][:]
-        rh = hdf[rh_path][:]
+        soc = hdf[soc_field][:]
+        rh = hdf[rh_field][:]
 
     # Find those areas of NoData in either array
     mask = np.logical_or(soc == nodata, rh == nodata)
