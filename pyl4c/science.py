@@ -516,6 +516,41 @@ def ordinals365(dates):
     ]
 
 
+def par(sw_rad, period_hrs = 1):
+    '''
+    Calculates daily total photosynthetically active radiation (PAR) from
+    (hourly) incoming short-wave radiation (`sw_rad`). PAR is assumed to
+    be 45% of `sw_rad`.
+
+    I make a note here, because this is one place someone would come back to
+    when looking for this information: `sw_rad` is a power (energy per unit
+    time), so when working with sub-daily source data, we don't take, e.g., a
+    24-hour sum but a 24-hour mean. An alternative approach might be to
+    convert the hourly data to energy (Joules) first, but that is not what has
+    historically been done. This was confirmed by comparing an official
+    24-hour MERRA-2 granule with the (apparently averaged) MERRA-2 data used
+    previously in L4C V4, as listed here:
+
+        /anx_v2/laj/smap/code/geog2egv2/list/merra2_gran_swgdn.list
+
+    Parameters
+    ----------
+    sw_rad : int or float or numpy.ndarray
+        Incoming short-wave radiation (W m-2)
+    period_hrs : int
+        Period over which radiation is measured, in hours (Default: 1, i.e.,
+        once-hourly measurements)
+
+    Returns
+    -------
+    int or float or numpy.ndarray
+    '''
+    # Convert SW_rad from [W m-2] to [MJ m-2], then take 45%; because
+    #   1 W == 1 J s-1, we multiply 3600 secs hr-1 times
+    #   (1 MJ / 1e6 Joules) == 0.0036
+    return 0.45 * (0.0036 * (24 / period_hrs) * sw_rad)
+
+
 def rescale_smrz(smrz0, smrz_min, smrz_max = 100):
     '''
     Rescales root-zone soil-moisture (SMRZ); original SMRZ is in percent
@@ -781,7 +816,7 @@ def tridiag_solver(tri, r, kl = 1, ku = 1, banded = None):
                   [10., 10.,  7.,  4.],
                   [ 0.,  2.,  4.,  5.]]
 
-    The banded matrix is what should be provided to the optoinal "banded"
+    The banded matrix is what should be provided to the optional "banded"
     argument, which should be used if the banded matrix can be created faster
     than `scipy.sparse.dia_matrix()`.
 
