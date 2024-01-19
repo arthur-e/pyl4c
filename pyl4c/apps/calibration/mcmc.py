@@ -12,7 +12,7 @@ import numpy as np
 import h5py
 import arviz as az
 import pymc as pm
-import aesara.tensor as at
+import pytensor.tensor as pt
 import pyl4c
 from functools import partial
 from multiprocessing import get_context
@@ -32,7 +32,7 @@ PFT_VALID = (1,2,3,4,5,6,7,8)
 pyplot.rcParams['figure.constrained_layout.use'] = True
 
 
-class BlackBoxLikelihood(at.Op):
+class BlackBoxLikelihood(pt.Op):
     '''
     A custom Theano operator that calculates the "likelihood" of model
     parameters; it takes a vector of values (the parameters that define our
@@ -55,8 +55,8 @@ class BlackBoxLikelihood(at.Op):
         Name of the objective (or "loss") function to use, one of
         ('rmsd', 'gaussian', 'kge'); defaults to "rmsd"
     '''
-    itypes = [at.dvector] # Expects a vector of parameter values when called
-    otypes = [at.dscalar] # Outputs a single scalar value (the log likelihood)
+    itypes = [pt.dvector] # Expects a vector of parameter values when called
+    otypes = [pt.dscalar] # Outputs a single scalar value (the log likelihood)
 
     def __init__(
             self, model: Callable, observed: Sequence, x: Sequence = None,
@@ -598,7 +598,7 @@ class L4CStochasticSampler(StochasticSampler):
             ft0 = pm.Uniform('ft0', **self.bounds['ft0'])
             # Convert model parameters to a tensor vector
             params_list = [LUE, tmin0, tmin1, vpd0, vpd1, smrz0, smrz1, ft0]
-            params = at.as_tensor_variable(params_list)
+            params = pt.as_tensor_variable(params_list)
             # Key step: Define the log-likelihood as an added potential
             pm.Potential('likelihood', log_likelihood(params))
         return model
@@ -634,7 +634,7 @@ class L4CStochasticSampler(StochasticSampler):
             smsf1 = pm.Uniform('smsf1', **self.bounds['smsf1'])
             # Convert model parameters to a tensor vector
             params_list = [CUE, tsoil, smsf0, smsf1]
-            params = at.as_tensor_variable(params_list)
+            params = pt.as_tensor_variable(params_list)
             # Key step: Define the log-likelihood as an added potential
             pm.Potential('likelihood', log_likelihood(params))
         return model
@@ -766,7 +766,7 @@ class CalibrationAPI(object):
                 drivers['fPAR'] = np.nanmean(drivers[f'fPAR'], axis = -1)
             assert len(set(L4CStochasticSampler.required_drivers['GPP'])\
                 .difference(set(drivers.keys()))) == 0
-            
+
             # If RMSE is used, then we want to pay attention to weighting
             weights = None
             if objective in ('rmsd', 'rmse'):
