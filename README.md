@@ -66,6 +66,13 @@ You may encounter an error installing `pyl4c` from `setup.py`, depending on the 
 pip install GDAL==$(gdal-config --version)
 ```
 
+There can also be issues with installing GDAL in a virtual environment; see [this thread](https://gis.stackexchange.com/questions/153199/import-error-no-module-named-gdal-array) and also try:
+
+```sh
+pip install --no-build-isolation --no-cache-dir --force-reinstall gdal==$(gdal-config --version)
+```
+
+
 ### Dependencies
 
 This package requires system support for HDF5 and the Geospatial Data Abstraction Library (GDAL).
