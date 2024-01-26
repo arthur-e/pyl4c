@@ -12,11 +12,13 @@ data:
     AU-Ync, AU-Stp, AU-Dry, AU-DaS, AU-How, AU-GWW, AU-ASM, AU-TTE
   ]
   fields:
-    fPAR: "drivers/fpar"
-    PAR: "drivers/par" # Photosynthetically active radiation [MJ m-2]
-    Tmin: "drivers/tmin" # Daily minimum air temperature, 2-m height [deg K]
-    VPD: "drivers/vpd" # Vapor pressure deficit [Pa]
-    SMRZ: "drivers/smrz" # Root-zone soil moisture wetness [%]
+    fPAR: "MODIS/MOD15A2H_fPAR_interp"
+    Tmin: "MERRA2/Tmin" # Daily minimum air temperature, 2-m height [deg K]
+    SWGDN: "MERRA2/SWGDN" # Downwelling short-wave radiation [W m-2]
+    QV2M: "MERRA2/QV2M" # Specific humidity at 2-m height
+    T2M: "MERRA2/T2M" # Air temperature at 2-m height [deg K]
+    PS: "MERRA2/PS" # Surface air pressure [Pa]
+    SMRZ0: "drivers/smrz0" # UNSCALED Root-zone soil moisture wetness [%]
     SMSF: "drivers/smsf" # Surface soil moisture wetness [%]
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "drivers/tsurf" # Surface skin temperature [deg K]

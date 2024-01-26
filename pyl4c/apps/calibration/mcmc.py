@@ -102,8 +102,6 @@ class BlackBoxLikelihood(pt.Op):
             The (negative) root-mean squared deviation (RMSD) between the
             predicted and observed values
         '''
-        import ipdb
-        ipdb.set_trace()#FIXME
         predicted = self.model(params, *x)
         if self.weights is not None:
             return -np.sqrt(
@@ -371,7 +369,7 @@ class StochasticSampler(AbstractSampler):
         Dictionary of model parameters, to be used as initial values and as
         the basis for constructing a new dictionary of optimized parameters
     backend : str or None
-        Path to a NetCDF4 file backend (Default: None)
+        Path to a netCDF4 file backend (Default: None)
     weights : Sequence or None
         Optional sequence of weights applied to the model residuals (as in
         weighted least squares)
@@ -381,11 +379,6 @@ class StochasticSampler(AbstractSampler):
             params_dict: dict = None, backend: str = None,
             weights: Sequence = None):
         self.backend = backend
-        # Convert the BOUNDS into nested dicts for easy use
-        self.bounds = dict([
-            (key, dict([('lower', b[0]), ('upper', b[1])]))
-            for key, b in config['optimization']['bounds'].items()
-        ])
         self.config = config
         self.model = model
         self.name = config['name']
@@ -518,8 +511,8 @@ class L4CStochasticSampler(StochasticSampler):
         'RECO': ['CUE', 'tsoil', 'smsf0', 'smsf1'],
     }
     required_drivers = {
-        # TS = Surface skin temperature; Tmin = Minimum daily temperature
-        'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'TS'],
+        # Tsurf = Surface skin temperature; Tmin = Minimum daily temperature
+        'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'Tsurf'],
         'RECO': ['SMSF', 'Tsoil']
     }
 
@@ -544,11 +537,7 @@ class L4CStochasticSampler(StochasticSampler):
         # Calculate E_mult based on current parameters:
         #   'LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'
         f_tmin = linear_constraint(params[1], params[2])
-        try:
-            f_vpd  = linear_constraint(params[3], params[4], 'reversed')
-        except:
-            import ipdb
-            ipdb.set_trace()#FIXME
+        f_vpd  = linear_constraint(params[3], params[4], 'reversed')
         f_smrz = linear_constraint(params[5], params[6])
         f_ft   = linear_constraint(params[7], 1.0, 'binary')
         e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
@@ -583,19 +572,21 @@ class L4CStochasticSampler(StochasticSampler):
         #   code block...are added to the model behind the scenes."
         with pm.Model() as model:
             # (Stochstic) Priors for unknown model parameters
-            LUE = pm.TruncatedNormal('LUE',
-                **self.prior['LUE'], **self.bounds['LUE'])
-            tmin0 = pm.Uniform('tmin0', **self.bounds['tmin0'])
-            tmin1 = pm.Uniform('tmin1', **self.bounds['tmin1'])
-            # NOTE: Upper bound on `vpd1` is set by the maximum observed VPD
-            vpd0 = pm.Uniform('vpd0', **self.bounds['vpd0'])
-            vpd1 = pm.Uniform('vpd1',
-                lower = self.bounds['vpd1']['lower'],
-                upper = np.nanmax(drivers[3]).round(0))
+            LUE = pm.TruncatedNormal('LUE', **self.prior['LUE'])
+            # NOTE: `tmin0` fixed at 5th percentile of observed Tmin
+            tmin0 = np.nanpercentile(drivers[2], 5)
+            tmin1 = pm.Uniform('tmin1',
+                lower = tmin0,
+                upper = self.prior['tmin1']['upper'])
+            # NOTE: `vpd1` fixed at 95th percentile of observed VPD
+            vpd1 = np.nanpercentile(drivers[3], 95)
+            vpd0 = pm.Uniform('vpd0',
+                lower = self.prior['vpd0']['lower'],
+                upper = vpd1)
             # NOTE: Fixing lower-bound on SMRZ at zero
             smrz0 = 0
-            smrz1 = pm.Uniform('smrz1', **self.bounds['smrz1'])
-            ft0 = pm.Uniform('ft0', **self.bounds['ft0'])
+            smrz1 = pm.Uniform('smrz1', **self.prior['smrz1'])
+            ft0 = pm.Uniform('ft0', **self.prior['ft0'])
             # Convert model parameters to a tensor vector
             params_list = [LUE, tmin0, tmin1, vpd0, vpd1, smrz0, smrz1, ft0]
             params = pt.as_tensor_variable(params_list)
@@ -733,31 +724,25 @@ class CalibrationAPI(object):
                 np.in1d(pft_map, pft), ~np.in1d(sites, blacklist))
 
             drivers = dict()
+            field_map = self.config['data']['fields']
             for field in L4CStochasticSampler.required_drivers['GPP']:
-                # For backwards compatibility
-                group = 'MERRA2' if 'MERRA2' in hdf.keys() else 'drivers'
-                if field in hdf[group].keys():
-                    drivers[field] = hdf[f'{group}/{field}'][:]
-                elif field.lower() in hdf['drivers'].keys():
-                    drivers[field] = hdf[f'drivers/{field.lower()}'][:]
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        drivers[field] = hdf[field_map[field]][:]
                 elif field == 'PAR':
-                    drivers[field] = par(hdf['MERRA2/SWGDN'][:])
+                    if 'SWGDN' not in field_map:
+                        raise ValueError(f"Could not find PAR or SWGDN data")
+                    drivers[field] = par(hdf[field_map['SWGDN']][:])
                 elif field == 'VPD':
-                    qv2m = hdf['MERRA2/QV2M'][:]
-                    ps   = hdf['MERRA2/PS'][:]
-                    t2m  = hdf['MERRA2/T2M'][:]
+                    qv2m = hdf[field_map['QV2M']][:]
+                    ps   = hdf[field_map['PS']][:]
+                    t2m  = hdf[field_map['T2M']][:]
                     drivers[field] = vpd(qv2m, ps, t2m)
                 elif field == 'SMRZ':
-                    smrz = hdf['drivers/smrz0'][:]
+                    smrz = hdf[field_map['SMRZ0']][:]
                     smrz_min = smrz.min(axis = 0)
                     drivers[field] = rescale_smrz(smrz, smrz_min)
-                elif field == 'TS':
-                    drivers[field] = hdf['drivers/tsurf'][:]
-
-            # Read fPAR in a backwards-compatible fashion
-            group = 'MODIS' if 'MODIS' in hdf.keys() else 'drivers'
-            key = 'fPAR' if 'fPAR' in hdf[group].keys() else 'MOD15A2H_fPAR_interpolated'
-            drivers['fPAR'] = hdf[f'{group}/{key}'][:]
 
             # Check units on fPAR, average sub-grid heterogeneity
             if np.nanmax(drivers['fPAR'][:]) > 10:
@@ -783,9 +768,6 @@ class CalibrationAPI(object):
                 tower_gpp = hdf['GPP'][:][:,pft_mask]
 
         # Check that driver data do not contain NaNs
-        import ipdb
-        ipdb.set_trace()#FIXME
-
         for field in drivers.keys():
             assert not np.isnan(drivers[field]).any(),\
                 f'Driver dataset "{field}" contains NaNs'
@@ -824,9 +806,13 @@ class CalibrationAPI(object):
         prior_params = filter(
             lambda p: p in prior.keys(), sampler.required_parameters['GPP'])
         prior = dict([
-            (p, {'mu': prior[p]['mu'][pft], 'sigma': prior[p]['sigma'][pft]})
+            (p, dict([(k, v[pft]) for k, v in prior[p].items()]))
             for p in prior_params
         ])
+        # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
+        #   those with priors
+        var_names = list(filter(
+            lambda x: x in prior.keys(), sampler.required_parameters['GPP']))
         # Convert drivers from a dict to a sequence, then run sampler
         drivers = [drivers[d] for d in sampler.required_drivers['GPP']]
         sampler.run(

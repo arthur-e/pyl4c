@@ -18,7 +18,7 @@ import numpy as np
 from collections import OrderedDict
 
 ANCILLARY_DATA_PATHS = {
-    'smap_l4c_ancillary_data_file_path': 'SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5',
+    'smap_l4c_ancillary_data_file_path': '/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5',
     'smap_l4c_1km_ancillary_data_lc_path': 'MCD12Q1_M01_lc_dom_uint8',
     'smap_l4c_9km_ancillary_data_lc_path': 'MOD12Q1_M09_lc_dom_uint8',
     'smap_l4c_1km_ancillary_data_x_coord_path': 'SMAP_L4_C_LON_14616_x_34704_M01_flt32',
@@ -26,8 +26,8 @@ ANCILLARY_DATA_PATHS = {
     'smap_l4c_9km_ancillary_data_x_coord_path': 'SMAP_L4_C_LON_1624_x_3856_M09_flt32',
     'smap_l4c_9km_ancillary_data_y_coord_path': 'SMAP_L4_C_LAT_1624_x_3856_M09_flt32',
     'smap_l4c_9km_pft_subgrid_counts_CONUS': 'SMAP_L4C_Vv4040_1km_subgrid_PFT_counts_CONUS.h5',
-    'smap_l4c_9km_sparse_col_index': 'MCD12Q1_M09land_col.uint16',
-    'smap_l4c_9km_sparse_row_index': 'MCD12Q1_M09land_row.uint16',
+    'smap_l4c_9km_sparse_col_index': '/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/MCD12Q1_M09land_col.uint16',
+    'smap_l4c_9km_sparse_row_index': '/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/MCD12Q1_M09land_row.uint16',
     'transcom_netcdf_path': 'CarbonTracker_TransCom_and_other_regions.nc'
 }
 
