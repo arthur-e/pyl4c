@@ -1,0 +1,29 @@
+---
+name: "GPP" # Should be upper-case of "name" in "compile_{name}_model()" function
+LUE: # Normal distribution, priors from Madani et al. (2017, JGR: Biogeosciences)
+  mu: [~, 0.98, 1.40, 1.23, 1.68, 0.80, 1.19, 1.94, 1.94]
+  sigma: [~, 0.32, 0.20, 0.20, 0.35, 0.38, 0.45, 0.55, 0.55]
+  lower: [~, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  upper: [~, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0]
+CUE:
+  lower: [~, 0.22, 0.22, 0.22, 0.22, 0.22, 0.22, 0.22, 0.22]
+  upper: [~, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79]
+# tmin0 fixed at 2nd percentile of climatological Tmin
+tmin0:
+  fixed: [~, 262.2, 280.3, 257.7, 267.0, 255.9, 258.1, 266.7, 274.9]
+# Lower limit on tmin1 chosen as rounding-up from the 2nd percentile
+#   of climatological Tmin
+tmin1:
+  lower: [~, 263.0, 281.0, 258.0, 268.0, 256.0, 259.0, 267.0, 275.0]
+  upper: [~, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0]
+# Upper limit on vpd1 chosen as ~thrice the 98th percentile of VPD
+#   for the PFT class with the highest mean climatological VPD
+vpd1:
+  lower: [~, 1, 1, 1, 1, 1, 1, 1, 1]
+  upper: [~, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+smrz1:
+  lower: [~, 1, 1, 1, 1, 1, 1, 1, 1]
+  upper: [~, 100, 100, 100, 100, 100, 100, 100, 100]
+ft0:
+  lower: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+  upper: [~, 1, 1, 1, 1, 1, 1, 1, 1]

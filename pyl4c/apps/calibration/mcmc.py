@@ -536,9 +536,18 @@ class L4CStochasticSampler(StochasticSampler):
         'L4C GPP function'
         # Calculate E_mult based on current parameters:
         #   'LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'
-        f_tmin = linear_constraint(params[1], params[2])
-        f_vpd  = linear_constraint(params[3], params[4], 'reversed')
-        f_smrz = linear_constraint(params[5], params[6])
+        try:
+            f_tmin = linear_constraint(params[1], params[2])
+        except AssertionError:
+            raise AssertionError(f"FAILED in linear_constraint() with parameters: {params[1:3]}")
+        try:
+            f_vpd  = linear_constraint(params[3], params[4], 'reversed')
+        except AssertionError:
+            raise AssertionError(f"FAILED in linear_constraint(form = 'reversed') with parameters: {params[3:5]}")
+        try:
+            f_smrz = linear_constraint(params[5], params[6])
+        except AssertionError:
+            raise AssertionError(f"FAILED in linear_constraint() with parameters: {params[5:7]}")
         f_ft   = linear_constraint(params[7], 1.0, 'binary')
         e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
         # Calculate GPP based on the provided BPLUT parameters
@@ -574,17 +583,13 @@ class L4CStochasticSampler(StochasticSampler):
             # (Stochstic) Priors for unknown model parameters
             LUE = pm.TruncatedNormal('LUE', **self.prior['LUE'])
             # NOTE: `tmin0` fixed at 5th percentile of observed Tmin
-            tmin0 = np.nanpercentile(drivers[2], 5)
-            tmin1 = pm.Uniform('tmin1',
-                lower = tmin0,
-                upper = self.prior['tmin1']['upper'])
+            tmin0 = self.prior['tmin0']['fixed']
+            tmin1 = pm.Uniform('tmin1', **self.prior['tmin1'])
             # NOTE: `vpd1` fixed at 95th percentile of observed VPD
-            vpd1 = np.nanpercentile(drivers[3], 95)
-            vpd0 = pm.Uniform('vpd0',
-                lower = self.prior['vpd0']['lower'],
-                upper = vpd1)
+            vpd0 = 0.0
+            vpd1 = pm.Uniform('vpd1', **self.prior['vpd1'])
             # NOTE: Fixing lower-bound on SMRZ at zero
-            smrz0 = 0
+            smrz0 = 0.0
             smrz1 = pm.Uniform('smrz1', **self.prior['smrz1'])
             ft0 = pm.Uniform('ft0', **self.prior['ft0'])
             # Convert model parameters to a tensor vector
@@ -750,7 +755,8 @@ class CalibrationAPI(object):
             if drivers['fPAR'].ndim == 3 and drivers['fPAR'].shape[-1] == 81:
                 drivers['fPAR'] = np.nanmean(drivers[f'fPAR'], axis = -1)
             assert len(set(L4CStochasticSampler.required_drivers['GPP'])\
-                .difference(set(drivers.keys()))) == 0
+                .difference(set(drivers.keys()))) == 0,\
+                'Did not find all required drivers for the GPP model!'
 
             # If RMSE is used, then we want to pay attention to weighting
             weights = None

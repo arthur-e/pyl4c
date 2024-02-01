@@ -67,7 +67,7 @@ from pyl4c.stats import linear_constraint, detrend, rmsd
 from pyl4c.lib.cli import ProgressBar
 from pyl4c.apps.calibration import BPLUT, OPT_BOUNDS, GenericOptimization, cbar, report_fit_stats, solve_least_squares
 
-CONFIG = os.path.join(os.path.dirname(pyl4c.__file__), 'data/files/config_optimization.json')
+CONFIG = os.path.join(os.path.dirname(pyl4c.__file__), 'data/files/config_L4C_optimization.json')
 
 class CLI(object):
     '''
