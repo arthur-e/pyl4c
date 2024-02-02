@@ -656,14 +656,19 @@ class CalibrationAPI(object):
             self.config = yaml.safe_load(file)
         self.hdf5 = self.config['data']['file']
 
-    def _clean(self, raw: Sequence, drivers: Sequence, protocol: str = 'GPP'):
+    def _clean(
+            self, raw: Sequence, drivers: Sequence, protocol: str = 'GPP',
+            num_std: int = 5):
         'Cleans up data values according to a prescribed protocol'
         if protocol == 'GPP':
             # Filter out observed GPP values when GPP is negative or when
             #   APAR < 0.1 g C m-2 day-1
             apar = drivers['fPAR'] * drivers['PAR']
-            return np.where(
+            cleaned = np.where(
                 apar < 0.1, np.nan, np.where(raw < 0, np.nan, raw))
+            return np.apply_along_axis(
+                lambda x: np.where(
+                    x > (num_std * np.nanstd(x)), np.nan, x), 0, cleaned)
 
     def _filter(self, raw: Sequence, size: int):
         'Apply a smoothing filter with zero phase offset'
@@ -723,7 +728,7 @@ class CalibrationAPI(object):
             if hasattr(sites[0], 'decode'):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
             # Get dominant PFT
-            pft_map = pft_dominant(hdf['state/PFT'][:])
+            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
             # Blacklist validation sites
             pft_mask = np.logical_and(
                 np.in1d(pft_map, pft), ~np.in1d(sites, blacklist))
@@ -779,17 +784,17 @@ class CalibrationAPI(object):
                 f'Driver dataset "{field}" contains NaNs'
             drivers[field] = drivers[field][:,pft_mask]
 
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_gpp = self._filter(tower_gpp, filter_length)
+        tower_gpp = self._clean(tower_gpp, drivers, protocol = 'GPP')
+        observed = tower_gpp[~np.isnan(tower_gpp)]
+
         # Subset all datasets to just the valid observation site-days
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
         for field in drivers.keys():
             drivers[field] = drivers[field][~np.isnan(tower_gpp)]
-        tower_gpp = tower_gpp[~np.isnan(tower_gpp)]
-
-        # Clean observations, then mask out driver data where the are no
-        #   observations
-        tower_gpp = self._filter(tower_gpp, filter_length)
-        tower_gpp = self._clean(tower_gpp, drivers, protocol = 'GPP')
 
         print('Initializing sampler...')
         backend = self.config['optimization']['backend_template'].format(
@@ -822,7 +827,7 @@ class CalibrationAPI(object):
         # Convert drivers from a dict to a sequence, then run sampler
         drivers = [drivers[d] for d in sampler.required_drivers['GPP']]
         sampler.run(
-            tower_gpp, drivers, prior = prior, save_fig = save_fig, **kwargs)
+            observed, drivers, prior = prior, save_fig = save_fig, **kwargs)
 
 
 
