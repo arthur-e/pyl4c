@@ -23,7 +23,7 @@ from scipy import signal
 from pyl4c import pft_dominant
 from pyl4c.data.fixtures import restore_bplut_flat
 from pyl4c.science import vpd, par, rescale_smrz
-from pyl4c.stats import linear_constraint
+from pyl4c.stats import linear_constraint, rmsd
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -312,40 +312,6 @@ class AbstractSampler(object):
         az.plot_posterior(trace, **kwargs)
         pyplot.show()
 
-    def score_posterior(
-            self, observed: Sequence, drivers: Sequence, posterior: Sequence,
-            method: str = 'rmsd') -> Number:
-        '''
-        Returns a goodness-of-fit score based on the existing calibration.
-
-        Parameters
-        ----------
-        observed : Sequence
-            Sequence of observed values that will be used to calibrate the model;
-            i.e., model is scored by how close its predicted values are to the
-            observed values
-        drivers : list or tuple
-            Sequence of driver datasets to be supplied, in order, to the
-            model's run function
-        posterior : list or tuple
-            Sequence of posterior parameter sets (i.e., nested sequence); each
-            nested sequence will be scored
-        method : str
-            The method for generating a goodness-of-fit score
-            (Default: "rmsd")
-
-        Returns
-        -------
-        float
-        '''
-        if method != 'rmsd':
-            raise NotImplementedError('"method" must be one of: "rmsd"')
-        score_func = partial(
-            rmsd, func = self.model, observed = observed, drivers = drivers)
-        with get_context('spawn').Pool() as pool:
-            scores = pool.map(score_func, posterior)
-        return scores
-
 
 class StochasticSampler(AbstractSampler):
     '''
@@ -512,7 +478,7 @@ class L4CStochasticSampler(StochasticSampler):
     }
     required_drivers = {
         # Tsurf = Surface skin temperature; Tmin = Minimum daily temperature
-        'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'Tsurf'],
+        'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'FT'],
         'RECO': ['SMSF', 'Tsoil']
     }
 
@@ -580,7 +546,7 @@ class L4CStochasticSampler(StochasticSampler):
         # With this context manager, "all PyMC3 objects introduced in the indented
         #   code block...are added to the model behind the scenes."
         with pm.Model() as model:
-            # (Stochstic) Priors for unknown model parameters
+            # NOTE: LUE is unbounded on the right side
             LUE = pm.TruncatedNormal('LUE', **self.prior['LUE'])
             # NOTE: `tmin0` fixed at 5th percentile of observed Tmin
             tmin0 = self.prior['tmin0']['fixed']
@@ -680,7 +646,9 @@ class CalibrationAPI(object):
 
     def tune_gpp(
             self, pft: int, filter_length: int = 2, plot_trace: bool = False,
-            ipdb: bool = False, save_fig: bool = False, **kwargs):
+            plot_exemplar: bool = False, plot_scatter: bool = False,
+            plot_posterior: bool = False, ipdb: bool = False,
+            save_fig: bool = False, **kwargs):
         '''
         Run the L4C GPP calibration.
 
@@ -697,6 +665,16 @@ class CalibrationAPI(object):
         plot_trace : bool
             True to plot the trace for a previous calibration run; this will
             also NOT start a new calibration (Default: False)
+        plot_exemplar : bool
+            True to plot a single time series showing tower observations and
+            simulations using new and old parameters (Default: False)
+        plot_scatter : bool
+            True to plot a scatterplot showing simulations, using new and old
+            parameters, against observations; also reports RMSE
+            (Default: False).
+        plot_posterior : bool
+            True to show an HDI plot of the posterior distribution(s)
+            (Default: False)
         ipdb : bool
             True to drop the user into an ipdb prompt, prior to and instead of
             running calibration
@@ -739,20 +717,25 @@ class CalibrationAPI(object):
                 # Try reading the field exactly as described in config file
                 if field in field_map:
                     if field_map[field] in hdf:
-                        drivers[field] = hdf[field_map[field]][:]
+                        drivers[field] = hdf[field_map[field]][:,pft_mask]
                 elif field == 'PAR':
                     if 'SWGDN' not in field_map:
                         raise ValueError(f"Could not find PAR or SWGDN data")
-                    drivers[field] = par(hdf[field_map['SWGDN']][:])
+                    drivers[field] = par(hdf[field_map['SWGDN']][:,pft_mask])
                 elif field == 'VPD':
-                    qv2m = hdf[field_map['QV2M']][:]
-                    ps   = hdf[field_map['PS']][:]
-                    t2m  = hdf[field_map['T2M']][:]
+                    qv2m = hdf[field_map['QV2M']][:,pft_mask]
+                    ps   = hdf[field_map['PS']][:,pft_mask]
+                    t2m  = hdf[field_map['T2M']][:,pft_mask]
                     drivers[field] = vpd(qv2m, ps, t2m)
                 elif field == 'SMRZ':
-                    smrz = hdf[field_map['SMRZ0']][:]
+                    smrz = hdf[field_map['SMRZ0']][:,pft_mask]
                     smrz_min = smrz.min(axis = 0)
                     drivers[field] = rescale_smrz(smrz, smrz_min)
+                elif field == 'FT':
+                    tsurf = hdf[field_map['Tsurf']][:,pft_mask]
+                    # Classify soil as frozen (FT=0) or unfrozen (FT=1) based
+                    #   on threshold freezing point of water
+                    drivers[field] = np.where(tsurf <= 273.15, 0, 1)
 
             # Check units on fPAR, average sub-grid heterogeneity
             if np.nanmax(drivers['fPAR'][:]) > 10:
@@ -782,7 +765,6 @@ class CalibrationAPI(object):
         for field in drivers.keys():
             assert not np.isnan(drivers[field]).any(),\
                 f'Driver dataset "{field}" contains NaNs'
-            drivers[field] = drivers[field][:,pft_mask]
 
         # Clean observations, then mask out driver data where the are no
         #   observations
@@ -793,8 +775,9 @@ class CalibrationAPI(object):
         # Subset all datasets to just the valid observation site-days
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
+        driver_data = dict()
         for field in drivers.keys():
-            drivers[field] = drivers[field][~np.isnan(tower_gpp)]
+            driver_data[field] = drivers[field][~np.isnan(tower_gpp)]
 
         print('Initializing sampler...')
         backend = self.config['optimization']['backend_template'].format(
@@ -802,15 +785,23 @@ class CalibrationAPI(object):
         sampler = L4CStochasticSampler(
             self.config, L4CStochasticSampler._gpp, params_dict,
             backend = backend, weights = weights)
-        if plot_trace or ipdb:
+
+        # For diagnostics
+        if plot_trace or plot_posterior or ipdb:
             if ipdb:
                 import ipdb
                 ipdb.set_trace()
-            trace = sampler.get_trace()
+            trace = sampler.get_trace(
+                burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
+            if plot_posterior:
+                az.plot_posterior(trace)
+                pyplot.show()
+                return
             az.plot_trace(
                 trace, var_names = sampler.required_parameters['GPP'])
             pyplot.show()
             return
+
         # Get (informative) priors for just those parameters that have them
         with open(self.config['optimization']['prior'], 'r') as file:
             prior = yaml.safe_load(file)
@@ -820,15 +811,77 @@ class CalibrationAPI(object):
             (p, dict([(k, v[pft]) for k, v in prior[p].items()]))
             for p in prior_params
         ])
+
+        # For plotting representative sites
+        if plot_exemplar or plot_scatter:
+            # Get the tower with the most available data
+            idx = np.apply_along_axis(
+                lambda x: x.size - np.isnan(x).sum(), 0, tower_gpp).argmax()
+            params0 = [params_dict[k] for k in sampler.required_parameters['GPP']]
+            # Get proposed (new) parameters, if provided
+            params1 = []
+            for k, key in enumerate(sampler.required_parameters['GPP']):
+                if key in kwargs.keys():
+                    params1.append(kwargs[key])
+                else:
+                    params1.append(params0[k])
+            if plot_exemplar:
+                _drivers = [
+                    drivers[k][:,idx] for k in sampler.required_drivers['GPP']
+                ]
+                gpp0 = sampler._gpp(params0, *_drivers)
+                gpp1 = sampler._gpp(params1, *_drivers)
+                pyplot.plot(tower_gpp[:,idx], 'g-', label = 'Tower GPP')
+                pyplot.plot(gpp0, 'r-', alpha = 0.5, label = 'Old Simulation')
+                pyplot.plot(gpp1, 'k-', label = 'New Simulation')
+            elif plot_scatter:
+                tidx = np.random.randint( # Random 20% sample
+                    0, tower_gpp.size, size = tower_gpp.size // 5)
+                _drivers = [
+                    drivers[k].ravel()[tidx] for k in sampler.required_drivers['GPP']
+                ]
+                _obs = tower_gpp.ravel()[tidx]
+                gpp0 = sampler._gpp(params0, *_drivers)
+                gpp1 = sampler._gpp(params1, *_drivers)
+                # Calculate (parameters of) trend lines
+                mask = np.isnan(_obs)
+                a0, b0 = np.polyfit(_obs[~mask], gpp0[~mask], deg = 1)
+                a1, b1 = np.polyfit(_obs[~mask], gpp1[~mask], deg = 1)
+                # Create a scatter plot
+                fig = pyplot.figure(figsize = (6, 6))
+                pyplot.scatter(
+                    _obs, gpp0, s = 2, c = 'r', alpha = 0.2,
+                    label = 'Old (RMSE=%.2f, r=%.2f)' % (
+                        rmsd(_obs, gpp0), np.corrcoef(_obs[~mask], gpp0[~mask])[0,1]))
+                pyplot.plot(_obs, a0 * _obs + b0, 'r-', alpha = 0.8)
+                pyplot.scatter(
+                    _obs, gpp1, s = 2, c = 'k', alpha = 0.2,
+                    label = 'New (RMSE=%.2f, r=%.2f)' % (
+                        rmsd(_obs, gpp1), np.corrcoef(_obs[~mask], gpp1[~mask])[0,1]))
+                pyplot.plot(_obs, a1 * _obs + b1, 'k-', alpha = 0.8)
+                ax = fig.get_axes()
+                ax[0].set_aspect(1)
+                ax[0].plot([0, 1], [0, 1],
+                    transform = ax[0].transAxes, linestyle = 'dashed',
+                    c = 'k', alpha = 0.5)
+                pyplot.xlabel('Observed')
+                pyplot.ylabel('Predicted')
+            pyplot.legend()
+            pyplot.show()
+            return
+
         # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
         #   those with priors
         var_names = list(filter(
             lambda x: x in prior.keys(), sampler.required_parameters['GPP']))
         # Convert drivers from a dict to a sequence, then run sampler
-        drivers = [drivers[d] for d in sampler.required_drivers['GPP']]
+        driver_data = [driver_data[d] for d in sampler.required_drivers['GPP']]
+        # Remove any kwargs that don't belong
+        for k in list(kwargs.keys()):
+            if k not in ('chains', 'draws', 'tune', 'scaling', 'save_fig', 'var_names'):
+                del kwargs[k]
         sampler.run(
-            observed, drivers, prior = prior, save_fig = save_fig, **kwargs)
-
+            observed, driver_data, prior = prior, save_fig = save_fig, **kwargs)
 
 
 if __name__ == '__main__':
