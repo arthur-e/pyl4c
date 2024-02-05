@@ -19,6 +19,7 @@ from multiprocessing import get_context
 from numbers import Number
 from typing import Callable, Sequence
 from matplotlib import pyplot
+from textwrap import wrap
 from scipy import signal
 from pyl4c import pft_dominant
 from pyl4c.data.fixtures import restore_bplut_flat
@@ -644,63 +645,16 @@ class CalibrationAPI(object):
                 lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
         return raw # Or, revert to the raw data
 
-    def tune_gpp(
-            self, pft: int, filter_length: int = 2, plot_trace: bool = False,
-            plot_exemplar: bool = False, plot_scatter: bool = False,
-            plot_posterior: bool = False, ipdb: bool = False,
-            save_fig: bool = False, **kwargs):
-        '''
-        Run the L4C GPP calibration.
-
-        - For GPP data: Removes observations where GPP < 0 or where APAR is
-            < 0.1 MJ m-2 day-1
-
-        Parameters
-        ----------
-        pft : int
-            The Plant Functional Type (PFT) to calibrate
-        filter_length : int
-            The window size for the smoothing filter, applied to the observed
-            data
-        plot_trace : bool
-            True to plot the trace for a previous calibration run; this will
-            also NOT start a new calibration (Default: False)
-        plot_exemplar : bool
-            True to plot a single time series showing tower observations and
-            simulations using new and old parameters (Default: False)
-        plot_scatter : bool
-            True to plot a scatterplot showing simulations, using new and old
-            parameters, against observations; also reports RMSE
-            (Default: False).
-        plot_posterior : bool
-            True to show an HDI plot of the posterior distribution(s)
-            (Default: False)
-        ipdb : bool
-            True to drop the user into an ipdb prompt, prior to and instead of
-            running calibration
-        save_fig : bool
-            True to save figures to files instead of showing them
-            (Default: False)
-        **kwargs
-            Additional keyword arguments passed to
-            `L4CStochasticSampler.run()`
-        '''
-        assert pft in PFT_VALID, f'Invalid PFT: {pft}'
-        # Pass configuration parameters to MOD17StochasticSampler.run()
-        for key in ('chains', 'draws', 'tune', 'scaling'):
-            if key in self.config['optimization'].keys() and not key in kwargs.keys():
-                kwargs[key] = self.config['optimization'][key]
+    def _get_params(self, pft, model):
         # Filter the parameters to just those for the PFT of interest
         params_dict = restore_bplut_flat(self.config['BPLUT'])
-        # Load blacklisted sites (if any)
-        blacklist = self.config['data']['sites_blacklisted']
-        params_dict = dict([
+        return dict([
             (k, params_dict[k].ravel()[pft])
-            for k in L4CStochasticSampler.required_parameters['GPP']
+            for k in L4CStochasticSampler.required_parameters[model]
         ])
-        objective = self.config['optimization']['objective'].lower()
 
-        print('Loading driver datasets...')
+    def _load_gpp_data(self, pft, blacklist, filter_length):
+        'Load the required datasets for GPP, for a single PFT'
         with h5py.File(self.hdf5, 'r') as hdf:
             sites = hdf['site_id'][:]
             if hasattr(sites[0], 'decode'):
@@ -710,7 +664,6 @@ class CalibrationAPI(object):
             # Blacklist validation sites
             pft_mask = np.logical_and(
                 np.in1d(pft_map, pft), ~np.in1d(sites, blacklist))
-
             drivers = dict()
             field_map = self.config['data']['fields']
             for field in L4CStochasticSampler.required_drivers['GPP']:
@@ -748,12 +701,11 @@ class CalibrationAPI(object):
 
             # If RMSE is used, then we want to pay attention to weighting
             weights = None
-            if objective in ('rmsd', 'rmse'):
-                if 'weights' in hdf.keys():
-                    weights = hdf['weights'][pft_mask][np.newaxis,:]\
-                        .repeat(t2m.shape[0], axis = 0)
-                else:
-                    print('WARNING - "weights" not found in HDF5 file!')
+            if 'weights' in hdf.keys():
+                weights = hdf['weights'][pft_mask][np.newaxis,:]\
+                    .repeat(t2m.shape[0], axis = 0)
+            else:
+                print('WARNING - "weights" not found in HDF5 file!')
             if 'GPP' not in hdf.keys():
                 with h5py.File(
                         self.config['data']['supplemental_file'], 'r') as _hdf:
@@ -765,19 +717,94 @@ class CalibrationAPI(object):
         for field in drivers.keys():
             assert not np.isnan(drivers[field]).any(),\
                 f'Driver dataset "{field}" contains NaNs'
-
         # Clean observations, then mask out driver data where the are no
         #   observations
         tower_gpp = self._filter(tower_gpp, filter_length)
         tower_gpp = self._clean(tower_gpp, drivers, protocol = 'GPP')
-        observed = tower_gpp[~np.isnan(tower_gpp)]
-
+        tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
         # Subset all datasets to just the valid observation site-days
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
-        driver_data = dict()
+        drivers_flat = dict()
         for field in drivers.keys():
-            driver_data[field] = drivers[field][~np.isnan(tower_gpp)]
+            drivers_flat[field] = drivers[field][~np.isnan(tower_gpp)]
+        return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
+
+    def _plot(self, pft: int, model: str):
+        'Configures the sampler and backend'
+        params_dict = self._get_params(pft, model)
+        backend = self.config['optimization']['backend_template'].format(
+            model = model, pft = pft)
+        sampler = L4CStochasticSampler(
+            self.config, getattr(L4CStochasticSampler, f'_{model.lower()}'),
+            params_dict, backend = backend)
+        return (sampler, backend)
+
+    def plot_autocorr(self, pft: int, model: str, **kwargs):
+        'Plots the autocorrelation in the trace for each parameter'
+        sampler, backend = self._plot(pft, model)
+        sampler.plot_autocorr(**kwargs)
+
+    def plot_posterior(self, pft: int, model: str, **kwargs):
+        'Plots the posterior density for each parameter'
+        sampler, backend = self._plot(pft, model)
+        sampler.plot_posterior()
+
+    def plot_trace(self, pft: int, model: str, **kwargs):
+        'Plots the trace for each parameter'
+        sampler, backend = self._plot(pft, model)
+        trace = sampler.get_trace(
+            burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
+        az.plot_trace(trace)
+        pyplot.show()
+
+    def tune_gpp(
+            self, pft: int, filter_length: int = 2, plot: str = None,
+            ipdb: bool = False, save_fig: bool = False, **kwargs):
+        '''
+        Run the L4C GPP calibration.
+
+        - For GPP data: Removes observations where GPP < 0 or where APAR is
+            < 0.1 MJ m-2 day-1
+
+        Parameters
+        ----------
+        pft : int
+            The Plant Functional Type (PFT) to calibrate
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        plot : str or None
+            Plot either: the "trace" for a previous calibration run; an
+            "exemplar", or single time series showing tower observations and
+            simulations using new and old parameters; a "scatter" plot
+            showing simulations, using new and old parameters, against
+            observations, with RMSE; or the "posterior" plot, an HDI plot
+            of the posterior distribution(s). If None, calibration will
+            proceed (calibration is not performed if plotting).
+        ipdb : bool
+            True to drop the user into an ipdb prompt, prior to and instead of
+            running calibration
+        save_fig : bool
+            True to save figures to files instead of showing them
+            (Default: False)
+        **kwargs
+            Additional keyword arguments passed to
+            `L4CStochasticSampler.run()`
+        '''
+        assert pft in PFT_VALID, f'Invalid PFT: {pft}'
+        # Pass configuration parameters to MOD17StochasticSampler.run()
+        for key in ('chains', 'draws', 'tune', 'scaling'):
+            if key in self.config['optimization'].keys() and not key in kwargs.keys():
+                kwargs[key] = self.config['optimization'][key]
+        params_dict = self._get_params(pft, 'GPP')
+        # Load blacklisted sites (if any)
+        blacklist = self.config['data']['sites_blacklisted']
+        objective = self.config['optimization']['objective'].lower()
+
+        print('Loading driver datasets...')
+        drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+            self._load_gpp_data(pft, blacklist, filter_length)
 
         print('Initializing sampler...')
         backend = self.config['optimization']['backend_template'].format(
@@ -785,22 +812,6 @@ class CalibrationAPI(object):
         sampler = L4CStochasticSampler(
             self.config, L4CStochasticSampler._gpp, params_dict,
             backend = backend, weights = weights)
-
-        # For diagnostics
-        if plot_trace or plot_posterior or ipdb:
-            if ipdb:
-                import ipdb
-                ipdb.set_trace()
-            trace = sampler.get_trace(
-                burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
-            if plot_posterior:
-                az.plot_posterior(trace)
-                pyplot.show()
-                return
-            az.plot_trace(
-                trace, var_names = sampler.required_parameters['GPP'])
-            pyplot.show()
-            return
 
         # Get (informative) priors for just those parameters that have them
         with open(self.config['optimization']['prior'], 'r') as file:
@@ -812,8 +823,8 @@ class CalibrationAPI(object):
             for p in prior_params
         ])
 
-        # For plotting representative sites
-        if plot_exemplar or plot_scatter:
+        # For diganostics or plotting representative sites
+        if ipdb or plot in ('exemplar', 'scatter'):
             # Get the tower with the most available data
             idx = np.apply_along_axis(
                 lambda x: x.size - np.isnan(x).sum(), 0, tower_gpp).argmax()
@@ -825,7 +836,7 @@ class CalibrationAPI(object):
                     params1.append(kwargs[key])
                 else:
                     params1.append(params0[k])
-            if plot_exemplar:
+            if plot == 'exemplar':
                 _drivers = [
                     drivers[k][:,idx] for k in sampler.required_drivers['GPP']
                 ]
@@ -834,7 +845,7 @@ class CalibrationAPI(object):
                 pyplot.plot(tower_gpp[:,idx], 'g-', label = 'Tower GPP')
                 pyplot.plot(gpp0, 'r-', alpha = 0.5, label = 'Old Simulation')
                 pyplot.plot(gpp1, 'k-', label = 'New Simulation')
-            elif plot_scatter:
+            elif plot == 'scatter':
                 tidx = np.random.randint( # Random 20% sample
                     0, tower_gpp.size, size = tower_gpp.size // 5)
                 _drivers = [
@@ -850,15 +861,15 @@ class CalibrationAPI(object):
                 # Create a scatter plot
                 fig = pyplot.figure(figsize = (6, 6))
                 pyplot.scatter(
-                    _obs, gpp0, s = 2, c = 'r', alpha = 0.2,
+                    _obs, gpp0, s = 2, c = 'k', alpha = 0.2,
                     label = 'Old (RMSE=%.2f, r=%.2f)' % (
                         rmsd(_obs, gpp0), np.corrcoef(_obs[~mask], gpp0[~mask])[0,1]))
-                pyplot.plot(_obs, a0 * _obs + b0, 'r-', alpha = 0.8)
+                pyplot.plot(_obs, a0 * _obs + b0, 'k-', alpha = 0.8)
                 pyplot.scatter(
-                    _obs, gpp1, s = 2, c = 'k', alpha = 0.2,
+                    _obs, gpp1, s = 2, c = 'r', alpha = 0.2,
                     label = 'New (RMSE=%.2f, r=%.2f)' % (
                         rmsd(_obs, gpp1), np.corrcoef(_obs[~mask], gpp1[~mask])[0,1]))
-                pyplot.plot(_obs, a1 * _obs + b1, 'k-', alpha = 0.8)
+                pyplot.plot(_obs, a1 * _obs + b1, 'r-', alpha = 0.8)
                 ax = fig.get_axes()
                 ax[0].set_aspect(1)
                 ax[0].plot([0, 1], [0, 1],
@@ -866,8 +877,17 @@ class CalibrationAPI(object):
                     c = 'k', alpha = 0.5)
                 pyplot.xlabel('Observed')
                 pyplot.ylabel('Predicted')
+                pyplot.title('\n'.join(wrap(f'PFT {pft} with: ' + ', '.join(list(map(
+                    lambda x: f'{x[0]}={x[1]}', zip(
+                    sampler.required_parameters['GPP'], params1)))))))
             pyplot.legend()
             pyplot.show()
+            # For diagnostics
+            if ipdb:
+                trace = sampler.get_trace(
+                    burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
+                import ipdb
+                ipdb.set_trace()
             return
 
         # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
@@ -875,13 +895,14 @@ class CalibrationAPI(object):
         var_names = list(filter(
             lambda x: x in prior.keys(), sampler.required_parameters['GPP']))
         # Convert drivers from a dict to a sequence, then run sampler
-        driver_data = [driver_data[d] for d in sampler.required_drivers['GPP']]
+        drivers_flat = [drivers_flat[d] for d in sampler.required_drivers['GPP']]
         # Remove any kwargs that don't belong
         for k in list(kwargs.keys()):
             if k not in ('chains', 'draws', 'tune', 'scaling', 'save_fig', 'var_names'):
                 del kwargs[k]
         sampler.run(
-            observed, driver_data, prior = prior, save_fig = save_fig, **kwargs)
+            tower_gpp_flat, drivers_flat, prior = prior, save_fig = save_fig,
+            **kwargs)
 
 
 if __name__ == '__main__':
