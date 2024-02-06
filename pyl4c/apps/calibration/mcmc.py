@@ -418,7 +418,7 @@ class StochasticSampler(AbstractSampler):
         except AttributeError:
             raise AttributeError('''Could not find a compiler for model named
             "%s"; make sure that a function "compile_%s_model()" is defined on
-             this class''' % (self.name, self.name))
+             this class''' % (self.name, self.name.lower()))
         with compiler(observed, drivers) as model:
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')
@@ -520,6 +520,23 @@ class L4CStochasticSampler(StochasticSampler):
         # Calculate GPP based on the provided BPLUT parameters
         return fpar * par * params[0] * e_mult
 
+    @staticmethod
+    def _gpp2(params, fpar, par, tmin, vpd, smrz, ft):
+        '''
+        L4C GPP function, with alternate parameters, where the ramp functions
+        are defined in terms of the left edge (lowest value) and the width of
+        the ramp function interval.
+        '''
+        # Calculate E_mult based on current parameters:
+        #   'LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'
+        f_tmin = linear_constraint(params[1], params[1] + params[2])
+        f_vpd  = linear_constraint(params[3], params[3] + params[4], 'reversed')
+        f_smrz = linear_constraint(params[5], params[5] + params[6])
+        f_ft   = linear_constraint(params[7], 1.0, 'binary')
+        e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
+        # Calculate GPP based on the provided BPLUT parameters
+        return fpar * par * params[0] * e_mult
+
     def compile_gpp_model(
             self, observed: Sequence, drivers: Sequence) -> pm.Model:
         '''
@@ -549,14 +566,12 @@ class L4CStochasticSampler(StochasticSampler):
         with pm.Model() as model:
             # NOTE: LUE is unbounded on the right side
             LUE = pm.TruncatedNormal('LUE', **self.prior['LUE'])
-            # NOTE: `tmin0` fixed at 5th percentile of observed Tmin
-            tmin0 = self.prior['tmin0']['fixed']
+            tmin0 = pm.Uniform('tmin0', **self.prior['tmin0'])
             tmin1 = pm.Uniform('tmin1', **self.prior['tmin1'])
-            # NOTE: `vpd1` fixed at 95th percentile of observed VPD
-            vpd0 = 0.0
+            vpd0 = pm.Uniform('vpd0', **self.prior['vpd0'])
             vpd1 = pm.Uniform('vpd1', **self.prior['vpd1'])
             # NOTE: Fixing lower-bound on SMRZ at zero
-            smrz0 = 0.0
+            smrz0 = pm.Uniform('smrz0', **self.prior['smrz0'])
             smrz1 = pm.Uniform('smrz1', **self.prior['smrz1'])
             ft0 = pm.Uniform('ft0', **self.prior['ft0'])
             # Convert model parameters to a tensor vector
@@ -755,7 +770,7 @@ class CalibrationAPI(object):
         sampler, backend = self._plot(pft, model)
         trace = sampler.get_trace(
             burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
-        az.plot_trace(trace)
+        az.plot_trace(trace, kwargs.get('var_names', None))
         pyplot.show()
 
     def tune_gpp(
@@ -809,8 +824,10 @@ class CalibrationAPI(object):
         print('Initializing sampler...')
         backend = self.config['optimization']['backend_template'].format(
             model = 'GPP', pft = pft)
+        model_func = getattr( # e.g., L4CStochasticSampler._gpp
+            L4CStochasticSampler, self.config['optimization']['function'])
         sampler = L4CStochasticSampler(
-            self.config, L4CStochasticSampler._gpp, params_dict,
+            self.config, model_func, params_dict,
             backend = backend, weights = weights)
 
         # Get (informative) priors for just those parameters that have them
@@ -828,7 +845,10 @@ class CalibrationAPI(object):
             # Get the tower with the most available data
             idx = np.apply_along_axis(
                 lambda x: x.size - np.isnan(x).sum(), 0, tower_gpp).argmax()
-            params0 = [params_dict[k] for k in sampler.required_parameters['GPP']]
+            params0 = [
+                params_dict[k] if k[-1] != '1' else params_dict[k] - params_dict[k.replace('1', '0')]
+                for k in sampler.required_parameters['GPP']
+            ]
             # Get proposed (new) parameters, if provided
             params1 = []
             for k, key in enumerate(sampler.required_parameters['GPP']):
@@ -840,8 +860,8 @@ class CalibrationAPI(object):
                 _drivers = [
                     drivers[k][:,idx] for k in sampler.required_drivers['GPP']
                 ]
-                gpp0 = sampler._gpp(params0, *_drivers)
-                gpp1 = sampler._gpp(params1, *_drivers)
+                gpp0 = model_func(params0, *_drivers)
+                gpp1 = model_func(params1, *_drivers)
                 pyplot.plot(tower_gpp[:,idx], 'g-', label = 'Tower GPP')
                 pyplot.plot(gpp0, 'r-', alpha = 0.5, label = 'Old Simulation')
                 pyplot.plot(gpp1, 'k-', label = 'New Simulation')
@@ -852,8 +872,8 @@ class CalibrationAPI(object):
                     drivers[k].ravel()[tidx] for k in sampler.required_drivers['GPP']
                 ]
                 _obs = tower_gpp.ravel()[tidx]
-                gpp0 = sampler._gpp(params0, *_drivers)
-                gpp1 = sampler._gpp(params1, *_drivers)
+                gpp0 = model_func(params0, *_drivers)
+                gpp1 = model_func(params1, *_drivers)
                 # Calculate (parameters of) trend lines
                 mask = np.isnan(_obs)
                 a0, b0 = np.polyfit(_obs[~mask], gpp0[~mask], deg = 1)

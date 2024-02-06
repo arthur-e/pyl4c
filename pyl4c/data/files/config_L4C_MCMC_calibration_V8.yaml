@@ -24,8 +24,9 @@ data:
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
 optimization:
-  backend_template: "/home/arthur/20230201_L4C_{model}_calibration_PFT{pft}.nc4"
-  prior: "/usr/local/dev/pyl4c/pyl4c/data/files/prior_L4C_V8_GPP.yaml"
+  function: "_gpp2" # i.e., Use the [left bound, left bound + width] spec
+  backend_template: "/home/arthur/20230207_L4C_{model}_calibration_PFT{pft}.nc4"
+  prior: "/usr/local/dev/pyl4c/pyl4c/data/files/prior_L4C_V8_GPP_alternate.yaml"
   chains: 3
   draws: 50000
   tune: scaling
