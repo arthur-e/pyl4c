@@ -471,8 +471,6 @@ class L4CStochasticSampler(StochasticSampler):
         Optional sequence of weights applied to the model residuals (as in
         weighted least squares)
     '''
-    # NOTE: This is different than for mod17.MOD17 because we haven't yet
-    #   figured out how the respiration terms are calculated
     required_parameters = {
         'GPP':  ['LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'],
         'RECO': ['CUE', 'tsoil', 'smsf0', 'smsf1'],
@@ -845,6 +843,8 @@ class CalibrationAPI(object):
             # Get the tower with the most available data
             idx = np.apply_along_axis(
                 lambda x: x.size - np.isnan(x).sum(), 0, tower_gpp).argmax()
+            # The BPLUT has a different representation of ramp function
+            #   parameters: translate "param1" into ("param1" - "param0")
             params0 = [
                 params_dict[k] if k[-1] != '1' else params_dict[k] - params_dict[k.replace('1', '0')]
                 for k in sampler.required_parameters['GPP']
