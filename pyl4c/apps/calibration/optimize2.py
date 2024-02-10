@@ -5,12 +5,14 @@ import numpy as np
 import h5py
 import pyl4c
 from typing import Sequence
+from functools import partial
 from matplotlib import pyplot
 from scipy import signal
 from pyl4c import pft_dominant
 from pyl4c.data.fixtures import restore_bplut_flat
 from pyl4c.science import vpd, par, rescale_smrz
 from pyl4c.stats import linear_constraint, rmsd
+from pyl4c.apps.calibration import GenericOptimization
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -44,10 +46,30 @@ class CalibrationAPI(object):
         config_file = config
         if config_file is None:
             config_file = os.path.join(
-                L4C_DIR, 'data/files/config_L4C_MCMC_calibration.yaml')
+                L4C_DIR, 'data/files/config_L4C_calibration.yaml')
         with open(config_file, 'r') as file:
             self.config = yaml.safe_load(file)
         self.hdf5 = self.config['data']['file']
+
+    def _bounds(self, init_params, bounds, model, fixed = None):
+        'Defines bounds; optionally "fixes" parameters by fixing bounds'
+        params = init_params
+        if fixed is not None:
+            params = [ # If the given parameter is in "fixed", restrict bounds
+                None if self._required_parameters[model][i] in fixed else init_params[i]
+                for i in range(0, len(self._required_parameters[model]))
+            ]
+        lower = []
+        upper = []
+        for i, p in enumerate(self._required_parameters[model]):
+            # This is a parameter to be optimized; use default bounds
+            if p is not None:
+                lower.append(bounds[p][0])
+                upper.append(bounds[p][1])
+            else:
+                lower.append(init_params[i] - 1e-3)
+                upper.append(init_params[i] + 1e-3)
+        return (np.array(lower), np.array(upper))
 
     def _clean(
             self, raw: Sequence, drivers: Sequence, protocol: str = 'GPP',
@@ -186,8 +208,8 @@ class CalibrationAPI(object):
         return apar * params[0] * self.e_mult(params, tmin, vpd, smrz, ft)
 
     def tune_gpp(
-            self, pft: int, filter_length: int = 2, plot: str = None,
-            ipdb: bool = False, save_fig: bool = False):
+            self, pft: int, filter_length: int = 2, optimize: bool = True,
+            use_nlopt: bool = True, ipdb: bool = False, save_fig: bool = False):
         '''
         Run the L4C GPP calibration.
 
@@ -201,14 +223,11 @@ class CalibrationAPI(object):
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
-        plot : str or None
-            Plot either: the "trace" for a previous calibration run; an
-            "exemplar", or single time series showing tower observations and
-            simulations using new and old parameters; a "scatter" plot
-            showing simulations, using new and old parameters, against
-            observations, with RMSE; or the "posterior" plot, an HDI plot
-            of the posterior distribution(s). If None, calibration will
-            proceed (calibration is not performed if plotting).
+        optimize : bool
+            True to run the optimization (Default) or False if you just want
+            the goodness-of-fit to be reported
+        use_nlopt : bool
+            True to use `nlopt` for optimization (Default)
         ipdb : bool
             True to drop the user into an ipdb prompt, prior to and instead of
             running calibration
@@ -226,6 +245,9 @@ class CalibrationAPI(object):
 
         assert pft in PFT_VALID, f'Invalid PFT: {pft}'
         params_dict = self._get_params(pft, 'GPP')
+        init_params = [
+            params_dict[p] for p in self._required_parameters['GPP']
+        ]
         # Load blacklisted sites (if any)
         blacklist = self.config['data']['sites_blacklisted']
         objective = self.config['optimization']['objective'].lower()
@@ -233,6 +255,57 @@ class CalibrationAPI(object):
         print('Loading driver datasets...')
         drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
             self._load_gpp_data(pft, blacklist, filter_length)
+
+        # Configure the optimization, get bounds for the parameter search
+        bounds_dict = self.config['optimization']['bounds']
+        fixed = self.config['optimization']['fixed']
+        trials = self.config['optimization']['trials']
+        step_size_global = [
+            self.config['optimization']['step_size'][p]
+            for p in self._required_parameters['GPP']
+        ]
+        bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
+        params = [] # Optimized parameters
+        params0 = [] # Initial (random) parameters
+        scores = []
+        param_space = np.linspace(bounds[0], bounds[1], 100)
+        for t in range(0, trials):
+            # If multiple trials, randomize the initial parameter values
+            #   and score the model in each trial
+            if trials > 1:
+                p = param_space.shape[1] # Number of parameters
+                idx = np.random.randint(0, param_space.shape[0], p)
+                init_params = param_space[idx,np.arange(0, p)]
+                params0.append(init_params)
+            if optimize and not use_nlopt:
+                # Apply constrained, non-linear least-squares optimization
+                print('Solving...')
+                bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
+                solution = solve_least_squares(
+                    residuals, init_params,
+                    labels = self.required_parameters['GPP'],
+                    bounds = bounds, loss = 'arctan')
+                fitted = solution.x.tolist()
+                print(solution.message)
+            elif optimize and use_nlopt:
+                objective = partial(
+                    residuals, drivers = drivers_flat,
+                    observed = tower_gpp_flat, weights = weights)
+                opt = GenericOptimization(
+                    objective, bounds,step_size = step_size_global)
+                fitted = opt.solve(init_params)
+            else:
+                fitted = [None for i in range(0, len(init_params))]
+            # Record the found solution and its goodness-of-fit score
+            params.append(fitted)
+            _, rmse_score, _, _ = self._report_fit(
+                gpp_tower,
+                gpp(fitted if optimize else init_params).mean(axis = 2),
+                weights, verbose = False)
+            print('[%s/%s] RMSE score of last trial: %.3f' % (
+                str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+            scores.append(rmse_score)
+
 
 
 if __name__ == '__main__':
