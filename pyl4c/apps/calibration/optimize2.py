@@ -8,11 +8,11 @@ from typing import Sequence
 from functools import partial
 from matplotlib import pyplot
 from scipy import signal
-from pyl4c import pft_dominant
-from pyl4c.data.fixtures import restore_bplut_flat
+from pyl4c import pft_dominant, suppress_warnings
+from pyl4c.data.fixtures import PFT, restore_bplut, restore_bplut_flat
 from pyl4c.science import vpd, par, rescale_smrz
 from pyl4c.stats import linear_constraint, rmsd
-from pyl4c.apps.calibration import GenericOptimization
+from pyl4c.apps.calibration import BPLUT, GenericOptimization, report_fit_stats
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -32,6 +32,14 @@ class CalibrationAPI(object):
         # Get access to the sampler (and debugger), after calibration is run
         python optimize.py tune-gpp --pft=<pft> --ipdb
     '''
+    _driver_bounds = {'apar': (2, np.inf)}
+    _metadata = {
+        'tmin': {'units': 'deg K'},
+        'vpd': {'units': 'Pa'},
+        'smrz': {'units': '%'},
+        'smsf': {'units': '%'},
+        'tsoil': {'units': 'deg K'},
+    }
     _required_parameters = {
         'GPP':  ['LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'],
         'RECO': ['CUE', 'tsoil', 'smsf0', 'smsf1'],
@@ -42,14 +50,20 @@ class CalibrationAPI(object):
         'RECO': ['SMSF', 'Tsoil']
     }
 
-    def __init__(self, config = None):
+    def __init__(self, config = None, pft = None):
         config_file = config
         if config_file is None:
             config_file = os.path.join(
                 L4C_DIR, 'data/files/config_L4C_calibration.yaml')
         with open(config_file, 'r') as file:
             self.config = yaml.safe_load(file)
+        if pft is not None:
+            assert pft in PFT_VALID, f'Invalid PFT: {pft}'
+            self._pft = pft
         self.hdf5 = self.config['data']['file']
+        self.bplut = BPLUT(
+            restore_bplut(self.config['BPLUT']),
+            hdf5_path = self.config['optimization']['backend'])
 
     def _bounds(self, init_params, bounds, model, fixed = None):
         'Defines bounds; optionally "fixes" parameters by fixing bounds'
@@ -93,16 +107,17 @@ class CalibrationAPI(object):
                 lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
         return raw # Or, revert to the raw data
 
-    def _get_params(self, pft, model):
+    def _get_params(self, model):
         # Filter the parameters to just those for the PFT of interest
         params_dict = restore_bplut_flat(self.config['BPLUT'])
         return dict([
-            (k, params_dict[k].ravel()[pft])
+            (k, params_dict[k].ravel()[self._pft])
             for k in self._required_parameters[model]
         ])
 
-    def _load_gpp_data(self, pft, blacklist, filter_length):
+    def _load_gpp_data(self, filter_length):
         'Load the required datasets for GPP, for a single PFT'
+        blacklist = self.config['data']['sites_blacklisted']
         with h5py.File(self.hdf5, 'r') as hdf:
             sites = hdf['site_id'][:]
             if hasattr(sites[0], 'decode'):
@@ -111,7 +126,7 @@ class CalibrationAPI(object):
             pft_map = pft_dominant(hdf['state/PFT'][:], sites)
             # Blacklist validation sites
             pft_mask = np.logical_and(
-                np.in1d(pft_map, pft), ~np.in1d(sites, blacklist))
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
             drivers = dict()
             field_map = self.config['data']['fields']
             for field in self._required_drivers['GPP']:
@@ -177,20 +192,26 @@ class CalibrationAPI(object):
         # Subset all datasets to just the valid observation site-days
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
-        drivers_flat = dict()
+        drivers_flat = list()
+        # For eveything other than fPAR, add a trailing axis to the flat view;
+        #   this will enable datasets to line up with fPAR's 1-km subgrid
         for field in drivers.keys():
-            drivers_flat[field] = drivers[field][~np.isnan(tower_gpp)]
+            flat = drivers[field][~np.isnan(tower_gpp)]
+            drivers_flat.append(flat[:,np.newaxis] if field != 'fPAR' else flat)
         return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
 
-    def _plot(self, pft: int, model: str):
-        'Configures the sampler and backend'
-        params_dict = self._get_params(pft, model)
-        backend = self.config['optimization']['backend_template'].format(
-            model = model, pft = pft)
-        sampler = L4CStochasticSampler(
-            self.config, getattr(L4CStochasticSampler, f'_{model.lower()}'),
-            params_dict, backend = backend)
-        return (sampler, backend)
+    def _report(self, old_params, new_params, labels, title, prec = 2):
+        'Prints a report on the updated (optimized) parameters'
+        pad = max(len(l) for l in labels) + 1
+        fmt_string = '-- {:<%d} {:>%d} [{:>%d}]' % (pad, 5 + prec, 7 + prec)
+        print('%s parameters report, %s (PFT %d):' % (
+            title, PFT[self._pft][0], self._pft))
+        print((' {:>%d} {:>%d}' % (8 + pad + prec, 8 + prec))\
+            .format('NEW', 'INITIAL'))
+        for i, label in enumerate(labels):
+            new = ('%%.%df' % prec) % new_params[i] if new_params[i] is not None else ''
+            old = ('%%.%df' % prec) % old_params[i]
+            print(fmt_string.format(('%s:' % label), new, old))
 
     @staticmethod
     def e_mult(params, tmin, vpd, smrz, ft):
@@ -199,16 +220,145 @@ class CalibrationAPI(object):
         f_vpd  = linear_constraint(params[3], params[4], 'reversed')
         f_smrz = linear_constraint(params[5], params[6])
         f_ft   = linear_constraint(params[7], 1.0, 'binary')
-        e = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
-        return e[...,np.newaxis]
+        return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
 
     @staticmethod
-    def gpp(params, apar, tmin, vpd, smrz, ft):
+    def gpp(params, fpar, par, tmin, vpd, smrz, ft):
         # Calculate GPP based on the provided BPLUT parameters
-        return apar * params[0] * self.e_mult(params, tmin, vpd, smrz, ft)
+        apar = fpar * par
+        return apar * params[0] *\
+            CalibrationAPI.e_mult(params, tmin, vpd, smrz, ft)
+
+    def pft(self, pft):
+        '''
+        Sets the PFT class for the next calibration step.
+
+        Parameters
+        ----------
+        pft : int
+            The PFT class to use in calibration
+
+        Returns
+        -------
+        CLI
+        '''
+        assert pft in range(1, 9), 'Unrecognized PFT class'
+        self._pft = pft
+        return self
+
+    def plot_gpp(
+            self, driver, filter_length = 2, coefs = None,
+            xlim = None, ylim = None, alpha = 0.1, marker = '.'):
+        '''
+        Using the current or optimized BPLUT coefficients, plots the GPP ramp
+        function for a given driver. NOTE: Values where APAR < 2.0 are not
+        shown.
+
+        Parameters
+        ----------
+        driver : str
+            Name of the driver to plot on the horizontal axis
+        coefs : list or tuple or numpy.ndarray
+            (Optional) array-like, Instead of using what's in the BPLUT,
+            specify the exact parameters, e.g., [tmin0, tmin1]
+        xlim : list or tuple
+            (Optional) A 2-element sequence: The x-axis limits
+        ylim : list or tuple
+            (Optional) A 2-element sequence: The x-axis limits
+        alpha : float
+            (Optional) The alpha value (Default: 0.1)
+        marker : str
+            (Optional) The marker symbol (Default: ".")
+        '''
+        @suppress_warnings
+        def empirical_lue(apar, gpp):
+            # Mask low APAR values
+            lower, _ = self._driver_bounds.get('apar', (0, None))
+            apar = np.where(apar < lower, np.nan, apar)
+            # Calculate empirical light-use efficiency: GPP/APAR
+            return np.where(apar > 0, np.divide(gpp, apar), 0)
+
+        np.seterr(invalid = 'ignore')
+        # Read in GPP and APAR data
+        assert driver.lower() in ('tmin', 'vpd', 'smrz'),\
+            'Requested driver "%s" cannot be plotted for GPP' % driver
+        if coefs is not None:
+            assert hasattr(coefs, 'index') and not hasattr(coefs, 'title'),\
+            "Argument --coefs expects a list [values,] with NO spaces"
+        coefs0 = [ # Original coefficients
+            self.bplut[driver.lower()][i][self._pft]
+            for i in (0, 1)
+        ]
+
+        # Load APAR and tower GPP data
+        driver_data, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+        apar = np.nanmean(driver_data['fPAR'], axis = -1) * driver_data['PAR']
+        # Based on the bounds, create an empirical ramp function that
+        #   spans the range of the driver
+        bounds = [
+            self.config['optimization']['bounds'][f'{driver.lower()}{i}'][i]
+            for i in (0, 1) # i.e., min(tmin0) and max(tmin1)
+        ]
+        domain = np.arange(bounds[0], bounds[1], 0.1)
+        ramp_func_original = linear_constraint(*coefs0)
+        if coefs is not None:
+            ramp_func = linear_constraint(*coefs)
+        if driver.lower() == 'vpd':
+            x0 = driver_data['VPD']
+            ramp_func_original = linear_constraint(*coefs0, 'reversed')
+            ramp_func = linear_constraint(*coefs, 'reversed')
+        elif driver.lower() == 'tmin':
+            x0 = driver_data['Tmin']
+        elif driver.lower() == 'smrz':
+            x0 = driver_data['SMRZ']
+
+        # Update plotting parameters
+        lue = empirical_lue(apar, tower_gpp)
+        # Mask out negative LUE values and values with APAR<2
+        pyplot.scatter(x0, np.where(
+            np.logical_or(lue == 0, apar < 2), np.nan, lue),
+            alpha = alpha, marker = marker)
+        # Plot the original ramp function (black line)
+        pyplot.plot(domain, ramp_func_original(domain) *\
+            self.bplut['LUE'][:,self._pft], 'k-')
+        # Optionally, plot a proposed ramp function (red line)
+        if coefs is not None:
+            pyplot.plot(domain, ramp_func(domain) *\
+                self.bplut['LUE'][:,self._pft], 'r-')
+        pyplot.xlabel('%s (%s)' % (driver, self._metadata[driver]['units']))
+        pyplot.ylabel('GPP/APAR (g C MJ-1 d-1)')
+        if xlim is not None:
+            pyplot.xlim(xlim[0], xlim[1])
+        if ylim is not None:
+            pyplot.ylim(ylim[0], ylim[1])
+        pyplot.title(
+            '%s (PFT %d): GPP Response to "%s"' % (
+                PFT[self._pft][0], self._pft, driver))
+        pyplot.show()
+
+    def set(self, parameter, value):
+        '''
+        Sets the named parameter to the given value for the specified PFT
+        class. This updates the initial parameters, affecting any subsequent
+        optimization.
+
+        Parameters
+        ----------
+        parameter : str
+            Name of the parameter to bet set
+        value : int or float
+            Value of the named parameter to be set
+
+        Returns
+        -------
+        CLI
+        '''
+        # Update the BPLUT in memory but NOT the file BPLUT (this is temporary)
+        self.bplut.update(self._pft, (value,), (parameter,), flush = False)
+        return self
 
     def tune_gpp(
-            self, pft: int, filter_length: int = 2, optimize: bool = True,
+            self, filter_length: int = 2, optimize: bool = True,
             use_nlopt: bool = True, ipdb: bool = False, save_fig: bool = False):
         '''
         Run the L4C GPP calibration.
@@ -218,8 +368,6 @@ class CalibrationAPI(object):
 
         Parameters
         ----------
-        pft : int
-            The Plant Functional Type (PFT) to calibrate
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
@@ -236,15 +384,13 @@ class CalibrationAPI(object):
             (Default: False)
         '''
         def residuals(params, drivers, observed, weights):
-            apar, tmin, vpd, smrz, ft = drivers
-            # Objective function: Difference between tower GPP and L4C GPP
-            gpp0 = self.gpp(params, apar, tmin, vpd, smrz, ft).mean(axis = 2)
+            gpp0 = self.gpp(params, *drivers).mean(axis = -1)
             diff = np.subtract(observed, gpp0)
-            # Multiply by the tower weights
+            # Objective function: Difference between tower GPP and L4C GPP,
+            #   multiplied by the tower weights
             return (weights * diff)[~np.isnan(diff)]
 
-        assert pft in PFT_VALID, f'Invalid PFT: {pft}'
-        params_dict = self._get_params(pft, 'GPP')
+        params_dict = self._get_params('GPP')
         init_params = [
             params_dict[p] for p in self._required_parameters['GPP']
         ]
@@ -254,7 +400,7 @@ class CalibrationAPI(object):
 
         print('Loading driver datasets...')
         drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
-            self._load_gpp_data(pft, blacklist, filter_length)
+            self._load_gpp_data(filter_length)
 
         # Configure the optimization, get bounds for the parameter search
         bounds_dict = self.config['optimization']['bounds']
@@ -277,20 +423,20 @@ class CalibrationAPI(object):
                 idx = np.random.randint(0, param_space.shape[0], p)
                 init_params = param_space[idx,np.arange(0, p)]
                 params0.append(init_params)
+            if optimize:
+                objective = partial(
+                    residuals, drivers = drivers_flat,
+                    observed = tower_gpp_flat, weights = weights)
             if optimize and not use_nlopt:
                 # Apply constrained, non-linear least-squares optimization
-                print('Solving...')
                 bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
                 solution = solve_least_squares(
-                    residuals, init_params,
+                    objective, init_params,
                     labels = self.required_parameters['GPP'],
                     bounds = bounds, loss = 'arctan')
                 fitted = solution.x.tolist()
                 print(solution.message)
             elif optimize and use_nlopt:
-                objective = partial(
-                    residuals, drivers = drivers_flat,
-                    observed = tower_gpp_flat, weights = weights)
                 opt = GenericOptimization(
                     objective, bounds,step_size = step_size_global)
                 fitted = opt.solve(init_params)
@@ -298,13 +444,25 @@ class CalibrationAPI(object):
                 fitted = [None for i in range(0, len(init_params))]
             # Record the found solution and its goodness-of-fit score
             params.append(fitted)
-            _, rmse_score, _, _ = self._report_fit(
-                gpp_tower,
-                gpp(fitted if optimize else init_params).mean(axis = 2),
-                weights, verbose = False)
+            _, rmse_score, _, _ = report_fit_stats(
+                tower_gpp_flat,
+                self.gpp(fitted if optimize else init_params, *drivers_flat)\
+                    .mean(axis = -1), weights, verbose = False)
             print('[%s/%s] RMSE score of last trial: %.3f' % (
                 str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
             scores.append(rmse_score)
+
+        # Select the fit params with the best score
+        if trials > 1:
+            fitted = params[np.argmin(scores)]
+            init_params = params0[np.argmin(scores)]
+        # Generate and print a report, update the BPLUT parameters
+        self._report(
+            init_params, fitted, self._required_parameters['GPP'],
+            'GPP Optimization')
+        if optimize:
+            self.bplut.update(
+                self._pft, fitted, self._required_parameters['GPP'])
 
 
 

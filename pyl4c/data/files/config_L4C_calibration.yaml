@@ -24,10 +24,10 @@ data:
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
 optimization:
-  backend_template: "/home/arthur/20230207_L4C_{model}_calibration_PFT{pft}.nc4"
+  backend: "/home/arthur/20230207_L4C_calibration.h5"
   objective: RMSE
   # Number of times to run the optimization, with random initializations
-  trials: 10
+  trials: 3
   fixed: ~
   # Size of steps to be used in global parameter search
   step_size:
@@ -43,9 +43,9 @@ optimization:
   bounds:
     LUE: [0.5, 4.0]
     tmin0: [230.0, 279.9]
-    tmin1: [280.0, 330.0]
-    vpd0: [0, 8000]
-    vpd1: [0, 8000]
-    smrz0: [0, 80]
-    smrz1: [20, 100]
+    tmin1: [280.1, 330.0]
+    vpd0: [0, 1499]
+    vpd1: [1500, 8000]
+    smrz0: [0, 29]
+    smrz1: [30, 100]
     ft0: [0, 1]
