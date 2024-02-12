@@ -1,3 +1,29 @@
+'''
+To calibrate the GPP model for a specific PFT:
+
+    python optimize.py pft <pft> tune-gpp
+
+To plot a specific PFT's (optimized) response to a driver:
+
+    python optimize.py pft <pft> plot-gpp <driver>
+
+Where `<driver>` is one of: `smrz`, `vpd`, `tmin`.
+
+To get the goodness-of-fit statistics for the updated parameters:
+
+    python optimize.py pft <pft> score GPP
+
+To view the current (potentially updated) BPLUT:
+
+    python optimize.py bplut show
+
+    # View parameter values for <param> across ALL PFTs
+    python optimize.py bplut show None <param>
+
+    # View a PFT's values across ALL parameters
+    python optimize.py bplut show <param> None
+'''
+
 import os
 import yaml
 import warnings
@@ -10,9 +36,9 @@ from matplotlib import pyplot
 from scipy import signal
 from pyl4c import pft_dominant, suppress_warnings
 from pyl4c.data.fixtures import PFT, restore_bplut, restore_bplut_flat
-from pyl4c.science import vpd, par, rescale_smrz
+from pyl4c.science import vpd, par, rescale_smrz, arrhenius
 from pyl4c.stats import linear_constraint, rmsd
-from pyl4c.apps.calibration import BPLUT, GenericOptimization, report_fit_stats
+from pyl4c.apps.calibration import BPLUT, GenericOptimization, cbar, report_fit_stats
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -99,6 +125,9 @@ class CalibrationAPI(object):
             return np.apply_along_axis(
                 lambda x: np.where(
                     x > (num_std * np.nanstd(x)), np.nan, x), 0, cleaned)
+        elif protocol == 'RECO':
+            # Remove negative values
+            return np.where(raw < 0, np.nan, raw)
 
     def _filter(self, raw: Sequence, size: int):
         'Apply a smoothing filter with zero phase offset'
@@ -116,6 +145,7 @@ class CalibrationAPI(object):
         'Load the required datasets for GPP, for a single PFT'
         blacklist = self.config['data']['sites_blacklisted']
         with h5py.File(self.hdf5, 'r') as hdf:
+            n_steps = hdf['time'].shape[0]
             sites = hdf['site_id'][:]
             if hasattr(sites[0], 'decode'):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
@@ -165,7 +195,7 @@ class CalibrationAPI(object):
             weights = None
             if 'weights' in hdf.keys():
                 weights = hdf['weights'][pft_mask][np.newaxis,:]\
-                    .repeat(t2m.shape[0], axis = 0)
+                    .repeat(n_steps, axis = 0)
             else:
                 print('WARNING - "weights" not found in HDF5 file!')
             if 'GPP' not in hdf.keys():
@@ -197,6 +227,54 @@ class CalibrationAPI(object):
             drivers_flat.append(flat[:,np.newaxis] if field != 'fPAR' else flat)
         return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
 
+    def _load_reco_data(self, filter_length):
+        'Load the required datasets for RECO, for a single PFT'
+        blacklist = self.config['data']['sites_blacklisted']
+        with h5py.File(self.hdf5, 'r') as hdf:
+            n_steps = hdf['time'].shape[0]
+            sites = hdf['site_id'][:]
+            if hasattr(sites[0], 'decode'):
+                sites = list(map(lambda x: x.decode('utf-8'), sites))
+            # Get dominant PFT
+            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
+            # Blacklist validation sites
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+            drivers = dict()
+            field_map = self.config['data']['fields']
+            for field in self._required_drivers['RECO']:
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        drivers[field] = hdf[field_map[field]][:,pft_mask]
+
+            # If RMSE is used, then we want to pay attention to weighting
+            weights = None
+            if 'weights' in hdf.keys():
+                weights = hdf['weights'][pft_mask][np.newaxis,:]\
+                    .repeat(n_steps, axis = 0)
+            else:
+                print('WARNING - "weights" not found in HDF5 file!')
+            if 'RECO' not in hdf.keys():
+                with h5py.File(
+                        self.config['data']['supplemental_file'], 'r') as _hdf:
+                    tower_reco = _hdf['RECO'][:][:,pft_mask]
+            else:
+                tower_reco = hdf['RECO'][:][:,pft_mask]
+
+        # Check that driver data do not contain NaNs
+        for field in drivers.keys():
+            assert not np.isnan(drivers[field]).any(),\
+                f'Driver dataset "{field}" contains NaNs'
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_reco = self._filter(tower_reco, filter_length)
+        tower_reco = self._clean(tower_reco, drivers, protocol = 'RECO')
+        # For eveything other than fPAR, add a trailing axis to the flat view;
+        #   this will enable datasets to line up with fPAR's 1-km subgrid
+        drivers = [drivers[k] for k in self._required_drivers['RECO']]
+        return (drivers, tower_reco, weights)
+
     def _report(self, old_params, new_params, model, prec = 2):
         'Prints a report on the updated (optimized) parameters'
         labels = self._required_parameters[model.upper()]
@@ -221,11 +299,28 @@ class CalibrationAPI(object):
         return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
 
     @staticmethod
+    def k_mult(params, tsoil, smsf):
+        # Calculate K_mult based on current parameters
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_smsf  = linear_constraint(params[2], params[3])
+        return f_tsoil(tsoil) * f_smsf(smsf)
+
+    @staticmethod
     def gpp(params, fpar, par, tmin, vpd, smrz, ft):
         # Calculate GPP based on the provided BPLUT parameters
         apar = fpar * par
         return apar * params[0] *\
             CalibrationAPI.e_mult(params, tmin, vpd, smrz, ft)
+
+    @staticmethod
+    def reco(params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k):
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
+        ra = ((1 - params[0]) * tower_gpp)
+        rh = tower_reco - ra
+        rh = np.where(rh < 0, 0, rh) # Mask out negative RH values
+        kmult0 = CalibrationAPI.k_mult(params, tsoil, smsf)
+        cbar0 = cbar(rh, kmult0, q_rh, q_k)
+        return ra + (kmult0 * cbar0)
 
     def pft(self, pft):
         '''
@@ -256,6 +351,7 @@ class CalibrationAPI(object):
         ----------
         driver : str
             Name of the driver to plot on the horizontal axis
+        filter_length : int
         coefs : list or tuple or numpy.ndarray
             (Optional) array-like, Instead of using what's in the BPLUT,
             specify the exact parameters, e.g., [tmin0, tmin1]
@@ -331,6 +427,85 @@ class CalibrationAPI(object):
             pyplot.ylim(ylim[0], ylim[1])
         pyplot.title(
             '%s (PFT %d): GPP Response to "%s"' % (
+                PFT[self._pft][0], self._pft, driver))
+        pyplot.show()
+
+    def plot_reco(
+            self, driver, filter_length: int = 2, coefs = None, q_rh = 75,
+            q_k = 50, xlim = None, ylim = None, alpha = 0.1, marker = '.'):
+        '''
+        Using the current or optimized BPLUT coefficients, plots the RECO ramp
+        function for a given driver. The ramp function is shown on a plot of
+        RH/Cbar, which is equivalent to Kmult (as Cbar is an upper quantile of
+        the RH/Kmult distribution).
+
+        Parameters
+        ----------
+        driver : str
+            Name of the driver to plot on the horizontal axis
+        filter_length : int
+        coefs : list or tuple or numpy.ndarray
+            (Optional) array-like, Instead of using what's in the BPLUT,
+            specify the exact parameters, e.g., `[tmin0, tmin1]`
+        q_rh : int
+            Additional arguments to `pyl4c.apps.calibration.cbar()`
+        q_k : int
+            Additional arguments to `pyl4c.apps.calibration.cbar()`
+        ylim : list or tuple
+            (Optional) A 2-element sequence: The x-axis limits
+        alpha : float
+            (Optional) The alpha value (Default: 0.1)
+        marker : str
+            (Optional) The marker symbol (Default: ".")
+        '''
+        np.seterr(invalid = 'ignore')
+        assert driver.lower() in ('tsoil', 'smsf'),\
+            'Requested driver "%s" cannot be plotted for RECO' % driver
+
+        if coefs is not None:
+            assert hasattr(coefs, 'index') and not hasattr(coefs, 'title'),\
+            "Argument --coefs expects a list [values,] with NO spaces"
+        drivers, reco, _ = self._load_reco_data(filter_length)
+        _, _, gpp, _, _ = self._load_gpp_data(filter_length)
+        smsf, tsoil = drivers
+        # Calculate k_mult based on original parameters
+        f_smsf = linear_constraint(*self.bplut['smsf'][:,self._pft])
+        k_mult = f_smsf(smsf) * arrhenius(tsoil, self.bplut['tsoil'][0,self._pft])
+        # Calculate RH as (RECO - RA)
+        rh = reco - ((1 - self.bplut['CUE'][0,self._pft]) * gpp)
+        # Set negative RH values to zero
+        rh = np.where(suppress_warnings(np.less)(rh, 0), 0, rh)
+        cbar0 = suppress_warnings(cbar)(rh, k_mult, q_rh, q_k)
+        gpp = reco = None
+
+        # Update plotting parameters
+        pyplot.scatter( # Plot RH/Cbar against either Tsoil or SMSF
+            tsoil if driver == 'tsoil' else smsf,
+            suppress_warnings(np.divide)(rh, cbar0),
+            alpha = alpha, marker = marker)
+
+        if driver == 'tsoil':
+            domain = np.arange(tsoil.min(), tsoil.max(), 0.1)
+            pyplot.plot(domain,
+                arrhenius(domain, self.bplut['tsoil'][0,self._pft]), 'k-')
+        elif driver == 'smsf':
+            domain = np.arange(smsf.min(), smsf.max(), 0.001)
+            pyplot.plot(domain, f_smsf(domain).ravel(), 'k-')
+
+        if coefs is not None:
+            if driver == 'tsoil':
+                pyplot.plot(domain, arrhenius(domain, *coefs), 'r-')
+            elif driver == 'smsf':
+                pyplot.plot(domain, linear_constraint(*coefs)(domain), 'r-')
+
+        pyplot.xlabel('%s (%s)' % (driver, self._metadata[driver]['units']))
+        pyplot.ylabel('RH/Cbar')
+        if xlim is not None:
+            pyplot.xlim(xlim[0], xlim[1])
+        if ylim is not None:
+            pyplot.ylim(ylim[0], ylim[1])
+        pyplot.title(
+            '%s (PFT %d): RECO Response to "%s"' % (
                 PFT[self._pft][0], self._pft, driver))
         pyplot.show()
 
@@ -425,22 +600,23 @@ class CalibrationAPI(object):
         print(f'NOTE: Counts of (days, towers) are: {tower_gpp.shape}')
 
         # Configure the optimization, get bounds for the parameter search
-        bounds_dict = self.config['optimization']['bounds']
         fixed = None
         if self.config['optimization']['fixed'] is not None:
             fixed = dict([ # Get any fixed parameters as {param: fixed_value}
                 (k, v[self._pft])
                 for k, v in self.config['optimization']['fixed'].items()
             ])
-        trials = self.config['optimization']['trials']
         step_size_global = [
             self.config['optimization']['step_size'][p]
             for p in self._required_parameters['GPP']
         ]
+        bounds_dict = self.config['optimization']['bounds']
         bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
+        trials = self.config['optimization']['trials']
         params = [] # Optimized parameters
         params0 = [] # Initial (random) parameters
         scores = []
+        # Will be a (100, P) space, where P is the number of parameters
         param_space = np.linspace(bounds[0], bounds[1], 100)
         for t in range(0, trials):
             # If multiple trials, randomize the initial parameter values
@@ -478,10 +654,11 @@ class CalibrationAPI(object):
                 fitted = [None for i in range(0, len(init_params))]
             # Record the found solution and its goodness-of-fit score
             params.append(fitted)
+            predicted = self.gpp(
+                fitted if optimize else init_params,
+                *drivers_flat).mean(axis = -1)
             _, rmse_score, _, _ = report_fit_stats(
-                tower_gpp_flat,
-                self.gpp(fitted if optimize else init_params, *drivers_flat)\
-                    .mean(axis = -1), weights, verbose = False)
+                tower_gpp_flat, predicted, weights, verbose = False)
             print('[%s/%s] RMSE score of last trial: %.3f' % (
                 str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
             scores.append(rmse_score)
@@ -496,6 +673,128 @@ class CalibrationAPI(object):
             self.bplut.update(
                 self._pft, fitted, self._required_parameters['GPP'])
 
+    def tune_reco(
+            self, filter_length: int = 2, q_rh: int = 75, q_k: int = 50,
+            optimize: bool = True, use_nlopt: bool = True):
+        '''
+        Optimizes RECO. The 9-km mean L4C RECO is fit to the tower-observed
+        RECO using constrained, non-linear least-squares optimization.
+        Considerations:
+
+        - Negative RH values (i.e., NPP > RECO) are set to zero.
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        use_nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        '''
+        def residuals(
+                params, drivers, observed_reco, observed_gpp, weights,
+                q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = self.reco(
+                params, observed_reco, observed_gpp, *drivers, q_rh, q_k)
+            diff = np.subtract(observed_reco, reco0)
+            missing = np.logical_or(np.isnan(observed_reco), np.isnan(reco0))
+            # Multiply by the tower weights
+            return (weights * diff)[~missing]
+
+        assert q_rh >= 0 and q_rh <= 100 and q_k >= 0 and q_k <= 100,\
+            'Invalid setting for "q_rh" or "q_k" parameters'
+
+        init_params = self._get_params('RECO')
+        # Load blacklisted sites (if any)
+        blacklist = self.config['data']['sites_blacklisted']
+
+        print('Loading driver datasets...')
+        _, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+        drivers, tower_reco, weights = self._load_reco_data(filter_length)
+        print(f'NOTE: Counts of (days, towers) are: {tower_reco.shape}')
+
+        # Configure the optimization, get bounds for the parameter search
+        fixed = None
+        if self.config['optimization']['fixed'] is not None:
+            fixed = dict([ # Get any fixed parameters as {param: fixed_value}
+                (k, v[self._pft])
+                for k, v in self.config['optimization']['fixed'].items()
+            ])
+        step_size_global = [
+            self.config['optimization']['step_size'][p]
+            for p in self._required_parameters['RECO']
+        ]
+        bounds_dict = self.config['optimization']['bounds']
+        bounds = self._bounds(init_params, bounds_dict, 'RECO', fixed)
+        trials = self.config['optimization']['trials']
+        params = [] # Optimized parameters
+        params0 = [] # Initial (random) parameters
+        scores = []
+        # Will be a (100, P) space, where P is the number of parameters
+        param_space = np.linspace(bounds[0], bounds[1], 100)
+        for t in range(0, trials):
+            # If multiple trials, randomize the initial parameter values
+            #   and score the model in each trial
+            if trials > 1:
+                p = param_space.shape[1] # Number of parameters
+                idx = np.random.randint(0, param_space.shape[0], p)
+                init_params = param_space[idx,np.arange(0, p)]
+                params0.append(init_params)
+            # If we're optimizing (with any library), define the bounds and
+            #   the objective function
+            if optimize:
+                bounds = self._bounds(init_params, bounds_dict, 'RECO', fixed)
+                # Set initial value to a fixed value if specified
+                for key, value in fixed.items():
+                    if value is not None:
+                        init_params[self._required_parameters['RECO'].index(key)] = value
+                objective = partial(
+                    residuals, drivers = drivers, weights = weights,
+                    observed_gpp = tower_gpp, observed_reco = tower_reco,
+                    q_rh = q_rh, q_k = q_k)
+            # Apply constrained, non-linear least-squares optimization, using
+            #   either SciPy or NLOPT
+            if optimize and not use_nlopt:
+                solution = solve_least_squares(
+                    objective, init_params,
+                    labels = self.required_parameters['RECO'],
+                    bounds = bounds, loss = 'arctan')
+                fitted = solution.x.tolist()
+                print(solution.message)
+            elif optimize and use_nlopt:
+                opt = GenericOptimization(
+                    objective, bounds, step_size = step_size_global)
+                fitted = opt.solve(init_params)
+            else:
+                fitted = [None for i in range(0, len(init_params))]
+            # Record the found solution and its goodness-of-fit score
+            params.append(fitted)
+            predicted = self.reco(
+                fitted if optimize else init_params, tower_reco, tower_gpp,
+                *drivers, q_rh = q_rh, q_k = q_k)
+            _, rmse_score, _, _ = report_fit_stats(
+                tower_reco, predicted, weights, verbose = False)
+            print('[%s/%s] RMSE score of last trial: %.3f' % (
+                str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+            scores.append(rmse_score)
+
+        # Select the fit params with the best score
+        if trials > 1:
+            fitted = params[np.argmin(scores)]
+            init_params = params0[np.argmin(scores)]
+        # Generate and print a report, update the BPLUT parameters
+        self._report(init_params, fitted, 'RECO')
+        if optimize:
+            self.bplut.update(
+                self._pft, fitted, self._required_parameters['RECO'])
 
 
 if __name__ == '__main__':

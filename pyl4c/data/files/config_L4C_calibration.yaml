@@ -1,5 +1,5 @@
 ---
-name: "GPP" # Should be upper-case of "name" in "compile_{name}_model()" function
+description: "For calibrating L4C GPP via stochastic gradient descent"
 # This is the OLD BPLUT, for reference
 BPLUT: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v7_Y2022/SMAP_BPLUT_V7_rev_20220728.csv"
 data:
@@ -24,12 +24,13 @@ data:
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
 optimization:
-  backend: "/home/arthur/20230207_L4C_calibration.h5"
+  backend: "/home/arthur/20230207_L4C_GPP_calibration.h5"
   # Number of times to run the optimization, with random initializations
   trials: 10
+  # Parameter values that are fixed in advance (i.e., not calibrated)
   fixed:
-    LUE: [~, ~, ~, 1.23, ~, ~, ~, ~]
-    smrz1: [~, ~, 30, ~, ~, ~, ~, ~, ~]
+    LUE: [~, ~, 1.40, 1.23, 1.68, ~, ~, ~, 1.94]
+    smrz1: [~, ~, 30, ~, ~, ~, ~, ~, ~, ~]
   # Size of steps to be used in global parameter search
   step_size:
     LUE: 0.01
@@ -40,13 +41,21 @@ optimization:
     smrz0: 0.1
     smrz1: 0.1
     ft0: 0.01
+    CUE: 0.01
+    tsoil: 1
+    smsf0: 0.1
+    smsf1: 0.1
   # Bounds on the optimization of free parameters
   bounds:
     LUE: [0.5, 4.0]
     tmin0: [230.0, 279.9]
     tmin1: [280.1, 330.0]
-    vpd0: [0, 1499]
-    vpd1: [1500, 8000]
+    vpd0: [0, 1999]
+    vpd1: [2000, 8000]
     smrz0: [0, 19]
     smrz1: [20, 100]
     ft0: [0, 1]
+    CUE: [0.22, 0.79]
+    tsoil: [1, 800]
+    smsf0: [0, 24.9]
+    smsf1: [25, 100]
