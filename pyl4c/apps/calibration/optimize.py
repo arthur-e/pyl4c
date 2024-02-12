@@ -82,7 +82,7 @@ class CalibrationAPI(object):
         'RECO': ['SMSF', 'Tsoil']
     }
 
-    def __init__(self, config = None, pft = None):
+    def __init__(self, config: str = None, pft: int = None):
         config_file = config
         if config_file is None:
             config_file = os.path.join(
@@ -276,8 +276,6 @@ class CalibrationAPI(object):
         #   observations
         tower_reco = self._filter(tower_reco, filter_length)
         tower_reco = self._clean(tower_reco, drivers, protocol = 'RECO')
-        # For eveything other than fPAR, add a trailing axis to the flat view;
-        #   this will enable datasets to line up with fPAR's 1-km subgrid
         drivers = [drivers[k] for k in self._required_drivers['RECO']]
         return (drivers, tower_reco, weights)
 
@@ -319,7 +317,7 @@ class CalibrationAPI(object):
             CalibrationAPI.e_mult(params, tmin, vpd, smrz, ft)
 
     @staticmethod
-    def reco(params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k):
+    def reco(params, tower_reco, tower_gpp, smsf, tsoil, q_rh, q_k):
         # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
         ra = ((1 - params[0]) * tower_gpp)
         rh = tower_reco - ra
@@ -707,10 +705,6 @@ class CalibrationAPI(object):
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
-        q_rh : int
-            The percentile of RH/Kmult to use in calculating Cbar
-        q_k : int
-            The percentile of Kmult below which RH/Kmult values are masked
         optimize : bool
             False to only report parameters and their fit statistics instead
             of optimizing (Default: True)

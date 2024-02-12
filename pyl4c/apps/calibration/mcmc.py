@@ -23,8 +23,9 @@ from textwrap import wrap
 from scipy import signal
 from pyl4c import pft_dominant
 from pyl4c.data.fixtures import restore_bplut_flat
-from pyl4c.science import vpd, par, rescale_smrz
+from pyl4c.science import vpd, par, rescale_smrz, arrhenius
 from pyl4c.stats import linear_constraint, rmsd
+from pyl4c.apps.calibration import cbar
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
@@ -478,7 +479,7 @@ class L4CStochasticSampler(StochasticSampler):
     required_drivers = {
         # Tsurf = Surface skin temperature; Tmin = Minimum daily temperature
         'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'FT'],
-        'RECO': ['SMSF', 'Tsoil']
+        'RECO': ['tower_RECO', 'tower_GPP', 'SMSF', 'Tsoil', 'q_rh', 'q_k']
     }
 
     def __init__(self, *args, **kwargs):
@@ -534,6 +535,23 @@ class L4CStochasticSampler(StochasticSampler):
         e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
         # Calculate GPP based on the provided BPLUT parameters
         return fpar * par * params[0] * e_mult
+
+    @staticmethod
+    def _reco(params, tower_reco, tower_gpp, smsf, tsoil, q_rh, q_k):
+        '''
+        L4C RECO function, with alternate parameters, where the ramp function
+        for SMSF is defined in terms of the left edge (lowest value) and the
+        width of the ramp function interval.
+        '''
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
+        ra = ((1 - params[0]) * tower_gpp)
+        rh = tower_reco - ra
+        rh = np.where(rh < 0, 0, rh) # Mask out negative RH values
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_smsf = linear_constraint(params[2], params[2] + params[3])
+        kmult0 = f_tsoil(tsoil) * f_smsf(smsf)
+        cbar0 = cbar(rh, kmult0, q_rh, q_k)
+        return ra + (kmult0 * cbar0)
 
     def compile_gpp_model(
             self, observed: Sequence, drivers: Sequence) -> pm.Model:
@@ -605,9 +623,9 @@ class L4CStochasticSampler(StochasticSampler):
         with pm.Model() as model:
             # (Stochstic) Priors for unknown model parameters
             CUE = pm.Beta('CUE', **self.prior['CUE'])
-            tsoil = pm.Uniform('tsoil', **self.bounds['tsoil'])
-            smsf0 = pm.Uniform('smsf0', **self.bounds['smsf0'])
-            smsf1 = pm.Uniform('smsf1', **self.bounds['smsf1'])
+            tsoil = pm.Uniform('tsoil', **self.prior['tsoil'])
+            smsf0 = pm.Uniform('smsf0', **self.prior['smsf0'])
+            smsf1 = pm.Uniform('smsf1', **self.prior['smsf1'])
             # Convert model parameters to a tensor vector
             params_list = [CUE, tsoil, smsf0, smsf1]
             params = pt.as_tensor_variable(params_list)
@@ -627,7 +645,7 @@ class CalibrationAPI(object):
         # Get access to the sampler (and debugger), after calibration is run
         python mcmc.py tune-gpp <pft> --ipdb
     '''
-    def __init__(self, config = None):
+    def __init__(self, config: str = None, pft: int = None):
         config_file = config
         if config_file is None:
             config_file = os.path.join(
@@ -635,6 +653,9 @@ class CalibrationAPI(object):
         print(f'Using configuration file: {config_file}')
         with open(config_file, 'r') as file:
             self.config = yaml.safe_load(file)
+        if pft is not None:
+            assert pft in PFT_VALID, f'Invalid PFT: {pft}'
+            self._pft = pft
         self.hdf5 = self.config['data']['file']
 
     def _clean(
@@ -650,6 +671,9 @@ class CalibrationAPI(object):
             return np.apply_along_axis(
                 lambda x: np.where(
                     x > (num_std * np.nanstd(x)), np.nan, x), 0, cleaned)
+        elif protocol == 'RECO':
+            # Remove negative values
+            return np.where(raw < 0, np.nan, raw)
 
     def _filter(self, raw: Sequence, size: int):
         'Apply a smoothing filter with zero phase offset'
@@ -659,16 +683,17 @@ class CalibrationAPI(object):
                 lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
         return raw # Or, revert to the raw data
 
-    def _get_params(self, pft, model):
+    def _get_params(self, model):
         # Filter the parameters to just those for the PFT of interest
         params_dict = restore_bplut_flat(self.config['BPLUT'])
         return dict([
-            (k, params_dict[k].ravel()[pft])
+            (k, params_dict[k].ravel()[self._pft])
             for k in L4CStochasticSampler.required_parameters[model]
         ])
 
-    def _load_gpp_data(self, pft, blacklist, filter_length):
+    def _load_gpp_data(self, filter_length):
         'Load the required datasets for GPP, for a single PFT'
+        blacklist = self.config['data']['sites_blacklisted']
         with h5py.File(self.hdf5, 'r') as hdf:
             sites = hdf['site_id'][:]
             if hasattr(sites[0], 'decode'):
@@ -677,7 +702,7 @@ class CalibrationAPI(object):
             pft_map = pft_dominant(hdf['state/PFT'][:], sites)
             # Blacklist validation sites
             pft_mask = np.logical_and(
-                np.in1d(pft_map, pft), ~np.in1d(sites, blacklist))
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
             drivers = dict()
             field_map = self.config['data']['fields']
             for field in L4CStochasticSampler.required_drivers['GPP']:
@@ -744,36 +769,99 @@ class CalibrationAPI(object):
             drivers_flat[field] = drivers[field][~np.isnan(tower_gpp)]
         return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
 
-    def _plot(self, pft: int, model: str):
-        'Configures the sampler and backend'
-        params_dict = self._get_params(pft, model)
+    def _load_reco_data(self, filter_length):
+        'Load the required datasets for RECO, for a single PFT'
+        blacklist = self.config['data']['sites_blacklisted']
+        with h5py.File(self.hdf5, 'r') as hdf:
+            n_steps = hdf['time'].shape[0]
+            sites = hdf['site_id'][:]
+            if hasattr(sites[0], 'decode'):
+                sites = list(map(lambda x: x.decode('utf-8'), sites))
+            # Get dominant PFT
+            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
+            # Blacklist validation sites
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+            drivers = dict()
+            field_map = self.config['data']['fields']
+            for field in ('SMSF', 'Tsoil'):
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        drivers[field] = hdf[field_map[field]][:,pft_mask]
+
+            # If RMSE is used, then we want to pay attention to weighting
+            weights = None
+            if 'weights' in hdf.keys():
+                weights = hdf['weights'][pft_mask][np.newaxis,:]\
+                    .repeat(n_steps, axis = 0)
+            else:
+                print('WARNING - "weights" not found in HDF5 file!')
+            if 'RECO' not in hdf.keys():
+                with h5py.File(
+                        self.config['data']['supplemental_file'], 'r') as _hdf:
+                    tower_reco = _hdf['RECO'][:][:,pft_mask]
+            else:
+                tower_reco = hdf['RECO'][:][:,pft_mask]
+
+        # Check that driver data do not contain NaNs
+        for field in drivers.keys():
+            assert not np.isnan(drivers[field]).any(),\
+                f'Driver dataset "{field}" contains NaNs'
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_reco = self._filter(tower_reco, filter_length)
+        tower_reco = self._clean(tower_reco, drivers, protocol = 'RECO')
+        drivers = [drivers[k] for k in ('SMSF', 'Tsoil')]
+        return (drivers, tower_reco, weights)
+
+    def _preplot(self, model: str):
+        'Loads the data and parameters required for plotting'
+        params_dict = self._get_params(self._pft, model)
         backend = self.config['optimization']['backend_template'].format(
-            model = model, pft = pft)
+            model = model, pft = self._pft)
         sampler = L4CStochasticSampler(
             self.config, getattr(L4CStochasticSampler, f'_{model.lower()}'),
             params_dict, backend = backend)
         return (sampler, backend)
 
-    def plot_autocorr(self, pft: int, model: str, **kwargs):
+    def pft(self, pft):
+        '''
+        Sets the PFT class for the next calibration step.
+
+        Parameters
+        ----------
+        pft : int
+            The PFT class to use in calibration
+
+        Returns
+        -------
+        CLI
+        '''
+        assert pft in range(1, 9), 'Unrecognized PFT class'
+        self._pft = pft
+        return self
+
+    def plot_autocorr(self, model: str, **kwargs):
         'Plots the autocorrelation in the trace for each parameter'
-        sampler, backend = self._plot(pft, model)
+        sampler, backend = self._preplot(self._pft, model)
         sampler.plot_autocorr(**kwargs)
 
-    def plot_posterior(self, pft: int, model: str, **kwargs):
+    def plot_posterior(self, model: str, **kwargs):
         'Plots the posterior density for each parameter'
-        sampler, backend = self._plot(pft, model)
+        sampler, backend = self._preplot(self._pft, model)
         sampler.plot_posterior()
 
-    def plot_trace(self, pft: int, model: str, **kwargs):
+    def plot_trace(self, model: str, **kwargs):
         'Plots the trace for each parameter'
-        sampler, backend = self._plot(pft, model)
+        sampler, backend = self._preplot(self._pft, model)
         trace = sampler.get_trace(
             burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
         az.plot_trace(trace, kwargs.get('var_names', None))
         pyplot.show()
 
     def tune_gpp(
-            self, pft: int, filter_length: int = 2, plot: str = None,
+            self, filter_length: int = 2, plot: str = None,
             ipdb: bool = False, save_fig: bool = False, **kwargs):
         '''
         Run the L4C GPP calibration.
@@ -783,8 +871,6 @@ class CalibrationAPI(object):
 
         Parameters
         ----------
-        pft : int
-            The Plant Functional Type (PFT) to calibrate
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
@@ -806,25 +892,30 @@ class CalibrationAPI(object):
             Additional keyword arguments passed to
             `L4CStochasticSampler.run()`
         '''
-        assert pft in PFT_VALID, f'Invalid PFT: {pft}'
-        # Pass configuration parameters to MOD17StochasticSampler.run()
+        assert self._pft in PFT_VALID, f'Invalid PFT: {self._pft}'
+        # IMPORTANT: Set the "name" property of the configuration file;
+        #   this is used by StochasticSampler classes to figure out how
+        #   to compile the model
+        self.config['name'] = 'GPP'
+        # Pass configuration parameters to L4CStochasticSampler.run()
         for key in ('chains', 'draws', 'tune', 'scaling'):
             if key in self.config['optimization'].keys() and not key in kwargs.keys():
                 kwargs[key] = self.config['optimization'][key]
-        params_dict = self._get_params(pft, 'GPP')
+        params_dict = self._get_params('GPP')
         # Load blacklisted sites (if any)
         blacklist = self.config['data']['sites_blacklisted']
         objective = self.config['optimization']['objective'].lower()
 
         print('Loading driver datasets...')
         drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
-            self._load_gpp_data(pft, blacklist, filter_length)
+            self._load_gpp_data(filter_length)
 
         print('Initializing sampler...')
         backend = self.config['optimization']['backend_template'].format(
-            model = 'GPP', pft = pft)
+            model = 'GPP', pft = self._pft)
         model_func = getattr( # e.g., L4CStochasticSampler._gpp
-            L4CStochasticSampler, self.config['optimization']['function'])
+            L4CStochasticSampler,
+            self.config['optimization']['function']['GPP'])
         sampler = L4CStochasticSampler(
             self.config, model_func, params_dict,
             backend = backend, weights = weights)
@@ -835,7 +926,7 @@ class CalibrationAPI(object):
         prior_params = filter(
             lambda p: p in prior.keys(), sampler.required_parameters['GPP'])
         prior = dict([
-            (p, dict([(k, v[pft]) for k, v in prior[p].items()]))
+            (p, dict([(k, v[self._pft]) for k, v in prior[p].items()]))
             for p in prior_params
         ])
 
@@ -898,7 +989,7 @@ class CalibrationAPI(object):
                     c = 'k', alpha = 0.5)
                 pyplot.xlabel('Observed')
                 pyplot.ylabel('Predicted')
-                pyplot.title('\n'.join(wrap(f'PFT {pft} with: ' + ', '.join(list(map(
+                pyplot.title('\n'.join(wrap(f'PFT {self._pft} with: ' + ', '.join(list(map(
                     lambda x: f'{x[0]}={x[1]}', zip(
                     sampler.required_parameters['GPP'], params1)))))))
             pyplot.legend()
@@ -924,6 +1015,94 @@ class CalibrationAPI(object):
         sampler.run(
             tower_gpp_flat, drivers_flat, prior = prior, save_fig = save_fig,
             **kwargs)
+
+    def tune_reco(
+            self, filter_length: int = 2, q_rh: int = 75, q_k: int = 50,
+            plot: str = None, ipdb: bool = False, save_fig: bool = False,
+            **kwargs):
+        '''
+        Run the L4C RECO calibration.
+
+        - Negative RH values (i.e., NPP > RECO) are set to zero.
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        plot : str or None
+            Plot either: the "trace" for a previous calibration run; an
+            "exemplar", or single time series showing tower observations and
+            simulations using new and old parameters; a "scatter" plot
+            showing simulations, using new and old parameters, against
+            observations, with RMSE; or the "posterior" plot, an HDI plot
+            of the posterior distribution(s). If None, calibration will
+            proceed (calibration is not performed if plotting).
+        ipdb : bool
+            True to drop the user into an ipdb prompt, prior to and instead of
+            running calibration
+        save_fig : bool
+            True to save figures to files instead of showing them
+            (Default: False)
+        **kwargs
+            Additional keyword arguments passed to
+            `L4CStochasticSampler.run()`
+        '''
+        assert self._pft in PFT_VALID, f'Invalid PFT: {self._pft}'
+        # IMPORTANT: Set the "name" property of the configuration file;
+        #   this is used by StochasticSampler classes to figure out how
+        #   to compile the model
+        self.config['name'] = 'RECO'
+        # Pass configuration parameters to MOD17StochasticSampler.run()
+        for key in ('chains', 'draws', 'tune', 'scaling'):
+            if key in self.config['optimization'].keys() and not key in kwargs.keys():
+                kwargs[key] = self.config['optimization'][key]
+        params_dict = self._get_params('RECO')
+        # Load blacklisted sites (if any)
+        blacklist = self.config['data']['sites_blacklisted']
+        objective = self.config['optimization']['objective'].lower()
+
+        print('Loading driver datasets...')
+        _, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+        drivers, tower_reco, weights = self._load_reco_data(filter_length)
+        # For simplicity and consistency with StochasticSampler.run(), the
+        #   observed data and hyperparamters become part of the "driver" data
+        drivers = [tower_reco, tower_gpp, *drivers, q_rh, q_k]
+
+        print('Initializing sampler...')
+        backend = self.config['optimization']['backend_template'].format(
+            model = 'RECO', pft = self._pft)
+        model_func = getattr( # e.g., L4CStochasticSampler._reco
+            L4CStochasticSampler,
+            self.config['optimization']['function']['RECO'])
+        sampler = L4CStochasticSampler(
+            self.config, model_func, params_dict,
+            backend = backend, weights = weights)
+
+        # Get (informative) priors for just those parameters that have them
+        with open(self.config['optimization']['prior'], 'r') as file:
+            prior = yaml.safe_load(file)
+        prior_params = filter(
+            lambda p: p in prior.keys(), sampler.required_parameters['RECO'])
+        prior = dict([
+            (p, dict([(k, v[self._pft]) for k, v in prior[p].items()]))
+            for p in prior_params
+        ])
+
+        # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
+        #   those with priors
+        var_names = list(filter(
+            lambda x: x in prior.keys(), sampler.required_parameters['RECO']))
+        # Remove any kwargs that don't belong
+        for k in list(kwargs.keys()):
+            if k not in ('chains', 'draws', 'tune', 'scaling', 'save_fig', 'var_names'):
+                del kwargs[k]
+        sampler.run(
+            tower_reco, drivers, prior = prior, save_fig = save_fig, **kwargs)
 
 
 if __name__ == '__main__':
