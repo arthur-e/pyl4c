@@ -632,6 +632,7 @@ class CalibrationAPI(object):
         if config_file is None:
             config_file = os.path.join(
                 L4C_DIR, 'data/files/config_L4C_MCMC_calibration.yaml')
+        print(f'Using configuration file: {config_file}')
         with open(config_file, 'r') as file:
             self.config = yaml.safe_load(file)
         self.hdf5 = self.config['data']['file']

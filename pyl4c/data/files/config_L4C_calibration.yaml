@@ -25,10 +25,11 @@ data:
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
 optimization:
   backend: "/home/arthur/20230207_L4C_calibration.h5"
-  objective: RMSE
   # Number of times to run the optimization, with random initializations
-  trials: 3
-  fixed: ~
+  trials: 10
+  fixed:
+    LUE: [~, ~, ~, 1.23, ~, ~, ~, ~]
+    smrz1: [~, ~, 30, ~, ~, ~, ~, ~, ~]
   # Size of steps to be used in global parameter search
   step_size:
     LUE: 0.01
@@ -46,6 +47,6 @@ optimization:
     tmin1: [280.1, 330.0]
     vpd0: [0, 1499]
     vpd1: [1500, 8000]
-    smrz0: [0, 29]
-    smrz1: [30, 100]
+    smrz0: [0, 19]
+    smrz1: [20, 100]
     ft0: [0, 1]

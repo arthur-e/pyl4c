@@ -55,6 +55,7 @@ class CalibrationAPI(object):
         if config_file is None:
             config_file = os.path.join(
                 L4C_DIR, 'data/files/config_L4C_calibration.yaml')
+        print(f'Using configuration file: {config_file}')
         with open(config_file, 'r') as file:
             self.config = yaml.safe_load(file)
         if pft is not None:
@@ -68,21 +69,21 @@ class CalibrationAPI(object):
     def _bounds(self, init_params, bounds, model, fixed = None):
         'Defines bounds; optionally "fixes" parameters by fixing bounds'
         params = init_params
-        if fixed is not None:
-            params = [ # If the given parameter is in "fixed", restrict bounds
-                None if self._required_parameters[model][i] in fixed else init_params[i]
-                for i in range(0, len(self._required_parameters[model]))
-            ]
         lower = []
         upper = []
+        # Then, set the bounds; for free parameters, this is what was given;
+        #   for fixed parameters, this is the fixed value plus/minus some
+        #   tolerance
         for i, p in enumerate(self._required_parameters[model]):
             # This is a parameter to be optimized; use default bounds
-            if p is not None:
-                lower.append(bounds[p][0])
-                upper.append(bounds[p][1])
-            else:
-                lower.append(init_params[i] - 1e-3)
-                upper.append(init_params[i] + 1e-3)
+            lower.append(bounds[p][0])
+            upper.append(bounds[p][1])
+            if p in fixed:
+                if fixed[p] is not None:
+                    lower.pop()
+                    upper.pop()
+                    lower.append(fixed[p] - 1e-3)
+                    upper.append(fixed[p] + 1e-3)
         return (np.array(lower), np.array(upper))
 
     def _clean(
@@ -107,13 +108,9 @@ class CalibrationAPI(object):
                 lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
         return raw # Or, revert to the raw data
 
-    def _get_params(self, model):
+    def _get_params(self, model: str):
         # Filter the parameters to just those for the PFT of interest
-        params_dict = restore_bplut_flat(self.config['BPLUT'])
-        return dict([
-            (k, params_dict[k].ravel()[self._pft])
-            for k in self._required_parameters[model]
-        ])
+        return self.bplut.flat(self._pft, self._required_parameters[model.upper()])
 
     def _load_gpp_data(self, filter_length):
         'Load the required datasets for GPP, for a single PFT'
@@ -200,12 +197,13 @@ class CalibrationAPI(object):
             drivers_flat.append(flat[:,np.newaxis] if field != 'fPAR' else flat)
         return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
 
-    def _report(self, old_params, new_params, labels, title, prec = 2):
+    def _report(self, old_params, new_params, model, prec = 2):
         'Prints a report on the updated (optimized) parameters'
+        labels = self._required_parameters[model.upper()]
         pad = max(len(l) for l in labels) + 1
         fmt_string = '-- {:<%d} {:>%d} [{:>%d}]' % (pad, 5 + prec, 7 + prec)
         print('%s parameters report, %s (PFT %d):' % (
-            title, PFT[self._pft][0], self._pft))
+            f'{model.upper()} Optimization', PFT[self._pft][0], self._pft))
         print((' {:>%d} {:>%d}' % (8 + pad + prec, 8 + prec))\
             .format('NEW', 'INITIAL'))
         for i, label in enumerate(labels):
@@ -300,13 +298,13 @@ class CalibrationAPI(object):
             for i in (0, 1) # i.e., min(tmin0) and max(tmin1)
         ]
         domain = np.arange(bounds[0], bounds[1], 0.1)
-        ramp_func_original = linear_constraint(*coefs0)
+        ramp_func_original = linear_constraint(
+            *coefs0, 'reversed' if driver.lower() == 'vpd' else None)
         if coefs is not None:
-            ramp_func = linear_constraint(*coefs)
+            ramp_func = linear_constraint(
+                *coefs, 'reversed' if driver.lower() == 'vpd' else None)
         if driver.lower() == 'vpd':
             x0 = driver_data['VPD']
-            ramp_func_original = linear_constraint(*coefs0, 'reversed')
-            ramp_func = linear_constraint(*coefs, 'reversed')
         elif driver.lower() == 'tmin':
             x0 = driver_data['Tmin']
         elif driver.lower() == 'smrz':
@@ -336,6 +334,39 @@ class CalibrationAPI(object):
                 PFT[self._pft][0], self._pft, driver))
         pyplot.show()
 
+    def score(self, model: str, filter_length: int = 2):
+        '''
+        Scores the current model (for a specific PFT) based on the parameters
+        in the BPLUT.
+
+        Parameters
+        ----------
+        model : str
+            One of: "GPP" or "RECO"
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        '''
+        _, drivers_flat, _, tower_gpp_flat, weights =\
+            self._load_gpp_data(filter_length)
+        # Print the parameters table
+        old_params = restore_bplut_flat(self.config['BPLUT'])
+        old_params = [
+            old_params[k][:,self._pft]
+            for k in self._required_parameters[model.upper()]
+        ]
+        params = self._get_params(model.upper())
+        self._report(old_params, params, model.upper())
+        predicted = self.gpp(params, *drivers_flat).mean(axis = -1)
+        # Get goodness-of-fit statistics
+        r2, rmse_score, ub_rmse, bias = report_fit_stats(
+            tower_gpp_flat, predicted, weights, verbose = False)
+        print(f'{model.upper()} model goodness-of-fit statistics:')
+        print(('-- {:<13} {:>5}').format('R-squared:', '%.3f' % r2))
+        print(('-- {:<13} {:>5}').format('RMSE:', '%.2f' % rmse_score))
+        print(('-- {:<13} {:>5}').format('Unbised RMSE:', '%.2f' % ub_rmse))
+        print(('-- {:<13} {:>5}').format('Bias:', '%.2f' % bias))
+
     def set(self, parameter, value):
         '''
         Sets the named parameter to the given value for the specified PFT
@@ -359,7 +390,7 @@ class CalibrationAPI(object):
 
     def tune_gpp(
             self, filter_length: int = 2, optimize: bool = True,
-            use_nlopt: bool = True, ipdb: bool = False, save_fig: bool = False):
+            use_nlopt: bool = True):
         '''
         Run the L4C GPP calibration.
 
@@ -376,12 +407,6 @@ class CalibrationAPI(object):
             the goodness-of-fit to be reported
         use_nlopt : bool
             True to use `nlopt` for optimization (Default)
-        ipdb : bool
-            True to drop the user into an ipdb prompt, prior to and instead of
-            running calibration
-        save_fig : bool
-            True to save figures to files instead of showing them
-            (Default: False)
         '''
         def residuals(params, drivers, observed, weights):
             gpp0 = self.gpp(params, *drivers).mean(axis = -1)
@@ -390,21 +415,23 @@ class CalibrationAPI(object):
             #   multiplied by the tower weights
             return (weights * diff)[~np.isnan(diff)]
 
-        params_dict = self._get_params('GPP')
-        init_params = [
-            params_dict[p] for p in self._required_parameters['GPP']
-        ]
+        init_params = self._get_params('GPP')
         # Load blacklisted sites (if any)
         blacklist = self.config['data']['sites_blacklisted']
-        objective = self.config['optimization']['objective'].lower()
 
         print('Loading driver datasets...')
         drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
             self._load_gpp_data(filter_length)
+        print(f'NOTE: Counts of (days, towers) are: {tower_gpp.shape}')
 
         # Configure the optimization, get bounds for the parameter search
         bounds_dict = self.config['optimization']['bounds']
-        fixed = self.config['optimization']['fixed']
+        fixed = None
+        if self.config['optimization']['fixed'] is not None:
+            fixed = dict([ # Get any fixed parameters as {param: fixed_value}
+                (k, v[self._pft])
+                for k, v in self.config['optimization']['fixed'].items()
+            ])
         trials = self.config['optimization']['trials']
         step_size_global = [
             self.config['optimization']['step_size'][p]
@@ -423,13 +450,20 @@ class CalibrationAPI(object):
                 idx = np.random.randint(0, param_space.shape[0], p)
                 init_params = param_space[idx,np.arange(0, p)]
                 params0.append(init_params)
+            # If we're optimizing (with any library), define the bounds and
+            #   the objective function
             if optimize:
+                bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
+                # Set initial value to a fixed value if specified
+                for key, value in fixed.items():
+                    if value is not None:
+                        init_params[self._required_parameters['GPP'].index(key)] = value
                 objective = partial(
                     residuals, drivers = drivers_flat,
                     observed = tower_gpp_flat, weights = weights)
+            # Apply constrained, non-linear least-squares optimization, using
+            #   either SciPy or NLOPT
             if optimize and not use_nlopt:
-                # Apply constrained, non-linear least-squares optimization
-                bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
                 solution = solve_least_squares(
                     objective, init_params,
                     labels = self.required_parameters['GPP'],
@@ -438,7 +472,7 @@ class CalibrationAPI(object):
                 print(solution.message)
             elif optimize and use_nlopt:
                 opt = GenericOptimization(
-                    objective, bounds,step_size = step_size_global)
+                    objective, bounds, step_size = step_size_global)
                 fitted = opt.solve(init_params)
             else:
                 fitted = [None for i in range(0, len(init_params))]
@@ -457,9 +491,7 @@ class CalibrationAPI(object):
             fitted = params[np.argmin(scores)]
             init_params = params0[np.argmin(scores)]
         # Generate and print a report, update the BPLUT parameters
-        self._report(
-            init_params, fitted, self._required_parameters['GPP'],
-            'GPP Optimization')
+        self._report(init_params, fitted, 'GPP')
         if optimize:
             self.bplut.update(
                 self._pft, fitted, self._required_parameters['GPP'])
