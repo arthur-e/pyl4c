@@ -1,5 +1,5 @@
 ---
-name: "GPP" # Should be upper-case of "name" in "compile_{name}_model()" function
+name: "RECO" # Should be upper-case of "name" in "compile_{name}_model()" function
 # This is the OLD BPLUT, for reference
 BPLUT: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v7_Y2022/SMAP_BPLUT_V7_rev_20220728.csv"
 data:
@@ -26,7 +26,7 @@ data:
 optimization:
   function: "_gpp2" # i.e., Use the [left bound, left bound + width] spec
   backend_template: "/home/arthur/20230207_L4C_{model}_calibration_PFT{pft}.nc4"
-  prior: "/usr/local/dev/pyl4c/pyl4c/data/files/prior_L4C_V8_GPP_alternate.yaml"
+  prior: "/usr/local/dev/pyl4c/pyl4c/data/files/priors/prior_L4C_V8_alternate.yaml"
   chains: 3
   draws: 50000
   tune: scaling
