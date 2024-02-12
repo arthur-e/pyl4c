@@ -1,17 +1,23 @@
 '''
-To calibrate the GPP model for a specific PFT:
+To calibrate the GPP or RECO model for a specific PFT:
 
     python optimize.py pft <pft> tune-gpp
+    python optimize.py pft <pft> tune-reco
 
 To plot a specific PFT's (optimized) response to a driver:
 
     python optimize.py pft <pft> plot-gpp <driver>
+    python optimize.py pft <pft> plot-reco <driver>
 
-Where `<driver>` is one of: `smrz`, `vpd`, `tmin`.
+Where:
+
+- For `plot-gpp`, `<driver>` is one of: `smrz`, `vpd`, `tmin`.
+- For `plot-reco`, `<driver>` is one of: `smsf`, `tsoil`.
 
 To get the goodness-of-fit statistics for the updated parameters:
 
     python optimize.py pft <pft> score GPP
+    python optimize.py pft <pft> score RECO
 
 To view the current (potentially updated) BPLUT:
 
@@ -509,7 +515,9 @@ class CalibrationAPI(object):
                 PFT[self._pft][0], self._pft, driver))
         pyplot.show()
 
-    def score(self, model: str, filter_length: int = 2):
+    def score(
+            self, model: str, filter_length: int = 2,
+            q_rh: int = 75, q_k: int = 50):
         '''
         Scores the current model (for a specific PFT) based on the parameters
         in the BPLUT.
@@ -522,8 +530,14 @@ class CalibrationAPI(object):
             The window size for the smoothing filter, applied to the observed
             data
         '''
-        _, drivers_flat, _, tower_gpp_flat, weights =\
+        gpp_drivers, gpp_drivers_flat, tower_gpp, tower_gpp_flat, weights =\
             self._load_gpp_data(filter_length)
+        if model.upper() == 'GPP':
+            observed = tower_gpp_flat
+        elif model.upper() == 'RECO':
+            reco_drivers, tower_reco, weights =\
+                self._load_reco_data(filter_length)
+            observed = tower_reco
         # Print the parameters table
         old_params = restore_bplut_flat(self.config['BPLUT'])
         old_params = [
@@ -532,10 +546,15 @@ class CalibrationAPI(object):
         ]
         params = self._get_params(model.upper())
         self._report(old_params, params, model.upper())
-        predicted = self.gpp(params, *drivers_flat).mean(axis = -1)
         # Get goodness-of-fit statistics
+        if model.upper() == 'GPP':
+            predicted = self.gpp(params, *gpp_drivers_flat).mean(axis = -1)
+        elif model.upper() == 'RECO':
+            predicted = self.reco(
+                params, tower_reco, tower_gpp, *reco_drivers,
+                q_rh = q_rh, q_k = q_k)
         r2, rmse_score, ub_rmse, bias = report_fit_stats(
-            tower_gpp_flat, predicted, weights, verbose = False)
+            observed, predicted, weights, verbose = False)
         print(f'{model.upper()} model goodness-of-fit statistics:')
         print(('-- {:<13} {:>5}').format('R-squared:', '%.3f' % r2))
         print(('-- {:<13} {:>5}').format('RMSE:', '%.2f' % rmse_score))
