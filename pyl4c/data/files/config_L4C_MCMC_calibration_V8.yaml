@@ -30,7 +30,7 @@ optimization:
   backend_template: "/home/arthur/20230207_L4C_{model}_calibration_PFT{pft}.nc4"
   prior: "/usr/local/dev/pyl4c/pyl4c/data/files/priors/prior_L4C_V8.yaml"
   chains: 3
-  draws: 50000
+  draws: 20000
   tune: scaling
   scaling: 0.001
   objective: RMSE
