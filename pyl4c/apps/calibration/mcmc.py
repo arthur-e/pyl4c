@@ -539,16 +539,14 @@ class L4CStochasticSampler(StochasticSampler):
     @staticmethod
     def _reco(params, tower_reco, tower_gpp, smsf, tsoil, q_rh, q_k):
         '''
-        L4C RECO function, with alternate parameters, where the ramp function
-        for SMSF is defined in terms of the left edge (lowest value) and the
-        width of the ramp function interval.
+        L4C RECO function, with standard parameters.
         '''
         # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
         ra = ((1 - params[0]) * tower_gpp)
         rh = tower_reco - ra
         rh = np.where(rh < 0, 0, rh) # Mask out negative RH values
         f_tsoil = partial(arrhenius, beta0 = params[1])
-        f_smsf = linear_constraint(params[2], params[2] + params[3])
+        f_smsf = linear_constraint(params[2], params[3])
         kmult0 = f_tsoil(tsoil) * f_smsf(smsf)
         cbar0 = cbar(rh, kmult0, q_rh, q_k)
         return ra + (kmult0 * cbar0)
@@ -624,7 +622,7 @@ class L4CStochasticSampler(StochasticSampler):
             # (Stochstic) Priors for unknown model parameters
             CUE = pm.Beta('CUE', **self.prior['CUE'])
             tsoil = pm.Uniform('tsoil', **self.prior['tsoil'])
-            smsf0 = pm.Uniform('smsf0', **self.prior['smsf0'])
+            smsf0 = 0.0 # NOTE: Left edge fixed at 0.0
             smsf1 = pm.Uniform('smsf1', **self.prior['smsf1'])
             # Convert model parameters to a tensor vector
             params_list = [CUE, tsoil, smsf0, smsf1]
