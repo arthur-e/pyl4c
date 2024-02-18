@@ -1091,6 +1091,13 @@ class CalibrationAPI(object):
             for p in prior_params
         ])
 
+        # For diagnostics
+        if ipdb:
+            trace = sampler.get_trace(
+                burn = kwargs.get('burn', None), thin = kwargs.get('thin'))
+            import ipdb
+            ipdb.set_trace()
+
         # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
         #   those with priors
         var_names = list(filter(
