@@ -767,7 +767,7 @@ class CalibrationAPI(object):
                 bounds = self._bounds(init_params, bounds_dict, 'RECO', fixed)
                 # Set initial value to a fixed value if specified
                 for key, value in fixed.items():
-                    if value is not None:
+                    if value is not None and key in self._required_parameters['RECO']:
                         init_params[self._required_parameters['RECO'].index(key)] = value
                 objective = partial(
                     residuals, drivers = drivers, weights = weights,
