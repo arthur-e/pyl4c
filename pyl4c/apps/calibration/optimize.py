@@ -14,6 +14,11 @@ Where:
 - For `plot-gpp`, `<driver>` is one of: `smrz`, `vpd`, `tmin`.
 - For `plot-reco`, `<driver>` is one of: `smsf`, `tsoil`.
 
+To plot the steady-state SOC versus IGBP SOC pit measurements, and then
+select potential new decay rates:
+
+    python optimize.py pft <pft> tune-soc
+
 To get the goodness-of-fit statistics for the updated parameters:
 
     python optimize.py pft <pft> score GPP
@@ -30,6 +35,7 @@ To view the current (potentially updated) BPLUT:
     python optimize.py bplut show <param> None
 '''
 
+import datetime
 import os
 import yaml
 import warnings
@@ -42,7 +48,7 @@ from matplotlib import pyplot
 from scipy import signal
 from pyl4c import pft_dominant, suppress_warnings
 from pyl4c.data.fixtures import PFT, restore_bplut, restore_bplut_flat
-from pyl4c.science import vpd, par, rescale_smrz, arrhenius
+from pyl4c.science import vpd, par, rescale_smrz, arrhenius, climatology365, soc_analytical_spinup, soc_numerical_spinup
 from pyl4c.stats import linear_constraint, rmsd
 from pyl4c.apps.calibration import BPLUT, GenericOptimization, cbar, report_fit_stats
 
@@ -75,11 +81,12 @@ class CalibrationAPI(object):
     _required_parameters = {
         'GPP':  ['LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0'],
         'RECO': ['CUE', 'tsoil', 'smsf0', 'smsf1'],
+        'SOC':  ['decay_rates0', 'decay_rates1', 'decay_rates2']
     }
     _required_drivers = {
         # Tsurf = Surface skin temperature; Tmin = Minimum daily temperature
         'GPP':  ['fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'FT'],
-        'RECO': ['SMSF', 'Tsoil']
+        'RECO': ['Tsoil', 'SMSF']
     }
 
     def __init__(self, config: str = None, pft: int = None):
@@ -317,7 +324,7 @@ class CalibrationAPI(object):
             CalibrationAPI.e_mult(params, tmin, vpd, smrz, ft)
 
     @staticmethod
-    def reco(params, tower_reco, tower_gpp, smsf, tsoil, q_rh, q_k):
+    def reco(params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k):
         # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
         ra = ((1 - params[0]) * tower_gpp)
         rh = tower_reco - ra
@@ -808,6 +815,109 @@ class CalibrationAPI(object):
         if optimize:
             self.bplut.update(
                 self._pft, fitted, self._required_parameters['RECO'])
+
+    def tune_soc(self, filter_length: int = 2):
+        '''
+        Starts interactive calibration procedure for the soil organic carbon
+        (SOC) decay parameters for a given PFT.
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        '''
+        print('Loading driver datasets...')
+        drivers_for_gpp, _, tower_gpp, _, _ = self._load_gpp_data(
+            filter_length)
+        drivers_for_reco, tower_reco, weights = self._load_reco_data(
+            filter_length)
+
+        # Load the date series (for computing a climatology) as well as the
+        #   map of dominant PFTs (for selecting IGBP sites)
+        blacklist = self.config['data']['sites_blacklisted']
+        with h5py.File(self.hdf5, 'r') as hdf:
+            dates = [datetime.date(*d) for d in hdf['time'][:].tolist()]
+            sites = hdf['site_id'][:]
+            if hasattr(sites[0], 'decode'):
+                sites = list(map(lambda x: x.decode('utf-8'), sites))
+            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+
+        # Load IGBP SOC pit measurements, convert from [kg C m-2] to [g C m-2]
+        with h5py.File(self.config['data']['supplemental_file'], 'r') as hdf:
+            igbp_soc = hdf['SOC'][:]
+        igbp_soc = igbp_soc[pft_mask]
+        igbp_soc[igbp_soc < 0] = np.nan
+
+        # Calculate GPP based on the updated parameters
+        init_params = restore_bplut_flat(self.config['BPLUT'])
+        params_gpp = self._get_params('GPP')
+        params_reco = self._get_params('RECO')
+        gpp = self.gpp(params_gpp, *[
+            drivers_for_gpp[d] if d != 'fPAR' else np.nanmean(drivers_for_gpp[d], axis = -1)
+            for d in self._required_drivers['GPP']
+        ])
+
+        # Calculate a 365-day climatology of NPP
+        cue = params_reco[self._required_parameters['RECO'].index('CUE')]
+        npp = gpp * cue
+        npp_clim = climatology365(npp, dates)
+        # Calculate litterfall
+        litter = npp_clim.sum(axis = 0) / 365
+        # Calculate a 365-day climatology of Kmult
+        kmult = self.k_mult(params_reco, *drivers_for_reco)
+        kmult_clim = climatology365(kmult, dates)
+        sigma = npp_clim.sum(axis = 0) / kmult_clim.sum(axis = 0)
+
+        # Inferred steady-state storage
+        fmet = init_params['f_metabolic'][:,self._pft][0]
+        fstr = init_params['f_structural'][:,self._pft][0]
+        decay_rates = self._get_params('SOC')
+        decay_rates = decay_rates[:,np.newaxis]
+        # Begin user-interaction loop to manually calibrate decay rates
+        prev = None
+        while True:
+            init_soc = soc_analytical_spinup(
+                litter, kmult_clim, fmet, fstr, decay_rates)
+            soc, _ = soc_numerical_spinup(
+                np.stack(init_soc), litter, kmult_clim, fmet, fstr, decay_rates,
+                verbose = True)
+            soc = np.stack(soc).sum(axis = 0)
+            _, ax = pyplot.subplots(figsize = (6,6))
+            ax.plot([0, 1], [0, 1], transform = ax.transAxes, linestyle = 'dotted')
+            if prev is not None:
+                pyplot.plot(igbp_soc / 1e3, prev / 1e3, 'o', c = 'gray', alpha = 0.3)
+            try:
+                pyplot.plot(igbp_soc / 1e3, soc / 1e3, 'o', alpha = 0.6)
+            except:
+                import ipdb
+                ipdb.set_trace()#FIXME
+            pyplot.xlabel('IGBP SOC (kg m$^{-2}$)')
+            pyplot.ylabel('Modeled Equilibrium SOC (kg m$^{-2}$)')
+            pyplot.show()
+            # Calculate correlation coefficient
+            mask = np.isnan(igbp_soc)
+            r = np.corrcoef(igbp_soc[~mask], soc[~mask])[0,1]
+            rmse = rmsd(igbp_soc[~mask], soc[~mask])
+            print(f'Current metabolic rate (r={r.round(3)}, RMSE={round(rmse, 1)}):')
+            print('%.5f\n' % decay_rates[0])
+            proposal = input('New metabolic rate [Q to quit]:\n')
+            if proposal == 'Q':
+                break
+            value = float(proposal)
+            # NOTE: The "structural" and "recalcitrant" pool decay rates
+            #   here should be the actual decay rates, i.e., the "metabolic"
+            #   rate scaled by fixed constants
+            decay_rates = np.array([
+                value, value * 0.4, value * 0.0093
+            ]).reshape((3, 1))
+            prev = soc.copy()
+        print(f'Updated BPLUT decay rates for PFT={self._pft}')
+        self.bplut.update(
+            self._pft, decay_rates.ravel(),
+            ['decay_rates0', 'decay_rates1', 'decay_rates2'])
 
 
 if __name__ == '__main__':
