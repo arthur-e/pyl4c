@@ -2,6 +2,7 @@
 '''
 
 import numpy as np
+import warnings
 from numbers import Number
 from typing import Sequence
 from tqdm import tqdm
@@ -20,7 +21,7 @@ class TCF(object):
     2. There is a maximum rate of carbon assimilation. Low water availability,
         cold or freezing temperatures, and high atmospheric demand for water
         vapor each reduce the efficiency of carbon assimilation.
-    3. Soil organic carbon (SOC) decomposes at a different rates based on the
+    3. Soil organic carbon (SOC) decomposes at different rates based on the
         type of material. The optimal rate of decomposition is fixed and
         depends only on the land-cover type.
     4. The efficiency of soil organic carbon decomposition is reduced under
@@ -66,10 +67,12 @@ class TCF(object):
         variables for each of N pixels. The first three (3) state variables
         should be the initial states of each SOC pool.
     litterfall : Sequence or numpy.ndarray or None
-        A sequence values or 1D array representing average daily litterfall
+        A sequence of values or 1D array representing average daily litterfall
         for each model resolution cell (pixel)
     '''
-
+    required_drivers = [
+        'fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'FT', 'Tsoil', 'SMSF'
+    ]
     required_parameters = [
         'LUE', 'tmin0', 'tmin1', 'vpd0', 'vpd1', 'smrz0', 'smrz1', 'ft0',
         'CUE', 'tsoil', 'smsf0', 'smsf1', 'decay_rates', 'f_structural',
@@ -86,6 +89,7 @@ class TCF(object):
         8: 'Broadleaf Croplands'
     }
 
+    num_soc_pools = 3 # Number of soil organic carbon (SOC) pools
     version = '7.4.1' # Pegged to the SMAP L4C version
 
     def __init__(
@@ -128,16 +132,16 @@ class TCF(object):
             p_vector = np.array(value)
             # Copy parameter values based on PFT map
             if key == 'decay_rates':
-                if p_vector.shape == (3,):
+                if p_vector.shape == (self.num_soc_pools,):
                     p_vector = p_vector[:,np.newaxis]\
                         .repeat(self.lc_map.size, axis = -1)
                 elif hasattr(value, 'count') and p_vector.ndim == 2:
                     # i.e., "value" was nested lists and result of converting
-                    #   to a NumPy array was a (N x 3) array
+                    #   to a NumPy array was a (N x self.num_soc_pools) array
                     p_vector = p_vector.swapaxes(0, 1)[:,self.lc_map]
                 elif p_vector.ndim == 2:
                     p_vector = p_vector[:,self.lc_map]
-                assert p_vector.shape == (3, self.lc_map.size)
+                assert p_vector.shape == (self.num_soc_pools, self.lc_map.size)
             else:
                 if p_vector.ndim == 0:
                     p_vector = p_vector[np.newaxis][np.newaxis]\
@@ -200,6 +204,7 @@ class TCF(object):
             dates: Sequence = None
         ) -> np.ndarray:
         'Pre-computes some vectorized quantities prior to forward run'
+        self.check_drivers(drivers)
         litter = self.constants.litterfall
         if litter is None:
             assert dates is not None,\
@@ -225,6 +230,28 @@ class TCF(object):
         wmult = f_smsf(smsf).swapaxes(0, 1)
         return (gpp, npp, litter, tmult, wmult)
 
+    def check_drivers(self, drivers: Sequence):
+        '''
+        Checks that driver datasets have correct shape and units. Issues
+        warnings otherwise.
+
+        Parameters
+        ----------
+        drivers : Sequence
+            Flat sequence of drivers or (P x ...) array for P drivers
+        '''
+        n = len(drivers)
+        _drivers = dict(zip(self.required_drivers[0:n], drivers))
+        if 'fPAR' in _drivers.keys():
+            if np.nanmax(_drivers['fPAR']) > 1:
+                warnings.warn('WARNING: fPAR might not have correct units; maximum value exceeds 1.0')
+        if 'SMRZ' in _drivers.keys():
+            if np.nanmax(_drivers['SMRZ']) > 1:
+                warnings.warn('WARNING: Root-zone soil moisture might not have correct units; maximum value exceeds 1.0')
+        if 'SMSF' in _drivers.keys():
+            if np.nanmax(_drivers['SMSF']) > 1:
+                warnings.warn('WARNING: Surface soil moisture might not have correct units; maximum value exceeds 1.0')
+
     def diagnose_kmult(self, drivers):
         '''
         Returns the environmental constraint multiplier on RH (Kmult). This
@@ -236,7 +263,7 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
             Soil temperature in the top (0-5 cm) layer [deg K]
             Surface soil moisture wetness, volume proportion [0-1]
@@ -244,8 +271,9 @@ class TCF(object):
         Parameters
         ----------
         drivers : Sequence or numpy.ndarray
-            Either a 1D sequence of P driver variables; a 2D (P x N) array for
-            N pixels, or a 3D data cube of shape (P x N x T) for T time steps
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
 
         Returns
         -------
@@ -270,21 +298,22 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
 
         Parameters
         ----------
         drivers : Sequence or numpy.ndarray
-            Either a 1D sequence of P driver variables; a 2D (P x N) array for
-            N pixels, or a 3D data cube of shape (P x N x T) for T time steps
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
 
         Returns
         -------
         tuple
             4-tuple of (FT, Tmin, VPD, SMRZ) environmental constraints
         '''
-        if drivers.shape[0] == 5:
+        if len(drivers) == 5:
             fpar, par, tmin, vpd, smrz0 = drivers
             ft0 = np.where(tmin < 273.15, 0, 1)
         else:
@@ -318,7 +347,7 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
             Soil temperature in the top (0-5 cm) layer [deg K]
             Surface soil moisture wetness, volume proportion [0-1]
@@ -329,8 +358,9 @@ class TCF(object):
         Parameters
         ----------
         drivers : Sequence or numpy.ndarray
-            Either a 1D sequence of P driver variables; a 2D (P x N) array for
-            N pixels, or a 3D data cube of shape (P x N x T) for T time steps
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
         state : Sequence or numpy.ndarray or None
             A sequence of 3 values or an (3 x N) array representing the
             SOC state in each SOC pool
@@ -353,6 +383,8 @@ class TCF(object):
         tuple
             A 3-element tuple of (NEE, GPP, RH)
         '''
+        if drivers[0].shape[-1] > drivers[0].shape[-2]:
+            warnings.warn('WARNING: Axes of input arrays might not be in the required (..., N, T) order')
         # NOTE: Allowing for state variables other than SOC to be included in
         #   a later version
         soc = state
@@ -397,7 +429,7 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
 
         The FT state is optional; if that axis of the data cube is not
@@ -413,8 +445,9 @@ class TCF(object):
         Parameters
         ----------
         drivers : Sequence or numpy.ndarray
-            Either a 1D sequence of P driver variables; a 2D (P x N) array for
-            N pixels, or a 3D data cube of shape (P x N x T) for T time steps
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
 
         Returns
         -------
@@ -422,7 +455,8 @@ class TCF(object):
             Gross primary production (GPP) in [g C m-2 time-1] where time is
             the time step of the PAR data, e.g., [g C m-2 day-1]
         '''
-        if drivers.shape[0] == 5:
+        self.check_drivers(drivers)
+        if len(drivers) == 5:
             fpar, par, _, _, _ = drivers
         else:
             fpar, par, _, _, _, _ = drivers
@@ -449,8 +483,9 @@ class TCF(object):
         Parameters
         ----------
         drivers : Sequence or numpy.ndarray
-            Either a 1D sequence of P driver variables or a 2D data cube of
-            shape (P x N), for N pixels
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
         state : Sequence or numpy.ndarray or None
             A sequence of 3 values or an (3 x N) array representing the
             SOC state in each SOC pool
@@ -497,8 +532,9 @@ class TCF(object):
             A sequence of `datetime.date` instances, of length T for T time
             steps
         drivers : Sequence or numpy.ndarray
-            Either a 1D sequence of P driver variables; a 2D (P x N) array for
-            N pixels, or a 3D data cube of shape (P x N x T) for T time steps
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
         state : Sequence or numpy.ndarray or None
             A sequence of 3 values or an (3 x N) array representing the
             SOC state in each SOC pool
@@ -521,6 +557,7 @@ class TCF(object):
         #   a later version
         soc = state
         if soc is None:
+            assert hasattr(self.state, 'soc'), 'No prior soil organic carbon ("soc") state defined'
             soc = self.state.soc
         clim = []
         for each in drivers:
