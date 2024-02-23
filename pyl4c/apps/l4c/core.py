@@ -157,7 +157,7 @@ class TCF(object):
             assert p_vector.shape[0] == self.lc_map.size or p_vector.shape[0] == 3
             self.params.add(key, p_vector)
 
-    def _rescale_smrz(self, smrz0, smrz_min, smrz_max = 1):
+    def _rescale_smrz(self, smrz0, smrz_min, smrz_max = 100):
         r'''
         Rescales root-zone soil-moisture (SMRZ) to increase plant sensitivity to
         very low water availability.
@@ -166,14 +166,14 @@ class TCF(object):
         \hat{\theta} &= 100 \times\left(
         \frac{\theta - \theta_{WP}}{\text{max}(\theta) - \theta_{WP}}
         \right) + 1\\
-        \theta_{RZ} &= 0.95 \times
-        \frac{\text{ln}(\hat{\theta} \times 100)}{\text{ln(101)}} + 0.05
+        \theta_{RZ} &= 95 \times
+        \frac{\text{ln}(\hat{\theta})}{\text{ln(101)}} + 5
         $$
 
         Parameters
         ----------
         smrz0 : numpy.ndarray
-            (N x T) array of original SMRZ data, in proportion saturation [0-1]
+            (N x T) array of original SMRZ data, in percent wetness [%]
             units for N sites and T time steps
         smrz_min : numpy.ndarray or float
             Site-level long-term minimum SMRZ (proportion saturation)
@@ -191,13 +191,13 @@ class TCF(object):
         # Clip input SMRZ to the lower, upper bounds
         smrz0 = np.where(smrz0 < smrz_min, smrz_min, smrz0)
         smrz0 = np.where(smrz0 > smrz_max, smrz_max, smrz0)
-        smrz_norm = np.divide(
+        smrz_norm = np.add(np.multiply(100, np.divide(
             np.subtract(smrz0, smrz_min),
-            np.subtract(smrz_max, smrz_min)) + 0.01
+            np.subtract(smrz_max, smrz_min))), 1)
         # Log-transform normalized data and rescale to range between
         #   5.0 and 100% saturation)
         return np.add(
-            np.multiply(0.95, np.divide(np.log(smrz_norm * 100), np.log(101))), 0.05)
+            np.multiply(95, np.divide(np.log(smrz_norm), np.log(101))), 5)
 
     def _setup_forward(
             self, drivers: Sequence, state: Sequence = None,
@@ -246,47 +246,11 @@ class TCF(object):
             if np.nanmax(_drivers['fPAR']) > 1:
                 warnings.warn('WARNING: fPAR might not have correct units; maximum value exceeds 1.0')
         if 'SMRZ' in _drivers.keys():
-            if np.nanmax(_drivers['SMRZ']) > 1:
-                warnings.warn('WARNING: Root-zone soil moisture might not have correct units; maximum value exceeds 1.0')
+            if np.nanmax(_drivers['SMRZ']) <= 1:
+                warnings.warn('WARNING: Root-zone soil moisture might not have correct units; maximum value is less than 1.0')
         if 'SMSF' in _drivers.keys():
-            if np.nanmax(_drivers['SMSF']) > 1:
-                warnings.warn('WARNING: Surface soil moisture might not have correct units; maximum value exceeds 1.0')
-
-    def diagnose_kmult(self, drivers):
-        '''
-        Returns the environmental constraint multiplier on RH (Kmult). This
-        dimensionless quantity indicates the aggregate impact of
-        meteorological conditions on heterotrophic respiration (RH). Order of
-        driver variables should be:
-
-            Fraction of PAR intercepted (fPAR) [0-1]
-            Photosynthetically active radation (PAR) [MJ m-2 day-1]
-            Minimum temperature (Tmin) [deg K]
-            Vapor pressure deficit (VPD) [Pa]
-            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
-            Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
-            Soil temperature in the top (0-5 cm) layer [deg K]
-            Surface soil moisture wetness, volume proportion [0-1]
-
-        Parameters
-        ----------
-        drivers : Sequence or numpy.ndarray
-            Either a flat sequence of P driver variables, each an array with
-            (N x T) or (... x N x T) shape for N sites and T time steps; or a
-            single array, with shape (P x N) or (P x N x T)
-
-        Returns
-        -------
-        tuple
-            2-tuple of (Tmult, Wmult), or (Tsoil, SMSF), environmental
-            constraints
-        '''
-        tsoil, smsf = drivers[-2:]
-        f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
-        # Swap axes here only to make time the major (first) axis
-        tmult = arrhenius(tsoil, self.params.tsoil)
-        wmult = f_smsf(smsf)
-        return (tmult, wmult)
+            if np.nanmax(_drivers['SMSF']) <= 1:
+                warnings.warn('WARNING: Surface soil moisture might not have correct units; maximum value is less than 1.0')
 
     def diagnose_emult(self, drivers):
         '''
@@ -298,7 +262,7 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
 
         Parameters
@@ -331,6 +295,42 @@ class TCF(object):
         # Compute the environmental constraint
         return (ft, f_tmin, f_vpd, f_smrz)
 
+    def diagnose_kmult(self, drivers):
+        '''
+        Returns the environmental constraint multiplier on RH (Kmult). This
+        dimensionless quantity indicates the aggregate impact of
+        meteorological conditions on heterotrophic respiration (RH). Order of
+        driver variables should be:
+
+            Fraction of PAR intercepted (fPAR) [0-1]
+            Photosynthetically active radation (PAR) [MJ m-2 day-1]
+            Minimum temperature (Tmin) [deg K]
+            Vapor pressure deficit (VPD) [Pa]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
+            Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+            Soil temperature in the top (0-5 cm) layer [deg K]
+            Surface soil moisture wetness [percent, %]
+
+        Parameters
+        ----------
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+
+        Returns
+        -------
+        tuple
+            2-tuple of (Tmult, Wmult), or (Tsoil, SMSF), environmental
+            constraints
+        '''
+        tsoil, smsf = drivers[-2:]
+        f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
+        # Swap axes here only to make time the major (first) axis
+        tmult = arrhenius(tsoil, self.params.tsoil)
+        wmult = f_smsf(smsf)
+        return (tmult, wmult)
+
     def forward_run(
             self, drivers: Sequence, state: Sequence = None,
             dates: Sequence = None, dynamic_litter: bool = False,
@@ -347,10 +347,10 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
             Soil temperature in the top (0-5 cm) layer [deg K]
-            Surface soil moisture wetness, volume proportion [0-1]
+            Surface soil moisture wetness [percent, %]
 
         GPP calculation is vectorized but RH and NEE calculation proceed
         step-wise because they depend on the model state (SOC).
@@ -429,7 +429,7 @@ class TCF(object):
             Photosynthetically active radation (PAR) [MJ m-2 day-1]
             Minimum temperature (Tmin) [deg K]
             Vapor pressure deficit (VPD) [Pa]
-            UNSCALED Root-zone soil moisture wetness, volume proportion [0-1]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
             Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
 
         The FT state is optional; if that axis of the data cube is not
@@ -474,7 +474,7 @@ class TCF(object):
         time point. Order of driver variables should be:
 
             Soil temperature in the top (0-5 cm) layer [deg K]
-            Surface soil moisture wetness, volume proportion [0-1]
+            Surface soil moisture wetness [percent, %]
 
         Unit of time should be consistent with the units of PAR and the
         turnover time (`decay_rate`). It's assumed that PAR is denominated
