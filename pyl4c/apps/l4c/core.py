@@ -152,8 +152,8 @@ class TCF(object):
                 elif p_vector.ndim == 2:
                     p_vector = p_vector[:,self.lc_map].swapaxes(0, 1)
             # Result should be a 2D vectorized parameter array, either:
-            #   (N x 1) or (S x N), where S is, e.g., each SOC pool
-            assert p_vector.ndim == 2
+            #   (N,) or (S x N), where S is, e.g., each SOC pool
+            assert p_vector.ndim in (1, 2)
             assert p_vector.shape[0] == self.lc_map.size or p_vector.shape[0] == 3
             self.params.add(key, p_vector)
 
@@ -209,7 +209,7 @@ class TCF(object):
         if litter is None:
             assert dates is not None,\
                 'Either: "litterfall" must be provided to TCF() or "dates" must be provided at runtime'
-            assert len(dates) >= 365 and drivers.shape[-1] >= 365,\
+            assert len(dates) >= 365 and drivers[0].shape[-1] >= 365,\
                 'At least 365 daily time steps must be provided to allow computation of annual NPP sum'
             assert hasattr(dates[0], 'year') and hasattr(dates[0], 'strftime'),\
                 'The values of "dates" must be datetime.date or datetime.datetime instances'
@@ -383,7 +383,7 @@ class TCF(object):
         tuple
             A 3-element tuple of (NEE, GPP, RH)
         '''
-        if drivers[0].shape[-1] > drivers[0].shape[-2]:
+        if drivers[0].shape[-2] > drivers[0].shape[-1]:
             warnings.warn('WARNING: Axes of input arrays might not be in the required (..., N, T) order')
         # NOTE: Allowing for state variables other than SOC to be included in
         #   a later version
@@ -394,8 +394,13 @@ class TCF(object):
         # Pre-allocate output arrays
         rh = np.ones((3, *gpp.shape), dtype = np.float32) # (3 x N x T)
         nee = np.ones((*gpp.shape,), dtype = np.float32) # (N x T)
-        # Forward time steps
-        steps = range(0, drivers.shape[-1])
+        # Determine the number of forward time steps
+        if dates is not None:
+            steps = range(0, len(dates))
+        elif hasattr(drivers, 'ndim'):
+            steps = range(0, drivers.shape[-1])
+        else:
+            raise ValueError('Could not determine number of time steps; provide a "dates" argument')
         for t in tqdm(steps, disable = not verbose):
             if dynamic_litter:
                 # Will ensure that NPP(t) ~= RH(t) in the dynamic steady-state
@@ -519,7 +524,7 @@ class TCF(object):
 
     def spin_up(
             self, dates: Sequence, drivers: Sequence, state: Sequence = None,
-            max_steps: int = 1000, threshold: float = 1, verbose: bool = True,
+            max_cycles: int = 1000, threshold: float = 1, verbose: bool = True,
             verbose_type = 'tqdm'
         ) -> np.ndarray:
         '''
@@ -538,7 +543,7 @@ class TCF(object):
         state : Sequence or numpy.ndarray or None
             A sequence of 3 values or an (3 x N) array representing the
             SOC state in each SOC pool
-        max_steps : int
+        max_cycles : int
             Maximum number of climatology cycles (365-day years) to apply
             (Default: 100)
         threshold : float
@@ -555,35 +560,39 @@ class TCF(object):
         '''
         # NOTE: Allowing for state variables other than SOC to be included in
         #   a later version
-        soc = state
-        if soc is None:
+        if state is None:
             assert hasattr(self.state, 'soc'), 'No prior soil organic carbon ("soc") state defined'
-            soc = self.state.soc
+        else:
+            self.state.soc = state
+        soc = self.state.soc
+
         clim = []
         for each in drivers:
+            # Make the T axis the first axis for calculating a climatology,
+            #   swap those axes back afterward
             clim.append(
-                climatology365(each.swapaxes(0, 1), dates).swapaxes(0, 1))
-        tolerance = np.nan * np.ones((soc.shape[-1], max_steps), np.float32)
+                climatology365(each.swapaxes(0, -1), dates).swapaxes(0, -1))
+        tolerance = np.nan * np.ones((soc.shape[-1], max_cycles), np.float32)
         disable = (not verbose or not verbose_type == 'tqdm')
-        for step in tqdm(range(0, max_steps), disable = disable):
+        for cycle in tqdm(range(0, max_cycles), disable = disable):
             nee, gpp, rh = self.forward_run(drivers, soc, dates, verbose = False)
             # Diagnostics
             # rh_sum = rh.sum(axis = 0).sum(axis = -1)
             # npp_sum = (gpp * self.params.CUE).sum(axis = -1)
             nee_sum = np.nansum(nee, axis = -1)
-            if step == 0:
+            if cycle == 0:
                 nee_last = nee_sum
             else:
-                tolerance[:,step] = (nee_last - nee_sum)
+                tolerance[:,cycle] = (nee_last - nee_sum)
                 nee_last = nee_sum
-                if (np.abs(tolerance[:,step]) < threshold).all():
+                if (np.abs(tolerance[:,cycle]) < threshold).all():
                     break
             # Diagnostics
             # rh_track[:,step] = rh_sum
             # npp_track[:,step] = npp_sum
             # soc_track[:,step] = self.state.soc.sum(axis = 0)
-            if step > 0 and verbose and verbose_type != 'tqdm':
+            if cycle > 0 and verbose and verbose_type != 'tqdm':
                 print(
                     'Change in annual NEE sum [SOC state]: %.2f, [%.0f]' %
-                    (np.nanmean(tolerance[:,step]), self.state.soc.sum()))
+                    (np.nanmean(tolerance[:,cycle]), self.state.soc.sum()))
         return tolerance
