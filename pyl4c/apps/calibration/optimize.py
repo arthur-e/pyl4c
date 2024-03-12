@@ -656,7 +656,7 @@ class CalibrationAPI(object):
                 bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
                 # Set initial value to a fixed value if specified
                 for key, value in fixed.items():
-                    if value is not None:
+                    if value is not None and key in self._required_parameters['GPP']:
                         init_params[self._required_parameters['GPP'].index(key)] = value
                 objective = partial(
                     residuals, drivers = drivers_flat,
@@ -863,12 +863,14 @@ class CalibrationAPI(object):
         # Calculate a 365-day climatology of NPP
         cue = params_reco[self._required_parameters['RECO'].index('CUE')]
         npp = gpp * cue
-        npp_clim = climatology365(npp, dates)
+        # Make the time axis (currently 0) be the trailing axis
+        npp_clim = climatology365(npp.swapaxes(0, 1), dates)
         # Calculate litterfall
         litter = npp_clim.sum(axis = 0) / 365
         # Calculate a 365-day climatology of Kmult
         kmult = self.k_mult(params_reco, *drivers_for_reco)
-        kmult_clim = climatology365(kmult, dates)
+        # Make the time axis (currently 0) be the trailing axis
+        kmult_clim = climatology365(kmult.swapaxes(0, 1), dates)
         sigma = npp_clim.sum(axis = 0) / kmult_clim.sum(axis = 0)
 
         # Inferred steady-state storage

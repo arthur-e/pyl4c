@@ -218,7 +218,7 @@ class TCF(object):
         npp = self.params.CUE * gpp
         # Compute litterfall from the mean annual NPP sum
         if litter is None:
-            npp_sum = climatology365(gpp.swapaxes(0, 1), dates).sum(axis = 0)
+            npp_sum = climatology365(gpp, dates).sum(axis = 0)
             # Litterfall is equal daily fraction of average annual NPP
             litter = npp_sum / 365
             self.constants.add('litterfall', litter)
@@ -333,8 +333,7 @@ class TCF(object):
 
     def forward_run(
             self, drivers: Sequence, state: Sequence = None,
-            dates: Sequence = None, dynamic_litter: bool = False,
-            verbose: bool = True
+            dates: Sequence = None, verbose: bool = True
         ) -> np.ndarray:
         '''
         Runs the TCF model forward in time for daily time steps. This is the
@@ -368,13 +367,6 @@ class TCF(object):
             If `litterfall` was not provided to `TCF` during initialization,
             you must provide a sequence of `datetime.date` instances, of length
             T for T time steps, indicating the current year of each time step.
-        dynamic_litter : bool
-            TCF assumes that litterfall is an equal daily fraction of the
-            annual NPP sum. This can lead to an imbalance between RH and NPP,
-            even in the dynamic steady-state. If `True`, daily litterfall is
-            set equal to the daily NPP (i.e., all daily NPP is available
-            immediately as litterfall), which resolves this imbalance,
-            resulting in RH ~= NPP. Default is `False`.
         verbose : bool
             True to show a progress bar and other messages (Default: True)
 
@@ -397,14 +389,12 @@ class TCF(object):
         # Determine the number of forward time steps
         if dates is not None:
             steps = range(0, len(dates))
-        elif hasattr(drivers, 'ndim'):
-            steps = range(0, drivers.shape[-1])
         else:
-            raise ValueError('Could not determine number of time steps; provide a "dates" argument')
+            try:
+                steps = range(0, drivers[0].shape[-1])
+            except:
+                raise ValueError('Could not determine number of time steps; provide a "dates" argument')
         for t in tqdm(steps, disable = not verbose):
-            if dynamic_litter:
-                # Will ensure that NPP(t) ~= RH(t) in the dynamic steady-state
-                litter = npp[...,t]
             rh_t = np.empty((3, litter.shape[0])) # Allocate RH(t) array
             for pool in range(0, soc.shape[0]):
                 rh_t[pool] = self.params.decay_rates[pool] *\
@@ -568,10 +558,9 @@ class TCF(object):
 
         clim = []
         for each in drivers:
-            # Make the T axis the first axis for calculating a climatology,
-            #   swap those axes back afterward
-            clim.append(
-                climatology365(each.swapaxes(0, -1), dates).swapaxes(0, -1))
+            # Reshape the (365 x ...) arrays to (... x 365) arrays after
+            #   calculating a climatology
+            clim.append(climatology365(each, dates).swapaxes(0, -1))
         tolerance = np.nan * np.ones((soc.shape[-1], max_cycles), np.float32)
         disable = (not verbose or not verbose_type == 'tqdm')
         for cycle in tqdm(range(0, max_cycles), disable = disable):

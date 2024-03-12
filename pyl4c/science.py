@@ -180,7 +180,7 @@ def climatology365(series, dates, ignore_leap = True):
     Parameters
     ----------
     series : numpy.ndarray
-        T x ... array of data
+        (... x T) array of data (time should be the trailing axis)
     dates : list or tuple
         Sequence of datetime.datetime or datetime.date instances
     ignore_leap : bool
@@ -190,11 +190,12 @@ def climatology365(series, dates, ignore_leap = True):
     Returns
     -------
     numpy.ndarray
+        A (365 x ...) array: the 365-day climatology
     '''
     @suppress_warnings
     def calc_climatology(x):
         return np.array([
-            np.nanmean(x[ordinal == day,...], axis = 0)
+            np.nanmean(x[...,ordinal == day], axis = -1)
             for day in range(1, 366)
         ])
     # Get first and last day of the year (DOY)
