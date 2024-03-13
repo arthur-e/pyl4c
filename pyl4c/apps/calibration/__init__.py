@@ -378,7 +378,10 @@ class BPLUT(object):
         # "fraut" (fraction of autotrophic respiration) is the complement
         #   of carbon use efficiency (CUE)
         bplut['fraut']  = 1 - self.data['CUE'].ravel()[1:9]
-        bplut.to_csv(dest)
+        # Strangely enough, the header in the Ops file begins with '#'
+        header = list(BPLUT_HEADER)
+        header[0] = f'#{header[0]}'
+        bplut.to_csv(dest, index = False, header = header)
         print(f'Wrote BPLUT to: {dest}')
 
 

@@ -97,6 +97,7 @@ class TCF(object):
             state: Sequence = None, litterfall: Sequence = None
         ):
         self.constants = Namespace()
+        self.history = Namespace()
         self.state = Namespace()
         self.params = Namespace() # Parameters accessed, e.g., tcf.params.LUE
         self.lc_map = np.array(land_cover_map, dtype = np.uint16)
@@ -218,7 +219,7 @@ class TCF(object):
         npp = self.params.CUE * gpp
         # Compute litterfall from the mean annual NPP sum
         if litter is None:
-            npp_sum = climatology365(gpp, dates).sum(axis = 0)
+            npp_sum = climatology365(npp, dates).sum(axis = 0)
             # Litterfall is equal daily fraction of average annual NPP
             litter = npp_sum / 365
             self.constants.add('litterfall', litter)
@@ -333,7 +334,8 @@ class TCF(object):
 
     def forward_run(
             self, drivers: Sequence, state: Sequence = None,
-            dates: Sequence = None, verbose: bool = True
+            dates: Sequence = None, track_state: bool = False,
+            verbose: bool = True
         ) -> np.ndarray:
         '''
         Runs the TCF model forward in time for daily time steps. This is the
@@ -367,6 +369,9 @@ class TCF(object):
             If `litterfall` was not provided to `TCF` during initialization,
             you must provide a sequence of `datetime.date` instances, of length
             T for T time steps, indicating the current year of each time step.
+        track_state : bool
+            True to track (soil organic carbon) state at each time step,
+            rather than only tracking the current state (Default: False)
         verbose : bool
             True to show a progress bar and other messages (Default: True)
 
@@ -386,15 +391,25 @@ class TCF(object):
         # Pre-allocate output arrays
         rh = np.ones((3, *gpp.shape), dtype = np.float32) # (3 x N x T)
         nee = np.ones((*gpp.shape,), dtype = np.float32) # (N x T)
+
         # Determine the number of forward time steps
         if dates is not None:
-            steps = range(0, len(dates))
+            steps = np.arange(0, len(dates))
         else:
             try:
-                steps = range(0, drivers[0].shape[-1])
+                steps = np.arange(0, drivers[0].shape[-1])
             except:
                 raise ValueError('Could not determine number of time steps; provide a "dates" argument')
+
+        # Create a way to track SOC state over time
+        if track_state:
+            if not hasattr(self.history, 'soc'):
+                self.history.add('soc', soc[...,np.newaxis].repeat(
+                    steps.size, axis = -1).astype(np.float32))
+
         for t in tqdm(steps, disable = not verbose):
+            if track_state:
+                self.history.soc[...,t] = soc
             rh_t = np.empty((3, litter.shape[0])) # Allocate RH(t) array
             for pool in range(0, soc.shape[0]):
                 rh_t[pool] = self.params.decay_rates[pool] *\
