@@ -469,6 +469,10 @@ class CalibrationAPI(object):
         marker : str
             (Optional) The marker symbol (Default: ".")
         '''
+        xlabels = {
+            'smsf': 'Surface Soil Moisture',
+            'tsoil': 'Soil Temperature'
+        }
         np.seterr(invalid = 'ignore')
         assert driver.lower() in ('tsoil', 'smsf'),\
             'Requested driver "%s" cannot be plotted for RECO' % driver
@@ -478,7 +482,7 @@ class CalibrationAPI(object):
             "Argument --coefs expects a list [values,] with NO spaces"
         drivers, reco, _ = self._load_reco_data(filter_length)
         _, _, gpp, _, _ = self._load_gpp_data(filter_length)
-        smsf, tsoil = drivers
+        tsoil, smsf = drivers
         # Calculate k_mult based on original parameters
         f_smsf = linear_constraint(*self.bplut['smsf'][:,self._pft])
         k_mult = f_smsf(smsf) * arrhenius(tsoil, self.bplut['tsoil'][0,self._pft])
@@ -509,7 +513,8 @@ class CalibrationAPI(object):
             elif driver == 'smsf':
                 pyplot.plot(domain, linear_constraint(*coefs)(domain), 'r-')
 
-        pyplot.xlabel('%s (%s)' % (driver, self._metadata[driver]['units']))
+        pyplot.xlabel('%s (%s)' % (
+            xlabels[driver], self._metadata[driver]['units']))
         pyplot.ylabel('RH/Cbar')
         if xlim is not None:
             pyplot.xlim(xlim[0], xlim[1])
@@ -517,7 +522,8 @@ class CalibrationAPI(object):
             pyplot.ylim(ylim[0], ylim[1])
         pyplot.title(
             '%s (PFT %d): RECO Response to "%s"' % (
-                PFT[self._pft][0], self._pft, driver))
+                PFT[self._pft][0], self._pft,
+                'SMSF' if driver.lower() == 'smsf' else 'Tsoil'))
         pyplot.show()
 
     def score(

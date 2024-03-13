@@ -14,6 +14,7 @@ Calibration of SMAP L4C can be done entirely through the Unix shell (command lin
 - `optimize.py` for calibrating the GPP model
 - `mcmc.py` for calibrating the RECO `CUE` parameter (with other free parameters)
 - `optimize.py` again for calibrating the other RECO free parameters, after fixing `CUE`
+- Finally, running `tune_soc()` in `optimize.py` to calibrate SOC parameters
 
 
 **Required data:**
