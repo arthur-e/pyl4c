@@ -7,7 +7,7 @@ from numbers import Number
 from typing import Sequence
 from tqdm import tqdm
 from pyl4c import Namespace
-from pyl4c.science import arrhenius, linear_constraint, climatology365
+from pyl4c.science import arrhenius, linear_constraint, climatology365, ordinals365
 
 
 class TCF(object):
@@ -67,8 +67,10 @@ class TCF(object):
         variables for each of N pixels. The first three (3) state variables
         should be the initial states of each SOC pool.
     litterfall : Sequence or numpy.ndarray or None
-        A sequence of values or 1D array representing average daily litterfall
-        for each model resolution cell (pixel)
+        A sequence of values or 1D array representing average annual
+        litterfall (units: g C m-2 year-1) for each model resolution cell
+        (pixel). If not provided, it will be based on the climatological NPP
+        (when it is calculated).
     '''
     required_drivers = [
         'fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'FT', 'Tsoil', 'SMSF'
@@ -101,10 +103,12 @@ class TCF(object):
         self.state = Namespace()
         self.params = Namespace() # Parameters accessed, e.g., tcf.params.LUE
         self.lc_map = np.array(land_cover_map, dtype = np.uint16)
-        # Load mean daily litterfall rates
+
+        # Load available annual litterfall (per resolution cell/ pixel)
         if litterfall is not None:
             litterfall = np.array(litterfall, dtype = np.float32)
         self.constants.add('litterfall', litterfall)
+
         # Load soil organic carbon (SOC) state
         if state is not None:
             if hasattr(state, 'ndim'):
@@ -184,7 +188,8 @@ class TCF(object):
 
         Returns
         -------
-        numpy.ndarray
+        tuple
+            A tuple of `(gpp, npp, tmult, wmult)`, each an numpy.ndarray
         '''
         smrz_min = np.array(smrz_min)
         if smrz_min.ndim == 1:
@@ -217,19 +222,17 @@ class TCF(object):
         # GPP can be computed matrix-wise, in a single time step
         gpp = self.gpp(drivers[0:6])
         npp = self.params.CUE * gpp
-        # Compute litterfall from the mean annual NPP sum
         if litter is None:
+            # Compute litterfall from the mean annual NPP sum
             npp_sum = climatology365(npp, dates).sum(axis = 0)
-            # Litterfall is equal daily fraction of average annual NPP
-            litter = npp_sum / 365
-            self.constants.add('litterfall', litter)
+            self.constants.add('litterfall', npp_sum)
         # Pre-compute environmental constraints for soil RH
         tsoil, smsf = drivers[-2:]
         f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
         # Swap axes here only to make time the major (first) axis
         tmult = arrhenius(tsoil, self.params.tsoil).swapaxes(0, 1)
         wmult = f_smsf(smsf).swapaxes(0, 1)
-        return (gpp, npp, litter, tmult, wmult)
+        return (gpp, npp, tmult, wmult)
 
     def check_drivers(self, drivers: Sequence):
         '''
@@ -367,8 +370,9 @@ class TCF(object):
             SOC state in each SOC pool
         dates : Sequence or numpy.ndarray or None
             If `litterfall` was not provided to `TCF` during initialization,
-            you must provide a sequence of `datetime.date` instances, of length
-            T for T time steps, indicating the current year of each time step.
+            you must provide a sequence of `datetime.date` instances, of
+            length T for T time steps, indicating the current year of each
+            time step.
         track_state : bool
             True to track (soil organic carbon) state at each time step,
             rather than only tracking the current state (Default: False)
@@ -387,7 +391,8 @@ class TCF(object):
         soc = state
         if soc is None:
             soc = self.state.soc
-        gpp, npp, litter, tmult, wmult = self._setup_forward(drivers, state, dates)
+        # NOTE: self.constants.litterfall is also initialized in this function
+        gpp, npp, tmult, wmult = self._setup_forward(drivers, state, dates)
         # Pre-allocate output arrays
         rh = np.ones((3, *gpp.shape), dtype = np.float32) # (3 x N x T)
         nee = np.ones((*gpp.shape,), dtype = np.float32) # (N x T)
@@ -407,7 +412,13 @@ class TCF(object):
                 self.history.add('soc', soc[...,np.newaxis].repeat(
                     steps.size, axis = -1).astype(np.float32))
 
+        litter0 = self.constants.litterfall # Available annual litterfall
+        litter = litter0 / 365 # Default: Allocate equal fraction every day
+
         for t in tqdm(steps, disable = not verbose):
+            # If litterfall is scheduled: is a varying fraction of the annual
+            if self.constants.litterfall_rate is not None:
+                litter = litter0 * self.constants.litterfall_rate[:,t]
             if track_state:
                 self.history.soc[...,t] = soc
             rh_t = np.empty((3, litter.shape[0])) # Allocate RH(t) array
@@ -526,6 +537,54 @@ class TCF(object):
         #   that this is a loss FROM the "medium" (structural) pool
         rh[1,...] = rh[1,...] * (1 - self.params.f_structural.T)
         return rh
+
+    def setup_litterfall(
+            self, dates: Sequence, litterfall_rate: Sequence,
+            period_days: int = 8):
+        '''
+        Create a schedule for daily litterfall allocation. This step is
+        optional and, without it, the default behavior is to allocate an
+        equal daily fraction (i.e., 1/365) of total annual litterfall. The
+        resulting litterfall schedule is stored in the `constants` namespace
+        as `constants.litterfall_rate`.
+
+        Parameters
+        ----------
+        dates : Sequence or numpy.ndarray
+            A sequence of `datetime.date` instances, of length T for T time
+            steps, indicating the current year of each time step.
+        litterfall_rate : numpy.ndarray
+            An (P x N) array specifying the litterfall rate in each period
+            (P periods per year) for N pixels. There are 46 8-day periods in
+            a year.
+        period_days : int
+            The number of days; defaults to 8 (8-day periods) to match the
+            8-day composite cycle of MODIS/VIIRS datasets
+        '''
+        n_periods = 1 + (365 // period_days) # e.g., 46 8-day periods in 365 days
+        _preamble = f'Expected "litterfall_rate" to be shape ({n_periods} x N)'
+        assert litterfall_rate.shape[0] == n_periods,\
+            f'{_preamble} but first axis does not have {n_periods} elements'
+        # Get a sequence of (e.g., 8-day) periods
+        periods = np.arange(0, n_periods)\
+            .reshape((n_periods, 1)).repeat(period_days, axis = 1)
+        periods = periods.ravel()[:365]
+        jdates = np.array(ordinals365(dates)) - 1
+        assert jdates.max() == 364 # Python starts counting at zero
+        # Index into periods [0,45], which can then index into litter_rate,
+        #   a (46 x N) array, to produce an (T x N) array, then swap axes
+        litterfall_rate = litterfall_rate[periods[jdates],:].swapaxes(0, 1)
+        # Finally, convert litterfall rate from (1/period_days) to (1/day);
+        #   i.e., for an 8-day period, instead of "this amount per 8 days"
+        #   we want a daily amount
+        litterfall_rate /= period_days
+        # Check that, for a given year, 100% of litterfall is allocated; this
+        #   is like a checksum for the schedule: The fractions in a year
+        #   should add up to (close to) 1.0
+        n_years = len(dates) // 365 # Expected number of years
+        assert (np.abs(litterfall_rate.sum(axis = -1) - n_years) < 1).all(),\
+            f'Summing daily "litterfall_rate" over time did not result in 100% of litterfall allocated each year; check data values or the value of "period_days"'
+        self.constants.add('litterfall_rate', litterfall_rate)
 
     def spin_up(
             self, dates: Sequence, drivers: Sequence, state: Sequence = None,
