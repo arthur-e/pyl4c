@@ -184,6 +184,41 @@ class BPLUT(object):
             (p.strip('0123456789'), 0) for p in labels
         ]).keys())
 
+    def dump(self, src, dest):
+        '''
+        Writes the BPLUT to a CSV file, formatted for use in L4C Ops.
+        Requires an existing copy of a BPLUT to use as a template.
+
+        Parameters
+        ----------
+        src : str
+            Path to the template (original) BPLUT CSV file
+        dest : str
+            Output BPLUT CSV file path
+        '''
+        bplut = pd.read_csv(src, comment = '#', names = BPLUT_HEADER)
+        bplut['LUEmax']     = self.data['LUE'][0,1:9]
+        bplut['Tmin_min_K'] = self.data['tmin'][0,1:9]
+        bplut['Tmin_max_K'] = self.data['tmin'][1,1:9]
+        bplut['VPD_min_Pa'] = self.data['vpd'][0,1:9]
+        bplut['VPD_max_Pa'] = self.data['vpd'][1,1:9]
+        bplut['SMrz_min']   = self.data['smrz'][0,1:9]
+        bplut['SMrz_max']   = self.data['smrz'][1,1:9]
+        bplut['FT_min']     = self.data['ft'][0,1:9]
+        bplut['FT_max']     = self.data['ft'][1,1:9] # Likely not used (=1.0)
+        bplut['Tsoil_beta0']= self.data['tsoil'][0,1:9]
+        bplut['SMtop_min']  = self.data['smsf'][0,1:9]
+        bplut['SMtop_max']  = self.data['smsf'][1,1:9]
+        bplut['kopt']       = self.data['decay_rates'][0,1:9]
+        # "fraut" (fraction of autotrophic respiration) is the complement
+        #   of carbon use efficiency (CUE)
+        bplut['fraut']  = 1 - self.data['CUE'].ravel()[1:9]
+        # Strangely enough, the header in the Ops file begins with '#'
+        header = list(BPLUT_HEADER)
+        header[0] = f'#{header[0]}'
+        bplut.to_csv(dest, index = False, header = header)
+        print(f'Wrote BPLUT to: {dest}')
+
     def flat(self, pft, labels = None):
         '''
         Retrieves a flat list of parameters for a specific PFT.
@@ -348,41 +383,6 @@ class BPLUT(object):
         if flush:
             hdf.flush()
             hdf.close()
-
-    def dump(self, src, dest):
-        '''
-        Writes the BPLUT to a CSV file, formatted for use in L4C Ops.
-        Requires an existing copy of a BPLUT to use as a template.
-
-        Parameters
-        ----------
-        src : str
-            Path to the template (original) BPLUT CSV file
-        dest : str
-            Output BPLUT CSV file path
-        '''
-        bplut = pd.read_csv(src, comment = '#', names = BPLUT_HEADER)
-        bplut['LUEmax']     = self.data['LUE'][0,1:9]
-        bplut['Tmin_min_K'] = self.data['tmin'][0,1:9]
-        bplut['Tmin_max_K'] = self.data['tmin'][1,1:9]
-        bplut['VPD_min_Pa'] = self.data['vpd'][0,1:9]
-        bplut['VPD_max_Pa'] = self.data['vpd'][1,1:9]
-        bplut['SMrz_min']   = self.data['smrz'][0,1:9]
-        bplut['SMrz_max']   = self.data['smrz'][1,1:9]
-        bplut['FT_min']     = self.data['ft'][0,1:9]
-        bplut['FT_max']     = self.data['ft'][1,1:9] # Likely not used (=1.0)
-        bplut['Tsoil_beta0']= self.data['tsoil'][0,1:9]
-        bplut['SMtop_min']  = self.data['smsf'][0,1:9]
-        bplut['SMtop_max']  = self.data['smsf'][1,1:9]
-        bplut['kopt']       = self.data['decay_rates'][0,1:9]
-        # "fraut" (fraction of autotrophic respiration) is the complement
-        #   of carbon use efficiency (CUE)
-        bplut['fraut']  = 1 - self.data['CUE'].ravel()[1:9]
-        # Strangely enough, the header in the Ops file begins with '#'
-        header = list(BPLUT_HEADER)
-        header[0] = f'#{header[0]}'
-        bplut.to_csv(dest, index = False, header = header)
-        print(f'Wrote BPLUT to: {dest}')
 
 
 class GenericOptimization(object):

@@ -117,12 +117,13 @@ class CalibrationAPI(object):
             # This is a parameter to be optimized; use default bounds
             lower.append(bounds[p][0])
             upper.append(bounds[p][1])
-            if p in fixed:
-                if fixed[p] is not None:
-                    lower.pop()
-                    upper.pop()
-                    lower.append(fixed[p] - 1e-3)
-                    upper.append(fixed[p] + 1e-3)
+            if fixed is not None:
+                if p in fixed:
+                    if fixed[p] is not None:
+                        lower.pop()
+                        upper.pop()
+                        lower.append(fixed[p] - 1e-3)
+                        upper.append(fixed[p] + 1e-3)
         return (np.array(lower), np.array(upper))
 
     def _clean(
@@ -661,9 +662,10 @@ class CalibrationAPI(object):
             if optimize:
                 bounds = self._bounds(init_params, bounds_dict, 'GPP', fixed)
                 # Set initial value to a fixed value if specified
-                for key, value in fixed.items():
-                    if value is not None and key in self._required_parameters['GPP']:
-                        init_params[self._required_parameters['GPP'].index(key)] = value
+                if fixed is not None:
+                    for key, value in fixed.items():
+                        if value is not None and key in self._required_parameters['GPP']:
+                            init_params[self._required_parameters['GPP'].index(key)] = value
                 objective = partial(
                     residuals, drivers = drivers_flat,
                     observed = tower_gpp_flat, weights = weights)

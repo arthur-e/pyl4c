@@ -1,7 +1,8 @@
 '''
 Calibration of L4C using Markov Chain Monte Carlo (MCMC). Example use:
 
-    python mcmc.py tune-gpp <pft>
+    python mcmc.py pft <pft> tune-gpp --config=<config_file>
+    python mcmc.py pft <pft> tune-reco --config=<config_file>
 '''
 
 import datetime
