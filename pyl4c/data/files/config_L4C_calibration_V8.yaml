@@ -30,10 +30,10 @@ optimization:
   # Parameter values that are fixed in advance (i.e., not calibrated)
   fixed:
     LUE: [~, ~, 1.40, ~, 1.68, ~, ~, ~, 1.94]
-    # smrz1: [~, ~, 30, ~, ~, ~, ~, ~, ~, ~]
-    # CUE: [~, 0.430, 0.497, 0.449, 0.481, 0.449, 0.448, 0.463, 0.459] # From MCMC
-    # tsoil: [~, 261.0, 389.4, 113.0, 280.0, 338.8, 390.7, 385.2, 397.6] # From MCMC
-    # smsf0: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+    CUE: [~, 0.435, 0.498, 0.448, 0.475, 0.455, 0.447, 0.461, 0.461] # From MCMC
+    smsf0: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+    smsf1: [~, ~, ~, ~, ~, ~, ~, ~, ~]
+    tsoil: [~, 178, ~, 121, 193, 179, ~, ~, ~] # From MCMC
   # Size of steps to be used in global parameter search
   step_size:
     LUE: 0.01

@@ -27,7 +27,7 @@ optimization:
   function:
     GPP: "_gpp2" # i.e., Use the [left bound, left bound + width] spec
     RECO: "_reco"
-  backend_template: "/ntsg_home/20240426_L4C_{model}_calibration_PFT{pft}.nc4"
+  backend_template: "/ntsg_home/SMAP_L4C/20240426_L4C_{model}_calibration_PFT{pft}.nc4"
   prior: "/usr/local/dev/pyl4c/pyl4c/data/files/priors/prior_L4C_V8.yaml"
   chains: 3
   draws: 20000
