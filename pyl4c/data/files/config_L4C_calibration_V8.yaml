@@ -32,7 +32,6 @@ optimization:
     LUE: [~, ~, 1.40, ~, 1.68, ~, ~, ~, 1.94]
     CUE: [~, 0.435, 0.498, 0.448, 0.475, 0.455, 0.447, 0.461, 0.461] # From MCMC
     smsf0: [~, 0, 0, 0, 0, 0, 0, 0, 0]
-    smsf1: [~, ~, ~, ~, ~, ~, ~, ~, ~]
     tsoil: [~, 178, ~, 121, 193, 179, ~, ~, ~] # From MCMC
   # Size of steps to be used in global parameter search
   step_size:

@@ -229,8 +229,8 @@ class CalibrationAPI(object):
         #   observations
         tower_gpp = self._filter(tower_gpp, filter_length)
         tower_gpp = self._clean(tower_gpp, drivers, protocol = 'GPP')
-        tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
         # Subset all datasets to just the valid observation site-days
+        tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
         drivers_flat = list()

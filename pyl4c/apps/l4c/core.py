@@ -108,6 +108,7 @@ class TCF(object):
         if litterfall is not None:
             litterfall = np.array(litterfall, dtype = np.float32)
         self.constants.add('litterfall', litterfall)
+        self.constants.add('litterfall_rate', None)
 
         # Load soil organic carbon (SOC) state
         if state is not None:
