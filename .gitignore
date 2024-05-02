@@ -7,6 +7,9 @@ virtualenv.sh
 pyl4c.egg-info/
 dist/
 
+# Project-specific files
+pyl4c/data/files/ancillary_file_paths.yaml
+
 # Cython stuff
 *.c
 *.so
