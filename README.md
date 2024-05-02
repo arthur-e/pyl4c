@@ -42,16 +42,16 @@ $ pip install -e .
 
 ```sh
 # To install support for calibration of L4C
-pip install -e pyl4c[calibration]
+pip install -e .[calibration]
 
 # To install support for command line interfaces and the "scripts" folder
-pip install -e pyl4c[cli]
+pip install -e .[cli]
 
 # To install support for reading netCDF4 files
-pip install -e pyl4c[netcdf]
+pip install -e .[netcdf]
 
 # To install support for resampling L4C data by TransCom regions
-pip install -e pyl4c[transcom]
+pip install -e .[transcom]
 ```
 
 This will also install the project's dependencies. **NOTE: Because the GDAL Python bindings can be difficult to install, I recommend installing them as binaries through your system's package manager.** For instance, on Ubuntu GNU/Linux:
@@ -70,6 +70,13 @@ There can also be issues with installing GDAL in a virtual environment; see [thi
 
 ```sh
 pip install --no-build-isolation --no-cache-dir --force-reinstall gdal==$(gdal-config --version)
+```
+
+If there are "undefined symbol" issues, despite the above steps, try installing `numpy` from source, first, before re-installing GDAL as above:
+
+```sh
+# Requires gcc version 8.0.0+
+pip install --no-binary=numpy numpy
 ```
 
 
