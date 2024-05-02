@@ -11,25 +11,38 @@ because, in fact, they must be 1000 or 9000, depending on the grid size, in
 order to get the right number of rows and columns in the output image.
 Grid resolution is only a whole number for the polar (north or south
 hemisphere) grids.
+
+`ANCILLARY_DATA_PATHS` is loaded from a file,
+`pyl4c/data/files/ancillary_file_paths.yaml`, which describes the location on
+the local file system of certain ancillary files (and naming conventions
+within those files):
+
+    smap_l4c_ancillary_data_file_path: "SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5"
+    smap_l4c_1km_ancillary_data_lc_path: "MCD12Q1_M01_lc_dom_uint8"
+    smap_l4c_9km_ancillary_data_lc_path: "MOD12Q1_M09_lc_dom_uint8"
+    smap_l4c_1km_ancillary_data_x_coord_path: "SMAP_L4_C_LON_14616_x_34704_M01_flt32"
+    smap_l4c_1km_ancillary_data_y_coord_path: "SMAP_L4_C_LAT_14616_x_34704_M01_flt32"
+    smap_l4c_9km_ancillary_data_x_coord_path: "SMAP_L4_C_LON_1624_x_3856_M09_flt32"
+    smap_l4c_9km_ancillary_data_y_coord_path: "SMAP_L4_C_LAT_1624_x_3856_M09_flt32"
+    smap_l4c_9km_pft_subgrid_counts_CONUS: "SMAP_L4C_Vv4040_1km_subgrid_PFT_counts_CONUS.h5"
+    smap_l4c_9km_sparse_col_index: "MCD12Q1_M09land_col.uint16"
+    smap_l4c_9km_sparse_row_index: "MCD12Q1_M09land_row.uint16"
+    transcom_netcdf_path: "CarbonTracker_TransCom_and_other_regions.nc"
+
 '''
 
 import csv
+import os
+import yaml
 import numpy as np
+import pyl4c
 from collections import OrderedDict
 
-ANCILLARY_DATA_PATHS = {
-    'smap_l4c_ancillary_data_file_path': '/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5',
-    'smap_l4c_1km_ancillary_data_lc_path': 'MCD12Q1_M01_lc_dom_uint8',
-    'smap_l4c_9km_ancillary_data_lc_path': 'MOD12Q1_M09_lc_dom_uint8',
-    'smap_l4c_1km_ancillary_data_x_coord_path': 'SMAP_L4_C_LON_14616_x_34704_M01_flt32',
-    'smap_l4c_1km_ancillary_data_y_coord_path': 'SMAP_L4_C_LAT_14616_x_34704_M01_flt32',
-    'smap_l4c_9km_ancillary_data_x_coord_path': 'SMAP_L4_C_LON_1624_x_3856_M09_flt32',
-    'smap_l4c_9km_ancillary_data_y_coord_path': 'SMAP_L4_C_LAT_1624_x_3856_M09_flt32',
-    'smap_l4c_9km_pft_subgrid_counts_CONUS': 'SMAP_L4C_Vv4040_1km_subgrid_PFT_counts_CONUS.h5',
-    'smap_l4c_9km_sparse_col_index': '/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/MCD12Q1_M09land_col.uint16',
-    'smap_l4c_9km_sparse_row_index': '/anx_lagr3/arthur.endsley/SMAP_L4C/ancillary_data/MCD12Q1_M09land_row.uint16',
-    'transcom_netcdf_path': 'CarbonTracker_TransCom_and_other_regions.nc'
-}
+ANCILLARY_FILE = os.path.join(
+    os.path.dirname(pyl4c.__file__), 'data/files/ancillary_file_paths.yaml')
+if os.path.exists(ANCILLARY_FILE):
+    with open(ANCILLARY_FILE, 'r') as file:
+        ANCILLARY_DATA_PATHS = yaml.safe_load(file)
 
 # CSV header for L4C Ops BPLUT files
 BPLUT_HEADER = ('LC_index', 'LC_Label', 'model_code', 'NDVItoFPAR_scale',
