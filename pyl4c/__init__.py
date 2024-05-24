@@ -117,22 +117,25 @@ def pft_dominant(
     numpy.ndarray
         An M-element 1D array of the dominant PFT among N pixels
     '''
-    results = np.array([ # Skip invalid PFT codes
-        list(filter(lambda x: x[0] in range(1, 9), count))[0][0]
-        for count in [ # Count 1-km cells by PFT
-            a.most_common() for a in np.apply_along_axis(
-                lambda x: Counter(x.tolist()), 1, pft_map_array)
-        ]
-    ])
+    most_common = [ # Count how many instances of each PFT code
+        a.most_common() for a in
+        np.apply_along_axis(lambda x: Counter(x.tolist()), 1, pft_map_array)
+    ]
+    candidates = [ # Filter out results for PFT codes not in [1,9)
+        list(filter(lambda x: x in range(1, 9), options)) for options in
+        [[code for code, _ in result] for result in most_common]
+    ]
+    # Some of the candidates have no valid PFT codes, hence len(x) == 0
+    cleaned = [np.nan if len(x) == 0 else x[0] for x in candidates]
     if site_list is None:
-        return results
+        return cleaned
     # Prescribe DNF sites based on an analysis of sites with at least
     #   5% DNF pixels
     for name in ('CN-Moh', 'CA-SCB', 'CA-SCC', 'CA-ARB', 'CA-ARF'):
         if name in site_list:
             idx = site_list.index(name)
-            results[idx] = 3
-    return results
+            cleaned[idx] = 3
+    return cleaned
 
 
 def pft_selector(pft_map, pft):

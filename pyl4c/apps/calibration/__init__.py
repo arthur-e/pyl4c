@@ -184,7 +184,7 @@ class BPLUT(object):
             (p.strip('0123456789'), 0) for p in labels
         ]).keys())
 
-    def dump(self, src, dest):
+    def dump(self, src, dest, clean = False):
         '''
         Writes the BPLUT to a CSV file, formatted for use in L4C Ops.
         Requires an existing copy of a BPLUT to use as a template.
@@ -195,6 +195,10 @@ class BPLUT(object):
             Path to the template (original) BPLUT CSV file
         dest : str
             Output BPLUT CSV file path
+        clean : bool
+            True to standardize some output fields, e.g., making sure very
+            small parameter values (from optimization) are actually zero
+            (Default: False)
         '''
         bplut = pd.read_csv(src, comment = '#', names = BPLUT_HEADER)
         bplut['LUEmax']     = self.data['LUE'][0,1:9]
@@ -210,6 +214,10 @@ class BPLUT(object):
         bplut['SMtop_min']  = self.data['smsf'][0,1:9]
         bplut['SMtop_max']  = self.data['smsf'][1,1:9]
         bplut['kopt']       = self.data['decay_rates'][0,1:9]
+        # If the soil-moisture parameters are close to zero, make them zero
+        if clean:
+            bplut.loc[np.abs(bplut['SMtop_min']) < 1,'SMtop_min'] = 0
+            bplut.loc[np.abs(bplut['SMrz_min']) < 1,'SMrz_min'] = 0
         # "fraut" (fraction of autotrophic respiration) is the complement
         #   of carbon use efficiency (CUE)
         bplut['fraut']  = 1 - self.data['CUE'].ravel()[1:9]

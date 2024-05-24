@@ -904,6 +904,12 @@ class CalibrationAPI(object):
             except:
                 import ipdb
                 ipdb.set_trace()#FIXME
+
+            xmin, xmax = np.nanpercentile(igbp_soc / 1e3, (0, 100))
+            print(f'-- Min/Max of IGBP SOC: {xmin.round(1), xmax.round(1)}')
+            print(f'-- Min/Max of Predicted SOC: {np.nanmin(soc / 1e3).round(1), np.nanmax(soc / 1e3).round(1)}')
+            pyplot.xlim(0, xmax)
+            pyplot.ylim(0, xmax)
             pyplot.xlabel('IGBP SOC (kg m$^{-2}$)')
             pyplot.ylabel('Modeled Equilibrium SOC (kg m$^{-2}$)')
             pyplot.show()
