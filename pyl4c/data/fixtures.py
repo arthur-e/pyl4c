@@ -44,6 +44,18 @@ if os.path.exists(ANCILLARY_FILE):
     with open(ANCILLARY_FILE, 'r') as file:
         ANCILLARY_DATA_PATHS = yaml.safe_load(file)
 
+# CSV header for L4C Ops BPLUT files
+BPLUT_HEADER = ('LC_index', 'LC_Label', 'model_code', 'NDVItoFPAR_scale',
+    'NDVItoFPAR_offset', 'LUEmax', 'Tmin_min_K', 'Tmin_max_K',
+    'VPD_min_Pa', 'VPD_max_Pa', 'SMrz_min', 'SMrz_max', 'FT_min',
+    'FT_max', 'SMtop_min', 'SMtop_max', 'Tsoil_beta0', 'Tsoil_beta1',
+    'Tsoil_beta2', 'fraut', 'fmet', 'fstr', 'kopt', 'kstr', 'kslw',
+    'Nee_QA_Rank_min', 'Nee_QA_Rank_max', 'Nee_QA_Error_min',
+    'Nee_QA_Error_max', 'Fpar_QA_Rank_min', 'Fpar_QA_Rank_max',
+    'Fpar_QA_Error_min', 'Fpar_QA_Error_max', 'FtMethod_QA_mult',
+    'FtAge_QA_Rank_min', 'FtAge_QA_Rank_max', 'FtAge_QA_Error_min',
+    'FtAge_QA_Error_max', 'Par_QA_Error', 'Tmin_QA_Error',
+    'Vpd_QA_Error', 'Smrz_QA_Error', 'Tsoil_QA_Error', 'Smtop_QA_Error')
 
 # Version 4020 BPLUT parameters in order of PFT numeric code (PFT 0 through 9)
 BPLUT = OrderedDict({
@@ -234,21 +246,11 @@ def restore_bplut(csv_file_path, version_id = None):
     -------
     OrderedDict
     '''
-    header = ('LC_index', 'LC_Label', 'model_code', 'NDVItoFPAR_scale',
-        'NDVItoFPAR_offset', 'LUEmax', 'Tmin_min_K', 'Tmin_max_K',
-        'VPD_min_Pa', 'VPD_max_Pa', 'SMrz_min', 'SMrz_max', 'FT_min',
-        'FT_max', 'SMtop_min', 'SMtop_max', 'Tsoil_beta0', 'Tsoil_beta1',
-        'Tsoil_beta2', 'fraut', 'fmet', 'fstr', 'kopt', 'kstr', 'kslw',
-        'Nee_QA_Rank_min', 'Nee_QA_Rank_max', 'Nee_QA_Error_min',
-        'Nee_QA_Error_max', 'Fpar_QA_Rank_min', 'Fpar_QA_Rank_max',
-        'Fpar_QA_Error_min', 'Fpar_QA_Error_max', 'FtMethod_QA_mult',
-        'FtAge_QA_Rank_min', 'FtAge_QA_Rank_max', 'FtAge_QA_Error_min',
-        'FtAge_QA_Error_max', 'Par_QA_Error', 'Tmin_QA_Error',
-        'Vpd_QA_Error', 'Smrz_QA_Error', 'Tsoil_QA_Error', 'Smtop_QA_Error')
     contents = []
     with open(csv_file_path, 'r') as stream:
         reader = csv.DictReader(
-            filter(lambda row: row[0] != '#', stream), fieldnames = header)
+            filter(lambda row: row[0] != '#', stream),
+            fieldnames = BPLUT_HEADER)
         for row in reader:
             contents.append(row)
 

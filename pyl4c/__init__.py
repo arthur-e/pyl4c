@@ -22,6 +22,7 @@ __pdoc__ = {}
 __pdoc__['tests'] = False
 
 from collections import Counter
+from typing import Sequence
 import warnings
 import numpy as np
 
@@ -99,7 +100,8 @@ def haversine(p1, p2, radius = 6371e3):
     return float(angle * radius)
 
 
-def pft_dominant(pft_map_array):
+def pft_dominant(
+        pft_map_array: np.ndarray, site_list: Sequence = None) -> np.ndarray:
     '''
     Returns the PFT class dominant among a (1-km) subarray; for example,
     for each 9-km EASE-Grid 2.0 pixel, returns the PFT class that is dominant
@@ -112,16 +114,28 @@ def pft_dominant(pft_map_array):
 
     Returns
     -------
-    list
-        An M-element list of the dominant PFT among N pixels
+    numpy.ndarray
+        An M-element 1D array of the dominant PFT among N pixels
     '''
-    return [ # Skip invalid PFT codes
-        list(filter(lambda x: x[0] in range(1, 9), count))[0][0]
-        for count in [ # Count 1-km cells by PFT
-            a.most_common() for a in np.apply_along_axis(
-                lambda x: Counter(x.tolist()), 1, pft_map_array)
-        ]
+    most_common = [ # Count how many instances of each PFT code
+        a.most_common() for a in
+        np.apply_along_axis(lambda x: Counter(x.tolist()), 1, pft_map_array)
     ]
+    candidates = [ # Filter out results for PFT codes not in [1,9)
+        list(filter(lambda x: x in range(1, 9), options)) for options in
+        [[code for code, _ in result] for result in most_common]
+    ]
+    # Some of the candidates have no valid PFT codes, hence len(x) == 0
+    cleaned = [np.nan if len(x) == 0 else x[0] for x in candidates]
+    if site_list is None:
+        return cleaned
+    # Prescribe DNF sites based on an analysis of sites with at least
+    #   5% DNF pixels
+    for name in ('CN-Moh', 'CA-SCB', 'CA-SCC', 'CA-ARB', 'CA-ARF'):
+        if name in site_list:
+            idx = site_list.index(name)
+            cleaned[idx] = 3
+    return cleaned
 
 
 def pft_selector(pft_map, pft):

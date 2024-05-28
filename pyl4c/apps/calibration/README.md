@@ -1,62 +1,39 @@
 L4C Calibration
 ===============
 
-**Differences from the Matlab version:**
+**Important considerations:**
 
-- In the Matlab version, the autotrophic respiration fraction, `fraut`, is calibrated instead of plant carbon-use efficiency (CUE). Plant CUE is reported in the public BPLUT, which led to this confusion, where it is (1 - CUE) that is actually calibrated in the Matlab code. Calibrating on CUE works just as well, and that is what is done in this Python version. Moreover, the bounds for the `fraut` (or 1 - CUE) parameter in the Matlab code were given as [0, 0.7], which doesn't make sense since it allows for autotrophic respiration to go to zero. These bounds make more sense for CUE, however, since a CUE of 0.7 (i.e., autotrophic respiration can't be less than 30\% of GPP) is more physically realistic.
+- In the L4C operational code, the autotrophic respiration ($R_A$) fraction, `fraut`, instead of plant carbon-use efficiency (CUE), is used to partition GPP into NPP and $R_A$. This may be confusing because plant CUE is reported in the public BPLUT, while it is (1 - CUE) that is actually used in the operational code. Here, we calibrate CUE and convert it to (1 - CUE) when updating the BPLUT.
 
 
 Calibration Procedure
 ---------------------
 
-Calibration of SMAP L4C can be done entirely through the Unix shell (command line) by running `pyl4c/apps/calibration/main.py` as a Python script. File paths for required input datasets should be specified in the calibration configuration JSON file, e.g.:
+Calibration of SMAP L4C can be done entirely through the Unix shell (command line) by running the `optimize.py` (non-linear least-squares optimization) and/or `mcmc.py` (Markov Chain Monte Carlo) scripts. While it's possible to calibrate the GPP and RECO models using either of these two approaches, we recommend:
 
-```json
-{
-  "BPLUT_file": "...",
-  "drivers_file": "...",
-  "scratch_file": "...",
-  "towers_file": "..."
-}
-```
+- `optimize.py` for calibrating the GPP model
+- `mcmc.py` for calibrating the RECO `CUE` parameter (with other free parameters)
+- `optimize.py` again for calibrating the other RECO free parameters, after fixing `CUE`
+- Finally, running `tune_soc()` in `optimize.py` to calibrate SOC parameters
 
-**See an example (and the default file used in calibration) here:** `pyl4c/data/files/config_calibration.json`
-
-On the NTSG network, the required files are stored at:
-
-  `/anx_lagr3/arthur.endsley/SMAP_L4C/calibration`
 
 **Required data:**
 
 - HDF5 file with driver datasets (see "Harmonized HDF Specification" below); this file should contain all of the input datasets necessary to calibrate GPP and RECO. In a typical re-calibration, the soil moisture fields (`smsf`, `smrz`) need to be updated. The path to this file is specified as the `drivers_file` property in the calibration configuration JSON file.
-- HDF5 file with eddy covariance (EC) flux tower observation data; currently, this file is named `Fluxnet2015_LaThuile_tower_data_for_356_sites.h5` and should not need to be changed. The path to this file is specified as the `towers_file` property in the calibration configure JSON file.
+- HDF5 file with eddy covariance (EC) flux tower observation data.
 - A recent BPLUT CSV file; typically, this is the BPLUT from the previous calibration (i.e., current operational product). The path to this file is specified as the `BPLUT_file` property in the calibration configuration JSON file.
 
-**During calibration, a "scratch" file is created.** This file contains 365-day climatologies for input drivers, tower observations (optionally filtered), and the working BPLUT that is progressively updated. The path to this file is specified as the `scratch_file` property in the calibration configuration JSON file.
 
 **Calibration steps:**
 
-Note that some commands require a specific PFT to be chosen (most notably, when running an optimization, as calibration is performed separately for each PFT). In such cases, the `pft` command is used to select a PFT and `pft <pft>` indicates that a numeric PFT code should be given in place of `<pft>`. Other commands require one of two arguments, "gpp" or "reco", to indicate which is being calibrated; these are indicated as `<gpp|reco>` and only one should be provided. Similarly, `<smrz|tmin>` and `<smsf|tsoil>` indicate that only one of the strings "smrz", "tmin", "smsf", or "tsoil" should be provided.
+Note that some commands require a specific PFT to be chosen (most notably, when running an optimization, as calibration is performed separately for each PFT). In such cases, the `pft` command is used to select a PFT and `pft <pft>` indicates that a numeric PFT code should be given in place of `<pft>`. Other commands require one of a fininte number of arguments, e.g., `<smrz|tmin>` and `<smsf|tsoil>` indicate that only one of the strings "smrz", "tmin", "smsf", or "tsoil" should be provided.
 
-1. Create the scratch file: `python main.py setup`
-2. Optionally, preview the effect of filtering the tower data: `python main.py pft <pft> filter-preview <gpp|reco> <window_size>`
-3. Optionally, apply a smoothing filter to the the data for that PFT: `python main.py pft <pft> filter <gpp|reco> <window_size>`
-4. Optionally, apply a smoothing filter to the data for ALL PFTs: `python main.py filter-all <gpp|reco> <window_size>`
-5. Optionally, plot the current GPP response function: `python main.py pft <pft> plot-gpp <smrz|tmin>`
-6. Run the GPP calibration with 20 random trials: `python main.py pft <pft> tune-gpp --trials=20`
-7. Optionally, plot the new GPP response function: `python main.py pft <pft> plot-gpp <smrz|tmin>`
-8. Optionally, plot the current RECO response function: `python main.py pft <pft> plot-reco <smsf|tsoil>`
-9. Run the RECO calibration with 20 random trials: `python main.py pft <pft> tune-reco --trials=20`
-10. Optionally, plot the new RECO response function: `python main.py pft <pft> plot-reco <smsf|tsoil>`
-
-The updated BPLUT is stored in the scratch file and can be dumped to a Python pickle file:
-
-```py
-from pyl4c.apps.calibration import BPLUT
-
-bp = BPLUT(hdf5_path = 'scratch_file.h5')
-bp.pickle('new_bplut.pickle')
-```
+1. Update the GPP optimization configuration file, starting with `config_L4C_calibration.yaml` as a template.
+2. Run the GPP parameter optimization using `optimization.py` with multiple random trials: `python optimize.py pft <pft> tune-gpp`
+3. Update the RECO optimization configuration file, starting with `config_L4C_MCMC_calibration.yaml` as a template.
+4. Run the RECO calibration using `mcmc.py`: `python mcmc.py pft <pft> tune-reco`
+5. Burn and thin the chains as needed, then select optimal `CUE` parameter, updating the RECO configuration file.
+6. Run the RECO optimization for the remaining free parameters: `python optimize.py pft <pft> tune-reco --fixed=[CUE]`
 
 
 Harmonized HDF Specification
@@ -69,9 +46,6 @@ Going forward, HDF5 files used in both calibration and forward model runs should
 ```
 # Shape is indicated, where N is number of sites and T is number of time steps
 coords/
-    grid_1km_subgrid_col_idx  (N x 81)
-    grid_1km_subgrid_row_idx  (N x 81)
-    grid_9km_idx              (N x 2)
     lng_lat                   (N x 2)
 
 drivers/
@@ -87,18 +61,12 @@ drivers/
     tsurf     (T x N)       [deg K]
     vpd       (T X N)       [Pascals]
 
-legacy/                 (Optional) Any data from prior versions goes here
-    lc_dom
-
 site_id       (N)       Site names/ unique identifiers
 site_pft_9km  (N)       Dominant PFT class in 9-km pixel
 
 state/
     PFT       (N x 81)      1-km PFT classes
     porosity  (N)           (Optional) Porosity from L4SM land model
-    npp_sum   (N x 81)      Annual sum of net primary production (NPP)
-    soil_organic_carbon
-              (3 x N x 81)  SOC content (g C m-2) for each of 3 SOC pools
 
 time          (T x 4)   Where T is the number of time steps
 ```

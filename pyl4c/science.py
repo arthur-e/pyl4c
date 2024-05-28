@@ -180,7 +180,7 @@ def climatology365(series, dates, ignore_leap = True):
     Parameters
     ----------
     series : numpy.ndarray
-        T x ... array of data
+        (... x T) array of data (time should be the trailing axis)
     dates : list or tuple
         Sequence of datetime.datetime or datetime.date instances
     ignore_leap : bool
@@ -190,11 +190,12 @@ def climatology365(series, dates, ignore_leap = True):
     Returns
     -------
     numpy.ndarray
+        A (365 x ...) array: the 365-day climatology
     '''
     @suppress_warnings
     def calc_climatology(x):
         return np.array([
-            np.nanmean(x[ordinal == day,...], axis = 0)
+            np.nanmean(x[...,ordinal == day], axis = -1)
             for day in range(1, 366)
         ])
     # Get first and last day of the year (DOY)
@@ -478,13 +479,13 @@ def mean_residence_time(
     if subset_id is not None:
         # Get X- and Y-offsets while we're at it
         soc, xoff, yoff = subset(
-            hdf, soc_path, None, None, subset_id = subset_id)
+            hdf, soc_field, None, None, subset_id = subset_id)
         rh, _, _ = subset(
-            hdf, rh_path, None, None, subset_id = subset_id)
+            hdf, rh_field, None, None, subset_id = subset_id)
     else:
         xoff = yoff = 0
-        soc = hdf[soc_path][:]
-        rh = hdf[rh_path][:]
+        soc = hdf[soc_field][:]
+        rh = hdf[rh_field][:]
 
     # Find those areas of NoData in either array
     mask = np.logical_or(soc == nodata, rh == nodata)
