@@ -155,16 +155,22 @@ class CalibrationAPI(object):
         # Filter the parameters to just those for the PFT of interest
         return self.bplut.flat(self._pft, self._required_parameters[model.upper()])
 
-    def _load_gpp_data(self, filter_length):
+    def _load_gpp_data(
+            self, filter_length, store = None, prefix = '', load_gpp = True,
+            check_validity = True):
         'Load the required datasets for GPP, for a single PFT'
         blacklist = self.config['data']['sites_blacklisted']
-        with h5py.File(self.hdf5, 'r') as hdf:
-            n_steps = hdf['time'].shape[0]
-            sites = hdf['site_id'][:]
+        if store is None:
+            store = self.hdf5
+        with h5py.File(store, 'r') as hdf:
+            n_steps = hdf[f'{prefix}time'].shape[0]
+            sites = hdf[f'{prefix}site_id'][:]
             if hasattr(sites[0], 'decode'):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
             # Get dominant PFT
-            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
+            pft_map = hdf[f'{prefix}state/PFT'][:]
+            if pft_map.ndim > 1:
+                pft_map = pft_dominant(pft_map, sites)
             # Blacklist validation sites
             pft_mask = np.logical_and(
                 np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
@@ -200,7 +206,7 @@ class CalibrationAPI(object):
 
             # Check units on fPAR
             if np.nanmax(drivers['fPAR'][:]) > 10:
-                drivers['fPAR'] /= 100
+                drivers['fPAR'] = drivers['fPAR'].astype(np.float32) / 100
             assert len(set(self._required_drivers['GPP'])\
                 .difference(set(drivers.keys()))) == 0,\
                 'Did not find all required drivers for the GPP model!'
@@ -212,19 +218,25 @@ class CalibrationAPI(object):
                     .repeat(n_steps, axis = 0)
             else:
                 print('WARNING - "weights" not found in HDF5 file!')
-            if 'GPP' not in hdf.keys():
+            if load_gpp and 'GPP' not in hdf.keys():
                 with h5py.File(
                         self.config['data']['supplemental_file'], 'r') as _hdf:
                     tower_gpp = _hdf['GPP'][:][:,pft_mask]
-            else:
+            elif load_gpp:
                 tower_gpp = hdf['GPP'][:][:,pft_mask]
 
         # Check that driver data do not contain NaNs
-        for field in drivers.keys():
-            if field == 'fPAR':
-                continue # The 1-km subgrid may have NaNs
-            assert not np.isnan(drivers[field]).any(),\
-                f'Driver dataset "{field}" contains NaNs'
+        if check_validity:
+            for field in drivers.keys():
+                if field == 'fPAR':
+                    continue # The 1-km subgrid may have NaNs
+                assert not np.isnan(drivers[field]).any(),\
+                    f'Driver dataset "{field}" contains NaNs'
+
+        # If we don't want to load observational data, return the drivers data
+        if not load_gpp:
+            return (drivers, None, None, None, weights)
+
         # Clean observations, then mask out driver data where the are no
         #   observations
         tower_gpp = self._filter(tower_gpp, filter_length)
@@ -241,16 +253,23 @@ class CalibrationAPI(object):
             drivers_flat.append(flat[:,np.newaxis] if field != 'fPAR' else flat)
         return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
 
-    def _load_reco_data(self, filter_length):
+    def _load_reco_data(
+            self, filter_length, store = None, prefix = '', load_reco = True,
+            check_validity = True):
         'Load the required datasets for RECO, for a single PFT'
         blacklist = self.config['data']['sites_blacklisted']
-        with h5py.File(self.hdf5, 'r') as hdf:
-            n_steps = hdf['time'].shape[0]
-            sites = hdf['site_id'][:]
+        if store is None:
+            store = self.hdf5
+        with h5py.File(store, 'r') as hdf:
+            n_steps = hdf[f'{prefix}time'].shape[0]
+            sites = hdf[f'{prefix}site_id'][:]
+
             if hasattr(sites[0], 'decode'):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
             # Get dominant PFT
-            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
+            pft_map = hdf[f'{prefix}state/PFT'][:]
+            if pft_map.ndim > 1:
+                pft_map = pft_dominant(pft_map, sites)
             # Blacklist validation sites
             pft_mask = np.logical_and(
                 np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
@@ -269,17 +288,23 @@ class CalibrationAPI(object):
                     .repeat(n_steps, axis = 0)
             else:
                 print('WARNING - "weights" not found in HDF5 file!')
-            if 'RECO' not in hdf.keys():
+            if load_reco and 'RECO' not in hdf.keys():
                 with h5py.File(
                         self.config['data']['supplemental_file'], 'r') as _hdf:
                     tower_reco = _hdf['RECO'][:][:,pft_mask]
-            else:
+            elif load_reco:
                 tower_reco = hdf['RECO'][:][:,pft_mask]
 
         # Check that driver data do not contain NaNs
-        for field in drivers.keys():
-            assert not np.isnan(drivers[field]).any(),\
-                f'Driver dataset "{field}" contains NaNs'
+        if check_validity:
+            for field in drivers.keys():
+                assert not np.isnan(drivers[field]).any(),\
+                    f'Driver dataset "{field}" contains NaNs'
+
+        # If we don't want to load observational data, return the drivers data
+        if not load_reco:
+            return (drivers, None, weights)
+
         # Clean observations, then mask out driver data where the are no
         #   observations
         tower_reco = self._filter(tower_reco, filter_length)
@@ -824,7 +849,7 @@ class CalibrationAPI(object):
             self.bplut.update(
                 self._pft, fitted, self._required_parameters['RECO'])
 
-    def tune_soc(self, filter_length: int = 2):
+    def tune_soc(self, filter_length: int = 2, xlim = None):
         '''
         Starts interactive calibration procedure for the soil organic carbon
         (SOC) decay parameters for a given PFT.
@@ -834,30 +859,33 @@ class CalibrationAPI(object):
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
+        xlim : int
+            The largest SOC value that should be shown on the plot (i.e.,
+            the X and Y axis limit, for a square plot); defaults to the largest
+            value in the inventory dataset
         '''
+        soc_file = self.config['data']['soil_organic_carbon']['file']
+        # Load SOC pit measurements
+        with h5py.File(soc_file, 'r') as hdf:
+            dates = hdf[
+                self.config['data']['soil_organic_carbon']['fields']['time']
+            ][:]
+            dates = [datetime.date(*ymd) for ymd in dates.tolist()]
+            field = self.config['data']['soil_organic_carbon']['fields']['observed']
+            field_pft = self.config['data']['soil_organic_carbon']['fields']['PFT']
+            pft_mask = hdf[field_pft][:]
+            target_soc = hdf[field][:][pft_mask == self._pft]
+
         print('Loading driver datasets...')
-        drivers_for_gpp, _, tower_gpp, _, _ = self._load_gpp_data(
-            filter_length)
-        drivers_for_reco, tower_reco, weights = self._load_reco_data(
-            filter_length)
-
-        # Load the date series (for computing a climatology) as well as the
-        #   map of dominant PFTs (for selecting IGBP sites)
-        blacklist = self.config['data']['sites_blacklisted']
-        with h5py.File(self.hdf5, 'r') as hdf:
-            dates = [datetime.date(*d) for d in hdf['time'][:].tolist()]
-            sites = hdf['site_id'][:]
-            if hasattr(sites[0], 'decode'):
-                sites = list(map(lambda x: x.decode('utf-8'), sites))
-            pft_map = pft_dominant(hdf['state/PFT'][:], sites)
-            pft_mask = np.logical_and(
-                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
-
-        # Load IGBP SOC pit measurements, convert from [kg C m-2] to [g C m-2]
-        with h5py.File(self.config['data']['supplemental_file'], 'r') as hdf:
-            igbp_soc = hdf['SOC'][:]
-        igbp_soc = igbp_soc[pft_mask]
-        igbp_soc[igbp_soc < 0] = np.nan
+        drivers_for_gpp, _, _, _, _ = self._load_gpp_data(
+            filter_length, store = soc_file, prefix = 'ISCN/',
+            load_gpp = False, check_validity = False)
+        drivers_for_reco, _, weights = self._load_reco_data(
+            filter_length, store = soc_file, prefix = 'ISCN/',
+            load_reco = False, check_validity = False)
+        drivers_for_reco = [ # Convert from dict to list
+            drivers_for_reco[key] for key in self._required_drivers['RECO']
+        ]
 
         # Calculate GPP based on the updated parameters
         init_params = restore_bplut_flat(self.config['BPLUT'])
@@ -898,25 +926,26 @@ class CalibrationAPI(object):
             _, ax = pyplot.subplots(figsize = (6,6))
             ax.plot([0, 1], [0, 1], transform = ax.transAxes, linestyle = 'dotted')
             if prev is not None:
-                pyplot.plot(igbp_soc / 1e3, prev / 1e3, 'o', c = 'gray', alpha = 0.3)
+                pyplot.plot(target_soc / 1e3, prev / 1e3, 'o', c = 'gray', alpha = 0.3)
             try:
-                pyplot.plot(igbp_soc / 1e3, soc / 1e3, 'o', alpha = 0.6)
+                pyplot.plot(target_soc / 1e3, soc / 1e3, 'o', alpha = 0.6)
             except:
                 import ipdb
                 ipdb.set_trace()#FIXME
 
-            xmin, xmax = np.nanpercentile(igbp_soc / 1e3, (0, 100))
-            print(f'-- Min/Max of IGBP SOC: {xmin.round(1), xmax.round(1)}')
+            xmin, xmax = np.nanpercentile(target_soc / 1e3, (0, 100))
+            print(f'-- Min/Max of Inventory SOC: {xmin.round(1), xmax.round(1)}')
             print(f'-- Min/Max of Predicted SOC: {np.nanmin(soc / 1e3).round(1), np.nanmax(soc / 1e3).round(1)}')
-            pyplot.xlim(0, xmax)
-            pyplot.ylim(0, xmax)
-            pyplot.xlabel('IGBP SOC (kg m$^{-2}$)')
+            pyplot.xlim(0, xmax if xlim is None else xlim)
+            pyplot.ylim(0, xmax if xlim is None else xlim)
+            pyplot.xlabel('Inventory SOC (kg m$^{-2}$)')
             pyplot.ylabel('Modeled Equilibrium SOC (kg m$^{-2}$)')
+            pyplot.title(f'For PFT={self._pft}')
             pyplot.show()
             # Calculate correlation coefficient
-            mask = np.isnan(igbp_soc)
-            r = np.corrcoef(igbp_soc[~mask], soc[~mask])[0,1]
-            rmse = rmsd(igbp_soc[~mask], soc[~mask])
+            mask = np.isnan(target_soc)
+            r = np.corrcoef(target_soc[~mask], soc[~mask])[0,1]
+            rmse = rmsd(target_soc[~mask], soc[~mask])
             print(f'Current metabolic rate (r={r.round(3)}, RMSE={round(rmse, 1)}):')
             print('%.5f\n' % decay_rates[0])
             proposal = input('New metabolic rate [Q to quit]:\n')
