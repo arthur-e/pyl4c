@@ -849,7 +849,7 @@ class CalibrationAPI(object):
             self.bplut.update(
                 self._pft, fitted, self._required_parameters['RECO'])
 
-    def tune_soc(self, filter_length: int = 2, xlim = None):
+    def tune_soc(self, filter_length: int = 2, xlim = None, alpha = 0.6):
         '''
         Starts interactive calibration procedure for the soil organic carbon
         (SOC) decay parameters for a given PFT.
@@ -859,10 +859,12 @@ class CalibrationAPI(object):
         filter_length : int
             The window size for the smoothing filter, applied to the observed
             data
-        xlim : int
+        xlim : int or None
             The largest SOC value that should be shown on the plot (i.e.,
-            the X and Y axis limit, for a square plot); defaults to the largest
-            value in the inventory dataset
+            the X and Y axis limit, for a square plot); if None, defaults to
+            the largest value in the inventory dataset
+        alpha : float
+            The alpha applied to the SOC scatterplot points (Default: 0.6)
         '''
         soc_file = self.config['data']['soil_organic_carbon']['file']
         # Load SOC pit measurements
@@ -926,9 +928,10 @@ class CalibrationAPI(object):
             _, ax = pyplot.subplots(figsize = (6,6))
             ax.plot([0, 1], [0, 1], transform = ax.transAxes, linestyle = 'dotted')
             if prev is not None:
-                pyplot.plot(target_soc / 1e3, prev / 1e3, 'o', c = 'gray', alpha = 0.3)
+                pyplot.plot(
+                    target_soc / 1e3, prev / 1e3, 'o', c = 'gray', alpha = alpha / 2)
             try:
-                pyplot.plot(target_soc / 1e3, soc / 1e3, 'o', alpha = 0.6)
+                pyplot.plot(target_soc / 1e3, soc / 1e3, 'o', alpha = alpha)
             except:
                 import ipdb
                 ipdb.set_trace()#FIXME
