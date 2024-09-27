@@ -19,6 +19,9 @@ Calibration of SMAP L4C can be done entirely through the Unix shell (command lin
 
 **Required data:**
 
+- A configuration file:
+  - For `optimize.py`, see this template: `pyl4c/data/files/config_L4C_calibration_V8.yaml`
+  - For `mcmc.py`, see this template: `pyl4c/data/files/config_L4C_MCMC_calibration_V8.yaml`
 - HDF5 file with driver datasets (see "Harmonized HDF Specification" below); this file should contain all of the input datasets necessary to calibrate GPP and RECO. In a typical re-calibration, the soil moisture fields (`smsf`, `smrz`) need to be updated. The path to this file is specified as the `drivers_file` property in the calibration configuration JSON file.
 - HDF5 file with eddy covariance (EC) flux tower observation data.
 - A recent BPLUT CSV file; typically, this is the BPLUT from the previous calibration (i.e., current operational product). The path to this file is specified as the `BPLUT_file` property in the calibration configuration JSON file.

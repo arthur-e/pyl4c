@@ -14,6 +14,13 @@ Where:
 - For `plot-gpp`, `<driver>` is one of: `smrz`, `vpd`, `tmin`.
 - For `plot-reco`, `<driver>` is one of: `smsf`, `tsoil`.
 
+**It's important to specify a configuration file,** otherwise the default,
+`pyl4c/data/files/config_L4C_calibration.yaml`, will be used:
+
+    python optimize.py pft <pft> tune-gpp --config=my_config.yaml
+    python optimize.py pft <pft> tune-soc --config=my_config.yaml
+    python optimize.py pft <pft> tune-reco --config=my_config.yaml
+
 To plot the steady-state SOC versus IGBP SOC pit measurements, and then
 select potential new decay rates:
 

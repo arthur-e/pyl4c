@@ -38,6 +38,8 @@ Below, we install the `pyl4c` library in "development mode," which enables you t
 $ pip install -e .
 ```
 
+**Some tasks require ancillary datasets; be sure to check out "Linking Ancillary Datasets," below.**
+
 **Some extra features must be requested in order to have their dependencies installed.**
 
 ```sh
@@ -78,6 +80,27 @@ If there are "undefined symbol" issues, despite the above steps, try installing 
 # Requires gcc version 8.0.0+
 pip install --no-binary=numpy numpy
 ```
+
+
+### Linking Ancillary Datasets
+
+You should create a file, `pyl4c/data/files/ancillary_data_paths.yaml`, using the following template:
+
+```yaml
+smap_l4c_ancillary_data_file_path: "SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5"
+smap_l4c_1km_ancillary_data_lc_path: "MCD12Q1_M01_lc_dom_uint8"
+smap_l4c_9km_ancillary_data_lc_path: "MOD12Q1_M09_lc_dom_uint8"
+smap_l4c_1km_ancillary_data_x_coord_path: "SMAP_L4_C_LON_14616_x_34704_M01_flt32"
+smap_l4c_1km_ancillary_data_y_coord_path: "SMAP_L4_C_LAT_14616_x_34704_M01_flt32"
+smap_l4c_9km_ancillary_data_x_coord_path: "SMAP_L4_C_LON_1624_x_3856_M09_flt32"
+smap_l4c_9km_ancillary_data_y_coord_path: "SMAP_L4_C_LAT_1624_x_3856_M09_flt32"
+smap_l4c_9km_pft_subgrid_counts_CONUS: "SMAP_L4C_Vv4040_1km_subgrid_PFT_counts_CONUS.h5"
+smap_l4c_9km_sparse_col_index: "MCD12Q1_M09land_col.uint16"
+smap_l4c_9km_sparse_row_index: "MCD12Q1_M09land_row.uint16"
+transcom_netcdf_path: "CarbonTracker_TransCom_and_other_regions.nc"
+```
+
+Each of the filenames corresponds to an ancillary data file that is probably needed. You should update that value with an absolute file path to the corresponding file on your file system.
 
 
 ### Dependencies
