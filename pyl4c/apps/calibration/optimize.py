@@ -41,6 +41,7 @@ import yaml
 import warnings
 import numpy as np
 import h5py
+import nlopt
 import pyl4c
 from typing import Sequence
 from functools import partial
@@ -50,13 +51,102 @@ from pyl4c import pft_dominant, suppress_warnings
 from pyl4c.data.fixtures import PFT, restore_bplut, restore_bplut_flat
 from pyl4c.science import vpd, par, rescale_smrz, arrhenius, climatology365, soc_analytical_spinup, soc_numerical_spinup
 from pyl4c.stats import linear_constraint, rmsd
-from pyl4c.apps.calibration import BPLUT, GenericOptimization, cbar, report_fit_stats
+from pyl4c.apps.calibration import BPLUT, cbar, report_fit_stats
 
 L4C_DIR = os.path.dirname(pyl4c.__file__)
 PFT_VALID = (1,2,3,4,5,6,7,8)
 
 # This matplotlib setting prevents labels from overplotting
 pyplot.rcParams['figure.constrained_layout.use'] = True
+
+
+class GenericOptimization(object):
+    '''
+    A more generic and expansive tool for optimization; includes many more
+    algorithms for minimization/ maximization problems, including sequential
+    quadratic programming (SQP), which is the default here and is closest to
+    what is performed in Matlab's `fmincon`. Despite the similarity to `fmincon`,
+    SQP will tend to deviate strongly from the initial parameters derived via
+    fmincon. This solver is SLOW for gradient descent methods relative to
+    `scipy.optimize.least_squares()`, because the gradient is calculated with
+    a finite element approach.
+
+        opt = GenericOptimization(residuals, OPT_BOUNDS['gpp'],
+            step_size = (0.01, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.05))
+        opt.solve(init_params)
+
+    See: https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/
+
+    Parameters
+    ----------
+    func : function
+        Function to calculate the residuals
+    bounds : list or tuple
+        2-element sequence of (lower, upper) bounds where each element is an
+        array
+    method : str
+        One of the nlopt algorithms
+    step_size : list or tuple or numpy.ndarray
+        Sequence of steps to take in gradient descent; not needed for
+        derivative-free methods
+    verbose : bool
+        True to print all output to the screen
+    '''
+    def __init__(
+            self, func, bounds, method: int = nlopt.LD_SLSQP,
+            step_size = None, verbose = True):
+        # https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#slsqp
+        assert isinstance(method, int), 'Did not recognize "method" argument'
+        self._bounds = bounds
+        self._method = method
+        self._residuals = func
+        self._step_size = step_size
+        self._verbose = verbose
+
+    def solve(self, init_params, ftol = 1e-8, xtol = 1e-8, maxeval = 500):
+        '''
+        Using the sum-of-squared errors (SSE) as the objective function,
+        solves a minimization problem.
+
+        Parameters
+        ----------
+        init_params : list or tuple or numpy.ndarray
+            Sequence of starting parameters (or "initial guesses")
+        ftol : float
+        xtol : float
+        maxeval : int
+            Maximum number of objective function evaluations
+
+        Returns
+        -------
+        numpy.ndarray
+        '''
+        @suppress_warnings
+        def sse(x):
+            return np.power(self._residuals(x), 2).sum()
+
+        @suppress_warnings
+        def objf(x, grad):
+            if grad.size > 0:
+                # Approximate the gradient using finite element method
+                grad[...] = optimize.approx_fprime(
+                    x, sse, self._step_size)
+            return sse(x)
+
+        opt = nlopt.opt(self._method, len(init_params))
+        # https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/#localsubsidiary-optimization-algorithm
+        if self._method == nlopt.G_MLSL_LDS:
+            opt.set_local_optimizer(
+                nlopt.opt(nlopt.LN_COBYLA, len(init_params)))
+        opt.set_min_objective(objf)
+        opt.set_lower_bounds(self._bounds[0])
+        opt.set_upper_bounds(self._bounds[1])
+        opt.set_ftol_abs(ftol)
+        opt.set_xtol_abs(xtol)
+        opt.set_maxeval(maxeval)
+        if self._verbose:
+            print('Solving...')
+        return opt.optimize(init_params)
 
 
 class CalibrationAPI(object):

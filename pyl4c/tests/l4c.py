@@ -1,4 +1,6 @@
 '''
+DEPRECATED. Currently, these tests are out of date and will not work.
+
 Test cases related to the pyl4c.apps.l4c module.
 '''
 

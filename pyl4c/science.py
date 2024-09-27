@@ -545,6 +545,7 @@ def par(sw_rad, period_hrs = 1):
     Returns
     -------
     int or float or numpy.ndarray
+        Photosynthetically active radiation (MJ m-2)
     '''
     # Convert SW_rad from [W m-2] to [MJ m-2], then take 45%; because
     #   1 W == 1 J s-1, we multiply 3600 secs hr-1 times
