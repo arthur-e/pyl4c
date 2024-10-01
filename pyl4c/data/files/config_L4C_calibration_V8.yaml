@@ -1,9 +1,9 @@
 ---
 description: "For calibrating L4C Version 8 via stochastic gradient descent"
 # This is a copy of the OLD BPLUT, updated with new CUE and GPP parameters
-BPLUT: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/SMAP_BPLUT_V8_rev_20240218.csv"
+BPLUT: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v7_Y2022/SMAP_BPLUT_V7_rev_20220728.csv"
 data:
-  file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_tower_site_drivers_SMAP-NRv11-2.h5"
+  file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_tower_site_drivers_SMAP-NRv11-4.h5"
   # The supplemental file is used when the observed fluxes are not contained in the main "file" above
   supplemental_file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_new_AmeriFlux-FLUXNET-ICOS_towers_v6.h5"
   # EXPERIMENTAL: This is a file with SOC data from ISCN
@@ -31,12 +31,13 @@ data:
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
 optimization:
-  backend: "/ntsg_home/SMAP_L4C/20230610_L4C_GPP_calibration.h5"
+  backend: "/ntsg_home/SMAP_L4C/20240927_L4C_calibration.h5"
   # Number of times to run the optimization, with random initializations
   trials: 10
   # Parameter values that are fixed in advance (i.e., not calibrated)
   fixed:
-    LUE: [~, ~, 1.40, 1.23, 1.68, ~, ~, ~, 1.94]
+    LUE: [~, ~, 1.40, ~, 1.68, ~, ~, ~, 1.94]
+    CUE: [~, 0.424, 0.498, 0.448, 0.484, 0.447, 0.445, 0.467, 0.461]
     smsf0: [~, 0, 0, 0, 0, 0, 0, 0, 0]
   # Size of steps to be used in global parameter search
   step_size:

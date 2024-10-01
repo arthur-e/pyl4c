@@ -949,7 +949,9 @@ class CalibrationAPI(object):
     def tune_soc(self, filter_length: int = 2, xlim = None, alpha = 0.6):
         '''
         Starts interactive calibration procedure for the soil organic carbon
-        (SOC) decay parameters for a given PFT.
+        (SOC) decay parameters for a given PFT. Uses any updated parameters
+        in the attached storage: `optimization.backend` in the configuration
+        file.
 
         Parameters
         ----------
