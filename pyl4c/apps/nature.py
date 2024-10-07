@@ -100,7 +100,7 @@ class NatureRunNetCDF4(object):
         match = np.logical_and(self._row_idx == row, self._col_idx == col)
         if not np.any(match):
             raise ValueError("No matching row-column index pair was found; requested cell might be outside of the model domain")
-        return int(np.arange(length)[match])
+        return int(np.arange(length)[match][0])
 
     def index(self, variable, indices):
         '''
