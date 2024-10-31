@@ -53,7 +53,7 @@ import pyl4c
 from typing import Sequence
 from functools import partial
 from matplotlib import pyplot
-from scipy import signal
+from scipy import signal, optimize
 from pyl4c import pft_dominant, suppress_warnings
 from pyl4c.data.fixtures import PFT, restore_bplut, restore_bplut_flat
 from pyl4c.science import vpd, par, rescale_smrz, arrhenius, climatology365, soc_analytical_spinup, soc_numerical_spinup

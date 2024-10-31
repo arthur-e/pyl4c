@@ -18,6 +18,8 @@ mission. In particular:
     essential ancillary datasets; see `pyl4c.data.fixtures`.
 '''
 
+__version__ = '0.18.1'
+
 __pdoc__ = {}
 __pdoc__['tests'] = False
 
