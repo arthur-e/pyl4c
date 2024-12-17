@@ -4,6 +4,7 @@ QA/QC and cloud masks applied.
 '''
 
 import numpy as np
+import h5py
 from typing import Sequence
 from osgeo import gdal
 from pyl4c.epsg import SR_ORG
@@ -14,8 +15,9 @@ def main(
         filename: str, output_path: str, valid_min: int = 0,
         valid_max: int = 100, nodata: int = 255,
         grid: str = 'MOD_Grid_MOD15A2H', field: str = 'Fpar_500m',
-        field_qc: str = 'FparLai_QC', dtype: str = 'uint8',
-        reclass: Sequence = None, apply_mask: bool = False):
+        field_qc: str = 'FparLai_QC', prefix: str = 'HDF4_EOS:EOS_GRID',
+        dtype: str = 'uint8', reclass: Sequence = None,
+        apply_mask: bool = False):
     '''
     Extract a VIIRS/MODIS gridded dataset as a GeoTIFF. Dataset should have
     integer digital numbers (i.e., integer type). NOTE: Does not apply the
@@ -52,10 +54,14 @@ def main(
     wkt = SR_ORG[6842]
     # Read in data array
     ds = gdal.Open(
-        'HDF4_EOS:EOS_GRID:"%s":%s:%s' % (filename, grid, field))
+        '%s:"%s":%s:%s' % (prefix, filename, grid, field))
     if ds is None:
-        raise AssertionError(
-            'Name error: Either field "%s" or grid "%s" not in MODIS product granule' % (field, grid))
+        # Some datasets use a final slash to indicate the data
+        ds = gdal.Open(
+            '%s:"%s":%s/%s' % (prefix, filename, grid, field))
+        if ds is None:
+            raise AssertionError(
+                'Name error: Either field "%s" or grid "%s" not in MODIS product granule' % (field, grid))
     gt = ds.GetGeoTransform()
     arr = ds.ReadAsArray()
     ds = None

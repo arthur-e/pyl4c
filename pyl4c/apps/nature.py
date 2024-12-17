@@ -132,7 +132,7 @@ class NatureRunNetCDF4(object):
         ]
         return self.__class__.index_bulk(self, variable, tile_idx)
 
-    def inflated(self, variable, nodata = -9999):
+    def inflated(self, variable, dtype = np.float32, nodata = -9999):
         '''
         Returns a "tile space" variable (1D) as a 2D NumPy array, calculating
         a daily average as needed.
@@ -141,6 +141,8 @@ class NatureRunNetCDF4(object):
         ----------
         variable : str
             Name of the netCDF4 variable to inflate
+        dtype : type
+            The NumPy data type to use for the resulting array
         nodata : int or float
             The NoData value to use in the output array
 
@@ -150,7 +152,7 @@ class NatureRunNetCDF4(object):
         '''
         target_variable = self.dataset.variables[variable]
         shp = EASE2_GRID_PARAMS[self._grid]['shape']
-        result = np.ones(shp) * nodata
+        result = np.ones(shp, dtype = dtype) * nodata
 
         # Check if we're working with a 3-hourly L4SM variable
         if target_variable.ndim == 2 and target_variable.shape[0] == 8:
@@ -159,7 +161,10 @@ class NatureRunNetCDF4(object):
                 # Calculate daily mean (collapse first axis)
                 row, col = self.tile_to_ease2(i)
                 result[row, col] = avg[i]
-        else:
+
+        # Or, it's a daily mean ("1200z") file with a trivial first axis
+        if target_variable.ndim == 2 and target_variable.shape[0] == 1:
+            target_variable = np.array(target_variable).ravel()
             for i in range(0, target_variable.shape[0]):
                 row, col = self.tile_to_ease2(i)
                 result[row, col] = target_variable[i]
