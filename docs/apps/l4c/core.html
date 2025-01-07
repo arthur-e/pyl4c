@@ -1,0 +1,1539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
+<title>pyl4c.apps.l4c.core API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.apps.l4c.core</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.apps.l4c.core.TCF"><code class="flex name class">
+<span>class <span class="ident">TCF</span></span>
+<span>(</span><span>params: dict,<br>land_cover_map: Sequence,<br>state: Sequence = None,<br>litterfall: Sequence = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TCF(object):
+    &#39;&#39;&#39;
+    The Terrestrial Carbon Flux (TCF) model, which is the basis for the NASA
+    Soil Moisture Active Passive (SMAP) Level 4 Carbon (L4C) model. TCF
+    incorporates these basic assumptions:
+
+    1. Carbon assimilation (gross primary production) is linearly related to
+        the amount of solar radiation and green photosynthetic land cover.
+    2. There is a maximum rate of carbon assimilation. Low water availability,
+        cold or freezing temperatures, and high atmospheric demand for water
+        vapor each reduce the efficiency of carbon assimilation.
+    3. Soil organic carbon (SOC) decomposes at different rates based on the
+        type of material. The optimal rate of decomposition is fixed and
+        depends only on the land-cover type.
+    4. The efficiency of soil organic carbon decomposition is reduced under
+        low soil temperatures or low soil moisture.
+
+    A complete description is available in Kimball et al. (2009) and in Jones
+    et al. (2017). Soil organic carbon (SOC) and soil decomposition are
+    discussed in Endsley et al. (2020) and Endsley et al. (2022).
+
+    If initial model &#34;state&#34; is provided it should be a 2D array with the
+    first axis containing, in order:
+
+    - Initial state of &#34;metabolic&#34; SOC pool
+    - Initial state of &#34;structural&#34; SOC pool
+    - Initial state of &#34;recalcitrant&#34; SOC pool
+
+    NOTE: For developers, `self.params` refers to model parameters that have
+    been vectorized to improve performance. If a function performs
+    vectorized calculations on longitudinal (N x T) arrays, the vectorized
+    parameter(s) can be used with their current shape. For cross-sectional
+    calculations, e.g., on (N,) or (1 x N) arrays, make sure to use the
+    transpose, `self.params.name.T`, where `name` is the parameter name.
+
+    Example use for a single pixel:
+
+        tcf = TCF(params, land_cover_map = [7])
+        tcf.nee(state = [500, 500, 1000], drivers = [...])
+
+
+    Parameters
+    ----------
+    params : dict
+        Dictionary of model parameters; keys should be among
+        `TCF.required_parameters` and values should be sequences ordered by
+        PFT code, either 9 values (value at index 0 being `np.nan`) or as many
+        values as there are keys in `TCF.valid_pft`
+    land_cover_map : Sequence or numpy.ndarray
+        1-dimensional sequence of one or more land-cover types, one for each
+        model resolution cell (pixel). These types should be represented as
+        integers (unsigned 16-bit type or lower).
+    state : Sequence or numpy.ndarray or None
+        A sequence of 3 values or a 2D (S x N) array representing the state
+        variables for each of N pixels. The first three (3) state variables
+        should be the initial states of each SOC pool.
+    litterfall : Sequence or numpy.ndarray or None
+        A sequence of values or 1D array representing average annual
+        litterfall (units: g C m-2 year-1) for each model resolution cell
+        (pixel). If not provided, it will be based on the climatological NPP
+        (when it is calculated).
+    &#39;&#39;&#39;
+    required_drivers = [
+        &#39;fPAR&#39;, &#39;PAR&#39;, &#39;Tmin&#39;, &#39;VPD&#39;, &#39;SMRZ&#39;, &#39;FT&#39;, &#39;Tsoil&#39;, &#39;SMSF&#39;
+    ]
+    required_parameters = [
+        &#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;,
+        &#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;decay_rates&#39;, &#39;f_structural&#39;,
+        &#39;f_metabolic&#39;
+    ]
+    valid_pft = {
+        1: &#39;Evergreen Needleleaf&#39;,
+        2: &#39;Evergreen Broadleaf&#39;,
+        3: &#39;Deciduous Needleleaf&#39;,
+        4: &#39;Deciduous Broadleaf&#39;,
+        5: &#39;Shrubland&#39;,
+        6: &#39;Grassland&#39;,
+        7: &#39;Cereal Croplands&#39;,
+        8: &#39;Broadleaf Croplands&#39;
+    }
+
+    num_soc_pools = 3 # Number of soil organic carbon (SOC) pools
+    version = &#39;7.4.1&#39; # Pegged to the SMAP L4C version
+
+    def __init__(
+            self, params: dict, land_cover_map: Sequence,
+            state: Sequence = None, litterfall: Sequence = None
+        ):
+        self.constants = Namespace()
+        self.history = Namespace()
+        self.state = Namespace()
+        self.params = Namespace() # Parameters accessed, e.g., tcf.params.LUE
+        self.lc_map = np.array(land_cover_map, dtype = np.uint16)
+
+        # Load available annual litterfall (per resolution cell/ pixel)
+        if litterfall is not None:
+            litterfall = np.array(litterfall, dtype = np.float32)
+        self.constants.add(&#39;litterfall&#39;, litterfall)
+        self.constants.add(&#39;litterfall_rate&#39;, None)
+
+        # Load soil organic carbon (SOC) state
+        if state is not None:
+            if hasattr(state, &#39;ndim&#39;):
+                assert state.ndim &lt;= 2, &#39;&#34;state&#34; should have at most 2 dimensions&#39;
+            # &#34;state&#34; either begins as or is converted to a numpy.ndarray
+            state = np.array(state, dtype = np.float32)
+            if state.ndim == 1:
+                state = state[:,np.newaxis]
+            assert len(state) == 3, &#39;Expected one &#34;state&#34; value for each SOC pool&#39;
+            self.state.add(&#39;soc&#39;, np.array(state))
+        # Create a parameters vector; e.g., for a land-cover map:
+        #   array([  1,   2,   1,   3])
+        # We create an array of parameters:
+        #   array([1.5, 3.0, 1.5, 1.0])
+        # Where the unique parameter for each land-cover class is copied as
+        #   many times as that class appears; result is an array that is the
+        #   same shape and size as the land-cover array
+        # Possible items of the parameters dictionary include, e.g.:
+        # {&#34;key&#34;: 3.14}
+        # {&#34;key&#34;: [3.14, 1.10]}
+        # {&#34;key&#34;: np.array([3.14, 1.10])}
+        # {&#34;key&#34;: np.array([[3.14, 1.10], [...], ...])}
+        for key, value in params.items():
+            if key not in self.required_parameters:
+                continue
+            p_vector = np.array(value)
+            # Copy parameter values based on PFT map
+            if key == &#39;decay_rates&#39;:
+                if p_vector.shape == (self.num_soc_pools,):
+                    p_vector = p_vector[:,np.newaxis]\
+                        .repeat(self.lc_map.size, axis = -1)
+                elif hasattr(value, &#39;count&#39;) and p_vector.ndim == 2:
+                    # i.e., &#34;value&#34; was nested lists and result of converting
+                    #   to a NumPy array was a (N x self.num_soc_pools) array
+                    p_vector = p_vector.swapaxes(0, 1)[:,self.lc_map]
+                elif p_vector.ndim == 2:
+                    p_vector = p_vector[:,self.lc_map]
+                assert p_vector.shape == (self.num_soc_pools, self.lc_map.size)
+            else:
+                if p_vector.ndim == 0:
+                    p_vector = p_vector[np.newaxis][np.newaxis]\
+                        .repeat(self.lc_map.size, axis = 0)
+                elif p_vector.ndim == 1:
+                    p_vector = p_vector.ravel()[self.lc_map]\
+                        .reshape((self.lc_map.size, 1))
+                elif p_vector.ndim == 2:
+                    p_vector = p_vector[:,self.lc_map].swapaxes(0, 1)
+            # Result should be a 2D vectorized parameter array, either:
+            #   (N,) or (S x N), where S is, e.g., each SOC pool
+            assert p_vector.ndim in (1, 2)
+            assert p_vector.shape[0] == self.lc_map.size or p_vector.shape[0] == 3
+            self.params.add(key, p_vector)
+
+    def _rescale_smrz(self, smrz0, smrz_min, smrz_max = 100):
+        r&#39;&#39;&#39;
+        Rescales root-zone soil-moisture (SMRZ) to increase plant sensitivity to
+        very low water availability.
+
+        $$
+        \hat{\theta} &amp;= 100 \times\left(
+        \frac{\theta - \theta_{WP}}{\text{max}(\theta) - \theta_{WP}}
+        \right) + 1\\
+        \theta_{RZ} &amp;= 95 \times
+        \frac{\text{ln}(\hat{\theta})}{\text{ln(101)}} + 5
+        $$
+
+        Parameters
+        ----------
+        smrz0 : numpy.ndarray
+            (N x T) array of original SMRZ data, in percent wetness [%]
+            units for N sites and T time steps
+        smrz_min : numpy.ndarray or float
+            Site-level long-term minimum SMRZ (proportion saturation)
+        smrz_max : numpy.ndarray or float
+            Site-level long-term maximum SMRZ (proportion saturation); can
+            optionally provide a fixed upper-limit on SMRZ
+
+        Returns
+        -------
+        tuple
+            A tuple of `(gpp, npp, tmult, wmult)`, each an numpy.ndarray
+        &#39;&#39;&#39;
+        smrz_min = np.array(smrz_min)
+        if smrz_min.ndim == 1:
+            smrz_min = smrz_min[:,np.newaxis]
+        # Clip input SMRZ to the lower, upper bounds
+        smrz0 = np.where(smrz0 &lt; smrz_min, smrz_min, smrz0)
+        smrz0 = np.where(smrz0 &gt; smrz_max, smrz_max, smrz0)
+        smrz_norm = np.add(np.multiply(100, np.divide(
+            np.subtract(smrz0, smrz_min),
+            np.subtract(smrz_max, smrz_min))), 1)
+        # Log-transform normalized data and rescale to range between
+        #   5.0 and 100% saturation)
+        return np.add(
+            np.multiply(95, np.divide(np.log(smrz_norm), np.log(101))), 5)
+
+    def _setup_forward(
+            self, drivers: Sequence, state: Sequence = None,
+            dates: Sequence = None
+        ) -&gt; np.ndarray:
+        &#39;Pre-computes some vectorized quantities prior to forward run&#39;
+        self.check_drivers(drivers)
+        litter = self.constants.litterfall
+        if litter is None:
+            assert dates is not None,\
+                &#39;Either: &#34;litterfall&#34; must be provided to TCF() or &#34;dates&#34; must be provided at runtime&#39;
+            assert len(dates) &gt;= 365 and drivers[0].shape[-1] &gt;= 365,\
+                &#39;At least 365 daily time steps must be provided to allow computation of annual NPP sum&#39;
+            assert hasattr(dates[0], &#39;year&#39;) and hasattr(dates[0], &#39;strftime&#39;),\
+                &#39;The values of &#34;dates&#34; must be datetime.date or datetime.datetime instances&#39;
+        # GPP can be computed matrix-wise, in a single time step
+        gpp = self.gpp(drivers[0:6])
+        npp = self.params.CUE * gpp
+        if litter is None:
+            # Compute litterfall from the mean annual NPP sum
+            npp_sum = climatology365(npp, dates).sum(axis = 0)
+            self.constants.add(&#39;litterfall&#39;, npp_sum)
+        # Pre-compute environmental constraints for soil RH
+        tsoil, smsf = drivers[-2:]
+        f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
+        # Swap axes here only to make time the major (first) axis
+        tmult = arrhenius(tsoil, self.params.tsoil).swapaxes(0, 1)
+        wmult = f_smsf(smsf).swapaxes(0, 1)
+        return (gpp, npp, tmult, wmult)
+
+    def check_drivers(self, drivers: Sequence):
+        &#39;&#39;&#39;
+        Checks that driver datasets have correct shape and units. Issues
+        warnings otherwise.
+
+        Parameters
+        ----------
+        drivers : Sequence
+            Flat sequence of drivers or (P x ...) array for P drivers
+        &#39;&#39;&#39;
+        n = len(drivers)
+        _drivers = dict(zip(self.required_drivers[0:n], drivers))
+        if &#39;fPAR&#39; in _drivers.keys():
+            if np.nanmax(_drivers[&#39;fPAR&#39;]) &gt; 1:
+                warnings.warn(&#39;WARNING: fPAR might not have correct units; maximum value exceeds 1.0&#39;)
+        if &#39;SMRZ&#39; in _drivers.keys():
+            if np.nanmax(_drivers[&#39;SMRZ&#39;]) &lt;= 1:
+                warnings.warn(&#39;WARNING: Root-zone soil moisture might not have correct units; maximum value is less than 1.0&#39;)
+        if &#39;SMSF&#39; in _drivers.keys():
+            if np.nanmax(_drivers[&#39;SMSF&#39;]) &lt;= 1:
+                warnings.warn(&#39;WARNING: Surface soil moisture might not have correct units; maximum value is less than 1.0&#39;)
+
+    def diagnose_emult(self, drivers):
+        &#39;&#39;&#39;
+        Returns the environmental constraint multiplier on GPP (Emult). This
+        dimensionless quantity indicates the aggregate impact of
+        meteorological conditions on GPP. Order of driver variables should be:
+
+            Fraction of PAR intercepted (fPAR) [0-1]
+            Photosynthetically active radation (PAR) [MJ m-2 day-1]
+            Minimum temperature (Tmin) [deg K]
+            Vapor pressure deficit (VPD) [Pa]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
+            Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+
+        Parameters
+        ----------
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+
+        Returns
+        -------
+        tuple
+            4-tuple of (FT, Tmin, VPD, SMRZ) environmental constraints
+        &#39;&#39;&#39;
+        if len(drivers) == 5:
+            fpar, par, tmin, vpd, smrz0 = drivers
+            ft0 = np.where(tmin &lt; 273.15, 0, 1)
+        else:
+            fpar, par, tmin, vpd, smrz0, ft0 = drivers
+        # Rescale root-zone soil moisture
+        smrz = self._rescale_smrz(smrz0, np.nanmin(smrz0, axis = -1))
+        # Convert freeze-thaw flag to a multiplier (always 1 when thawed but
+        #   potentially non-zero and less than 1 when thawed)
+        ft = np.where(ft0 == 0, self.params.ft0, 1)
+        # Get a function that constrains each met. driver to [0, 1]
+        f_tmin = linear_constraint(self.params.tmin0, self.params.tmin1)(tmin)
+        f_vpd = linear_constraint(
+            self.params.vpd0, self.params.vpd1, &#39;reversed&#39;)(vpd)
+        f_smrz = linear_constraint(self.params.smrz0, self.params.smrz1)(smrz)
+        # Compute the environmental constraint
+        return (ft, f_tmin, f_vpd, f_smrz)
+
+    def diagnose_kmult(self, drivers):
+        &#39;&#39;&#39;
+        Returns the environmental constraint multiplier on RH (Kmult). This
+        dimensionless quantity indicates the aggregate impact of
+        meteorological conditions on heterotrophic respiration (RH). Order of
+        driver variables should be:
+
+            Fraction of PAR intercepted (fPAR) [0-1]
+            Photosynthetically active radation (PAR) [MJ m-2 day-1]
+            Minimum temperature (Tmin) [deg K]
+            Vapor pressure deficit (VPD) [Pa]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
+            Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+            Soil temperature in the top (0-5 cm) layer [deg K]
+            Surface soil moisture wetness [percent, %]
+
+        Parameters
+        ----------
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+
+        Returns
+        -------
+        tuple
+            2-tuple of (Tmult, Wmult), or (Tsoil, SMSF), environmental
+            constraints
+        &#39;&#39;&#39;
+        tsoil, smsf = drivers[-2:]
+        f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
+        # Swap axes here only to make time the major (first) axis
+        tmult = arrhenius(tsoil, self.params.tsoil)
+        wmult = f_smsf(smsf)
+        return (tmult, wmult)
+
+    def forward_run(
+            self, drivers: Sequence, state: Sequence = None,
+            dates: Sequence = None, track_state: bool = False,
+            verbose: bool = True
+        ) -&gt; np.ndarray:
+        &#39;&#39;&#39;
+        Runs the TCF model forward in time for daily time steps. This is the
+        recommended interface for most users. If `litterfall` was not provided
+        to `TCF` at initialization, it will be necessary to provide at least
+        365 daily steps and the `years` of each time step. Order of driver
+        variables should be:
+
+            Fraction of PAR intercepted (fPAR) [0-1]
+            Photosynthetically active radation (PAR) [MJ m-2 day-1]
+            Minimum temperature (Tmin) [deg K]
+            Vapor pressure deficit (VPD) [Pa]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
+            Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+            Soil temperature in the top (0-5 cm) layer [deg K]
+            Surface soil moisture wetness [percent, %]
+
+        GPP calculation is vectorized but RH and NEE calculation proceed
+        step-wise because they depend on the model state (SOC).
+
+        Parameters
+        ----------
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+        state : Sequence or numpy.ndarray or None
+            A sequence of 3 values or an (3 x N) array representing the
+            SOC state in each SOC pool
+        dates : Sequence or numpy.ndarray or None
+            If `litterfall` was not provided to `TCF` during initialization,
+            you must provide a sequence of `datetime.date` instances, of
+            length T for T time steps, indicating the current year of each
+            time step.
+        track_state : bool
+            True to track (soil organic carbon) state at each time step,
+            rather than only tracking the current state (Default: False)
+        verbose : bool
+            True to show a progress bar and other messages (Default: True)
+
+        Returns
+        -------
+        tuple
+            A 3-element tuple of (NEE, GPP, RH)
+        &#39;&#39;&#39;
+        if drivers[0].shape[-2] &gt; drivers[0].shape[-1]:
+            warnings.warn(&#39;WARNING: Axes of input arrays might not be in the required (..., N, T) order&#39;)
+        # NOTE: Allowing for state variables other than SOC to be included in
+        #   a later version
+        soc = state
+        if soc is None:
+            soc = self.state.soc
+        # NOTE: self.constants.litterfall is also initialized in this function
+        gpp, npp, tmult, wmult = self._setup_forward(drivers, state, dates)
+        # Pre-allocate output arrays
+        rh = np.ones((3, *gpp.shape), dtype = np.float32) # (3 x N x T)
+        nee = np.ones((*gpp.shape,), dtype = np.float32) # (N x T)
+
+        # Determine the number of forward time steps
+        if dates is not None:
+            steps = np.arange(0, len(dates))
+        else:
+            try:
+                steps = np.arange(0, drivers[0].shape[-1])
+            except:
+                raise ValueError(&#39;Could not determine number of time steps; provide a &#34;dates&#34; argument&#39;)
+
+        # Create a way to track SOC state over time
+        if track_state:
+            if not hasattr(self.history, &#39;soc&#39;):
+                self.history.add(&#39;soc&#39;, soc[...,np.newaxis].repeat(
+                    steps.size, axis = -1).astype(np.float32))
+
+        litter0 = self.constants.litterfall # Available annual litterfall
+        litter = litter0 / 365 # Default: Allocate equal fraction every day
+
+        for t in tqdm(steps, disable = not verbose):
+            # If litterfall is scheduled: is a varying fraction of the annual
+            if self.constants.litterfall_rate is not None:
+                litter = litter0 * self.constants.litterfall_rate[:,t]
+            if track_state:
+                self.history.soc[...,t] = soc
+            rh_t = np.empty((3, litter.shape[0])) # Allocate RH(t) array
+            for pool in range(0, soc.shape[0]):
+                rh_t[pool] = self.params.decay_rates[pool] *\
+                    wmult[t] * tmult[t] * soc[pool]
+            # Compute SOC change
+            dc1 = (litter * self.params.f_metabolic.T) - rh_t[0,...]
+            dc2 = (litter * (1 - self.params.f_metabolic.T)) - rh_t[1,...]
+            dc3 = (self.params.f_structural.T * rh_t[1,...]) - rh_t[2,...]
+            for i, delta in enumerate([dc1, dc2, dc3]):
+                delta[np.isnan(delta)] = 0 # Protect against NaN contamination
+                soc[i] += delta[0]
+            # &#34;the adjustment...to account for material transferred into the slow
+            #   pool during humification&#34; (Jones et al. 2017, TGARS, p.5); note
+            #   that this is a loss FROM the &#34;medium&#34; (structural) pool
+            rh_t[1,...] = rh_t[1,...] * (1 - self.params.f_structural.T)
+            # Record RH and NEE at this time step
+            rh[...,t] = rh_t
+            nee[...,t] = rh_t.sum(axis = 0) - npp[...,t]
+        return (nee, gpp, rh)
+
+    def gpp(self, drivers: Sequence) -&gt; np.ndarray:
+        &#39;&#39;&#39;
+        Calculates gross primary production (GPP) under prevailing climatic
+        climatic conditions. Order of driver variables should be:
+
+            Fraction of PAR intercepted (fPAR) [0-1]
+            Photosynthetically active radation (PAR) [MJ m-2 day-1]
+            Minimum temperature (Tmin) [deg K]
+            Vapor pressure deficit (VPD) [Pa]
+            UNSCALED Root-zone soil moisture wetness [percent, %]
+            Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+
+        The FT state is optional; if that axis of the data cube is not
+        provided, FT state will be calculated from Tmin using a threshold
+        of 32 degrees F (273.15 deg K).
+
+        Unit of time should be consistent with the units of PAR. For example,
+        if PAR is given as [MJ m-2 day-1], then GPP will be in units of
+        [g C m-2 day-1]. It&#39;s assumed the other driver data are representative
+        of that time step (e.g., daily averages). GPP doesn&#39;t depend on model
+        state, so it can be estimated for an arbitrary number of time steps.
+
+        Parameters
+        ----------
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+
+        Returns
+        -------
+        numpy.ndarray
+            Gross primary production (GPP) in [g C m-2 time-1] where time is
+            the time step of the PAR data, e.g., [g C m-2 day-1]
+        &#39;&#39;&#39;
+        self.check_drivers(drivers)
+        if len(drivers) == 5:
+            fpar, par, _, _, _ = drivers
+        else:
+            fpar, par, _, _, _, _ = drivers
+        ft, f_tmin, f_vpd, f_smrz = self.diagnose_emult(drivers)
+        emult = ft * f_tmin * f_vpd * f_smrz
+        return par * fpar * emult * self.params.LUE
+
+    def rh(
+            self, drivers: Sequence, state: Sequence = None
+        ) -&gt; np.ndarray:
+        &#39;&#39;&#39;
+        Calculates heterotrophic respiration (RH) based on the available
+        soil organic carbon (SOC) state and prevailing climatic conditions.
+        This calculation is NOT vectorized, so can only be applied to a single
+        time point. Order of driver variables should be:
+
+            Soil temperature in the top (0-5 cm) layer [deg K]
+            Surface soil moisture wetness [percent, %]
+
+        Unit of time should be consistent with the units of PAR and the
+        turnover time (`decay_rate`). It&#39;s assumed that PAR is denominated
+        by daily time steps, so RH would be given in [g C m-2 day-1].
+
+        Parameters
+        ----------
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+        state : Sequence or numpy.ndarray or None
+            A sequence of 3 values or an (3 x N) array representing the
+            SOC state in each SOC pool
+
+        Returns
+        -------
+        numpy.ndarray
+            A (3 x N) array representing the RH flux from each SOC pool, in
+            units of [g C m-2] per unit time, most likely [g C m-2 day-1]
+        &#39;&#39;&#39;
+        if hasattr(drivers, &#39;ndim&#39;):
+            assert drivers.ndim &lt;= 2,\
+                &#39;TCF.rh() computes a single time step; only (P x N) driver arrays should be provided&#39;
+        # NOTE: Allowing for state variables other than SOC to be included in
+        #   a later version
+        soc = state
+        if soc is None:
+            soc = self.state.soc
+        tsoil, smsf = drivers # Unpack met. drivers
+        # Take transpose of parameter vectors here because the driver datasets
+        #   are cross-sectional; i.e., smsf and tsoil are 1D vectors
+        f_smsf = linear_constraint(self.params.smsf0.T, self.params.smsf1.T)
+        tmult = arrhenius(tsoil, self.params.tsoil.T)
+        wmult = f_smsf(smsf)
+        rh = wmult * tmult * self.params.decay_rates * soc
+        # &#34;the adjustment...to account for material transferred into the slow
+        #   pool during humification&#34; (Jones et al. 2017, TGARS, p.5); note
+        #   that this is a loss FROM the &#34;medium&#34; (structural) pool
+        rh[1,...] = rh[1,...] * (1 - self.params.f_structural.T)
+        return rh
+
+    def setup_litterfall(
+            self, dates: Sequence, litterfall_rate: Sequence,
+            period_days: int = 8):
+        &#39;&#39;&#39;
+        Create a schedule for daily litterfall allocation. This step is
+        optional and, without it, the default behavior is to allocate an
+        equal daily fraction (i.e., 1/365) of total annual litterfall. The
+        resulting litterfall schedule is stored in the `constants` namespace
+        as `constants.litterfall_rate`.
+
+        Parameters
+        ----------
+        dates : Sequence or numpy.ndarray
+            A sequence of `datetime.date` instances, of length T for T time
+            steps, indicating the current year of each time step.
+        litterfall_rate : numpy.ndarray
+            An (P x N) array specifying the litterfall rate in each period
+            (P periods per year) for N pixels. There are 46 8-day periods in
+            a year.
+        period_days : int
+            The number of days; defaults to 8 (8-day periods) to match the
+            8-day composite cycle of MODIS/VIIRS datasets
+        &#39;&#39;&#39;
+        n_periods = 1 + (365 // period_days) # e.g., 46 8-day periods in 365 days
+        _preamble = f&#39;Expected &#34;litterfall_rate&#34; to be shape ({n_periods} x N)&#39;
+        assert litterfall_rate.shape[0] == n_periods,\
+            f&#39;{_preamble} but first axis does not have {n_periods} elements&#39;
+        # Get a sequence of (e.g., 8-day) periods
+        periods = np.arange(0, n_periods)\
+            .reshape((n_periods, 1)).repeat(period_days, axis = 1)
+        periods = periods.ravel()[:365]
+        jdates = np.array(ordinals365(dates)) - 1
+        assert jdates.max() == 364 # Python starts counting at zero
+        # Index into periods [0,45], which can then index into litter_rate,
+        #   a (46 x N) array, to produce an (T x N) array, then swap axes
+        litterfall_rate = litterfall_rate[periods[jdates],:].swapaxes(0, 1)
+        # Finally, convert litterfall rate from (1/period_days) to (1/day);
+        #   i.e., for an 8-day period, instead of &#34;this amount per 8 days&#34;
+        #   we want a daily amount
+        litterfall_rate /= period_days
+        # Check that, for a given year, 100% of litterfall is allocated; this
+        #   is like a checksum for the schedule: The fractions in a year
+        #   should add up to (close to) 1.0
+        n_years = len(dates) // 365 # Expected number of years
+        assert (np.abs(litterfall_rate.sum(axis = -1) - n_years) &lt; 1).all(),\
+            f&#39;Summing daily &#34;litterfall_rate&#34; over time did not result in 100% of litterfall allocated each year; check data values or the value of &#34;period_days&#34;&#39;
+        self.constants.add(&#39;litterfall_rate&#39;, litterfall_rate)
+
+    def spin_up(
+            self, dates: Sequence, drivers: Sequence, state: Sequence = None,
+            max_cycles: int = 1000, threshold: float = 1, verbose: bool = True,
+            verbose_type = &#39;tqdm&#39;
+        ) -&gt; np.ndarray:
+        &#39;&#39;&#39;
+        Repeatedly cycle climatology until SOC state reaches equilibrium. See
+        `TCF.forward_run()` for details on `drivers` and `state` arguments.
+
+        Parameters
+        ----------
+        dates : Sequence or numpy.ndarray
+            A sequence of `datetime.date` instances, of length T for T time
+            steps
+        drivers : Sequence or numpy.ndarray
+            Either a flat sequence of P driver variables, each an array with
+            (N x T) or (... x N x T) shape for N sites and T time steps; or a
+            single array, with shape (P x N) or (P x N x T)
+        state : Sequence or numpy.ndarray or None
+            A sequence of 3 values or an (3 x N) array representing the
+            SOC state in each SOC pool
+        max_cycles : int
+            Maximum number of climatology cycles (365-day years) to apply
+            (Default: 100)
+        threshold : float
+            Threshold for inter-annual change in NEE [g C m-2 year-1]; when the
+            difference in the annual NEE sum is less than this number, spin-up
+            is complete (Default: 1 g C m-2 year-1)
+        verbose : bool
+            True to show a progress bar and other messages (Default: True)
+
+        Returns
+        -------
+        numpy.ndarray
+            The history of change in annual NEE
+        &#39;&#39;&#39;
+        # NOTE: Allowing for state variables other than SOC to be included in
+        #   a later version
+        if state is None:
+            assert hasattr(self.state, &#39;soc&#39;), &#39;No prior soil organic carbon (&#34;soc&#34;) state defined&#39;
+        else:
+            self.state.soc = state
+        soc = self.state.soc
+
+        clim = []
+        for each in drivers:
+            # Reshape the (365 x ...) arrays to (... x 365) arrays after
+            #   calculating a climatology
+            clim.append(climatology365(each, dates).swapaxes(0, -1))
+        tolerance = np.nan * np.ones((soc.shape[-1], max_cycles), np.float32)
+        disable = (not verbose or not verbose_type == &#39;tqdm&#39;)
+        for cycle in tqdm(range(0, max_cycles), disable = disable):
+            nee, gpp, rh = self.forward_run(drivers, soc, dates, verbose = False)
+            # Diagnostics
+            # rh_sum = rh.sum(axis = 0).sum(axis = -1)
+            # npp_sum = (gpp * self.params.CUE).sum(axis = -1)
+            nee_sum = np.nansum(nee, axis = -1)
+            if cycle == 0:
+                nee_last = nee_sum
+            else:
+                tolerance[:,cycle] = (nee_last - nee_sum)
+                nee_last = nee_sum
+                if (np.abs(tolerance[:,cycle]) &lt; threshold).all():
+                    break
+            # Diagnostics
+            # rh_track[:,step] = rh_sum
+            # npp_track[:,step] = npp_sum
+            # soc_track[:,step] = self.state.soc.sum(axis = 0)
+            if cycle &gt; 0 and verbose and verbose_type != &#39;tqdm&#39;:
+                print(
+                    &#39;Change in annual NEE sum [SOC state]: %.2f, [%.0f]&#39; %
+                    (np.nanmean(tolerance[:,cycle]), self.state.soc.sum()))
+        return tolerance</code></pre>
+</details>
+<div class="desc"><p>The Terrestrial Carbon Flux (TCF) model, which is the basis for the NASA
+Soil Moisture Active Passive (SMAP) Level 4 Carbon (L4C) model. TCF
+incorporates these basic assumptions:</p>
+<ol>
+<li>Carbon assimilation (gross primary production) is linearly related to
+the amount of solar radiation and green photosynthetic land cover.</li>
+<li>There is a maximum rate of carbon assimilation. Low water availability,
+cold or freezing temperatures, and high atmospheric demand for water
+vapor each reduce the efficiency of carbon assimilation.</li>
+<li>Soil organic carbon (SOC) decomposes at different rates based on the
+type of material. The optimal rate of decomposition is fixed and
+depends only on the land-cover type.</li>
+<li>The efficiency of soil organic carbon decomposition is reduced under
+low soil temperatures or low soil moisture.</li>
+</ol>
+<p>A complete description is available in Kimball et al. (2009) and in Jones
+et al. (2017). Soil organic carbon (SOC) and soil decomposition are
+discussed in Endsley et al. (2020) and Endsley et al. (2022).</p>
+<p>If initial model "state" is provided it should be a 2D array with the
+first axis containing, in order:</p>
+<ul>
+<li>Initial state of "metabolic" SOC pool</li>
+<li>Initial state of "structural" SOC pool</li>
+<li>Initial state of "recalcitrant" SOC pool</li>
+</ul>
+<p>NOTE: For developers, <code>self.params</code> refers to model parameters that have
+been vectorized to improve performance. If a function performs
+vectorized calculations on longitudinal (N x T) arrays, the vectorized
+parameter(s) can be used with their current shape. For cross-sectional
+calculations, e.g., on (N,) or (1 x N) arrays, make sure to use the
+transpose, <code>self.params.name.T</code>, where <code>name</code> is the parameter name.</p>
+<p>Example use for a single pixel:</p>
+<pre><code>tcf = TCF(params, land_cover_map = [7])
+tcf.nee(state = [500, 500, 1000], drivers = [...])
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of model parameters; keys should be among
+<code><a title="pyl4c.apps.l4c.core.TCF.required_parameters" href="#pyl4c.apps.l4c.core.TCF.required_parameters">TCF.required_parameters</a></code> and values should be sequences ordered by
+PFT code, either 9 values (value at index 0 being <code>np.nan</code>) or as many
+values as there are keys in <code><a title="pyl4c.apps.l4c.core.TCF.valid_pft" href="#pyl4c.apps.l4c.core.TCF.valid_pft">TCF.valid_pft</a></code></dd>
+<dt><strong><code>land_cover_map</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>1-dimensional sequence of one or more land-cover types, one for each
+model resolution cell (pixel). These types should be represented as
+integers (unsigned 16-bit type or lower).</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>A sequence of 3 values or a 2D (S x N) array representing the state
+variables for each of N pixels. The first three (3) state variables
+should be the initial states of each SOC pool.</dd>
+<dt><strong><code>litterfall</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>A sequence of values or 1D array representing average annual
+litterfall (units: g C m-2 year-1) for each model resolution cell
+(pixel). If not provided, it will be based on the climatological NPP
+(when it is calculated).</dd>
+</dl></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.core.TCF.num_soc_pools"><code class="name">var <span class="ident">num_soc_pools</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.required_drivers"><code class="name">var <span class="ident">required_drivers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.required_parameters"><code class="name">var <span class="ident">required_parameters</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.valid_pft"><code class="name">var <span class="ident">valid_pft</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.version"><code class="name">var <span class="ident">version</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.l4c.core.TCF.check_drivers"><code class="name flex">
+<span>def <span class="ident">check_drivers</span></span>(<span>self, drivers: Sequence)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_drivers(self, drivers: Sequence):
+    &#39;&#39;&#39;
+    Checks that driver datasets have correct shape and units. Issues
+    warnings otherwise.
+
+    Parameters
+    ----------
+    drivers : Sequence
+        Flat sequence of drivers or (P x ...) array for P drivers
+    &#39;&#39;&#39;
+    n = len(drivers)
+    _drivers = dict(zip(self.required_drivers[0:n], drivers))
+    if &#39;fPAR&#39; in _drivers.keys():
+        if np.nanmax(_drivers[&#39;fPAR&#39;]) &gt; 1:
+            warnings.warn(&#39;WARNING: fPAR might not have correct units; maximum value exceeds 1.0&#39;)
+    if &#39;SMRZ&#39; in _drivers.keys():
+        if np.nanmax(_drivers[&#39;SMRZ&#39;]) &lt;= 1:
+            warnings.warn(&#39;WARNING: Root-zone soil moisture might not have correct units; maximum value is less than 1.0&#39;)
+    if &#39;SMSF&#39; in _drivers.keys():
+        if np.nanmax(_drivers[&#39;SMSF&#39;]) &lt;= 1:
+            warnings.warn(&#39;WARNING: Surface soil moisture might not have correct units; maximum value is less than 1.0&#39;)</code></pre>
+</details>
+<div class="desc"><p>Checks that driver datasets have correct shape and units. Issues
+warnings otherwise.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>Flat sequence of drivers or (P x &hellip;) array for P drivers</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.diagnose_emult"><code class="name flex">
+<span>def <span class="ident">diagnose_emult</span></span>(<span>self, drivers)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def diagnose_emult(self, drivers):
+    &#39;&#39;&#39;
+    Returns the environmental constraint multiplier on GPP (Emult). This
+    dimensionless quantity indicates the aggregate impact of
+    meteorological conditions on GPP. Order of driver variables should be:
+
+        Fraction of PAR intercepted (fPAR) [0-1]
+        Photosynthetically active radation (PAR) [MJ m-2 day-1]
+        Minimum temperature (Tmin) [deg K]
+        Vapor pressure deficit (VPD) [Pa]
+        UNSCALED Root-zone soil moisture wetness [percent, %]
+        Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+
+    Parameters
+    ----------
+    drivers : Sequence or numpy.ndarray
+        Either a flat sequence of P driver variables, each an array with
+        (N x T) or (... x N x T) shape for N sites and T time steps; or a
+        single array, with shape (P x N) or (P x N x T)
+
+    Returns
+    -------
+    tuple
+        4-tuple of (FT, Tmin, VPD, SMRZ) environmental constraints
+    &#39;&#39;&#39;
+    if len(drivers) == 5:
+        fpar, par, tmin, vpd, smrz0 = drivers
+        ft0 = np.where(tmin &lt; 273.15, 0, 1)
+    else:
+        fpar, par, tmin, vpd, smrz0, ft0 = drivers
+    # Rescale root-zone soil moisture
+    smrz = self._rescale_smrz(smrz0, np.nanmin(smrz0, axis = -1))
+    # Convert freeze-thaw flag to a multiplier (always 1 when thawed but
+    #   potentially non-zero and less than 1 when thawed)
+    ft = np.where(ft0 == 0, self.params.ft0, 1)
+    # Get a function that constrains each met. driver to [0, 1]
+    f_tmin = linear_constraint(self.params.tmin0, self.params.tmin1)(tmin)
+    f_vpd = linear_constraint(
+        self.params.vpd0, self.params.vpd1, &#39;reversed&#39;)(vpd)
+    f_smrz = linear_constraint(self.params.smrz0, self.params.smrz1)(smrz)
+    # Compute the environmental constraint
+    return (ft, f_tmin, f_vpd, f_smrz)</code></pre>
+</details>
+<div class="desc"><p>Returns the environmental constraint multiplier on GPP (Emult). This
+dimensionless quantity indicates the aggregate impact of
+meteorological conditions on GPP. Order of driver variables should be:</p>
+<pre><code>Fraction of PAR intercepted (fPAR) [0-1]
+Photosynthetically active radation (PAR) [MJ m-2 day-1]
+Minimum temperature (Tmin) [deg K]
+Vapor pressure deficit (VPD) [Pa]
+UNSCALED Root-zone soil moisture wetness [percent, %]
+Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a flat sequence of P driver variables, each an array with
+(N x T) or (&hellip; x N x T) shape for N sites and T time steps; or a
+single array, with shape (P x N) or (P x N x T)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>4-tuple of (FT, Tmin, VPD, SMRZ) environmental constraints</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.diagnose_kmult"><code class="name flex">
+<span>def <span class="ident">diagnose_kmult</span></span>(<span>self, drivers)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def diagnose_kmult(self, drivers):
+    &#39;&#39;&#39;
+    Returns the environmental constraint multiplier on RH (Kmult). This
+    dimensionless quantity indicates the aggregate impact of
+    meteorological conditions on heterotrophic respiration (RH). Order of
+    driver variables should be:
+
+        Fraction of PAR intercepted (fPAR) [0-1]
+        Photosynthetically active radation (PAR) [MJ m-2 day-1]
+        Minimum temperature (Tmin) [deg K]
+        Vapor pressure deficit (VPD) [Pa]
+        UNSCALED Root-zone soil moisture wetness [percent, %]
+        Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+        Soil temperature in the top (0-5 cm) layer [deg K]
+        Surface soil moisture wetness [percent, %]
+
+    Parameters
+    ----------
+    drivers : Sequence or numpy.ndarray
+        Either a flat sequence of P driver variables, each an array with
+        (N x T) or (... x N x T) shape for N sites and T time steps; or a
+        single array, with shape (P x N) or (P x N x T)
+
+    Returns
+    -------
+    tuple
+        2-tuple of (Tmult, Wmult), or (Tsoil, SMSF), environmental
+        constraints
+    &#39;&#39;&#39;
+    tsoil, smsf = drivers[-2:]
+    f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
+    # Swap axes here only to make time the major (first) axis
+    tmult = arrhenius(tsoil, self.params.tsoil)
+    wmult = f_smsf(smsf)
+    return (tmult, wmult)</code></pre>
+</details>
+<div class="desc"><p>Returns the environmental constraint multiplier on RH (Kmult). This
+dimensionless quantity indicates the aggregate impact of
+meteorological conditions on heterotrophic respiration (RH). Order of
+driver variables should be:</p>
+<pre><code>Fraction of PAR intercepted (fPAR) [0-1]
+Photosynthetically active radation (PAR) [MJ m-2 day-1]
+Minimum temperature (Tmin) [deg K]
+Vapor pressure deficit (VPD) [Pa]
+UNSCALED Root-zone soil moisture wetness [percent, %]
+Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+Soil temperature in the top (0-5 cm) layer [deg K]
+Surface soil moisture wetness [percent, %]
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a flat sequence of P driver variables, each an array with
+(N x T) or (&hellip; x N x T) shape for N sites and T time steps; or a
+single array, with shape (P x N) or (P x N x T)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>2-tuple of (Tmult, Wmult), or (Tsoil, SMSF), environmental
+constraints</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.forward_run"><code class="name flex">
+<span>def <span class="ident">forward_run</span></span>(<span>self,<br>drivers: Sequence,<br>state: Sequence = None,<br>dates: Sequence = None,<br>track_state: bool = False,<br>verbose: bool = True) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def forward_run(
+        self, drivers: Sequence, state: Sequence = None,
+        dates: Sequence = None, track_state: bool = False,
+        verbose: bool = True
+    ) -&gt; np.ndarray:
+    &#39;&#39;&#39;
+    Runs the TCF model forward in time for daily time steps. This is the
+    recommended interface for most users. If `litterfall` was not provided
+    to `TCF` at initialization, it will be necessary to provide at least
+    365 daily steps and the `years` of each time step. Order of driver
+    variables should be:
+
+        Fraction of PAR intercepted (fPAR) [0-1]
+        Photosynthetically active radation (PAR) [MJ m-2 day-1]
+        Minimum temperature (Tmin) [deg K]
+        Vapor pressure deficit (VPD) [Pa]
+        UNSCALED Root-zone soil moisture wetness [percent, %]
+        Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+        Soil temperature in the top (0-5 cm) layer [deg K]
+        Surface soil moisture wetness [percent, %]
+
+    GPP calculation is vectorized but RH and NEE calculation proceed
+    step-wise because they depend on the model state (SOC).
+
+    Parameters
+    ----------
+    drivers : Sequence or numpy.ndarray
+        Either a flat sequence of P driver variables, each an array with
+        (N x T) or (... x N x T) shape for N sites and T time steps; or a
+        single array, with shape (P x N) or (P x N x T)
+    state : Sequence or numpy.ndarray or None
+        A sequence of 3 values or an (3 x N) array representing the
+        SOC state in each SOC pool
+    dates : Sequence or numpy.ndarray or None
+        If `litterfall` was not provided to `TCF` during initialization,
+        you must provide a sequence of `datetime.date` instances, of
+        length T for T time steps, indicating the current year of each
+        time step.
+    track_state : bool
+        True to track (soil organic carbon) state at each time step,
+        rather than only tracking the current state (Default: False)
+    verbose : bool
+        True to show a progress bar and other messages (Default: True)
+
+    Returns
+    -------
+    tuple
+        A 3-element tuple of (NEE, GPP, RH)
+    &#39;&#39;&#39;
+    if drivers[0].shape[-2] &gt; drivers[0].shape[-1]:
+        warnings.warn(&#39;WARNING: Axes of input arrays might not be in the required (..., N, T) order&#39;)
+    # NOTE: Allowing for state variables other than SOC to be included in
+    #   a later version
+    soc = state
+    if soc is None:
+        soc = self.state.soc
+    # NOTE: self.constants.litterfall is also initialized in this function
+    gpp, npp, tmult, wmult = self._setup_forward(drivers, state, dates)
+    # Pre-allocate output arrays
+    rh = np.ones((3, *gpp.shape), dtype = np.float32) # (3 x N x T)
+    nee = np.ones((*gpp.shape,), dtype = np.float32) # (N x T)
+
+    # Determine the number of forward time steps
+    if dates is not None:
+        steps = np.arange(0, len(dates))
+    else:
+        try:
+            steps = np.arange(0, drivers[0].shape[-1])
+        except:
+            raise ValueError(&#39;Could not determine number of time steps; provide a &#34;dates&#34; argument&#39;)
+
+    # Create a way to track SOC state over time
+    if track_state:
+        if not hasattr(self.history, &#39;soc&#39;):
+            self.history.add(&#39;soc&#39;, soc[...,np.newaxis].repeat(
+                steps.size, axis = -1).astype(np.float32))
+
+    litter0 = self.constants.litterfall # Available annual litterfall
+    litter = litter0 / 365 # Default: Allocate equal fraction every day
+
+    for t in tqdm(steps, disable = not verbose):
+        # If litterfall is scheduled: is a varying fraction of the annual
+        if self.constants.litterfall_rate is not None:
+            litter = litter0 * self.constants.litterfall_rate[:,t]
+        if track_state:
+            self.history.soc[...,t] = soc
+        rh_t = np.empty((3, litter.shape[0])) # Allocate RH(t) array
+        for pool in range(0, soc.shape[0]):
+            rh_t[pool] = self.params.decay_rates[pool] *\
+                wmult[t] * tmult[t] * soc[pool]
+        # Compute SOC change
+        dc1 = (litter * self.params.f_metabolic.T) - rh_t[0,...]
+        dc2 = (litter * (1 - self.params.f_metabolic.T)) - rh_t[1,...]
+        dc3 = (self.params.f_structural.T * rh_t[1,...]) - rh_t[2,...]
+        for i, delta in enumerate([dc1, dc2, dc3]):
+            delta[np.isnan(delta)] = 0 # Protect against NaN contamination
+            soc[i] += delta[0]
+        # &#34;the adjustment...to account for material transferred into the slow
+        #   pool during humification&#34; (Jones et al. 2017, TGARS, p.5); note
+        #   that this is a loss FROM the &#34;medium&#34; (structural) pool
+        rh_t[1,...] = rh_t[1,...] * (1 - self.params.f_structural.T)
+        # Record RH and NEE at this time step
+        rh[...,t] = rh_t
+        nee[...,t] = rh_t.sum(axis = 0) - npp[...,t]
+    return (nee, gpp, rh)</code></pre>
+</details>
+<div class="desc"><p>Runs the TCF model forward in time for daily time steps. This is the
+recommended interface for most users. If <code>litterfall</code> was not provided
+to <code><a title="pyl4c.apps.l4c.core.TCF" href="#pyl4c.apps.l4c.core.TCF">TCF</a></code> at initialization, it will be necessary to provide at least
+365 daily steps and the <code>years</code> of each time step. Order of driver
+variables should be:</p>
+<pre><code>Fraction of PAR intercepted (fPAR) [0-1]
+Photosynthetically active radation (PAR) [MJ m-2 day-1]
+Minimum temperature (Tmin) [deg K]
+Vapor pressure deficit (VPD) [Pa]
+UNSCALED Root-zone soil moisture wetness [percent, %]
+Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+Soil temperature in the top (0-5 cm) layer [deg K]
+Surface soil moisture wetness [percent, %]
+</code></pre>
+<p>GPP calculation is vectorized but RH and NEE calculation proceed
+step-wise because they depend on the model state (SOC).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a flat sequence of P driver variables, each an array with
+(N x T) or (&hellip; x N x T) shape for N sites and T time steps; or a
+single array, with shape (P x N) or (P x N x T)</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>A sequence of 3 values or an (3 x N) array representing the
+SOC state in each SOC pool</dd>
+<dt><strong><code>dates</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>If <code>litterfall</code> was not provided to <code><a title="pyl4c.apps.l4c.core.TCF" href="#pyl4c.apps.l4c.core.TCF">TCF</a></code> during initialization,
+you must provide a sequence of <code>datetime.date</code> instances, of
+length T for T time steps, indicating the current year of each
+time step.</dd>
+<dt><strong><code>track_state</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to track (soil organic carbon) state at each time step,
+rather than only tracking the current state (Default: False)</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to show a progress bar and other messages (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>A 3-element tuple of (NEE, GPP, RH)</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.gpp"><code class="name flex">
+<span>def <span class="ident">gpp</span></span>(<span>self, drivers: Sequence) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gpp(self, drivers: Sequence) -&gt; np.ndarray:
+    &#39;&#39;&#39;
+    Calculates gross primary production (GPP) under prevailing climatic
+    climatic conditions. Order of driver variables should be:
+
+        Fraction of PAR intercepted (fPAR) [0-1]
+        Photosynthetically active radation (PAR) [MJ m-2 day-1]
+        Minimum temperature (Tmin) [deg K]
+        Vapor pressure deficit (VPD) [Pa]
+        UNSCALED Root-zone soil moisture wetness [percent, %]
+        Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+
+    The FT state is optional; if that axis of the data cube is not
+    provided, FT state will be calculated from Tmin using a threshold
+    of 32 degrees F (273.15 deg K).
+
+    Unit of time should be consistent with the units of PAR. For example,
+    if PAR is given as [MJ m-2 day-1], then GPP will be in units of
+    [g C m-2 day-1]. It&#39;s assumed the other driver data are representative
+    of that time step (e.g., daily averages). GPP doesn&#39;t depend on model
+    state, so it can be estimated for an arbitrary number of time steps.
+
+    Parameters
+    ----------
+    drivers : Sequence or numpy.ndarray
+        Either a flat sequence of P driver variables, each an array with
+        (N x T) or (... x N x T) shape for N sites and T time steps; or a
+        single array, with shape (P x N) or (P x N x T)
+
+    Returns
+    -------
+    numpy.ndarray
+        Gross primary production (GPP) in [g C m-2 time-1] where time is
+        the time step of the PAR data, e.g., [g C m-2 day-1]
+    &#39;&#39;&#39;
+    self.check_drivers(drivers)
+    if len(drivers) == 5:
+        fpar, par, _, _, _ = drivers
+    else:
+        fpar, par, _, _, _, _ = drivers
+    ft, f_tmin, f_vpd, f_smrz = self.diagnose_emult(drivers)
+    emult = ft * f_tmin * f_vpd * f_smrz
+    return par * fpar * emult * self.params.LUE</code></pre>
+</details>
+<div class="desc"><p>Calculates gross primary production (GPP) under prevailing climatic
+climatic conditions. Order of driver variables should be:</p>
+<pre><code>Fraction of PAR intercepted (fPAR) [0-1]
+Photosynthetically active radation (PAR) [MJ m-2 day-1]
+Minimum temperature (Tmin) [deg K]
+Vapor pressure deficit (VPD) [Pa]
+UNSCALED Root-zone soil moisture wetness [percent, %]
+Freeze-thaw (FT) state of soil [0 = Frozen, 1 = Thawed]
+</code></pre>
+<p>The FT state is optional; if that axis of the data cube is not
+provided, FT state will be calculated from Tmin using a threshold
+of 32 degrees F (273.15 deg K).</p>
+<p>Unit of time should be consistent with the units of PAR. For example,
+if PAR is given as [MJ m-2 day-1], then GPP will be in units of
+[g C m-2 day-1]. It's assumed the other driver data are representative
+of that time step (e.g., daily averages). GPP doesn't depend on model
+state, so it can be estimated for an arbitrary number of time steps.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a flat sequence of P driver variables, each an array with
+(N x T) or (&hellip; x N x T) shape for N sites and T time steps; or a
+single array, with shape (P x N) or (P x N x T)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>Gross primary production (GPP) in [g C m-2 time-1] where time is
+the time step of the PAR data, e.g., [g C m-2 day-1]</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.rh"><code class="name flex">
+<span>def <span class="ident">rh</span></span>(<span>self, drivers: Sequence, state: Sequence = None) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def rh(
+        self, drivers: Sequence, state: Sequence = None
+    ) -&gt; np.ndarray:
+    &#39;&#39;&#39;
+    Calculates heterotrophic respiration (RH) based on the available
+    soil organic carbon (SOC) state and prevailing climatic conditions.
+    This calculation is NOT vectorized, so can only be applied to a single
+    time point. Order of driver variables should be:
+
+        Soil temperature in the top (0-5 cm) layer [deg K]
+        Surface soil moisture wetness [percent, %]
+
+    Unit of time should be consistent with the units of PAR and the
+    turnover time (`decay_rate`). It&#39;s assumed that PAR is denominated
+    by daily time steps, so RH would be given in [g C m-2 day-1].
+
+    Parameters
+    ----------
+    drivers : Sequence or numpy.ndarray
+        Either a flat sequence of P driver variables, each an array with
+        (N x T) or (... x N x T) shape for N sites and T time steps; or a
+        single array, with shape (P x N) or (P x N x T)
+    state : Sequence or numpy.ndarray or None
+        A sequence of 3 values or an (3 x N) array representing the
+        SOC state in each SOC pool
+
+    Returns
+    -------
+    numpy.ndarray
+        A (3 x N) array representing the RH flux from each SOC pool, in
+        units of [g C m-2] per unit time, most likely [g C m-2 day-1]
+    &#39;&#39;&#39;
+    if hasattr(drivers, &#39;ndim&#39;):
+        assert drivers.ndim &lt;= 2,\
+            &#39;TCF.rh() computes a single time step; only (P x N) driver arrays should be provided&#39;
+    # NOTE: Allowing for state variables other than SOC to be included in
+    #   a later version
+    soc = state
+    if soc is None:
+        soc = self.state.soc
+    tsoil, smsf = drivers # Unpack met. drivers
+    # Take transpose of parameter vectors here because the driver datasets
+    #   are cross-sectional; i.e., smsf and tsoil are 1D vectors
+    f_smsf = linear_constraint(self.params.smsf0.T, self.params.smsf1.T)
+    tmult = arrhenius(tsoil, self.params.tsoil.T)
+    wmult = f_smsf(smsf)
+    rh = wmult * tmult * self.params.decay_rates * soc
+    # &#34;the adjustment...to account for material transferred into the slow
+    #   pool during humification&#34; (Jones et al. 2017, TGARS, p.5); note
+    #   that this is a loss FROM the &#34;medium&#34; (structural) pool
+    rh[1,...] = rh[1,...] * (1 - self.params.f_structural.T)
+    return rh</code></pre>
+</details>
+<div class="desc"><p>Calculates heterotrophic respiration (RH) based on the available
+soil organic carbon (SOC) state and prevailing climatic conditions.
+This calculation is NOT vectorized, so can only be applied to a single
+time point. Order of driver variables should be:</p>
+<pre><code>Soil temperature in the top (0-5 cm) layer [deg K]
+Surface soil moisture wetness [percent, %]
+</code></pre>
+<p>Unit of time should be consistent with the units of PAR and the
+turnover time (<code>decay_rate</code>). It's assumed that PAR is denominated
+by daily time steps, so RH would be given in [g C m-2 day-1].</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a flat sequence of P driver variables, each an array with
+(N x T) or (&hellip; x N x T) shape for N sites and T time steps; or a
+single array, with shape (P x N) or (P x N x T)</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>A sequence of 3 values or an (3 x N) array representing the
+SOC state in each SOC pool</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>A (3 x N) array representing the RH flux from each SOC pool, in
+units of [g C m-2] per unit time, most likely [g C m-2 day-1]</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.setup_litterfall"><code class="name flex">
+<span>def <span class="ident">setup_litterfall</span></span>(<span>self, dates: Sequence, litterfall_rate: Sequence, period_days: int = 8)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setup_litterfall(
+        self, dates: Sequence, litterfall_rate: Sequence,
+        period_days: int = 8):
+    &#39;&#39;&#39;
+    Create a schedule for daily litterfall allocation. This step is
+    optional and, without it, the default behavior is to allocate an
+    equal daily fraction (i.e., 1/365) of total annual litterfall. The
+    resulting litterfall schedule is stored in the `constants` namespace
+    as `constants.litterfall_rate`.
+
+    Parameters
+    ----------
+    dates : Sequence or numpy.ndarray
+        A sequence of `datetime.date` instances, of length T for T time
+        steps, indicating the current year of each time step.
+    litterfall_rate : numpy.ndarray
+        An (P x N) array specifying the litterfall rate in each period
+        (P periods per year) for N pixels. There are 46 8-day periods in
+        a year.
+    period_days : int
+        The number of days; defaults to 8 (8-day periods) to match the
+        8-day composite cycle of MODIS/VIIRS datasets
+    &#39;&#39;&#39;
+    n_periods = 1 + (365 // period_days) # e.g., 46 8-day periods in 365 days
+    _preamble = f&#39;Expected &#34;litterfall_rate&#34; to be shape ({n_periods} x N)&#39;
+    assert litterfall_rate.shape[0] == n_periods,\
+        f&#39;{_preamble} but first axis does not have {n_periods} elements&#39;
+    # Get a sequence of (e.g., 8-day) periods
+    periods = np.arange(0, n_periods)\
+        .reshape((n_periods, 1)).repeat(period_days, axis = 1)
+    periods = periods.ravel()[:365]
+    jdates = np.array(ordinals365(dates)) - 1
+    assert jdates.max() == 364 # Python starts counting at zero
+    # Index into periods [0,45], which can then index into litter_rate,
+    #   a (46 x N) array, to produce an (T x N) array, then swap axes
+    litterfall_rate = litterfall_rate[periods[jdates],:].swapaxes(0, 1)
+    # Finally, convert litterfall rate from (1/period_days) to (1/day);
+    #   i.e., for an 8-day period, instead of &#34;this amount per 8 days&#34;
+    #   we want a daily amount
+    litterfall_rate /= period_days
+    # Check that, for a given year, 100% of litterfall is allocated; this
+    #   is like a checksum for the schedule: The fractions in a year
+    #   should add up to (close to) 1.0
+    n_years = len(dates) // 365 # Expected number of years
+    assert (np.abs(litterfall_rate.sum(axis = -1) - n_years) &lt; 1).all(),\
+        f&#39;Summing daily &#34;litterfall_rate&#34; over time did not result in 100% of litterfall allocated each year; check data values or the value of &#34;period_days&#34;&#39;
+    self.constants.add(&#39;litterfall_rate&#39;, litterfall_rate)</code></pre>
+</details>
+<div class="desc"><p>Create a schedule for daily litterfall allocation. This step is
+optional and, without it, the default behavior is to allocate an
+equal daily fraction (i.e., 1/365) of total annual litterfall. The
+resulting litterfall schedule is stored in the <code>constants</code> namespace
+as <code>constants.litterfall_rate</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>dates</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>A sequence of <code>datetime.date</code> instances, of length T for T time
+steps, indicating the current year of each time step.</dd>
+<dt><strong><code>litterfall_rate</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>An (P x N) array specifying the litterfall rate in each period
+(P periods per year) for N pixels. There are 46 8-day periods in
+a year.</dd>
+<dt><strong><code>period_days</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of days; defaults to 8 (8-day periods) to match the
+8-day composite cycle of MODIS/VIIRS datasets</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.l4c.core.TCF.spin_up"><code class="name flex">
+<span>def <span class="ident">spin_up</span></span>(<span>self,<br>dates: Sequence,<br>drivers: Sequence,<br>state: Sequence = None,<br>max_cycles: int = 1000,<br>threshold: float = 1,<br>verbose: bool = True,<br>verbose_type='tqdm') ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def spin_up(
+        self, dates: Sequence, drivers: Sequence, state: Sequence = None,
+        max_cycles: int = 1000, threshold: float = 1, verbose: bool = True,
+        verbose_type = &#39;tqdm&#39;
+    ) -&gt; np.ndarray:
+    &#39;&#39;&#39;
+    Repeatedly cycle climatology until SOC state reaches equilibrium. See
+    `TCF.forward_run()` for details on `drivers` and `state` arguments.
+
+    Parameters
+    ----------
+    dates : Sequence or numpy.ndarray
+        A sequence of `datetime.date` instances, of length T for T time
+        steps
+    drivers : Sequence or numpy.ndarray
+        Either a flat sequence of P driver variables, each an array with
+        (N x T) or (... x N x T) shape for N sites and T time steps; or a
+        single array, with shape (P x N) or (P x N x T)
+    state : Sequence or numpy.ndarray or None
+        A sequence of 3 values or an (3 x N) array representing the
+        SOC state in each SOC pool
+    max_cycles : int
+        Maximum number of climatology cycles (365-day years) to apply
+        (Default: 100)
+    threshold : float
+        Threshold for inter-annual change in NEE [g C m-2 year-1]; when the
+        difference in the annual NEE sum is less than this number, spin-up
+        is complete (Default: 1 g C m-2 year-1)
+    verbose : bool
+        True to show a progress bar and other messages (Default: True)
+
+    Returns
+    -------
+    numpy.ndarray
+        The history of change in annual NEE
+    &#39;&#39;&#39;
+    # NOTE: Allowing for state variables other than SOC to be included in
+    #   a later version
+    if state is None:
+        assert hasattr(self.state, &#39;soc&#39;), &#39;No prior soil organic carbon (&#34;soc&#34;) state defined&#39;
+    else:
+        self.state.soc = state
+    soc = self.state.soc
+
+    clim = []
+    for each in drivers:
+        # Reshape the (365 x ...) arrays to (... x 365) arrays after
+        #   calculating a climatology
+        clim.append(climatology365(each, dates).swapaxes(0, -1))
+    tolerance = np.nan * np.ones((soc.shape[-1], max_cycles), np.float32)
+    disable = (not verbose or not verbose_type == &#39;tqdm&#39;)
+    for cycle in tqdm(range(0, max_cycles), disable = disable):
+        nee, gpp, rh = self.forward_run(drivers, soc, dates, verbose = False)
+        # Diagnostics
+        # rh_sum = rh.sum(axis = 0).sum(axis = -1)
+        # npp_sum = (gpp * self.params.CUE).sum(axis = -1)
+        nee_sum = np.nansum(nee, axis = -1)
+        if cycle == 0:
+            nee_last = nee_sum
+        else:
+            tolerance[:,cycle] = (nee_last - nee_sum)
+            nee_last = nee_sum
+            if (np.abs(tolerance[:,cycle]) &lt; threshold).all():
+                break
+        # Diagnostics
+        # rh_track[:,step] = rh_sum
+        # npp_track[:,step] = npp_sum
+        # soc_track[:,step] = self.state.soc.sum(axis = 0)
+        if cycle &gt; 0 and verbose and verbose_type != &#39;tqdm&#39;:
+            print(
+                &#39;Change in annual NEE sum [SOC state]: %.2f, [%.0f]&#39; %
+                (np.nanmean(tolerance[:,cycle]), self.state.soc.sum()))
+    return tolerance</code></pre>
+</details>
+<div class="desc"><p>Repeatedly cycle climatology until SOC state reaches equilibrium. See
+<code><a title="pyl4c.apps.l4c.core.TCF.forward_run" href="#pyl4c.apps.l4c.core.TCF.forward_run">TCF.forward_run()</a></code> for details on <code>drivers</code> and <code>state</code> arguments.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>dates</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>A sequence of <code>datetime.date</code> instances, of length T for T time
+steps</dd>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a flat sequence of P driver variables, each an array with
+(N x T) or (&hellip; x N x T) shape for N sites and T time steps; or a
+single array, with shape (P x N) or (P x N x T)</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>Sequence</code> or <code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>A sequence of 3 values or an (3 x N) array representing the
+SOC state in each SOC pool</dd>
+<dt><strong><code>max_cycles</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of climatology cycles (365-day years) to apply
+(Default: 100)</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>float</code></dt>
+<dd>Threshold for inter-annual change in NEE [g C m-2 year-1]; when the
+difference in the annual NEE sum is less than this number, spin-up
+is complete (Default: 1 g C m-2 year-1)</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to show a progress bar and other messages (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>The history of change in annual NEE</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.apps.l4c" href="index.html">pyl4c.apps.l4c</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.apps.l4c.core.TCF" href="#pyl4c.apps.l4c.core.TCF">TCF</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pyl4c.apps.l4c.core.TCF.check_drivers" href="#pyl4c.apps.l4c.core.TCF.check_drivers">check_drivers</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.diagnose_emult" href="#pyl4c.apps.l4c.core.TCF.diagnose_emult">diagnose_emult</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.diagnose_kmult" href="#pyl4c.apps.l4c.core.TCF.diagnose_kmult">diagnose_kmult</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.forward_run" href="#pyl4c.apps.l4c.core.TCF.forward_run">forward_run</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.gpp" href="#pyl4c.apps.l4c.core.TCF.gpp">gpp</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.num_soc_pools" href="#pyl4c.apps.l4c.core.TCF.num_soc_pools">num_soc_pools</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.required_drivers" href="#pyl4c.apps.l4c.core.TCF.required_drivers">required_drivers</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.required_parameters" href="#pyl4c.apps.l4c.core.TCF.required_parameters">required_parameters</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.rh" href="#pyl4c.apps.l4c.core.TCF.rh">rh</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.setup_litterfall" href="#pyl4c.apps.l4c.core.TCF.setup_litterfall">setup_litterfall</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.spin_up" href="#pyl4c.apps.l4c.core.TCF.spin_up">spin_up</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.valid_pft" href="#pyl4c.apps.l4c.core.TCF.valid_pft">valid_pft</a></code></li>
+<li><code><a title="pyl4c.apps.l4c.core.TCF.version" href="#pyl4c.apps.l4c.core.TCF.version">version</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
+</footer>
+</body>
+</html>

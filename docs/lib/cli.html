@@ -2,20 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.lib.cli API documentation</title>
 <meta name="description" content="Classes for building command line interface (CLI) tools, such as for bulk
-processing data at the command line." />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+processing data at the command line.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -27,450 +42,6 @@ processing data at the command line." />
 <section id="section-intro">
 <p>Classes for building command line interface (CLI) tools, such as for bulk
 processing data at the command line.</p>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-Classes for building command line interface (CLI) tools, such as for bulk
-processing data at the command line.
-&#39;&#39;&#39;
-
-import os
-import sys
-import h5py
-import numpy as np
-from osgeo import gdal
-from cached_property import cached_property
-from pyl4c.data.fixtures import EASE2_GRID_PARAMS
-from pyl4c.epsg import EPSG
-from pyl4c.spatial import array_to_raster, as_array, ease2_coords_approx
-from pyl4c.utils import get_ease2_coords, get_ease2_slice_idx
-from pyl4c.lib.tcf import TYPE_MAP, SparseArray, TCFArray
-
-class CommandLineInterface(object):
-    &#39;&#39;&#39;
-    A command line interface (CLI) convenience class used for creating
-    Python scripts that can be invoked from the command line.
-    &#39;&#39;&#39;
-
-    def __init__(self):
-        pass
-
-    def __check__(self):
-        possible_required_keys = (&#39;_output_path&#39;, &#39;_output_tpl&#39;)
-        for key in possible_required_keys:
-            if hasattr(self, key):
-                assert getattr(self, key) is not None, &#39;You must specify %s with: --%s=&#34;&#34;&#39; % (key, key)
-
-        if hasattr(self, &#39;_field_tpl&#39;):
-            assert self._field_tpl.rfind(&#39;%d&#39;) &gt; 0, &#39;The field argument must contain a string formatting character, e.g., &#34;SOC/soc_pft%d_mean&#34;&#39;
-
-        if hasattr(self, &#39;_grid&#39;):
-            assert self._grid is not None, &#39;Must specify the EASE-Grid 2.0 size with --grid argument (&#34;M01&#34; or &#34;M09&#34;)&#39;
-
-        if hasattr(self, &#39;_mask&#39;):
-            if self._mask is not None:
-                assert isinstance(self._mask, str), &#39;Did not recognize --mask as a file path&#39;
-                assert os.path.exists(self._mask), &#39;File not found: %s (Cannot use shortcuts like ~)&#39; % self._mask
-
-        if hasattr(self, &#39;_output_dir&#39;):
-            assert os.path.isdir(self._output_dir), &#39;Directory does not exist: %s&#39; % self._output_dir
-
-        if hasattr(self, &#39;_output_path&#39;):
-            assert os.path.exists(os.path.dirname(self._output_path)), &#39;Did not recognize output_path (Cannot use shortcuts like ~)&#39;
-
-        if hasattr(self, &#39;_output_tpl&#39;):
-            assert self._output_tpl.rfind(&#39;%s&#39;) &gt;= 0, &#39;The output_tpl argument must have one string formatting character&#39;
-
-        if hasattr(self, &#39;_reference&#39;):
-            if self._reference is not None:
-                assert isinstance(self._reference, str), &#39;Did not recognize --reference as a file path&#39;
-                assert os.path.exists(self._reference), &#39;File not found: %s (Cannot use shortcuts like ~)&#39; % self._reference
-
-        if hasattr(self, &#39;_summaries&#39;):
-            assert not isinstance(self._summaries, str), &#39;Could not interpret --summaries argument as a sequence of NumPy functions&#39;
-
-    @cached_property
-    def __coords__(self):
-        if self._grid in (&#39;M01&#39;, &#39;M09&#39;):
-            return get_ease2_coords(self._grid)
-
-        # But if coordinate arrays are not pre-computed...
-        return ease2_coords_approx(self._grid)
-
-    @cached_property
-    def __shp__(self):
-        if self._subset_id is not None:
-            x_idx, y_idx = self.__slice_idx__
-            return (y_idx[1] - y_idx[0], x_idx[1] - x_idx[0])
-
-        x_coords, y_coords = self.__coords__
-        return (len(y_coords), len(x_coords))
-
-    @cached_property
-    def __slice_idx__(self):
-        # The ((xmin, xmax), (ymin, ymax)) indices in pixel space
-        if self._subset_id is not None:
-            return get_ease2_slice_idx(
-                grid = self._grid, subset_id = self._subset_id)
-
-        return (None, None)
-
-    def __pieces__(self):
-        # Returns the next row chunk
-        p = 0 # Initialize at piece 0
-        start = 0 # Starting at first row, if no subsetting
-        if self._subset_id is not None:
-            x_idx, y_idx = self.__slice_idx__
-            start = y_idx[0] # Starting at top of subset
-
-        num_pieces = self._pieces
-        num_rows = self.__shp__[0]
-        step = int(np.ceil(num_rows / num_pieces))
-        while p &lt; num_pieces:
-            yield (start + (p * step), start + ((p+1) * step))
-            p += 1
-
-    def gdt_to_dtype(self, gdt):
-        return {
-            gdal.GDT_Float32: np.float32,
-            gdal.GDT_Float64: np.float64,
-            gdal.GDT_Int16: np.int16,
-            gdal.GDT_Int32: np.int32
-        }[gdt]
-
-    def lookup_dtype(self, type_string):
-        &#39;&#39;&#39;
-        Given, e.g., &#34;float32&#34;, returns `numpy.float32`.
-
-        Parameters
-        ----------
-        type_string : str
-            A NumPy named type, e.g., &#34;float32&#34;, &#34;int16&#34;, &#34;byte&#34;
-        &#39;&#39;&#39;
-        return getattr(np, type_string)
-
-    def lookup_gdt(self, type_string):
-        &#39;&#39;&#39;
-        Given, e.g., &#34;float32&#34;, returns `gdal.GDT_Float32`.
-
-        Parameters
-        ----------
-        type_string : str
-            A NumPy named type, e.g., &#34;float32&#34;, &#34;int16&#34;, &#34;byte&#34;
-        &#39;&#39;&#39;
-        return getattr(
-            gdal, &#39;GDT_%s&#39; % type_string.title() if type_string != &#39;uint8&#39; else &#39;GDT_Byte&#39;)
-
-    def infer_file_mode(self, file_paths):
-        &#39;&#39;&#39;
-        Determine what class of file we&#39;re working with.
-
-        Parameters
-        ----------
-        file_path : str
-
-        Returns
-        -------
-        str
-            One of: &#34;hdf5&#34;, &#34;sparse&#34;, &#34;other&#34;
-        &#39;&#39;&#39;
-        # Check if a list/tuple given versus a character sequence
-        path = file_paths[0] if len(file_paths[0]) &gt; 1 else file_paths
-        if path.split(&#39;.&#39;)[-1] == &#39;h5&#39;:
-            return &#39;hdf5&#39;
-        elif path.split(&#39;.&#39;)[-1] in TYPE_MAP.keys():
-            return &#39;sparse&#39;
-        else:
-            return &#39;other&#39;
-
-    def read_array(self, file_path, **kwargs):
-        &#39;&#39;&#39;
-        Reads in the file at the given file path and returns a
-        `numpy.ndarray`.
-
-        Parameters
-        ----------
-        file_path : str
-            The location of a file
-        start_row : int
-            Index of the first row in a row chunk
-        end_row : int
-            Index of the final row in a row chunk
-        mode : str
-            The file mode to use
-        shp : tuple
-            The shape of the raster arrays
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        if &#39;start_row&#39; in kwargs.keys() and &#39;end_row&#39; in kwargs.keys():
-            if kwargs[&#39;start_row&#39;] is not None and kwargs[&#39;end_row&#39;] is not None:
-                return self.read_chunked(file_path, **kwargs)
-        if &#39;shp&#39; in kwargs.keys():
-            shp = kwargs[&#39;shp&#39;]
-        else:
-            shp = None
-
-        mode = self._mode
-        if &#39;mode&#39; in kwargs.keys():
-            mode = kwargs[&#39;mode&#39;]
-        if self._subset_id is not None:
-            x_idx, y_idx = self.__slice_idx__
-            xmin, xmax = x_idx
-            ymin, ymax = y_idx
-        # If we&#39;re reading HDF5 files...
-        if mode == &#39;hdf5&#39;:
-            with h5py.File(file_path, &#39;r&#39;) as hdf:
-                assert self._field in hdf.keys(), &#39;Could not find the specified field name: %s&#39; % self._field
-                # If we&#39;re not subsetting...
-                if self._subset_id is None:
-                    return hdf[self._field][:]
-                return hdf[self._field][ymin:ymax, xmin:xmax]
-        # If we&#39;re reading sparse TCF output arrays...
-        elif mode in (&#39;sparse&#39;, &#39;tcf&#39;):
-            # TCFArray has stronger assumptions than SparseArray; try to read
-            #   the file either way
-            tcf = SparseArray(file_path, self._grid)
-            tcf.inflate()
-            if self._subset_id is None:
-                return tcf.data[:]
-            return tcf.data[ymin:ymax, xmin:xmax]
-        # If we&#39;re reading arbitrary raster arrays...
-        elif mode == &#39;other&#39;:
-            if self._subset_id is not None:
-                raise NotImplementedError(&#39;No way of compositing subsets on arbitrary raster arrays with unknown shape&#39;)
-            return as_array(file_path, False)[0]
-        else:
-            raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)
-
-    def read_chunked(
-            self, file_path, start_row, end_row, mode = None, shp = None):
-        &#39;&#39;&#39;
-        Reads in the file at the given file path, row chunk by row chunk,
-        and returns a `numpy.ndarray`.
-
-        Parameters
-        ----------
-        file_path : str
-            The location of a file
-        start_row : int
-            Index of the first row in a row chunk
-        end_row : int
-            Index of the final row in a row chunk
-        mode : str
-            The file mode to use
-        shp : tuple
-            The shape of the raster arrays
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        if mode is None:
-            mode = self._mode
-
-        r0, r1 = (start_row, end_row)
-        if self._subset_id is not None:
-            x_idx, y_idx = self.__slice_idx__
-            xmin, xmax = x_idx
-
-        # If we&#39;re reading HDF5 files...
-        if mode == &#39;hdf5&#39;:
-            with h5py.File(file_path, &#39;r&#39;) as hdf:
-                assert self._field in hdf.keys(), &#39;Could not find the specified field name: %s&#39; % self._field
-                # If we&#39;re not subsetting...
-                if self._subset_id is None:
-                    return hdf[self._field][r0:r1,:]
-
-                return hdf[self._field][r0:r1, xmin:xmax]
-
-        # If we&#39;re reading sparse TCF output arrays...
-        elif mode in (&#39;sparse&#39;, &#39;tcf&#39;):
-            # TCFArray has stronger assumptions than SparseArray; try to read
-            #   the file either way
-            tcf = SparseArray(file_path, self._grid)
-
-            tcf.inflate()
-            if self._subset_id is None:
-                return tcf.data[r0:r1,:]
-
-            return tcf.data[r0:r1, xmin:xmax]
-
-        # If we&#39;re reading arbitrary raster arrays...
-        elif mode == &#39;other&#39;:
-            if self._subset_id is None:
-                shp = self.__shp__ if shp is None else shp
-                return as_array(
-                    file_path, False, (0, r0, shp[1], r1))[0]
-
-            return as_array(file_path, False, (xmin, r0, xmax, r1))[0]
-
-        else:
-            raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)
-
-    def read_raster(self, file_path, mode = None):
-        &#39;&#39;&#39;
-        Reads in the file at the given file path and returns a `gdal.Dataset`.
-
-        Parameters
-        ----------
-        file_path : str
-            The location of a file
-        mode : str
-            The file mode to use
-
-        Returns
-        -------
-        gdal.Dataset
-        &#39;&#39;&#39;
-        if mode is None:
-            mode = self._mode
-
-        # For all other file modes...
-        assert getattr(self, &#39;_grid&#39;, None) is not None, &#39;Must define input --grid in order to read input HDF5 or sparse arrays&#39;
-        gt = EASE2_GRID_PARAMS[self._grid][&#39;geotransform&#39;]
-        wkt = EPSG[EASE2_GRID_PARAMS[self._grid][&#39;epsg&#39;]]
-
-        # If we&#39;re reading arbitrary raster arrays...
-        if mode == &#39;other&#39;:
-            rast, _, _ = as_raster(file_path, False)
-            return rast
-
-        # If we&#39;re reading HDF5 files...
-        elif mode == &#39;hdf5&#39;:
-            with h5py.File(file_path, &#39;r&#39;) as hdf:
-                assert self._field in hdf.keys(), &#39;Could not find the specified field name: %s&#39; % self._field
-                arr = hdf[self._field][:]
-                return array_to_raster(arr, gt, wkt)
-
-        # If we&#39;re reading sparse TCF output arrays...
-        elif mode in (&#39;sparse&#39;, &#39;tcf&#39;):
-            # TCFArray has stronger assumptions than SparseArray; try to read
-            #   the file either way
-            tcf = SparseArray(file_path, self._grid)
-            tcf.inflate()
-            return array_to_raster(tcf.data, gt, wkt)
-
-        else:
-            raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)
-
-
-class ProgressBar(object):
-    &#39;&#39;&#39;
-    An animated progress bar for printing progress to the screen, as with a
-    command line interface. Used as a context manager around a loop, e.g.:
-
-        with ProgressBar(len(things), &#34;Working...&#34;) as progress:
-            for i, each in enumerate(things):
-                ...
-                progress.update(i)
-
-    Parameters
-    ----------
-    total : int
-        The total number of loop iterations
-    prefix : str
-        (Optional) The text to print before the progress bar (Default: &#34;&#34;)
-    suffix : str
-        (Optional) The text to print at the end of the progress bar
-        (Default: &#34;&#34;)
-    decimals : int
-        (Optional) Number of decimal places for the progress bar&#39;s percent
-        (Default: 0)
-    length : int
-        (Optional) The length of the progress bar, in characters (Default: 30)
-    fill : str
-        (Optional) The character to display for the filled portion of the bar
-        (Default: &#34;|&#34;)
-    verbose : bool
-        True to display the bar (Default: True); set to False if the
-        `ProgressBar` should not be displayed
-    &#39;&#39;&#39;
-    def __init__(
-            self, total, prefix = &#39;&#39;, suffix = &#39;&#39;, decimals = 0, length = 30,
-            fill = &#39;|&#39;, verbose = True):
-        self._decimals = decimals
-        self._fill = fill
-        self._length = length
-        self._prefix = prefix
-        self._suffix = suffix
-        self._total = total
-        # Some CLIs might have a &#34;verbose&#34; mode, in which progress *should* be
-        #   printed to the screen; when not in &#34;verbose,&#34; we still enter and
-        #   exit the ProgressBar context; so, we return a &#34;dummy&#34; bar that
-        #   cannot print to screen when not in &#34;verbose&#34; mode
-        self._verbose = verbose
-
-    def __enter__(self):
-        self.update(0) # Initialize the bar
-        if not self._verbose:
-            return self.dummy() # Return a dummy bar
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        if self._verbose:
-            self.update(self._total) # Finalize the bar
-
-    @property
-    def prefix(self):
-        return self._prefix
-
-    @prefix.setter
-    def prefix(self, new_prefix):
-        self._prefix = new_prefix
-
-    def dummy(self):
-        &#39;&#39;&#39;
-        Returns a dummy instance of ProgressBar that prints nothing; used
-        when not in &#34;verbose&#34; mode (the default).
-        &#39;&#39;&#39;
-        dummy = ProgressBar(0)
-        setattr(dummy, &#39;update&#39;, lambda s, i: None)
-        return dummy
-
-    def update(self, iteration):
-        &#39;&#39;&#39;
-        When called in a loop, creates a progress bar in the terminal.
-        NOTE: Adapted from this example:
-
-            https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console
-
-        Parameters
-        ----------
-        iteration : int
-            The current iteration
-        total : int
-            The total iterations
-        prefix : str
-            (Optional) Prefix string
-        suffix : str
-            (Optional) Suffix string
-        decimals : int
-            (Optional) Positive number of decimals in percent complete
-        length : int
-            (Optional) Character length of bar
-        fill : str
-            (Optional) Bar fill character
-        &#39;&#39;&#39;
-        percent = (&#34;{0:.&#34; + str(self._decimals) + &#34;f}&#34;)\
-            .format(100 * (iteration / float(self._total)))
-        d = 1 if self._decimals &gt; 0 else 0 # Space for decimal point
-        filled_len = int(self._length * iteration // self._total)
-        bar = self._fill * filled_len + &#39;-&#39; * (self._length - filled_len)
-        # Print new line on complete
-        if iteration == self._total:
-            # Clear the bar, leave the prefix
-            print(&#39;\r%s%s&#39; % (self._prefix, &#39;&#39;.rjust(self._length + 10)))
-        else:
-            print(&#39;\r%s [%s] %s%% %s&#39; % (
-                self._prefix, bar, percent.rjust(self._decimals + d + 3),
-                self._suffix
-            ), end = &#39;\r&#39;)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -485,8 +56,6 @@ class ProgressBar(object):
 <span>class <span class="ident">CommandLineInterface</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>A command line interface (CLI) convenience class used for creating
-Python scripts that can be invoked from the command line.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -801,6 +370,8 @@ Python scripts that can be invoked from the command line.</p></div>
         else:
             raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)</code></pre>
 </details>
+<div class="desc"><p>A command line interface (CLI) convenience class used for creating
+Python scripts that can be invoked from the command line.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="pyl4c.apps.resample.CLI" href="../apps/resample.html#pyl4c.apps.resample.CLI">CLI</a></li>
@@ -812,7 +383,6 @@ Python scripts that can be invoked from the command line.</p></div>
 <span>def <span class="ident">gdt_to_dtype</span></span>(<span>self, gdt)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -825,22 +395,12 @@ Python scripts that can be invoked from the command line.</p></div>
         gdal.GDT_Int32: np.int32
     }[gdt]</code></pre>
 </details>
+<div class="desc"></div>
 </dd>
 <dt id="pyl4c.lib.cli.CommandLineInterface.infer_file_mode"><code class="name flex">
 <span>def <span class="ident">infer_file_mode</span></span>(<span>self, file_paths)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Determine what class of file we're working with.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>One of: "hdf5", "sparse", "other"</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -867,17 +427,22 @@ Python scripts that can be invoked from the command line.</p></div>
     else:
         return &#39;other&#39;</code></pre>
 </details>
+<div class="desc"><p>Determine what class of file we're working with.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>One of: "hdf5", "sparse", "other"</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.cli.CommandLineInterface.lookup_dtype"><code class="name flex">
 <span>def <span class="ident">lookup_dtype</span></span>(<span>self, type_string)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Given, e.g., "float32", returns <code>numpy.float32</code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>type_string</code></strong> :&ensp;<code>str</code></dt>
-<dd>A NumPy named type, e.g., "float32", "int16", "byte"</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -893,17 +458,17 @@ Python scripts that can be invoked from the command line.</p></div>
     &#39;&#39;&#39;
     return getattr(np, type_string)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.cli.CommandLineInterface.lookup_gdt"><code class="name flex">
-<span>def <span class="ident">lookup_gdt</span></span>(<span>self, type_string)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Given, e.g., "float32", returns <code>gdal.GDT_Float32</code>.</p>
+<div class="desc"><p>Given, e.g., "float32", returns <code>numpy.float32</code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>type_string</code></strong> :&ensp;<code>str</code></dt>
 <dd>A NumPy named type, e.g., "float32", "int16", "byte"</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.cli.CommandLineInterface.lookup_gdt"><code class="name flex">
+<span>def <span class="ident">lookup_gdt</span></span>(<span>self, type_string)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -920,31 +485,17 @@ Python scripts that can be invoked from the command line.</p></div>
     return getattr(
         gdal, &#39;GDT_%s&#39; % type_string.title() if type_string != &#39;uint8&#39; else &#39;GDT_Byte&#39;)</code></pre>
 </details>
+<div class="desc"><p>Given, e.g., "float32", returns <code>gdal.GDT_Float32</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>type_string</code></strong> :&ensp;<code>str</code></dt>
+<dd>A NumPy named type, e.g., "float32", "int16", "byte"</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.cli.CommandLineInterface.read_array"><code class="name flex">
 <span>def <span class="ident">read_array</span></span>(<span>self, file_path, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Reads in the file at the given file path and returns a
-<code>numpy.ndarray</code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The location of a file</dd>
-<dt><strong><code>start_row</code></strong> :&ensp;<code>int</code></dt>
-<dd>Index of the first row in a row chunk</dd>
-<dt><strong><code>end_row</code></strong> :&ensp;<code>int</code></dt>
-<dd>Index of the final row in a row chunk</dd>
-<dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
-<dd>The file mode to use</dd>
-<dt><strong><code>shp</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>The shape of the raster arrays</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1011,13 +562,8 @@ Python scripts that can be invoked from the command line.</p></div>
     else:
         raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.cli.CommandLineInterface.read_chunked"><code class="name flex">
-<span>def <span class="ident">read_chunked</span></span>(<span>self, file_path, start_row, end_row, mode=None, shp=None)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Reads in the file at the given file path, row chunk by row chunk,
-and returns a <code>numpy.ndarray</code>.</p>
+<div class="desc"><p>Reads in the file at the given file path and returns a
+<code>numpy.ndarray</code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
@@ -1036,6 +582,11 @@ and returns a <code>numpy.ndarray</code>.</p>
 <dt><code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.cli.CommandLineInterface.read_chunked"><code class="name flex">
+<span>def <span class="ident">read_chunked</span></span>(<span>self, file_path, start_row, end_row, mode=None, shp=None)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1105,24 +656,31 @@ and returns a <code>numpy.ndarray</code>.</p>
     else:
         raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)</code></pre>
 </details>
+<div class="desc"><p>Reads in the file at the given file path, row chunk by row chunk,
+and returns a <code>numpy.ndarray</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The location of a file</dd>
+<dt><strong><code>start_row</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index of the first row in a row chunk</dd>
+<dt><strong><code>end_row</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index of the final row in a row chunk</dd>
+<dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
+<dd>The file mode to use</dd>
+<dt><strong><code>shp</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>The shape of the raster arrays</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.cli.CommandLineInterface.read_raster"><code class="name flex">
 <span>def <span class="ident">read_raster</span></span>(<span>self, file_path, mode=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Reads in the file at the given file path and returns a <code>gdal.Dataset</code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The location of a file</dd>
-<dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
-<dd>The file mode to use</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>gdal.Dataset</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1173,6 +731,19 @@ and returns a <code>numpy.ndarray</code>.</p>
     else:
         raise NotImplementedError(&#39;File mode &#34;%s&#34; not recognized&#39; % mode)</code></pre>
 </details>
+<div class="desc"><p>Reads in the file at the given file path and returns a <code>gdal.Dataset</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The location of a file</dd>
+<dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
+<dd>The file mode to use</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>gdal.Dataset</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -1181,34 +752,6 @@ and returns a <code>numpy.ndarray</code>.</p>
 <span>(</span><span>total, prefix='', suffix='', decimals=0, length=30, fill='|', verbose=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>An animated progress bar for printing progress to the screen, as with a
-command line interface. Used as a context manager around a loop, e.g.:</p>
-<pre><code>with ProgressBar(len(things), "Working...") as progress:
-    for i, each in enumerate(things):
-        ...
-        progress.update(i)
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>total</code></strong> :&ensp;<code>int</code></dt>
-<dd>The total number of loop iterations</dd>
-<dt><strong><code>prefix</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) The text to print before the progress bar (Default: "")</dd>
-<dt><strong><code>suffix</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) The text to print at the end of the progress bar
-(Default: "")</dd>
-<dt><strong><code>decimals</code></strong> :&ensp;<code>int</code></dt>
-<dd>(Optional) Number of decimal places for the progress bar's percent
-(Default: 0)</dd>
-<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
-<dd>(Optional) The length of the progress bar, in characters (Default: 30)</dd>
-<dt><strong><code>fill</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) The character to display for the filled portion of the bar
-(Default: "|")</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to display the bar (Default: True); set to False if the
-<code><a title="pyl4c.lib.cli.ProgressBar" href="#pyl4c.lib.cli.ProgressBar">ProgressBar</a></code> should not be displayed</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1325,11 +868,38 @@ command line interface. Used as a context manager around a loop, e.g.:</p>
                 self._suffix
             ), end = &#39;\r&#39;)</code></pre>
 </details>
+<div class="desc"><p>An animated progress bar for printing progress to the screen, as with a
+command line interface. Used as a context manager around a loop, e.g.:</p>
+<pre><code>with ProgressBar(len(things), "Working...") as progress:
+    for i, each in enumerate(things):
+        ...
+        progress.update(i)
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>total</code></strong> :&ensp;<code>int</code></dt>
+<dd>The total number of loop iterations</dd>
+<dt><strong><code>prefix</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The text to print before the progress bar (Default: "")</dd>
+<dt><strong><code>suffix</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The text to print at the end of the progress bar
+(Default: "")</dd>
+<dt><strong><code>decimals</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) Number of decimal places for the progress bar's percent
+(Default: 0)</dd>
+<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) The length of the progress bar, in characters (Default: 30)</dd>
+<dt><strong><code>fill</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The character to display for the filled portion of the bar
+(Default: "|")</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to display the bar (Default: True); set to False if the
+<code><a title="pyl4c.lib.cli.ProgressBar" href="#pyl4c.lib.cli.ProgressBar">ProgressBar</a></code> should not be displayed</dd>
+</dl></div>
 <h3>Instance variables</h3>
 <dl>
-<dt id="pyl4c.lib.cli.ProgressBar.prefix"><code class="name">var <span class="ident">prefix</span></code></dt>
+<dt id="pyl4c.lib.cli.ProgressBar.prefix"><code class="name">prop <span class="ident">prefix</span></code></dt>
 <dd>
-<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1338,6 +908,7 @@ command line interface. Used as a context manager around a loop, e.g.:</p>
 def prefix(self):
     return self._prefix</code></pre>
 </details>
+<div class="desc"></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -1346,8 +917,6 @@ def prefix(self):
 <span>def <span class="ident">dummy</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a dummy instance of ProgressBar that prints nothing; used
-when not in "verbose" mode (the default).</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1361,32 +930,13 @@ when not in "verbose" mode (the default).</p></div>
     setattr(dummy, &#39;update&#39;, lambda s, i: None)
     return dummy</code></pre>
 </details>
+<div class="desc"><p>Returns a dummy instance of ProgressBar that prints nothing; used
+when not in "verbose" mode (the default).</p></div>
 </dd>
 <dt id="pyl4c.lib.cli.ProgressBar.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, iteration)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>When called in a loop, creates a progress bar in the terminal.
-NOTE: Adapted from this example:</p>
-<pre><code>&lt;https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console&gt;
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>iteration</code></strong> :&ensp;<code>int</code></dt>
-<dd>The current iteration</dd>
-<dt><strong><code>total</code></strong> :&ensp;<code>int</code></dt>
-<dd>The total iterations</dd>
-<dt><strong><code>prefix</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) Prefix string</dd>
-<dt><strong><code>suffix</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) Suffix string</dd>
-<dt><strong><code>decimals</code></strong> :&ensp;<code>int</code></dt>
-<dd>(Optional) Positive number of decimals in percent complete</dd>
-<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
-<dd>(Optional) Character length of bar</dd>
-<dt><strong><code>fill</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) Bar fill character</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1430,6 +980,27 @@ NOTE: Adapted from this example:</p>
             self._suffix
         ), end = &#39;\r&#39;)</code></pre>
 </details>
+<div class="desc"><p>When called in a loop, creates a progress bar in the terminal.
+NOTE: Adapted from this example:</p>
+<pre><code>&lt;https://stackoverflow.com/questions/3173320/text-progress-bar-in-the-console&gt;
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>iteration</code></strong> :&ensp;<code>int</code></dt>
+<dd>The current iteration</dd>
+<dt><strong><code>total</code></strong> :&ensp;<code>int</code></dt>
+<dd>The total iterations</dd>
+<dt><strong><code>prefix</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Prefix string</dd>
+<dt><strong><code>suffix</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Suffix string</dd>
+<dt><strong><code>decimals</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) Positive number of decimals in percent complete</dd>
+<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
+<dd>(Optional) Character length of bar</dd>
+<dt><strong><code>fill</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) Bar fill character</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -1442,7 +1013,6 @@ NOTE: Adapted from this example:</p>
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -1480,7 +1050,7 @@ NOTE: Adapted from this example:</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

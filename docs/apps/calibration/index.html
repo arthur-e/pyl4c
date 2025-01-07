@@ -2,19 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.apps.calibration API documentation</title>
-<meta name="description" content="Essential functions and classes for calibration. See, in particular: …" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<meta name="description" content="Essential functions and classes for calibration. See, in particular: …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -41,7 +56,7 @@ repeatedly seeing the message:</p>
 <p>Most likely, the bounds on your parameters are producing initial parameter
 values that are totally unreasonable.</p>
 <p>Note that calibration of L4C (i.e., updating the BPLUT) can be performed using
-the command-line interface in <code><a title="pyl4c.apps.calibration.main" href="main.html">pyl4c.apps.calibration.main</a></code>, for example:</p>
+the command-line interface in <code>pyl4c.apps.calibration.main</code>, for example:</p>
 <pre><code># Build the scratch dataset needed for calibration
 python main.py setup
 
@@ -65,646 +80,17 @@ python main.py bplut pickle &lt;output_path&gt; --version-id=&lt;version_id&gt;
 # Get help on any command with --help, for example:
 python main.py plot-gpp --help
 </code></pre>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-Essential functions and classes for calibration. See, in particular:
-
-- `OPT_BOUNDS`, which has lower and upper bounds on calibration parameters
-
-**You must create a configuration JSON file before calibrating L4C.** There
-is a template available in the directory:
-
-    pyl4c/data/fixtures/files
-
-The optimization routines here are best used with multiple `--trials`, i.e.,
-multiple, random initial parameter values. This can help avoiding falling into
-a local optimum when a better solution set is available. However, if you are
-repeatedly seeing the message:
-
-    Error in objective function; restarting...
-
-Most likely, the bounds on your parameters are producing initial parameter
-values that are totally unreasonable.
-
-Note that calibration of L4C (i.e., updating the BPLUT) can be performed using
-the command-line interface in `pyl4c.apps.calibration.main`, for example:
-
-    # Build the scratch dataset needed for calibration
-    python main.py setup
-
-    # You can get a preview of what filtering the data would look like...
-    python main.py pft &lt;pft_number&gt; filter-preview gpp &lt;window_size&gt;
-    python main.py pft &lt;pft_number&gt; filter-preview reco &lt;window_size&gt;
-
-    # Optionally, filter the tower datasets to remove spurious spikes
-    python main.py filter-all gpp &lt;window_size&gt;
-    python main.py filter-all reco &lt;window_size&gt;
-
-    # Run the GPP calibration for a given Plant Functional Type (PFT)
-    python main.py pft &lt;pft_number&gt; tune-gpp
-
-    # Run the RECO calibration for a given Plant Functional Type (PFT)
-    python main.py pft &lt;pft_number&gt; tune-reco
-
-    # Finally, to dump the updated BPLUT into a CSV or Python pickle file...
-    python main.py bplut pickle &lt;output_path&gt; --version-id=&lt;version_id&gt;
-
-    # Get help on any command with --help, for example:
-    python main.py plot-gpp --help
-&#39;&#39;&#39;
-
-import os
-import pickle
-import nlopt
-import netCDF4 # Necessary to import this before HDF5 due to a bug
-import h5py
-import numpy as np
-from collections import OrderedDict
-from scipy import optimize
-from pyl4c import suppress_warnings
-from pyl4c.stats import detrend, rmsd, sum_of_squares
-from pyl4c.science import k_mult
-
-# Constrained optimization bounds
-OPT_BOUNDS = {
-    &#39;gpp&#39;: ( # lue, tmin0, tmin1, vpd0, vpd1, smrz0, smrz1, ft0
-        np.array((0.5, 230, 276,    0,  1501,  0,  30.1, 0.)), # Lower bound
-        np.array((4.0, 275, 320, 1500, 10000, 30, 100,   1.))), # Upper bound
-    &#39;reco&#39;: ( # CUE, beta_tsoil, smsf0, smsf1
-        np.array((0.0,   1,    0,  25)),
-        np.array((0.7, 800, 24.9, 100)))
-}
-
-
-class BPLUT(object):
-    &#39;&#39;&#39;
-    Represents a Biome Properties Look-Up Table (BPLUT) with PFT classes along
-    the rows and parameters along the columns.
-
-    If initialized with a `params_dict`, these are the values of the BPLUT.
-    If initialized with an `hdf5_path` but without a `params_dict`, the
-    parameters are read-in from the HDF5 file.
-    &#39;&#39;&#39;
-    _labels = [
-        &#39;LUE&#39;, &#39;CUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;,
-        &#39;smsf0&#39;, &#39;smsf1&#39;, &#39;ft0&#39;, &#39;ft1&#39;, &#39;tsoil&#39;, &#39;decay_rates0&#39;,
-        &#39;decay_rates1&#39;, &#39;decay_rates2&#39;, &#39;f_metabolic&#39;, &#39;f_structural&#39;
-    ]
-    _npft = 10 # Number of (possible) PFT classes
-    _valid_pft = range(1, 9) # Canonical range of valid PFTs
-
-    def __init__(
-            self, params_dict = None, labels = None, hdf5_path = None,
-            hdf5_group = &#39;BPLUT&#39;):
-        &#39;&#39;&#39;
-        Parameters
-        ----------
-        params_dict : dict
-            A BPLUT to initialize the new BPLUT
-        labels : tuple or list
-            Names of the parameters
-        hdf5_path : str
-            Path to an HDF5 file to use as a temporary store
-        hdf5_group : str
-            Field name with which to store data in HDF5 file
-            (Default: &#34;BPLUT&#34;)
-        &#39;&#39;&#39;
-        self.hdf5_group = hdf5_group
-        self.hdf5_path = hdf5_path
-        if labels is not None:
-            print(&#39;WARNING: Parameter names ending with a number are assumed to be bounds on ramp functions!&#39;)
-            self._labels = labels
-        # Create an in-memory parameter dictionary
-        empty = self._empty_dict(self.labels)
-        if params_dict is None:
-            init_data = empty # No prior BPLUT, use empty table
-        else:
-            init_data = params_dict.copy()
-            # IMPORTANT: Make sure prior BPLUT has all the necessary params
-            for key in empty.keys():
-                init_data.setdefault(key, empty[key])
-        # Optionally, maintain a file BPLUT
-        if hdf5_path is not None:
-            # Restore from the file data, filling in NaNs with initial
-            if os.path.exists(hdf5_path):
-                with h5py.File(hdf5_path, &#39;r&#39;) as hdf:
-                    if hdf5_group in hdf.keys():
-                        init_data = self.hdf5_restore(hdf, init_data = init_data)
-            # Then, if file dataset doesn&#39;t exist, create a new one and store
-            #   the initial data
-            with h5py.File(hdf5_path, &#39;a&#39;) as hdf:
-                self.hdf5_flush(hdf, data = init_data)
-        self.data = init_data
-
-    @property
-    def data(self):
-        &#39;The parameters dictionary or `dict` instance&#39;
-        return self._data
-
-    @data.setter
-    def data(self, data):
-        self._data = data
-
-    @property
-    def labels(self):
-        &#39;Names of the free parameters&#39;
-        return self._labels
-
-    def __getitem__(self, key):
-        return self.data[key]
-
-    def __setitem__(self, key, value):
-        self.data[key] = value
-
-    def _empty_dict(self, labels = None, dtype = np.float32):
-        &#39;&#39;&#39;
-        Given sequence of labels, convert to legacy, human-readable dict,
-        e.g.:
-
-            { &#39;LUE&#39;: array([[ nan, 1.17, ..., nan ]]), ... }
-        &#39;&#39;&#39;
-        labels_dedupe = self._canonical(labels)
-        result = dict()
-        for name in labels_dedupe:
-            size = len(list(filter(lambda x: x.startswith(name), labels)))
-            result[name] = np.ones((size, self._npft), dtype = dtype) * np.nan
-        return result
-
-    def _canonical(self, labels = None):
-        &#39;&#39;&#39;
-        Returns a short list of labels, without duplicates. Specifically,
-        a list of labels like, e.g., (&#34;tmin0&#34;, &#34;tmin1&#34;, &#34;decay_rates1&#34;)
-        becomes (&#34;tmin&#34;, &#34;decay_rates&#34;).
-
-        Parameters
-        ----------
-        labels : tuple or list or None
-
-        Returns
-        -------
-        list
-        &#39;&#39;&#39;
-        labels = self.labels if labels is None else labels
-        # Remove numeric suffixes and de-duplicate the list
-        return list(OrderedDict([
-            (p.strip(&#39;0123456789&#39;), 0) for p in labels
-        ]).keys())
-
-    def flat(self, pft, labels = None):
-        &#39;&#39;&#39;
-        Retrieves a flat list of parameters for a specific PFT.
-
-        Parameters
-        ----------
-        pft : int
-            Numeric code of the PFT for which to return parameter values
-        labels : tuple or list
-            (Optional) A sequence of parameter names desired, if not all;
-            defaults to returning all parameters
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        labels_dedupe = self._canonical(labels)
-        return np.hstack([
-            self.data[p][:,pft].ravel() if p in self.data.keys() else np.nan
-            for p in labels_dedupe
-        ])
-
-    def hdf5_flush(self, hdf, data = None):
-        &#39;&#39;&#39;
-        Writes the current BPLUT to an HDF5 file.
-
-        Parameters
-        ----------
-        hdf : h5py.File
-            HDF5 file open for writing
-        data : dict
-        &#39;&#39;&#39;
-        assert hdf.mode != &#39;r&#39;, &#39;File not open for writing!&#39;
-        data = self.data if data is None else data
-        if self.hdf5_group not in hdf.keys():
-            hdf.create_group(self.hdf5_group)
-        for key, value in data.items():
-            if key.startswith(&#39;_&#39;):
-                continue # Skip keys that are not parameter names
-            field = &#39;%s/%s&#39; % (self.hdf5_group, key)
-            if key not in hdf[self.hdf5_group].keys():
-                hdf.create_dataset(field, value.shape, np.float32, value)
-            else:
-                # Overwrite NaNs in the file data
-                _value = hdf[field][:]
-                hdf[field][:] = np.where(np.isnan(_value), value, _value)
-        hdf.flush()
-
-    def hdf5_restore(self, hdf, init_data = None, dtype = np.float32):
-        &#39;&#39;&#39;
-        Reads in the BPLUT table stored in the HDF5 file.
-
-        Parameters
-        ----------
-        hdf : h5py.File
-        init_data : dict
-            Initital data; will be over-written by HDF5 file contents
-
-        Returns
-        -------
-        dict
-        &#39;&#39;&#39;
-        data = dict() if init_data is None else init_data
-        for key in hdf[self.hdf5_group].keys():
-            # Update the in-memory BPLUT
-            from_hdf5 = hdf[self.hdf5_group][key][:]
-            data[key] = np.where(
-                ~np.isnan(from_hdf5), from_hdf5, init_data.get(key)
-            ).astype(dtype)
-        return data
-
-    def pickle(self, output_path, version_id = None):
-        &#39;&#39;&#39;
-        Writes the current BPLUT parameters, as a dictionary, to a pickle
-        file.
-
-        Parameters
-        ----------
-        output_path : str
-            The output path for the pickle file (*.pickle)
-        version_id : str
-            (Optional) The version identifier for this BPLUT
-        &#39;&#39;&#39;
-        with open(output_path, &#39;wb&#39;) as file:
-            output = self.data.copy()
-            if version_id is not None:
-                output[&#39;_version&#39;] = version_id
-            pickle.dump(output, file)
-
-    def show(self, pft, param, precision = 2):
-        &#39;&#39;&#39;
-        Prints the current BPLUT parameters for a given PFT, the values of a
-        given parameter for all PFTs, or the value of a specific PFT-parameter
-        combination.
-
-        Parameters
-        ----------
-        pft : int or None
-            The PFT class
-        param : str or None
-            The name of the parameter
-        precision : int
-            Decimal precision to use for printing numbers
-        &#39;&#39;&#39;
-        assert not (pft is None and param is None),\
-            &#39;Either one or both must be specified: --pft or --param&#39;
-        set_of_labels = self._canonical() if param is None else [param]
-        set_of_pfts = self._valid_pft if pft is None else [pft]
-        for each in set_of_labels:
-            assert each in self._canonical(), &#39;Unrecognized parameter: %s&#39; % each
-        for each in set_of_pfts:
-            assert each in range(0, self._npft), &#39;PFT code out of range&#39;
-        pad = max(len(l) for l in set_of_labels) + 2
-        fmt_string = &#39;{:&gt;%d} {:&gt;%d}&#39; % (pad, 5 + precision)
-        for pft in set_of_pfts:
-            print(&#39;BPLUT parameters for PFT %d:&#39; % pft)
-            for label in set_of_labels:
-                param_values = self.data[label][:,pft]
-                for i, value in enumerate(param_values):
-                    # If there are multiple values for a parameter (group),
-                    #   append a number to the end of the label
-                    if len(param_values) &gt; 1:
-                        prefix = &#39;%s%d:&#39; % (label, i)
-                    else:
-                        prefix = &#39;%s:&#39; % label
-                    print(
-                        fmt_string.format(prefix, (&#39;%%.%df&#39; % precision) % value))
-
-    def update(self, pft, values, labels, flush = True):
-        &#39;&#39;&#39;
-        Updates the BPLUT with the specified parameters for a single PFT.
-
-        Parameters
-        ----------
-        pft : int
-            The PFT class
-        values : tuple or list
-            Sequence of parameter values, one for each parameter named in
-            `labels`
-        labels : tuple or list
-            Sequence of parameter names, one for each value in `values`
-        flush : bool
-            True to write the result to disk (attached HDF5 file storage)
-            (Default: True)
-        &#39;&#39;&#39;
-        assert len(values) == len(labels),\
-            &#39;Vectors of values and parameter labels must have the same length&#39;
-        if flush:
-            assert self.hdf5_path is not None,\
-                &#39;No HDF5 file storage is attached&#39;
-            hdf = h5py.File(self.hdf5_path, &#39;a&#39;)
-        for i, name in enumerate(labels):
-            abbrv = name.strip(&#39;0123456789&#39;)
-            # In case parameter has multiple levels, like a ramp function
-            #   (e.g., &#34;smsf0&#34; and &#34;smsf1&#34; are two rows)
-            dupes = list(filter(lambda x: x.startswith(abbrv), self.labels))
-            j = dupes.index(name) # If it has one level (e.g., &#34;LUE&#34;), j = 0
-            self.data[abbrv][j,pft] = values[i]
-            if flush:
-                path = &#39;%s/%s&#39; % (self.hdf5_group, abbrv)
-                hdf[path][:,pft] = self.data[abbrv][:,pft]
-        if flush:
-            hdf.flush()
-            hdf.close()
-
-
-class ModelParameters(OrderedDict):
-    &#39;&#39;&#39;
-    Convenience wrapper for an OrderedDict, allowing both vectorized and
-    keyword access to model parameters.
-
-    Parameters
-    ----------
-    group : str
-        Name of this model parameters group, usually the name of the model or
-        sub-model to which they belong
-    *params : spotpy.parameter
-        One or more parameters
-    &#39;&#39;&#39;
-    def __init__(self, group, *params):
-        self._group = group
-        # Create {name: spotpy.parameter, ...} dictionary
-        super().__init__(**dict([(p.name, p) for p in params]))
-
-
-class GenericOptimization(object):
-    &#39;&#39;&#39;
-    A more generic and expansive tool for optimization; includes many more
-    algorithms for minimization/ maximization problems, including sequential
-    quadratic programming (SQP), which is the default here and is closest to
-    what is performed in Matlab&#39;s `fmincon`. Despite the similarity to `fmincon`,
-    SQP will tend to deviate strongly from the initial parameters derived via
-    fmincon. This solver is SLOW for gradient descent methods relative to
-    `scipy.optimize.least_squares()`, because the gradient is calculated with
-    a finite element approach.
-
-        opt = GenericOptimization(residuals, OPT_BOUNDS[&#39;gpp&#39;],
-            step_size = (0.01, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.05))
-        opt.solve(init_params)
-
-    See: https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/
-
-    Parameters
-    ----------
-    func : function
-        Function to calculate the residuals
-    bounds : list or tuple
-        2-element sequence of (lower, upper) bounds where each element is an
-        array
-    method : str
-        One of the nlopt algorithms
-    step_size : list or tuple or numpy.ndarray
-        Sequence of steps to take in gradient descent; not needed for
-        derivative-free methods
-    verbose : bool
-        True to print all output to the screen
-    &#39;&#39;&#39;
-    def __init__(
-            self, func, bounds, method: int = nlopt.LD_SLSQP,
-            step_size = None, verbose = True):
-        # https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#slsqp
-        assert isinstance(method, int), &#39;Did not recognize &#34;method&#34; argument&#39;
-        self._bounds = bounds
-        self._method = method
-        self._residuals = func
-        self._step_size = step_size
-        self._verbose = verbose
-
-    def solve(self, init_params, ftol = 1e-8, xtol = 1e-8, maxeval = 500):
-        &#39;&#39;&#39;
-        Using the sum-of-squared errors (SSE) as the objective function,
-        solves a minimization problem.
-
-        Parameters
-        ----------
-        init_params : list or tuple or numpy.ndarray
-            Sequence of starting parameters (or &#34;initial guesses&#34;)
-        ftol : float
-        xtol : float
-        maxeval : int
-            Maximum number of objective function evaluations
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        @suppress_warnings
-        def sse(x):
-            return np.power(self._residuals(x), 2).sum()
-
-        @suppress_warnings
-        def objf(x, grad):
-            if grad.size &gt; 0:
-                # Approximate the gradient using finite element method
-                grad[...] = optimize.approx_fprime(
-                    x, sse, self._step_size)
-            return sse(x)
-
-        opt = nlopt.opt(self._method, len(init_params))
-        # https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/#localsubsidiary-optimization-algorithm
-        if self._method == nlopt.G_MLSL_LDS:
-            opt.set_local_optimizer(
-                nlopt.opt(nlopt.LN_COBYLA, len(init_params)))
-        opt.set_min_objective(objf)
-        opt.set_lower_bounds(self._bounds[0])
-        opt.set_upper_bounds(self._bounds[1])
-        opt.set_ftol_abs(ftol)
-        opt.set_xtol_abs(xtol)
-        opt.set_maxeval(maxeval)
-        if self._verbose:
-            print(&#39;Solving...&#39;)
-        return opt.optimize(init_params)
-
-
-def cbar(rh, k_mult, q_rh = 75, q_k = 50):
-    &#39;&#39;&#39;
-    Calculates &#34;Cbar,&#34; the time-constant upper quantile of the RH/Kmult
-    ratio. Where Kmult is &gt;/= `q_k`, return the `q_rh` quantile of RH/Kmult;
-    intended for T x N arrays where T is the number of time steps and
-    N is the number of (flux tower) sites.
-
-    Parameters
-    ----------
-    rh : numpy.ndarray
-        (T x N) vector of heterotrophic respiration
-    k_mult : numpy.ndarray
-        (T x N) vector of Kmult
-    q_rh : float
-        Percentile of RH/Kmult to return
-    q_k : float
-        Percentile of Kmult below which RH/Kmult values are masked
-
-    Returns
-    -------
-    numpy.float64
-    &#39;&#39;&#39;
-    cutoff = np.apply_along_axis(
-        np.percentile, 0, k_mult, q = q_k).reshape((1, k_mult.shape[1]))
-    return np.nanpercentile(
-        np.where(k_mult &gt;= cutoff,
-            np.divide(rh, np.where(k_mult == 0, np.nan, k_mult)), np.nan),
-        q = q_rh, axis = 0)
-
-
-def reco(params, tsoil, smsf, reco_tower, gpp_tower, q_rh = 75, q_k = 50):
-    &#39;&#39;&#39;
-    Calculate empirical ecosystem respiration, RECO, based on current model
-    parameters and the inferred soil organic carbon (SOC) storage; i.e., this
-    calculation should be used in model calibration when SOC is not a priori
-    known, see `pyl4c.apps.calibration.cbar()`. The expected model parameter
-    names are &#34;CUE&#34; for the carbon use efficiency of plants.
-
-    Parameters
-    ----------
-    params : dict
-        A dict-like data structure with named model parameters
-    tsoil : numpy.ndarray
-        (T x N) vector of soil temperature (deg K), where T is the number of
-        time steps, N the number of sites
-    smsf : numpy.ndarray
-        (T x N) vector of surface soil wetness (%), where T is the number of
-        time steps, N the number of sites
-    reco_tower : numpy.ndarray
-        (T x N) vector of observed RECO from eddy covariance tower sites
-    gpp_tower : numpy.ndarray
-        (T x N) vector of observed GPP from eddy covariance tower sites
-    q_rh : int
-        The percentile of RH/Kmult to use in calculating Cbar
-    q_k : int
-        The percentile of Kmult below which RH/Kmult values are masked
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    # Calculate RH as (RECO - RA) or (RECO - (faut * GPP));
-    #   globals &#34;reco_tower&#34;, &#34;gpp_tower&#34;
-    ra = ((1 - params[&#39;CUE&#39;]) * gpp_tower)
-    rh = reco_tower - ra
-    rh = np.where(rh &lt; 0, 0, rh) # Mask out negative RH values
-    # Compute Cbar with globals &#34;q_rh&#34; and &#34;q_k&#34;
-    kmult0 = k_mult(params, tsoil, smsf)
-    cbar0 = cbar(rh, kmult0, q_rh, q_k)
-    return ra + (kmult0 * cbar0)
-
-
-def report_fit_stats(obs, pred, weights = np.array([1]), verbose = True):
-    &#39;&#39;&#39;
-    Reports the RMSE, ubRMSE, and Bias for observed and predicted values.
-
-    Parameters
-    ----------
-    obs : numpy.ndarray
-        Vector of observed (&#34;true&#34;) values
-    pred : numpy.ndarray
-        Vector of predicted values
-    weights : numpy.ndarray
-        (Optional) Vector of weights for each sample
-
-    Returns
-    -------
-    tuple
-        (R-squared, RMSE, ubRMSE, Bias)
-    &#39;&#39;&#39;
-    y = np.apply_along_axis(detrend, 0, obs, fill = True)
-    yhat = np.apply_along_axis(detrend, 0, pred, fill = True)
-    rmse = rmsd(obs, pred, weights = weights)
-    ubrmse = rmsd(y, yhat, weights = weights)
-    bias = np.nanmean(np.subtract(pred, obs))
-    mask = np.logical_or(np.isnan(obs), np.isnan(pred))
-    r_squared = 1 - np.divide(
-        sum_of_squares(
-            obs[~mask], pred[~mask], add_intercept = False, which = &#39;sse&#39;),
-        sum_of_squares(
-            obs[~mask], pred[~mask], add_intercept = False, which = &#39;sst&#39;))
-    if verbose:
-        print(&#39;Fit statistics:&#39;)
-        print(&#39;--    R^2: %s&#39; % (&#39;%.3f&#39; % r_squared).rjust(6))
-        print(&#39;--   RMSE: %s&#39; % (&#39;%.3f&#39; % rmse).rjust(6))
-        print(&#39;-- ubRMSE: %s&#39; % (&#39;%.3f&#39; % ubrmse).rjust(6))
-        print(&#39;--   Bias: %s&#39; % (&#39;%.3f&#39; % bias).rjust(6))
-    return (r_squared, rmse, ubrmse, bias)
-
-
-def solve_least_squares(func, init_params, labels, bounds, **kwargs):
-    &#39;&#39;&#39;
-    Apply constrained, non-linear least-squares optimization. Mostly a
-    wrapper for `scipy.optimize.least_squares()`.
-
-    Parameters
-    ----------
-    func : function
-        Function to calculate the residuals
-    init_params : list or tuple or numpy.ndarray
-        Sequence of starting parameters (or &#34;initial guesses&#34;)
-    labels : list or tuple or numpy.ndarray
-        Sequence of parameter names
-    bounds : list or tuple
-        2-element sequence of (lower, upper) bounds where each element is an
-        array
-
-    Returns
-    -------
-    scipy.optimize.OptimizeResult
-    &#39;&#39;&#39;
-    # Update the optimization settings; this loss function produces
-    #   an estimate for the FT multiplier that is closest to prior
-    kwargs.setdefault(&#39;loss&#39;, &#39;arctan&#39;)
-    kwargs.setdefault(&#39;method&#39;, &#39;trf&#39;)
-    kwargs.setdefault(&#39;max_nfev&#39;, 500)
-    kwargs.setdefault(&#39;ftol&#39;, 1e-8)
-    kwargs.setdefault(&#39;xtol&#39;, 1e-8)
-    kwargs.setdefault(&#39;gtol&#39;, 1e-8)
-    try:
-        solution = optimize.least_squares(
-            func, init_params, bounds = bounds, **kwargs)
-    except ValueError:
-        below = [
-            labels[i]
-            for i in np.argwhere(init_params &lt; bounds[0]).flatten().tolist()
-        ]
-        above = [
-            labels[i]
-            for i in np.argwhere(init_params &gt; bounds[1]).flatten().tolist()
-        ]
-        if np.isnan(init_params).any():
-            raise ValueError(
-                &#39;Error in candidate parameter values; residual function probably returning NaNs&#39;)
-        else:
-            raise ValueError(
-                &#39;&#34;Infeasibility&#34; error; check lower bound on %s; upper bound on %s&#39; % (
-                &#39;(None)&#39; if len(below) == 0 else &#39;, &#39;.join(below),
-                &#39;(None)&#39; if len(above) == 0 else &#39;, &#39;.join(above)))
-    return solution</code></pre>
-</details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="pyl4c.apps.calibration.extensions" href="extensions/index.html">pyl4c.apps.calibration.extensions</a></code></dt>
+<dt><code class="name"><a title="pyl4c.apps.calibration.mcmc" href="mcmc.html">pyl4c.apps.calibration.mcmc</a></code></dt>
 <dd>
-<div class="desc"><p>These sub-modules were created to support the calibration of specific L4C
-model variants (which are also implemented in the corresponding sub-module …</p></div>
+<div class="desc"><p>Calibration of L4C using Markov Chain Monte Carlo (MCMC). Example use: …</p></div>
 </dd>
-<dt><code class="name"><a title="pyl4c.apps.calibration.main" href="main.html">pyl4c.apps.calibration.main</a></code></dt>
+<dt><code class="name"><a title="pyl4c.apps.calibration.optimize" href="optimize.html">pyl4c.apps.calibration.optimize</a></code></dt>
 <dd>
-<div class="desc"><p>Calibration procedure for SMAP Level-4 Carbon (L4C). For a list of all
-commands, type: …</p></div>
-</dd>
-<dt><code class="name"><a title="pyl4c.apps.calibration.nature" href="nature.html">pyl4c.apps.calibration.nature</a></code></dt>
-<dd>
-<div class="desc"><p>Tools for working with L4SM Nature Run data …</p></div>
+<div class="desc"><p>To calibrate the GPP or RECO model for a specific PFT: …</p></div>
 </dd>
 </dl>
 </section>
@@ -717,26 +103,6 @@ commands, type: …</p></div>
 <span>def <span class="ident">cbar</span></span>(<span>rh, k_mult, q_rh=75, q_k=50)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculates "Cbar," the time-constant upper quantile of the RH/Kmult
-ratio. Where Kmult is &gt;/= <code>q_k</code>, return the <code>q_rh</code> quantile of RH/Kmult;
-intended for T x N arrays where T is the number of time steps and
-N is the number of (flux tower) sites.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>rh</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of heterotrophic respiration</dd>
-<dt><strong><code>k_mult</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of Kmult</dd>
-<dt><strong><code>q_rh</code></strong> :&ensp;<code>float</code></dt>
-<dd>Percentile of RH/Kmult to return</dd>
-<dt><strong><code>q_k</code></strong> :&ensp;<code>float</code></dt>
-<dd>Percentile of Kmult below which RH/Kmult values are masked</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.float64</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -770,40 +136,31 @@ N is the number of (flux tower) sites.</p>
             np.divide(rh, np.where(k_mult == 0, np.nan, k_mult)), np.nan),
         q = q_rh, axis = 0)</code></pre>
 </details>
+<div class="desc"><p>Calculates "Cbar," the time-constant upper quantile of the RH/Kmult
+ratio. Where Kmult is &gt;/= <code>q_k</code>, return the <code>q_rh</code> quantile of RH/Kmult;
+intended for T x N arrays where T is the number of time steps and
+N is the number of (flux tower) sites.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>rh</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of heterotrophic respiration</dd>
+<dt><strong><code>k_mult</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of Kmult</dd>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>float</code></dt>
+<dd>Percentile of RH/Kmult to return</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>float</code></dt>
+<dd>Percentile of Kmult below which RH/Kmult values are masked</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.float64</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.reco"><code class="name flex">
 <span>def <span class="ident">reco</span></span>(<span>params, tsoil, smsf, reco_tower, gpp_tower, q_rh=75, q_k=50)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculate empirical ecosystem respiration, RECO, based on current model
-parameters and the inferred soil organic carbon (SOC) storage; i.e., this
-calculation should be used in model calibration when SOC is not a priori
-known, see <code><a title="pyl4c.apps.calibration.cbar" href="#pyl4c.apps.calibration.cbar">cbar()</a></code>. The expected model parameter
-names are "CUE" for the carbon use efficiency of plants.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
-<dd>A dict-like data structure with named model parameters</dd>
-<dt><strong><code>tsoil</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of soil temperature (deg K), where T is the number of
-time steps, N the number of sites</dd>
-<dt><strong><code>smsf</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of surface soil wetness (%), where T is the number of
-time steps, N the number of sites</dd>
-<dt><strong><code>reco_tower</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of observed RECO from eddy covariance tower sites</dd>
-<dt><strong><code>gpp_tower</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of observed GPP from eddy covariance tower sites</dd>
-<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
-<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
-<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
-<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -849,26 +206,40 @@ time steps, N the number of sites</dd>
     cbar0 = cbar(rh, kmult0, q_rh, q_k)
     return ra + (kmult0 * cbar0)</code></pre>
 </details>
+<div class="desc"><p>Calculate empirical ecosystem respiration, RECO, based on current model
+parameters and the inferred soil organic carbon (SOC) storage; i.e., this
+calculation should be used in model calibration when SOC is not a priori
+known, see <code><a title="pyl4c.apps.calibration.cbar" href="#pyl4c.apps.calibration.cbar">cbar()</a></code>. The expected model parameter
+names are "CUE" for the carbon use efficiency of plants.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dict-like data structure with named model parameters</dd>
+<dt><strong><code>tsoil</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of soil temperature (deg K), where T is the number of
+time steps, N the number of sites</dd>
+<dt><strong><code>smsf</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of surface soil wetness (%), where T is the number of
+time steps, N the number of sites</dd>
+<dt><strong><code>reco_tower</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of observed RECO from eddy covariance tower sites</dd>
+<dt><strong><code>gpp_tower</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of observed GPP from eddy covariance tower sites</dd>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.report_fit_stats"><code class="name flex">
 <span>def <span class="ident">report_fit_stats</span></span>(<span>obs, pred, weights=array([1]), verbose=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Reports the RMSE, ubRMSE, and Bias for observed and predicted values.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>obs</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Vector of observed ("true") values</dd>
-<dt><strong><code>pred</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Vector of predicted values</dd>
-<dt><strong><code>weights</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(Optional) Vector of weights for each sample</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>(R-squared, RMSE, ubRMSE, Bias)</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -910,30 +281,26 @@ time steps, N the number of sites</dd>
         print(&#39;--   Bias: %s&#39; % (&#39;%.3f&#39; % bias).rjust(6))
     return (r_squared, rmse, ubrmse, bias)</code></pre>
 </details>
+<div class="desc"><p>Reports the RMSE, ubRMSE, and Bias for observed and predicted values.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>obs</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Vector of observed ("true") values</dd>
+<dt><strong><code>pred</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Vector of predicted values</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Optional) Vector of weights for each sample</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(R-squared, RMSE, ubRMSE, Bias)</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.solve_least_squares"><code class="name flex">
 <span>def <span class="ident">solve_least_squares</span></span>(<span>func, init_params, labels, bounds, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Apply constrained, non-linear least-squares optimization. Mostly a
-wrapper for <code>scipy.optimize.least_squares()</code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>func</code></strong> :&ensp;<code>function</code></dt>
-<dd>Function to calculate the residuals</dd>
-<dt><strong><code>init_params</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
-<dd>Sequence of starting parameters (or "initial guesses")</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
-<dd>Sequence of parameter names</dd>
-<dt><strong><code>bounds</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>2-element sequence of (lower, upper) bounds where each element is an
-array</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>scipy.optimize.OptimizeResult</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -989,6 +356,25 @@ array</dd>
                 &#39;(None)&#39; if len(above) == 0 else &#39;, &#39;.join(above)))
     return solution</code></pre>
 </details>
+<div class="desc"><p>Apply constrained, non-linear least-squares optimization. Mostly a
+wrapper for <code>scipy.optimize.least_squares()</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>func</code></strong> :&ensp;<code>function</code></dt>
+<dd>Function to calculate the residuals</dd>
+<dt><strong><code>init_params</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
+<dd>Sequence of starting parameters (or "initial guesses")</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
+<dd>Sequence of parameter names</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>2-element sequence of (lower, upper) bounds where each element is an
+array</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>scipy.optimize.OptimizeResult</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 </dl>
 </section>
@@ -1000,23 +386,6 @@ array</dd>
 <span>(</span><span>params_dict=None, labels=None, hdf5_path=None, hdf5_group='BPLUT')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Represents a Biome Properties Look-Up Table (BPLUT) with PFT classes along
-the rows and parameters along the columns.</p>
-<p>If initialized with a <code>params_dict</code>, these are the values of the BPLUT.
-If initialized with an <code>hdf5_path</code> but without a <code>params_dict</code>, the
-parameters are read-in from the HDF5 file.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>params_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>A BPLUT to initialize the new BPLUT</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>Names of the parameters</dd>
-<dt><strong><code>hdf5_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>Path to an HDF5 file to use as a temporary store</dd>
-<dt><strong><code>hdf5_group</code></strong> :&ensp;<code>str</code></dt>
-<dd>Field name with which to store data in HDF5 file
-(Default: "BPLUT")</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1134,6 +503,49 @@ parameters are read-in from the HDF5 file.</p>
         return list(OrderedDict([
             (p.strip(&#39;0123456789&#39;), 0) for p in labels
         ]).keys())
+
+    def dump(self, src, dest, clean = False):
+        &#39;&#39;&#39;
+        Writes the BPLUT to a CSV file, formatted for use in L4C Ops.
+        Requires an existing copy of a BPLUT to use as a template.
+
+        Parameters
+        ----------
+        src : str
+            Path to the template (original) BPLUT CSV file
+        dest : str
+            Output BPLUT CSV file path
+        clean : bool
+            True to standardize some output fields, e.g., making sure very
+            small parameter values (from optimization) are actually zero
+            (Default: False)
+        &#39;&#39;&#39;
+        bplut = pd.read_csv(src, comment = &#39;#&#39;, names = BPLUT_HEADER)
+        bplut[&#39;LUEmax&#39;]     = self.data[&#39;LUE&#39;][0,1:9]
+        bplut[&#39;Tmin_min_K&#39;] = self.data[&#39;tmin&#39;][0,1:9]
+        bplut[&#39;Tmin_max_K&#39;] = self.data[&#39;tmin&#39;][1,1:9]
+        bplut[&#39;VPD_min_Pa&#39;] = self.data[&#39;vpd&#39;][0,1:9]
+        bplut[&#39;VPD_max_Pa&#39;] = self.data[&#39;vpd&#39;][1,1:9]
+        bplut[&#39;SMrz_min&#39;]   = self.data[&#39;smrz&#39;][0,1:9]
+        bplut[&#39;SMrz_max&#39;]   = self.data[&#39;smrz&#39;][1,1:9]
+        bplut[&#39;FT_min&#39;]     = self.data[&#39;ft&#39;][0,1:9]
+        bplut[&#39;FT_max&#39;]     = self.data[&#39;ft&#39;][1,1:9] # Likely not used (=1.0)
+        bplut[&#39;Tsoil_beta0&#39;]= self.data[&#39;tsoil&#39;][0,1:9]
+        bplut[&#39;SMtop_min&#39;]  = self.data[&#39;smsf&#39;][0,1:9]
+        bplut[&#39;SMtop_max&#39;]  = self.data[&#39;smsf&#39;][1,1:9]
+        bplut[&#39;kopt&#39;]       = self.data[&#39;decay_rates&#39;][0,1:9]
+        # If the soil-moisture parameters are close to zero, make them zero
+        if clean:
+            bplut.loc[np.abs(bplut[&#39;SMtop_min&#39;]) &lt; 1,&#39;SMtop_min&#39;] = 0
+            bplut.loc[np.abs(bplut[&#39;SMrz_min&#39;]) &lt; 1,&#39;SMrz_min&#39;] = 0
+        # &#34;fraut&#34; (fraction of autotrophic respiration) is the complement
+        #   of carbon use efficiency (CUE)
+        bplut[&#39;fraut&#39;]  = 1 - self.data[&#39;CUE&#39;].ravel()[1:9]
+        # Strangely enough, the header in the Ops file begins with &#39;#&#39;
+        header = list(BPLUT_HEADER)
+        header[0] = f&#39;#{header[0]}&#39;
+        bplut.to_csv(dest, index = False, header = header)
+        print(f&#39;Wrote BPLUT to: {dest}&#39;)
 
     def flat(self, pft, labels = None):
         &#39;&#39;&#39;
@@ -1300,11 +712,27 @@ parameters are read-in from the HDF5 file.</p>
             hdf.flush()
             hdf.close()</code></pre>
 </details>
+<div class="desc"><p>Represents a Biome Properties Look-Up Table (BPLUT) with PFT classes along
+the rows and parameters along the columns.</p>
+<p>If initialized with a <code>params_dict</code>, these are the values of the BPLUT.
+If initialized with an <code>hdf5_path</code> but without a <code>params_dict</code>, the
+parameters are read-in from the HDF5 file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params_dict</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A BPLUT to initialize the new BPLUT</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Names of the parameters</dd>
+<dt><strong><code>hdf5_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to an HDF5 file to use as a temporary store</dd>
+<dt><strong><code>hdf5_group</code></strong> :&ensp;<code>str</code></dt>
+<dd>Field name with which to store data in HDF5 file
+(Default: "BPLUT")</dd>
+</dl></div>
 <h3>Instance variables</h3>
 <dl>
-<dt id="pyl4c.apps.calibration.BPLUT.data"><code class="name">var <span class="ident">data</span></code></dt>
+<dt id="pyl4c.apps.calibration.BPLUT.data"><code class="name">prop <span class="ident">data</span></code></dt>
 <dd>
-<div class="desc"><p>The parameters dictionary or <code>dict</code> instance</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1314,10 +742,10 @@ def data(self):
     &#39;The parameters dictionary or `dict` instance&#39;
     return self._data</code></pre>
 </details>
+<div class="desc"><p>The parameters dictionary or <code>dict</code> instance</p></div>
 </dd>
-<dt id="pyl4c.apps.calibration.BPLUT.labels"><code class="name">var <span class="ident">labels</span></code></dt>
+<dt id="pyl4c.apps.calibration.BPLUT.labels"><code class="name">prop <span class="ident">labels</span></code></dt>
 <dd>
-<div class="desc"><p>Names of the free parameters</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1327,28 +755,80 @@ def labels(self):
     &#39;Names of the free parameters&#39;
     return self._labels</code></pre>
 </details>
+<div class="desc"><p>Names of the free parameters</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
+<dt id="pyl4c.apps.calibration.BPLUT.dump"><code class="name flex">
+<span>def <span class="ident">dump</span></span>(<span>self, src, dest, clean=False)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dump(self, src, dest, clean = False):
+    &#39;&#39;&#39;
+    Writes the BPLUT to a CSV file, formatted for use in L4C Ops.
+    Requires an existing copy of a BPLUT to use as a template.
+
+    Parameters
+    ----------
+    src : str
+        Path to the template (original) BPLUT CSV file
+    dest : str
+        Output BPLUT CSV file path
+    clean : bool
+        True to standardize some output fields, e.g., making sure very
+        small parameter values (from optimization) are actually zero
+        (Default: False)
+    &#39;&#39;&#39;
+    bplut = pd.read_csv(src, comment = &#39;#&#39;, names = BPLUT_HEADER)
+    bplut[&#39;LUEmax&#39;]     = self.data[&#39;LUE&#39;][0,1:9]
+    bplut[&#39;Tmin_min_K&#39;] = self.data[&#39;tmin&#39;][0,1:9]
+    bplut[&#39;Tmin_max_K&#39;] = self.data[&#39;tmin&#39;][1,1:9]
+    bplut[&#39;VPD_min_Pa&#39;] = self.data[&#39;vpd&#39;][0,1:9]
+    bplut[&#39;VPD_max_Pa&#39;] = self.data[&#39;vpd&#39;][1,1:9]
+    bplut[&#39;SMrz_min&#39;]   = self.data[&#39;smrz&#39;][0,1:9]
+    bplut[&#39;SMrz_max&#39;]   = self.data[&#39;smrz&#39;][1,1:9]
+    bplut[&#39;FT_min&#39;]     = self.data[&#39;ft&#39;][0,1:9]
+    bplut[&#39;FT_max&#39;]     = self.data[&#39;ft&#39;][1,1:9] # Likely not used (=1.0)
+    bplut[&#39;Tsoil_beta0&#39;]= self.data[&#39;tsoil&#39;][0,1:9]
+    bplut[&#39;SMtop_min&#39;]  = self.data[&#39;smsf&#39;][0,1:9]
+    bplut[&#39;SMtop_max&#39;]  = self.data[&#39;smsf&#39;][1,1:9]
+    bplut[&#39;kopt&#39;]       = self.data[&#39;decay_rates&#39;][0,1:9]
+    # If the soil-moisture parameters are close to zero, make them zero
+    if clean:
+        bplut.loc[np.abs(bplut[&#39;SMtop_min&#39;]) &lt; 1,&#39;SMtop_min&#39;] = 0
+        bplut.loc[np.abs(bplut[&#39;SMrz_min&#39;]) &lt; 1,&#39;SMrz_min&#39;] = 0
+    # &#34;fraut&#34; (fraction of autotrophic respiration) is the complement
+    #   of carbon use efficiency (CUE)
+    bplut[&#39;fraut&#39;]  = 1 - self.data[&#39;CUE&#39;].ravel()[1:9]
+    # Strangely enough, the header in the Ops file begins with &#39;#&#39;
+    header = list(BPLUT_HEADER)
+    header[0] = f&#39;#{header[0]}&#39;
+    bplut.to_csv(dest, index = False, header = header)
+    print(f&#39;Wrote BPLUT to: {dest}&#39;)</code></pre>
+</details>
+<div class="desc"><p>Writes the BPLUT to a CSV file, formatted for use in L4C Ops.
+Requires an existing copy of a BPLUT to use as a template.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>src</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to the template (original) BPLUT CSV file</dd>
+<dt><strong><code>dest</code></strong> :&ensp;<code>str</code></dt>
+<dd>Output BPLUT CSV file path</dd>
+<dt><strong><code>clean</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to standardize some output fields, e.g., making sure very
+small parameter values (from optimization) are actually zero
+(Default: False)</dd>
+</dl></div>
+</dd>
 <dt id="pyl4c.apps.calibration.BPLUT.flat"><code class="name flex">
 <span>def <span class="ident">flat</span></span>(<span>self, pft, labels=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Retrieves a flat list of parameters for a specific PFT.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>pft</code></strong> :&ensp;<code>int</code></dt>
-<dd>Numeric code of the PFT for which to return parameter values</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>(Optional) A sequence of parameter names desired, if not all;
-defaults to returning all parameters</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1375,19 +855,25 @@ defaults to returning all parameters</dd>
         for p in labels_dedupe
     ])</code></pre>
 </details>
+<div class="desc"><p>Retrieves a flat list of parameters for a specific PFT.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pft</code></strong> :&ensp;<code>int</code></dt>
+<dd>Numeric code of the PFT for which to return parameter values</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>(Optional) A sequence of parameter names desired, if not all;
+defaults to returning all parameters</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.BPLUT.hdf5_flush"><code class="name flex">
 <span>def <span class="ident">hdf5_flush</span></span>(<span>self, hdf, data=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Writes the current BPLUT to an HDF5 file.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
-<dd>HDF5 file open for writing</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1418,24 +904,19 @@ defaults to returning all parameters</dd>
             hdf[field][:] = np.where(np.isnan(_value), value, _value)
     hdf.flush()</code></pre>
 </details>
+<div class="desc"><p>Writes the current BPLUT to an HDF5 file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dd>HDF5 file open for writing</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.BPLUT.hdf5_restore"><code class="name flex">
 <span>def <span class="ident">hdf5_restore</span></span>(<span>self, hdf, init_data=None, dtype=numpy.float32)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Reads in the BPLUT table stored in the HDF5 file.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>init_data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>Initital data; will be over-written by HDF5 file contents</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1463,20 +944,24 @@ defaults to returning all parameters</dd>
         ).astype(dtype)
     return data</code></pre>
 </details>
+<div class="desc"><p>Reads in the BPLUT table stored in the HDF5 file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>init_data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Initital data; will be over-written by HDF5 file contents</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.BPLUT.pickle"><code class="name flex">
 <span>def <span class="ident">pickle</span></span>(<span>self, output_path, version_id=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Writes the current BPLUT parameters, as a dictionary, to a pickle
-file.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The output path for the pickle file (*.pickle)</dd>
-<dt><strong><code>version_id</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) The version identifier for this BPLUT</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1499,23 +984,20 @@ file.</p>
             output[&#39;_version&#39;] = version_id
         pickle.dump(output, file)</code></pre>
 </details>
+<div class="desc"><p>Writes the current BPLUT parameters, as a dictionary, to a pickle
+file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The output path for the pickle file (*.pickle)</dd>
+<dt><strong><code>version_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The version identifier for this BPLUT</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.BPLUT.show"><code class="name flex">
 <span>def <span class="ident">show</span></span>(<span>self, pft, param, precision=2)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Prints the current BPLUT parameters for a given PFT, the values of a
-given parameter for all PFTs, or the value of a specific PFT-parameter
-combination.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>pft</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>The PFT class</dd>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>The name of the parameter</dd>
-<dt><strong><code>precision</code></strong> :&ensp;<code>int</code></dt>
-<dd>Decimal precision to use for printing numbers</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1559,25 +1041,23 @@ combination.</p>
                 print(
                     fmt_string.format(prefix, (&#39;%%.%df&#39; % precision) % value))</code></pre>
 </details>
+<div class="desc"><p>Prints the current BPLUT parameters for a given PFT, the values of a
+given parameter for all PFTs, or the value of a specific PFT-parameter
+combination.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pft</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
+<dd>The PFT class</dd>
+<dt><strong><code>param</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>The name of the parameter</dd>
+<dt><strong><code>precision</code></strong> :&ensp;<code>int</code></dt>
+<dd>Decimal precision to use for printing numbers</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.BPLUT.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self, pft, values, labels, flush=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Updates the BPLUT with the specified parameters for a single PFT.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>pft</code></strong> :&ensp;<code>int</code></dt>
-<dd>The PFT class</dd>
-<dt><strong><code>values</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>Sequence of parameter values, one for each parameter named in
-<code>labels</code></dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>Sequence of parameter names, one for each value in <code>values</code></dd>
-<dt><strong><code>flush</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to write the result to disk (attached HDF5 file storage)
-(Default: True)</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1619,252 +1099,22 @@ combination.</p>
         hdf.flush()
         hdf.close()</code></pre>
 </details>
-</dd>
-</dl>
-</dd>
-<dt id="pyl4c.apps.calibration.GenericOptimization"><code class="flex name class">
-<span>class <span class="ident">GenericOptimization</span></span>
-<span>(</span><span>func, bounds, method: int = 40, step_size=None, verbose=True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>A more generic and expansive tool for optimization; includes many more
-algorithms for minimization/ maximization problems, including sequential
-quadratic programming (SQP), which is the default here and is closest to
-what is performed in Matlab's <code>fmincon</code>. Despite the similarity to <code>fmincon</code>,
-SQP will tend to deviate strongly from the initial parameters derived via
-fmincon. This solver is SLOW for gradient descent methods relative to
-<code>scipy.optimize.least_squares()</code>, because the gradient is calculated with
-a finite element approach.</p>
-<pre><code>opt = GenericOptimization(residuals, OPT_BOUNDS['gpp'],
-    step_size = (0.01, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.05))
-opt.solve(init_params)
-</code></pre>
-<p>See: <a href="https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/">https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/</a></p>
+<div class="desc"><p>Updates the BPLUT with the specified parameters for a single PFT.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>func</code></strong> :&ensp;<code>function</code></dt>
-<dd>Function to calculate the residuals</dd>
-<dt><strong><code>bounds</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>2-element sequence of (lower, upper) bounds where each element is an
-array</dd>
-<dt><strong><code>method</code></strong> :&ensp;<code>str</code></dt>
-<dd>One of the nlopt algorithms</dd>
-<dt><strong><code>step_size</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
-<dd>Sequence of steps to take in gradient descent; not needed for
-derivative-free methods</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to print all output to the screen</dd>
+<dt><strong><code>pft</code></strong> :&ensp;<code>int</code></dt>
+<dd>The PFT class</dd>
+<dt><strong><code>values</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Sequence of parameter values, one for each parameter named in
+<code>labels</code></dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>Sequence of parameter names, one for each value in <code>values</code></dd>
+<dt><strong><code>flush</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to write the result to disk (attached HDF5 file storage)
+(Default: True)</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class GenericOptimization(object):
-    &#39;&#39;&#39;
-    A more generic and expansive tool for optimization; includes many more
-    algorithms for minimization/ maximization problems, including sequential
-    quadratic programming (SQP), which is the default here and is closest to
-    what is performed in Matlab&#39;s `fmincon`. Despite the similarity to `fmincon`,
-    SQP will tend to deviate strongly from the initial parameters derived via
-    fmincon. This solver is SLOW for gradient descent methods relative to
-    `scipy.optimize.least_squares()`, because the gradient is calculated with
-    a finite element approach.
-
-        opt = GenericOptimization(residuals, OPT_BOUNDS[&#39;gpp&#39;],
-            step_size = (0.01, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.05))
-        opt.solve(init_params)
-
-    See: https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/
-
-    Parameters
-    ----------
-    func : function
-        Function to calculate the residuals
-    bounds : list or tuple
-        2-element sequence of (lower, upper) bounds where each element is an
-        array
-    method : str
-        One of the nlopt algorithms
-    step_size : list or tuple or numpy.ndarray
-        Sequence of steps to take in gradient descent; not needed for
-        derivative-free methods
-    verbose : bool
-        True to print all output to the screen
-    &#39;&#39;&#39;
-    def __init__(
-            self, func, bounds, method: int = nlopt.LD_SLSQP,
-            step_size = None, verbose = True):
-        # https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#slsqp
-        assert isinstance(method, int), &#39;Did not recognize &#34;method&#34; argument&#39;
-        self._bounds = bounds
-        self._method = method
-        self._residuals = func
-        self._step_size = step_size
-        self._verbose = verbose
-
-    def solve(self, init_params, ftol = 1e-8, xtol = 1e-8, maxeval = 500):
-        &#39;&#39;&#39;
-        Using the sum-of-squared errors (SSE) as the objective function,
-        solves a minimization problem.
-
-        Parameters
-        ----------
-        init_params : list or tuple or numpy.ndarray
-            Sequence of starting parameters (or &#34;initial guesses&#34;)
-        ftol : float
-        xtol : float
-        maxeval : int
-            Maximum number of objective function evaluations
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        @suppress_warnings
-        def sse(x):
-            return np.power(self._residuals(x), 2).sum()
-
-        @suppress_warnings
-        def objf(x, grad):
-            if grad.size &gt; 0:
-                # Approximate the gradient using finite element method
-                grad[...] = optimize.approx_fprime(
-                    x, sse, self._step_size)
-            return sse(x)
-
-        opt = nlopt.opt(self._method, len(init_params))
-        # https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/#localsubsidiary-optimization-algorithm
-        if self._method == nlopt.G_MLSL_LDS:
-            opt.set_local_optimizer(
-                nlopt.opt(nlopt.LN_COBYLA, len(init_params)))
-        opt.set_min_objective(objf)
-        opt.set_lower_bounds(self._bounds[0])
-        opt.set_upper_bounds(self._bounds[1])
-        opt.set_ftol_abs(ftol)
-        opt.set_xtol_abs(xtol)
-        opt.set_maxeval(maxeval)
-        if self._verbose:
-            print(&#39;Solving...&#39;)
-        return opt.optimize(init_params)</code></pre>
-</details>
-<h3>Methods</h3>
-<dl>
-<dt id="pyl4c.apps.calibration.GenericOptimization.solve"><code class="name flex">
-<span>def <span class="ident">solve</span></span>(<span>self, init_params, ftol=1e-08, xtol=1e-08, maxeval=500)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Using the sum-of-squared errors (SSE) as the objective function,
-solves a minimization problem.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>init_params</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
-<dd>Sequence of starting parameters (or "initial guesses")</dd>
-<dt><strong><code>ftol</code></strong> :&ensp;<code>float</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>xtol</code></strong> :&ensp;<code>float</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>maxeval</code></strong> :&ensp;<code>int</code></dt>
-<dd>Maximum number of objective function evaluations</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def solve(self, init_params, ftol = 1e-8, xtol = 1e-8, maxeval = 500):
-    &#39;&#39;&#39;
-    Using the sum-of-squared errors (SSE) as the objective function,
-    solves a minimization problem.
-
-    Parameters
-    ----------
-    init_params : list or tuple or numpy.ndarray
-        Sequence of starting parameters (or &#34;initial guesses&#34;)
-    ftol : float
-    xtol : float
-    maxeval : int
-        Maximum number of objective function evaluations
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    @suppress_warnings
-    def sse(x):
-        return np.power(self._residuals(x), 2).sum()
-
-    @suppress_warnings
-    def objf(x, grad):
-        if grad.size &gt; 0:
-            # Approximate the gradient using finite element method
-            grad[...] = optimize.approx_fprime(
-                x, sse, self._step_size)
-        return sse(x)
-
-    opt = nlopt.opt(self._method, len(init_params))
-    # https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/#localsubsidiary-optimization-algorithm
-    if self._method == nlopt.G_MLSL_LDS:
-        opt.set_local_optimizer(
-            nlopt.opt(nlopt.LN_COBYLA, len(init_params)))
-    opt.set_min_objective(objf)
-    opt.set_lower_bounds(self._bounds[0])
-    opt.set_upper_bounds(self._bounds[1])
-    opt.set_ftol_abs(ftol)
-    opt.set_xtol_abs(xtol)
-    opt.set_maxeval(maxeval)
-    if self._verbose:
-        print(&#39;Solving...&#39;)
-    return opt.optimize(init_params)</code></pre>
-</details>
 </dd>
 </dl>
-</dd>
-<dt id="pyl4c.apps.calibration.ModelParameters"><code class="flex name class">
-<span>class <span class="ident">ModelParameters</span></span>
-<span>(</span><span>group, *params)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Convenience wrapper for an OrderedDict, allowing both vectorized and
-keyword access to model parameters.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>group</code></strong> :&ensp;<code>str</code></dt>
-<dd>Name of this model parameters group, usually the name of the model or
-sub-model to which they belong</dd>
-<dt><strong><code>*params</code></strong> :&ensp;<code>spotpy.parameter</code></dt>
-<dd>One or more parameters</dd>
-</dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">class ModelParameters(OrderedDict):
-    &#39;&#39;&#39;
-    Convenience wrapper for an OrderedDict, allowing both vectorized and
-    keyword access to model parameters.
-
-    Parameters
-    ----------
-    group : str
-        Name of this model parameters group, usually the name of the model or
-        sub-model to which they belong
-    *params : spotpy.parameter
-        One or more parameters
-    &#39;&#39;&#39;
-    def __init__(self, group, *params):
-        self._group = group
-        # Create {name: spotpy.parameter, ...} dictionary
-        super().__init__(**dict([(p.name, p) for p in params]))</code></pre>
-</details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>collections.OrderedDict</li>
-<li>builtins.dict</li>
-</ul>
 </dd>
 </dl>
 </section>
@@ -1875,7 +1125,6 @@ sub-model to which they belong</dd>
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -1887,9 +1136,8 @@ sub-model to which they belong</dd>
 </li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="pyl4c.apps.calibration.extensions" href="extensions/index.html">pyl4c.apps.calibration.extensions</a></code></li>
-<li><code><a title="pyl4c.apps.calibration.main" href="main.html">pyl4c.apps.calibration.main</a></code></li>
-<li><code><a title="pyl4c.apps.calibration.nature" href="nature.html">pyl4c.apps.calibration.nature</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc" href="mcmc.html">pyl4c.apps.calibration.mcmc</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize" href="optimize.html">pyl4c.apps.calibration.optimize</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
@@ -1906,6 +1154,7 @@ sub-model to which they belong</dd>
 <h4><code><a title="pyl4c.apps.calibration.BPLUT" href="#pyl4c.apps.calibration.BPLUT">BPLUT</a></code></h4>
 <ul class="two-column">
 <li><code><a title="pyl4c.apps.calibration.BPLUT.data" href="#pyl4c.apps.calibration.BPLUT.data">data</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.BPLUT.dump" href="#pyl4c.apps.calibration.BPLUT.dump">dump</a></code></li>
 <li><code><a title="pyl4c.apps.calibration.BPLUT.flat" href="#pyl4c.apps.calibration.BPLUT.flat">flat</a></code></li>
 <li><code><a title="pyl4c.apps.calibration.BPLUT.hdf5_flush" href="#pyl4c.apps.calibration.BPLUT.hdf5_flush">hdf5_flush</a></code></li>
 <li><code><a title="pyl4c.apps.calibration.BPLUT.hdf5_restore" href="#pyl4c.apps.calibration.BPLUT.hdf5_restore">hdf5_restore</a></code></li>
@@ -1915,22 +1164,13 @@ sub-model to which they belong</dd>
 <li><code><a title="pyl4c.apps.calibration.BPLUT.update" href="#pyl4c.apps.calibration.BPLUT.update">update</a></code></li>
 </ul>
 </li>
-<li>
-<h4><code><a title="pyl4c.apps.calibration.GenericOptimization" href="#pyl4c.apps.calibration.GenericOptimization">GenericOptimization</a></code></h4>
-<ul class="">
-<li><code><a title="pyl4c.apps.calibration.GenericOptimization.solve" href="#pyl4c.apps.calibration.GenericOptimization.solve">solve</a></code></li>
-</ul>
-</li>
-<li>
-<h4><code><a title="pyl4c.apps.calibration.ModelParameters" href="#pyl4c.apps.calibration.ModelParameters">ModelParameters</a></code></h4>
-</li>
 </ul>
 </li>
 </ul>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

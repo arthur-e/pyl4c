@@ -1,0 +1,2160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
+<title>pyl4c.apps.calibration.optimize API documentation</title>
+<meta name="description" content="To calibrate the GPP or RECO model for a specific PFT: …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.apps.calibration.optimize</code></h1>
+</header>
+<section id="section-intro">
+<p>To calibrate the GPP or RECO model for a specific PFT:</p>
+<pre><code>python optimize.py pft &lt;pft&gt; tune-gpp
+python optimize.py pft &lt;pft&gt; tune-reco
+</code></pre>
+<p>To plot a specific PFT's (optimized) response to a driver:</p>
+<pre><code>python optimize.py pft &lt;pft&gt; plot-gpp &lt;driver&gt;
+python optimize.py pft &lt;pft&gt; plot-reco &lt;driver&gt;
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>For <code>plot-gpp</code>, <code>&lt;driver&gt;</code> is one of: <code>smrz</code>, <code>vpd</code>, <code>tmin</code>.</li>
+<li>For <code>plot-reco</code>, <code>&lt;driver&gt;</code> is one of: <code>smsf</code>, <code>tsoil</code>.</li>
+</ul>
+<p><strong>It's important to specify a configuration file,</strong> otherwise the default,
+<code>pyl4c/data/files/config_L4C_calibration.yaml</code>, will be used:</p>
+<pre><code>python optimize.py pft &lt;pft&gt; tune-gpp --config=my_config.yaml
+python optimize.py pft &lt;pft&gt; tune-soc --config=my_config.yaml
+python optimize.py pft &lt;pft&gt; tune-reco --config=my_config.yaml
+</code></pre>
+<p>To plot the steady-state SOC versus IGBP SOC pit measurements, and then
+select potential new decay rates:</p>
+<pre><code>python optimize.py pft &lt;pft&gt; tune-soc
+</code></pre>
+<p>To get the goodness-of-fit statistics for the updated parameters:</p>
+<pre><code>python optimize.py pft &lt;pft&gt; score GPP
+python optimize.py pft &lt;pft&gt; score RECO
+</code></pre>
+<p>To view the current (potentially updated) BPLUT:</p>
+<pre><code>python optimize.py bplut show
+
+# View parameter values for &lt;param&gt; across ALL PFTs
+python optimize.py bplut show None &lt;param&gt;
+
+# View a PFT's values across ALL parameters
+python optimize.py bplut show &lt;param&gt; None
+</code></pre>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI"><code class="flex name class">
+<span>class <span class="ident">CalibrationAPI</span></span>
+<span>(</span><span>config: str = None, pft: int = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalibrationAPI(object):
+    &#39;&#39;&#39;
+    Convenience class for calibrating the L4C GPP and RECO models. Meant to
+    be used with `fire.Fire()`. Uses:
+
+        # Run the calibration for a specific PFT
+        python optimize.py tune-gpp --pft=&lt;pft&gt;
+
+        # Get access to the sampler (and debugger), after calibration is run
+        python optimize.py tune-gpp --pft=&lt;pft&gt; --ipdb
+    &#39;&#39;&#39;
+    _driver_bounds = {&#39;apar&#39;: (2, np.inf)}
+    _metadata = {
+        &#39;tmin&#39;: {&#39;units&#39;: &#39;deg K&#39;},
+        &#39;vpd&#39;: {&#39;units&#39;: &#39;Pa&#39;},
+        &#39;smrz&#39;: {&#39;units&#39;: &#39;%&#39;},
+        &#39;smsf&#39;: {&#39;units&#39;: &#39;%&#39;},
+        &#39;tsoil&#39;: {&#39;units&#39;: &#39;deg K&#39;},
+    }
+    _required_parameters = {
+        &#39;GPP&#39;:  [&#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;],
+        &#39;RECO&#39;: [&#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;],
+        &#39;SOC&#39;:  [&#39;decay_rates0&#39;, &#39;decay_rates1&#39;, &#39;decay_rates2&#39;]
+    }
+    _required_drivers = {
+        # Tsurf = Surface skin temperature; Tmin = Minimum daily temperature
+        &#39;GPP&#39;:  [&#39;fPAR&#39;, &#39;PAR&#39;, &#39;Tmin&#39;, &#39;VPD&#39;, &#39;SMRZ&#39;, &#39;FT&#39;],
+        &#39;RECO&#39;: [&#39;Tsoil&#39;, &#39;SMSF&#39;]
+    }
+
+    def __init__(self, config: str = None, pft: int = None):
+        config_file = config
+        if config_file is None:
+            config_file = os.path.join(
+                L4C_DIR, &#39;data/files/config_L4C_calibration.yaml&#39;)
+        print(f&#39;Using configuration file: {config_file}&#39;)
+        with open(config_file, &#39;r&#39;) as file:
+            self.config = yaml.safe_load(file)
+        if pft is not None:
+            assert pft in PFT_VALID, f&#39;Invalid PFT: {pft}&#39;
+            self._pft = pft
+        self.hdf5 = self.config[&#39;data&#39;][&#39;file&#39;]
+        self.bplut = BPLUT(
+            restore_bplut(self.config[&#39;BPLUT&#39;]),
+            hdf5_path = self.config[&#39;optimization&#39;][&#39;backend&#39;])
+
+    def _bounds(self, init_params, bounds, model, fixed = None):
+        &#39;Defines bounds; optionally &#34;fixes&#34; parameters by fixing bounds&#39;
+        params = init_params
+        lower = []
+        upper = []
+        # Then, set the bounds; for free parameters, this is what was given;
+        #   for fixed parameters, this is the fixed value plus/minus some
+        #   tolerance
+        for i, p in enumerate(self._required_parameters[model]):
+            # This is a parameter to be optimized; use default bounds
+            lower.append(bounds[p][0])
+            upper.append(bounds[p][1])
+            if fixed is not None:
+                if p in fixed:
+                    if fixed[p] is not None:
+                        lower.pop()
+                        upper.pop()
+                        lower.append(fixed[p] - 1e-3)
+                        upper.append(fixed[p] + 1e-3)
+        return (np.array(lower), np.array(upper))
+
+    def _clean(
+            self, raw: Sequence, drivers: Sequence, protocol: str = &#39;GPP&#39;,
+            num_std: int = 5):
+        &#39;Cleans up data values according to a prescribed protocol&#39;
+        if protocol == &#39;GPP&#39;:
+            # Filter out observed GPP values when GPP is negative or when
+            #   APAR &lt; 0.1 g C m-2 day-1
+            apar = np.nanmean(drivers[&#39;fPAR&#39;], axis = -1) * drivers[&#39;PAR&#39;]
+            cleaned = np.where(
+                apar &lt; 0.1, np.nan, np.where(raw &lt; 0, np.nan, raw))
+            return np.apply_along_axis(
+                lambda x: np.where(
+                    x &gt; (num_std * np.nanstd(x)), np.nan, x), 0, cleaned)
+        elif protocol == &#39;RECO&#39;:
+            # Remove negative values
+            return np.where(raw &lt; 0, np.nan, raw)
+
+    def _filter(self, raw: Sequence, size: int):
+        &#39;Apply a smoothing filter with zero phase offset&#39;
+        if size &gt; 1:
+            window = np.ones(size) / size
+            return np.apply_along_axis(
+                lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
+        return raw # Or, revert to the raw data
+
+    def _get_params(self, model: str):
+        # Filter the parameters to just those for the PFT of interest
+        return self.bplut.flat(self._pft, self._required_parameters[model.upper()])
+
+    def _load_gpp_data(
+            self, filter_length, store = None, prefix = &#39;&#39;, load_gpp = True,
+            check_validity = True):
+        &#39;Load the required datasets for GPP, for a single PFT&#39;
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+        if store is None:
+            store = self.hdf5
+        with h5py.File(store, &#39;r&#39;) as hdf:
+            n_steps = hdf[f&#39;{prefix}time&#39;].shape[0]
+            sites = hdf[f&#39;{prefix}site_id&#39;][:]
+            if hasattr(sites[0], &#39;decode&#39;):
+                sites = list(map(lambda x: x.decode(&#39;utf-8&#39;), sites))
+            # Get dominant PFT
+            pft_map = hdf[f&#39;{prefix}state/PFT&#39;][:]
+            if pft_map.ndim &gt; 1:
+                pft_map = pft_dominant(pft_map, sites)
+            # Blacklist validation sites
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+            drivers = dict()
+            field_map = self.config[&#39;data&#39;][&#39;fields&#39;]
+            for field in self._required_drivers[&#39;GPP&#39;]:
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        # Preserve 1-km subgrid for fPAR
+                        if field == &#39;fPAR&#39;:
+                            drivers[field] = hdf[field_map[field]][:,pft_mask,:]
+                        else:
+                            drivers[field] = hdf[field_map[field]][:,pft_mask]
+                elif field == &#39;PAR&#39;:
+                    if &#39;SWGDN&#39; not in field_map:
+                        raise ValueError(f&#34;Could not find PAR or SWGDN data&#34;)
+                    drivers[field] = par(hdf[field_map[&#39;SWGDN&#39;]][:,pft_mask])
+                elif field == &#39;VPD&#39;:
+                    qv2m = hdf[field_map[&#39;QV2M&#39;]][:,pft_mask]
+                    ps   = hdf[field_map[&#39;PS&#39;]][:,pft_mask]
+                    t2m  = hdf[field_map[&#39;T2M&#39;]][:,pft_mask]
+                    drivers[field] = vpd(qv2m, ps, t2m)
+                elif field == &#39;SMRZ&#39;:
+                    smrz = hdf[field_map[&#39;SMRZ0&#39;]][:,pft_mask]
+                    smrz_min = smrz.min(axis = 0)
+                    drivers[field] = rescale_smrz(smrz, smrz_min)
+                elif field == &#39;FT&#39;:
+                    tsurf = hdf[field_map[&#39;Tsurf&#39;]][:,pft_mask]
+                    # Classify soil as frozen (FT=0) or unfrozen (FT=1) based
+                    #   on threshold freezing point of water
+                    drivers[field] = np.where(tsurf &lt;= 273.15, 0, 1)
+
+            # Check units on fPAR
+            if np.nanmax(drivers[&#39;fPAR&#39;][:]) &gt; 10:
+                drivers[&#39;fPAR&#39;] = drivers[&#39;fPAR&#39;].astype(np.float32) / 100
+            assert len(set(self._required_drivers[&#39;GPP&#39;])\
+                .difference(set(drivers.keys()))) == 0,\
+                &#39;Did not find all required drivers for the GPP model!&#39;
+
+            # If RMSE is used, then we want to pay attention to weighting
+            weights = None
+            if &#39;weights&#39; in hdf.keys():
+                weights = hdf[&#39;weights&#39;][pft_mask][np.newaxis,:]\
+                    .repeat(n_steps, axis = 0)
+            else:
+                print(&#39;WARNING - &#34;weights&#34; not found in HDF5 file!&#39;)
+            if load_gpp and &#39;GPP&#39; not in hdf.keys():
+                with h5py.File(
+                        self.config[&#39;data&#39;][&#39;supplemental_file&#39;], &#39;r&#39;) as _hdf:
+                    tower_gpp = _hdf[&#39;GPP&#39;][:][:,pft_mask]
+            elif load_gpp:
+                tower_gpp = hdf[&#39;GPP&#39;][:][:,pft_mask]
+
+        # Check that driver data do not contain NaNs
+        if check_validity:
+            for field in drivers.keys():
+                if field == &#39;fPAR&#39;:
+                    continue # The 1-km subgrid may have NaNs
+                assert not np.isnan(drivers[field]).any(),\
+                    f&#39;Driver dataset &#34;{field}&#34; contains NaNs&#39;
+
+        # If we don&#39;t want to load observational data, return the drivers data
+        if not load_gpp:
+            return (drivers, None, None, None, weights)
+
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_gpp = self._filter(tower_gpp, filter_length)
+        tower_gpp = self._clean(tower_gpp, drivers, protocol = &#39;GPP&#39;)
+        # Subset all datasets to just the valid observation site-days
+        tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
+        if weights is not None:
+            weights = weights[~np.isnan(tower_gpp)]
+        drivers_flat = list()
+        # For eveything other than fPAR, add a trailing axis to the flat view;
+        #   this will enable datasets to line up with fPAR&#39;s 1-km subgrid
+        for field in drivers.keys():
+            flat = drivers[field][~np.isnan(tower_gpp)]
+            drivers_flat.append(flat[:,np.newaxis] if field != &#39;fPAR&#39; else flat)
+        return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
+
+    def _load_reco_data(
+            self, filter_length, store = None, prefix = &#39;&#39;, load_reco = True,
+            check_validity = True):
+        &#39;Load the required datasets for RECO, for a single PFT&#39;
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+        if store is None:
+            store = self.hdf5
+        with h5py.File(store, &#39;r&#39;) as hdf:
+            n_steps = hdf[f&#39;{prefix}time&#39;].shape[0]
+            sites = hdf[f&#39;{prefix}site_id&#39;][:]
+
+            if hasattr(sites[0], &#39;decode&#39;):
+                sites = list(map(lambda x: x.decode(&#39;utf-8&#39;), sites))
+            # Get dominant PFT
+            pft_map = hdf[f&#39;{prefix}state/PFT&#39;][:]
+            if pft_map.ndim &gt; 1:
+                pft_map = pft_dominant(pft_map, sites)
+            # Blacklist validation sites
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+            drivers = dict()
+            field_map = self.config[&#39;data&#39;][&#39;fields&#39;]
+            for field in self._required_drivers[&#39;RECO&#39;]:
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        drivers[field] = hdf[field_map[field]][:,pft_mask]
+
+            # If RMSE is used, then we want to pay attention to weighting
+            weights = None
+            if &#39;weights&#39; in hdf.keys():
+                weights = hdf[&#39;weights&#39;][pft_mask][np.newaxis,:]\
+                    .repeat(n_steps, axis = 0)
+            else:
+                print(&#39;WARNING - &#34;weights&#34; not found in HDF5 file!&#39;)
+            if load_reco and &#39;RECO&#39; not in hdf.keys():
+                with h5py.File(
+                        self.config[&#39;data&#39;][&#39;supplemental_file&#39;], &#39;r&#39;) as _hdf:
+                    tower_reco = _hdf[&#39;RECO&#39;][:][:,pft_mask]
+            elif load_reco:
+                tower_reco = hdf[&#39;RECO&#39;][:][:,pft_mask]
+
+        # Check that driver data do not contain NaNs
+        if check_validity:
+            for field in drivers.keys():
+                assert not np.isnan(drivers[field]).any(),\
+                    f&#39;Driver dataset &#34;{field}&#34; contains NaNs&#39;
+
+        # If we don&#39;t want to load observational data, return the drivers data
+        if not load_reco:
+            return (drivers, None, weights)
+
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_reco = self._filter(tower_reco, filter_length)
+        tower_reco = self._clean(tower_reco, drivers, protocol = &#39;RECO&#39;)
+        drivers = [drivers[k] for k in self._required_drivers[&#39;RECO&#39;]]
+        return (drivers, tower_reco, weights)
+
+    def _report(self, old_params, new_params, model, prec = 2):
+        &#39;Prints a report on the updated (optimized) parameters&#39;
+        labels = self._required_parameters[model.upper()]
+        pad = max(len(l) for l in labels) + 1
+        fmt_string = &#39;-- {:&lt;%d} {:&gt;%d} [{:&gt;%d}]&#39; % (pad, 5 + prec, 7 + prec)
+        print(&#39;%s parameters report, %s (PFT %d):&#39; % (
+            f&#39;{model.upper()} Optimization&#39;, PFT[self._pft][0], self._pft))
+        print((&#39; {:&gt;%d} {:&gt;%d}&#39; % (8 + pad + prec, 8 + prec))\
+            .format(&#39;NEW&#39;, &#39;INITIAL&#39;))
+        for i, label in enumerate(labels):
+            new = (&#39;%%.%df&#39; % prec) % new_params[i] if new_params[i] is not None else &#39;&#39;
+            old = (&#39;%%.%df&#39; % prec) % old_params[i]
+            print(fmt_string.format((&#39;%s:&#39; % label), new, old))
+
+    @staticmethod
+    def e_mult(params, tmin, vpd, smrz, ft):
+        # Calculate E_mult based on current parameters
+        f_tmin = linear_constraint(params[1], params[2])
+        f_vpd  = linear_constraint(params[3], params[4], &#39;reversed&#39;)
+        f_smrz = linear_constraint(params[5], params[6])
+        f_ft   = linear_constraint(params[7], 1.0, &#39;binary&#39;)
+        return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
+
+    @staticmethod
+    def k_mult(params, tsoil, smsf):
+        # Calculate K_mult based on current parameters
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_smsf  = linear_constraint(params[2], params[3])
+        return f_tsoil(tsoil) * f_smsf(smsf)
+
+    @staticmethod
+    def gpp(params, fpar, par, tmin, vpd, smrz, ft):
+        # Calculate GPP based on the provided BPLUT parameters
+        apar = fpar * par
+        return apar * params[0] *\
+            CalibrationAPI.e_mult(params, tmin, vpd, smrz, ft)
+
+    @staticmethod
+    def reco(params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k):
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
+        ra = ((1 - params[0]) * tower_gpp)
+        rh = tower_reco - ra
+        rh = np.where(rh &lt; 0, 0, rh) # Mask out negative RH values
+        kmult0 = CalibrationAPI.k_mult(params, tsoil, smsf)
+        cbar0 = cbar(rh, kmult0, q_rh, q_k)
+        return ra + (kmult0 * cbar0)
+
+    def pft(self, pft):
+        &#39;&#39;&#39;
+        Sets the PFT class for the next calibration step.
+
+        Parameters
+        ----------
+        pft : int
+            The PFT class to use in calibration
+
+        Returns
+        -------
+        CLI
+        &#39;&#39;&#39;
+        assert pft in range(1, 9), &#39;Unrecognized PFT class&#39;
+        self._pft = pft
+        return self
+
+    def plot_gpp(
+            self, driver, filter_length = 2, coefs = None,
+            xlim = None, ylim = None, alpha = 0.1, marker = &#39;.&#39;):
+        &#39;&#39;&#39;
+        Using the current or optimized BPLUT coefficients, plots the GPP ramp
+        function for a given driver. NOTE: Values where APAR &lt; 2.0 are not
+        shown.
+
+        Parameters
+        ----------
+        driver : str
+            Name of the driver to plot on the horizontal axis
+        filter_length : int
+        coefs : list or tuple or numpy.ndarray
+            (Optional) array-like, Instead of using what&#39;s in the BPLUT,
+            specify the exact parameters, e.g., [tmin0, tmin1]
+        xlim : list or tuple
+            (Optional) A 2-element sequence: The x-axis limits
+        ylim : list or tuple
+            (Optional) A 2-element sequence: The x-axis limits
+        alpha : float
+            (Optional) The alpha value (Default: 0.1)
+        marker : str
+            (Optional) The marker symbol (Default: &#34;.&#34;)
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def empirical_lue(apar, gpp):
+            # Mask low APAR values
+            lower, _ = self._driver_bounds.get(&#39;apar&#39;, (0, None))
+            apar = np.where(apar &lt; lower, np.nan, apar)
+            # Calculate empirical light-use efficiency: GPP/APAR
+            return np.where(apar &gt; 0, np.divide(gpp, apar), 0)
+
+        np.seterr(invalid = &#39;ignore&#39;)
+        # Read in GPP and APAR data
+        assert driver.lower() in (&#39;tmin&#39;, &#39;vpd&#39;, &#39;smrz&#39;),\
+            &#39;Requested driver &#34;%s&#34; cannot be plotted for GPP&#39; % driver
+        if coefs is not None:
+            assert hasattr(coefs, &#39;index&#39;) and not hasattr(coefs, &#39;title&#39;),\
+            &#34;Argument --coefs expects a list [values,] with NO spaces&#34;
+        coefs0 = [ # Original coefficients
+            self.bplut[driver.lower()][i][self._pft]
+            for i in (0, 1)
+        ]
+
+        # Load APAR and tower GPP data
+        driver_data, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+        apar = np.nanmean(driver_data[&#39;fPAR&#39;], axis = -1) * driver_data[&#39;PAR&#39;]
+        # Based on the bounds, create an empirical ramp function that
+        #   spans the range of the driver
+        bounds = [
+            self.config[&#39;optimization&#39;][&#39;bounds&#39;][f&#39;{driver.lower()}{i}&#39;][i]
+            for i in (0, 1) # i.e., min(tmin0) and max(tmin1)
+        ]
+        domain = np.arange(bounds[0], bounds[1], 0.1)
+        ramp_func_original = linear_constraint(
+            *coefs0, &#39;reversed&#39; if driver.lower() == &#39;vpd&#39; else None)
+        if coefs is not None:
+            ramp_func = linear_constraint(
+                *coefs, &#39;reversed&#39; if driver.lower() == &#39;vpd&#39; else None)
+        if driver.lower() == &#39;vpd&#39;:
+            x0 = driver_data[&#39;VPD&#39;]
+        elif driver.lower() == &#39;tmin&#39;:
+            x0 = driver_data[&#39;Tmin&#39;]
+        elif driver.lower() == &#39;smrz&#39;:
+            x0 = driver_data[&#39;SMRZ&#39;]
+
+        # Update plotting parameters
+        lue = empirical_lue(apar, tower_gpp)
+        # Mask out negative LUE values and values with APAR&lt;2
+        pyplot.scatter(x0, np.where(
+            np.logical_or(lue == 0, apar &lt; 2), np.nan, lue),
+            alpha = alpha, marker = marker)
+        # Plot the original ramp function (black line)
+        pyplot.plot(domain, ramp_func_original(domain) *\
+            self.bplut[&#39;LUE&#39;][:,self._pft], &#39;k-&#39;)
+        # Optionally, plot a proposed ramp function (red line)
+        if coefs is not None:
+            pyplot.plot(domain, ramp_func(domain) *\
+                self.bplut[&#39;LUE&#39;][:,self._pft], &#39;r-&#39;)
+        pyplot.xlabel(&#39;%s (%s)&#39; % (driver, self._metadata[driver][&#39;units&#39;]))
+        pyplot.ylabel(&#39;GPP/APAR (g C MJ-1 d-1)&#39;)
+        if xlim is not None:
+            pyplot.xlim(xlim[0], xlim[1])
+        if ylim is not None:
+            pyplot.ylim(ylim[0], ylim[1])
+        pyplot.title(
+            &#39;%s (PFT %d): GPP Response to &#34;%s&#34;&#39; % (
+                PFT[self._pft][0], self._pft, driver))
+        pyplot.show()
+
+    def plot_reco(
+            self, driver, filter_length: int = 2, coefs = None, q_rh = 75,
+            q_k = 50, xlim = None, ylim = None, alpha = 0.1, marker = &#39;.&#39;):
+        &#39;&#39;&#39;
+        Using the current or optimized BPLUT coefficients, plots the RECO ramp
+        function for a given driver. The ramp function is shown on a plot of
+        RH/Cbar, which is equivalent to Kmult (as Cbar is an upper quantile of
+        the RH/Kmult distribution).
+
+        Parameters
+        ----------
+        driver : str
+            Name of the driver to plot on the horizontal axis
+        filter_length : int
+        coefs : list or tuple or numpy.ndarray
+            (Optional) array-like, Instead of using what&#39;s in the BPLUT,
+            specify the exact parameters, e.g., `[tmin0, tmin1]`
+        q_rh : int
+            Additional arguments to `pyl4c.apps.calibration.cbar()`
+        q_k : int
+            Additional arguments to `pyl4c.apps.calibration.cbar()`
+        ylim : list or tuple
+            (Optional) A 2-element sequence: The x-axis limits
+        alpha : float
+            (Optional) The alpha value (Default: 0.1)
+        marker : str
+            (Optional) The marker symbol (Default: &#34;.&#34;)
+        &#39;&#39;&#39;
+        xlabels = {
+            &#39;smsf&#39;: &#39;Surface Soil Moisture&#39;,
+            &#39;tsoil&#39;: &#39;Soil Temperature&#39;
+        }
+        np.seterr(invalid = &#39;ignore&#39;)
+        assert driver.lower() in (&#39;tsoil&#39;, &#39;smsf&#39;),\
+            &#39;Requested driver &#34;%s&#34; cannot be plotted for RECO&#39; % driver
+
+        if coefs is not None:
+            assert hasattr(coefs, &#39;index&#39;) and not hasattr(coefs, &#39;title&#39;),\
+            &#34;Argument --coefs expects a list [values,] with NO spaces&#34;
+        drivers, reco, _ = self._load_reco_data(filter_length)
+        _, _, gpp, _, _ = self._load_gpp_data(filter_length)
+        tsoil, smsf = drivers
+        # Calculate k_mult based on original parameters
+        f_smsf = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+        k_mult = f_smsf(smsf) * arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft])
+        # Calculate RH as (RECO - RA)
+        rh = reco - ((1 - self.bplut[&#39;CUE&#39;][0,self._pft]) * gpp)
+        # Set negative RH values to zero
+        rh = np.where(suppress_warnings(np.less)(rh, 0), 0, rh)
+        cbar0 = suppress_warnings(cbar)(rh, k_mult, q_rh, q_k)
+        gpp = reco = None
+
+        # Update plotting parameters
+        pyplot.scatter( # Plot RH/Cbar against either Tsoil or SMSF
+            tsoil if driver == &#39;tsoil&#39; else smsf,
+            suppress_warnings(np.divide)(rh, cbar0),
+            alpha = alpha, marker = marker)
+
+        if driver == &#39;tsoil&#39;:
+            domain = np.arange(tsoil.min(), tsoil.max(), 0.1)
+            pyplot.plot(domain,
+                arrhenius(domain, self.bplut[&#39;tsoil&#39;][0,self._pft]), &#39;k-&#39;)
+        elif driver == &#39;smsf&#39;:
+            domain = np.arange(smsf.min(), smsf.max(), 0.001)
+            pyplot.plot(domain, f_smsf(domain).ravel(), &#39;k-&#39;)
+
+        if coefs is not None:
+            if driver == &#39;tsoil&#39;:
+                pyplot.plot(domain, arrhenius(domain, *coefs), &#39;r-&#39;)
+            elif driver == &#39;smsf&#39;:
+                pyplot.plot(domain, linear_constraint(*coefs)(domain), &#39;r-&#39;)
+
+        pyplot.xlabel(&#39;%s (%s)&#39; % (
+            xlabels[driver], self._metadata[driver][&#39;units&#39;]))
+        pyplot.ylabel(&#39;RH/Cbar&#39;)
+        if xlim is not None:
+            pyplot.xlim(xlim[0], xlim[1])
+        if ylim is not None:
+            pyplot.ylim(ylim[0], ylim[1])
+        pyplot.title(
+            &#39;%s (PFT %d): RECO Response to &#34;%s&#34;&#39; % (
+                PFT[self._pft][0], self._pft,
+                &#39;SMSF&#39; if driver.lower() == &#39;smsf&#39; else &#39;Tsoil&#39;))
+        pyplot.show()
+
+    def score(
+            self, model: str, filter_length: int = 2,
+            q_rh: int = 75, q_k: int = 50):
+        &#39;&#39;&#39;
+        Scores the current model (for a specific PFT) based on the parameters
+        in the BPLUT.
+
+        Parameters
+        ----------
+        model : str
+            One of: &#34;GPP&#34; or &#34;RECO&#34;
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        &#39;&#39;&#39;
+        gpp_drivers, gpp_drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+            self._load_gpp_data(filter_length)
+        if model.upper() == &#39;GPP&#39;:
+            observed = tower_gpp_flat
+        elif model.upper() == &#39;RECO&#39;:
+            reco_drivers, tower_reco, weights =\
+                self._load_reco_data(filter_length)
+            observed = tower_reco
+        # Print the parameters table
+        old_params = restore_bplut_flat(self.config[&#39;BPLUT&#39;])
+        old_params = [
+            old_params[k][:,self._pft]
+            for k in self._required_parameters[model.upper()]
+        ]
+        params = self._get_params(model.upper())
+        self._report(old_params, params, model.upper())
+        # Get goodness-of-fit statistics
+        if model.upper() == &#39;GPP&#39;:
+            predicted = self.gpp(params, *gpp_drivers_flat).mean(axis = -1)
+        elif model.upper() == &#39;RECO&#39;:
+            predicted = self.reco(
+                params, tower_reco, tower_gpp, *reco_drivers,
+                q_rh = q_rh, q_k = q_k)
+        r2, rmse_score, ub_rmse, bias = report_fit_stats(
+            observed, predicted, weights, verbose = False)
+        print(f&#39;{model.upper()} model goodness-of-fit statistics:&#39;)
+        print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;R-squared:&#39;, &#39;%.3f&#39; % r2))
+        print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;RMSE:&#39;, &#39;%.2f&#39; % rmse_score))
+        print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;Unbised RMSE:&#39;, &#39;%.2f&#39; % ub_rmse))
+        print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;Bias:&#39;, &#39;%.2f&#39; % bias))
+
+    def set(self, parameter, value):
+        &#39;&#39;&#39;
+        Sets the named parameter to the given value for the specified PFT
+        class. This updates the initial parameters, affecting any subsequent
+        optimization.
+
+        Parameters
+        ----------
+        parameter : str
+            Name of the parameter to bet set
+        value : int or float
+            Value of the named parameter to be set
+
+        Returns
+        -------
+        CLI
+        &#39;&#39;&#39;
+        # Update the BPLUT in memory but NOT the file BPLUT (this is temporary)
+        self.bplut.update(self._pft, (value,), (parameter,), flush = False)
+        return self
+
+    def tune_gpp(
+            self, filter_length: int = 2, optimize: bool = True,
+            use_nlopt: bool = True):
+        &#39;&#39;&#39;
+        Run the L4C GPP calibration.
+
+        - For GPP data: Removes observations where GPP &lt; 0 or where APAR is
+            &lt; 0.1 MJ m-2 day-1
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        optimize : bool
+            True to run the optimization (Default) or False if you just want
+            the goodness-of-fit to be reported
+        use_nlopt : bool
+            True to use `nlopt` for optimization (Default)
+        &#39;&#39;&#39;
+        def residuals(params, drivers, observed, weights):
+            gpp0 = self.gpp(params, *drivers).mean(axis = -1)
+            diff = np.subtract(observed, gpp0)
+            # Objective function: Difference between tower GPP and L4C GPP,
+            #   multiplied by the tower weights
+            return (weights * diff)[~np.isnan(diff)]
+
+        init_params = self._get_params(&#39;GPP&#39;)
+        # Load blacklisted sites (if any)
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+
+        print(&#39;Loading driver datasets...&#39;)
+        drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+            self._load_gpp_data(filter_length)
+        print(f&#39;NOTE: Counts of (days, towers) are: {tower_gpp.shape}&#39;)
+
+        # Configure the optimization, get bounds for the parameter search
+        fixed = None
+        if self.config[&#39;optimization&#39;][&#39;fixed&#39;] is not None:
+            fixed = dict([ # Get any fixed parameters as {param: fixed_value}
+                (k, v[self._pft])
+                for k, v in self.config[&#39;optimization&#39;][&#39;fixed&#39;].items()
+            ])
+        step_size_global = [
+            self.config[&#39;optimization&#39;][&#39;step_size&#39;][p]
+            for p in self._required_parameters[&#39;GPP&#39;]
+        ]
+        bounds_dict = self.config[&#39;optimization&#39;][&#39;bounds&#39;]
+        bounds = self._bounds(init_params, bounds_dict, &#39;GPP&#39;, fixed)
+        trials = self.config[&#39;optimization&#39;][&#39;trials&#39;]
+        params = [] # Optimized parameters
+        params0 = [] # Initial (random) parameters
+        scores = []
+        # Will be a (100, P) space, where P is the number of parameters
+        param_space = np.linspace(bounds[0], bounds[1], 100)
+        for t in range(0, trials):
+            # If multiple trials, randomize the initial parameter values
+            #   and score the model in each trial
+            if trials &gt; 1:
+                p = param_space.shape[1] # Number of parameters
+                idx = np.random.randint(0, param_space.shape[0], p)
+                init_params = param_space[idx,np.arange(0, p)]
+                params0.append(init_params)
+            # If we&#39;re optimizing (with any library), define the bounds and
+            #   the objective function
+            if optimize:
+                bounds = self._bounds(init_params, bounds_dict, &#39;GPP&#39;, fixed)
+                # Set initial value to a fixed value if specified
+                if fixed is not None:
+                    for key, value in fixed.items():
+                        if value is not None and key in self._required_parameters[&#39;GPP&#39;]:
+                            init_params[self._required_parameters[&#39;GPP&#39;].index(key)] = value
+                objective = partial(
+                    residuals, drivers = drivers_flat,
+                    observed = tower_gpp_flat, weights = weights)
+            # Apply constrained, non-linear least-squares optimization, using
+            #   either SciPy or NLOPT
+            if optimize and not use_nlopt:
+                solution = solve_least_squares(
+                    objective, init_params,
+                    labels = self.required_parameters[&#39;GPP&#39;],
+                    bounds = bounds, loss = &#39;arctan&#39;)
+                fitted = solution.x.tolist()
+                print(solution.message)
+            elif optimize and use_nlopt:
+                opt = GenericOptimization(
+                    objective, bounds, step_size = step_size_global)
+                fitted = opt.solve(init_params)
+            else:
+                fitted = [None for i in range(0, len(init_params))]
+            # Record the found solution and its goodness-of-fit score
+            params.append(fitted)
+            predicted = self.gpp(
+                fitted if optimize else init_params,
+                *drivers_flat).mean(axis = -1)
+            _, rmse_score, _, _ = report_fit_stats(
+                tower_gpp_flat, predicted, weights, verbose = False)
+            print(&#39;[%s/%s] RMSE score of last trial: %.3f&#39; % (
+                str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+            scores.append(rmse_score)
+
+        # Select the fit params with the best score
+        if trials &gt; 1:
+            fitted = params[np.argmin(scores)]
+            init_params = params0[np.argmin(scores)]
+        # Generate and print a report, update the BPLUT parameters
+        self._report(init_params, fitted, &#39;GPP&#39;)
+        if optimize:
+            self.bplut.update(
+                self._pft, fitted, self._required_parameters[&#39;GPP&#39;])
+
+    def tune_reco(
+            self, filter_length: int = 2, q_rh: int = 75, q_k: int = 50,
+            optimize: bool = True, use_nlopt: bool = True):
+        &#39;&#39;&#39;
+        Optimizes RECO. The 9-km mean L4C RECO is fit to the tower-observed
+        RECO using constrained, non-linear least-squares optimization.
+        Considerations:
+
+        - Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        optimize : bool
+            False to only report parameters and their fit statistics instead
+            of optimizing (Default: True)
+        use_nlopt : bool
+            True to use the nlopt library for optimization (Default: True)
+        &#39;&#39;&#39;
+        def residuals(
+                params, drivers, observed_reco, observed_gpp, weights,
+                q_rh, q_k):
+            # Objective function: Difference between tower RECO and L4C RECO
+            reco0 = self.reco(
+                params, observed_reco, observed_gpp, *drivers, q_rh, q_k)
+            diff = np.subtract(observed_reco, reco0)
+            missing = np.logical_or(np.isnan(observed_reco), np.isnan(reco0))
+            # Multiply by the tower weights
+            return (weights * diff)[~missing]
+
+        assert q_rh &gt;= 0 and q_rh &lt;= 100 and q_k &gt;= 0 and q_k &lt;= 100,\
+            &#39;Invalid setting for &#34;q_rh&#34; or &#34;q_k&#34; parameters&#39;
+
+        init_params = self._get_params(&#39;RECO&#39;)
+        # Load blacklisted sites (if any)
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+
+        print(&#39;Loading driver datasets...&#39;)
+        _, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+        drivers, tower_reco, weights = self._load_reco_data(filter_length)
+        print(f&#39;NOTE: Counts of (days, towers) are: {tower_reco.shape}&#39;)
+
+        # Configure the optimization, get bounds for the parameter search
+        fixed = None
+        if self.config[&#39;optimization&#39;][&#39;fixed&#39;] is not None:
+            fixed = dict([ # Get any fixed parameters as {param: fixed_value}
+                (k, v[self._pft])
+                for k, v in self.config[&#39;optimization&#39;][&#39;fixed&#39;].items()
+            ])
+        step_size_global = [
+            self.config[&#39;optimization&#39;][&#39;step_size&#39;][p]
+            for p in self._required_parameters[&#39;RECO&#39;]
+        ]
+        bounds_dict = self.config[&#39;optimization&#39;][&#39;bounds&#39;]
+        bounds = self._bounds(init_params, bounds_dict, &#39;RECO&#39;, fixed)
+        trials = self.config[&#39;optimization&#39;][&#39;trials&#39;]
+        params = [] # Optimized parameters
+        params0 = [] # Initial (random) parameters
+        scores = []
+        # Will be a (100, P) space, where P is the number of parameters
+        param_space = np.linspace(bounds[0], bounds[1], 100)
+        for t in range(0, trials):
+            # If multiple trials, randomize the initial parameter values
+            #   and score the model in each trial
+            if trials &gt; 1:
+                p = param_space.shape[1] # Number of parameters
+                idx = np.random.randint(0, param_space.shape[0], p)
+                init_params = param_space[idx,np.arange(0, p)]
+                params0.append(init_params)
+            # If we&#39;re optimizing (with any library), define the bounds and
+            #   the objective function
+            if optimize:
+                bounds = self._bounds(init_params, bounds_dict, &#39;RECO&#39;, fixed)
+                # Set initial value to a fixed value if specified
+                for key, value in fixed.items():
+                    if value is not None and key in self._required_parameters[&#39;RECO&#39;]:
+                        init_params[self._required_parameters[&#39;RECO&#39;].index(key)] = value
+                objective = partial(
+                    residuals, drivers = drivers, weights = weights,
+                    observed_gpp = tower_gpp, observed_reco = tower_reco,
+                    q_rh = q_rh, q_k = q_k)
+            # Apply constrained, non-linear least-squares optimization, using
+            #   either SciPy or NLOPT
+            if optimize and not use_nlopt:
+                solution = solve_least_squares(
+                    objective, init_params,
+                    labels = self.required_parameters[&#39;RECO&#39;],
+                    bounds = bounds, loss = &#39;arctan&#39;)
+                fitted = solution.x.tolist()
+                print(solution.message)
+            elif optimize and use_nlopt:
+                opt = GenericOptimization(
+                    objective, bounds, step_size = step_size_global)
+                fitted = opt.solve(init_params)
+            else:
+                fitted = [None for i in range(0, len(init_params))]
+            # Record the found solution and its goodness-of-fit score
+            params.append(fitted)
+            predicted = self.reco(
+                fitted if optimize else init_params, tower_reco, tower_gpp,
+                *drivers, q_rh = q_rh, q_k = q_k)
+            _, rmse_score, _, _ = report_fit_stats(
+                tower_reco, predicted, weights, verbose = False)
+            print(&#39;[%s/%s] RMSE score of last trial: %.3f&#39; % (
+                str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+            scores.append(rmse_score)
+
+        # Select the fit params with the best score
+        if trials &gt; 1:
+            fitted = params[np.argmin(scores)]
+            init_params = params0[np.argmin(scores)]
+        # Generate and print a report, update the BPLUT parameters
+        self._report(init_params, fitted, &#39;RECO&#39;)
+        if optimize:
+            self.bplut.update(
+                self._pft, fitted, self._required_parameters[&#39;RECO&#39;])
+
+    def tune_soc(self, filter_length: int = 2, xlim = None, alpha = 0.6):
+        &#39;&#39;&#39;
+        Starts interactive calibration procedure for the soil organic carbon
+        (SOC) decay parameters for a given PFT. Uses any updated parameters
+        in the attached storage: `optimization.backend` in the configuration
+        file.
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        xlim : int or None
+            The largest SOC value that should be shown on the plot (i.e.,
+            the X and Y axis limit, for a square plot); if None, defaults to
+            the largest value in the inventory dataset
+        alpha : float
+            The alpha applied to the SOC scatterplot points (Default: 0.6)
+        &#39;&#39;&#39;
+        soc_file = self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;file&#39;]
+        # Load SOC pit measurements
+        with h5py.File(soc_file, &#39;r&#39;) as hdf:
+            dates = hdf[
+                self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;fields&#39;][&#39;time&#39;]
+            ][:]
+            dates = [datetime.date(*ymd) for ymd in dates.tolist()]
+            field = self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;fields&#39;][&#39;observed&#39;]
+            field_pft = self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;fields&#39;][&#39;PFT&#39;]
+            pft_mask = hdf[field_pft][:]
+            target_soc = hdf[field][:][pft_mask == self._pft]
+
+        print(&#39;Loading driver datasets...&#39;)
+        drivers_for_gpp, _, _, _, _ = self._load_gpp_data(
+            filter_length, store = soc_file, prefix = &#39;ISCN/&#39;,
+            load_gpp = False, check_validity = False)
+        drivers_for_reco, _, weights = self._load_reco_data(
+            filter_length, store = soc_file, prefix = &#39;ISCN/&#39;,
+            load_reco = False, check_validity = False)
+        drivers_for_reco = [ # Convert from dict to list
+            drivers_for_reco[key] for key in self._required_drivers[&#39;RECO&#39;]
+        ]
+
+        # Calculate GPP based on the updated parameters
+        init_params = restore_bplut_flat(self.config[&#39;BPLUT&#39;])
+        params_gpp = self._get_params(&#39;GPP&#39;)
+        params_reco = self._get_params(&#39;RECO&#39;)
+        gpp = self.gpp(params_gpp, *[
+            drivers_for_gpp[d] if d != &#39;fPAR&#39; else np.nanmean(drivers_for_gpp[d], axis = -1)
+            for d in self._required_drivers[&#39;GPP&#39;]
+        ])
+
+        # Calculate a 365-day climatology of NPP
+        cue = params_reco[self._required_parameters[&#39;RECO&#39;].index(&#39;CUE&#39;)]
+        npp = gpp * cue
+        # Make the time axis (currently 0) be the trailing axis
+        npp_clim = climatology365(npp.swapaxes(0, 1), dates)
+        # Calculate litterfall
+        litter = npp_clim.sum(axis = 0) / 365
+        # Calculate a 365-day climatology of Kmult
+        kmult = self.k_mult(params_reco, *drivers_for_reco)
+        # Make the time axis (currently 0) be the trailing axis
+        kmult_clim = climatology365(kmult.swapaxes(0, 1), dates)
+        sigma = npp_clim.sum(axis = 0) / kmult_clim.sum(axis = 0)
+
+        # Inferred steady-state storage
+        fmet = init_params[&#39;f_metabolic&#39;][:,self._pft][0]
+        fstr = init_params[&#39;f_structural&#39;][:,self._pft][0]
+        decay_rates = self._get_params(&#39;SOC&#39;)
+        decay_rates = decay_rates[:,np.newaxis]
+        # Begin user-interaction loop to manually calibrate decay rates
+        prev = None
+        while True:
+            init_soc = soc_analytical_spinup(
+                litter, kmult_clim, fmet, fstr, decay_rates)
+            soc, _ = soc_numerical_spinup(
+                np.stack(init_soc), litter, kmult_clim, fmet, fstr, decay_rates,
+                verbose = True)
+            soc = np.stack(soc).sum(axis = 0)
+            _, ax = pyplot.subplots(figsize = (6,6))
+            ax.plot([0, 1], [0, 1], transform = ax.transAxes, linestyle = &#39;dotted&#39;)
+            if prev is not None:
+                pyplot.plot(
+                    target_soc / 1e3, prev / 1e3, &#39;o&#39;, c = &#39;gray&#39;, alpha = alpha / 2)
+            try:
+                pyplot.plot(target_soc / 1e3, soc / 1e3, &#39;o&#39;, alpha = alpha)
+            except:
+                import ipdb
+                ipdb.set_trace()#FIXME
+
+            xmin, xmax = np.nanpercentile(target_soc / 1e3, (0, 100))
+            print(f&#39;-- Min/Max of Inventory SOC: {xmin.round(1), xmax.round(1)}&#39;)
+            print(f&#39;-- Min/Max of Predicted SOC: {np.nanmin(soc / 1e3).round(1), np.nanmax(soc / 1e3).round(1)}&#39;)
+            pyplot.xlim(0, xmax if xlim is None else xlim)
+            pyplot.ylim(0, xmax if xlim is None else xlim)
+            pyplot.xlabel(&#39;Inventory SOC (kg m$^{-2}$)&#39;)
+            pyplot.ylabel(&#39;Modeled Equilibrium SOC (kg m$^{-2}$)&#39;)
+            pyplot.title(f&#39;For PFT={self._pft}&#39;)
+            pyplot.show()
+            # Calculate correlation coefficient
+            mask = np.isnan(target_soc)
+            r = np.corrcoef(target_soc[~mask], soc[~mask])[0,1]
+            rmse = rmsd(target_soc[~mask], soc[~mask])
+            print(f&#39;Current metabolic rate (r={r.round(3)}, RMSE={round(rmse, 1)}):&#39;)
+            print(&#39;%.5f\n&#39; % decay_rates[0])
+            proposal = input(&#39;New metabolic rate [Q to quit]:\n&#39;)
+            if proposal == &#39;Q&#39;:
+                break
+            value = float(proposal)
+            # NOTE: The &#34;structural&#34; and &#34;recalcitrant&#34; pool decay rates
+            #   here should be the actual decay rates, i.e., the &#34;metabolic&#34;
+            #   rate scaled by fixed constants
+            decay_rates = np.array([
+                value, value * 0.4, value * 0.0093
+            ]).reshape((3, 1))
+            prev = soc.copy()
+        print(f&#39;Updated BPLUT decay rates for PFT={self._pft}&#39;)
+        self.bplut.update(
+            self._pft, decay_rates.ravel(),
+            [&#39;decay_rates0&#39;, &#39;decay_rates1&#39;, &#39;decay_rates2&#39;])</code></pre>
+</details>
+<div class="desc"><p>Convenience class for calibrating the L4C GPP and RECO models. Meant to
+be used with <code>fire.Fire()</code>. Uses:</p>
+<pre><code># Run the calibration for a specific PFT
+python optimize.py tune-gpp --pft=&lt;pft&gt;
+
+# Get access to the sampler (and debugger), after calibration is run
+python optimize.py tune-gpp --pft=&lt;pft&gt; --ipdb
+</code></pre></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.e_mult"><code class="name flex">
+<span>def <span class="ident">e_mult</span></span>(<span>params, tmin, vpd, smrz, ft)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def e_mult(params, tmin, vpd, smrz, ft):
+    # Calculate E_mult based on current parameters
+    f_tmin = linear_constraint(params[1], params[2])
+    f_vpd  = linear_constraint(params[3], params[4], &#39;reversed&#39;)
+    f_smrz = linear_constraint(params[5], params[6])
+    f_ft   = linear_constraint(params[7], 1.0, &#39;binary&#39;)
+    return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.gpp"><code class="name flex">
+<span>def <span class="ident">gpp</span></span>(<span>params, fpar, par, tmin, vpd, smrz, ft)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def gpp(params, fpar, par, tmin, vpd, smrz, ft):
+    # Calculate GPP based on the provided BPLUT parameters
+    apar = fpar * par
+    return apar * params[0] *\
+        CalibrationAPI.e_mult(params, tmin, vpd, smrz, ft)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.k_mult"><code class="name flex">
+<span>def <span class="ident">k_mult</span></span>(<span>params, tsoil, smsf)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def k_mult(params, tsoil, smsf):
+    # Calculate K_mult based on current parameters
+    f_tsoil = partial(arrhenius, beta0 = params[1])
+    f_smsf  = linear_constraint(params[2], params[3])
+    return f_tsoil(tsoil) * f_smsf(smsf)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.reco"><code class="name flex">
+<span>def <span class="ident">reco</span></span>(<span>params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def reco(params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k):
+    # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
+    ra = ((1 - params[0]) * tower_gpp)
+    rh = tower_reco - ra
+    rh = np.where(rh &lt; 0, 0, rh) # Mask out negative RH values
+    kmult0 = CalibrationAPI.k_mult(params, tsoil, smsf)
+    cbar0 = cbar(rh, kmult0, q_rh, q_k)
+    return ra + (kmult0 * cbar0)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.pft"><code class="name flex">
+<span>def <span class="ident">pft</span></span>(<span>self, pft)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pft(self, pft):
+    &#39;&#39;&#39;
+    Sets the PFT class for the next calibration step.
+
+    Parameters
+    ----------
+    pft : int
+        The PFT class to use in calibration
+
+    Returns
+    -------
+    CLI
+    &#39;&#39;&#39;
+    assert pft in range(1, 9), &#39;Unrecognized PFT class&#39;
+    self._pft = pft
+    return self</code></pre>
+</details>
+<div class="desc"><p>Sets the PFT class for the next calibration step.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pft</code></strong> :&ensp;<code>int</code></dt>
+<dd>The PFT class to use in calibration</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>CLI</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.plot_gpp"><code class="name flex">
+<span>def <span class="ident">plot_gpp</span></span>(<span>self, driver, filter_length=2, coefs=None, xlim=None, ylim=None, alpha=0.1, marker='.')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_gpp(
+        self, driver, filter_length = 2, coefs = None,
+        xlim = None, ylim = None, alpha = 0.1, marker = &#39;.&#39;):
+    &#39;&#39;&#39;
+    Using the current or optimized BPLUT coefficients, plots the GPP ramp
+    function for a given driver. NOTE: Values where APAR &lt; 2.0 are not
+    shown.
+
+    Parameters
+    ----------
+    driver : str
+        Name of the driver to plot on the horizontal axis
+    filter_length : int
+    coefs : list or tuple or numpy.ndarray
+        (Optional) array-like, Instead of using what&#39;s in the BPLUT,
+        specify the exact parameters, e.g., [tmin0, tmin1]
+    xlim : list or tuple
+        (Optional) A 2-element sequence: The x-axis limits
+    ylim : list or tuple
+        (Optional) A 2-element sequence: The x-axis limits
+    alpha : float
+        (Optional) The alpha value (Default: 0.1)
+    marker : str
+        (Optional) The marker symbol (Default: &#34;.&#34;)
+    &#39;&#39;&#39;
+    @suppress_warnings
+    def empirical_lue(apar, gpp):
+        # Mask low APAR values
+        lower, _ = self._driver_bounds.get(&#39;apar&#39;, (0, None))
+        apar = np.where(apar &lt; lower, np.nan, apar)
+        # Calculate empirical light-use efficiency: GPP/APAR
+        return np.where(apar &gt; 0, np.divide(gpp, apar), 0)
+
+    np.seterr(invalid = &#39;ignore&#39;)
+    # Read in GPP and APAR data
+    assert driver.lower() in (&#39;tmin&#39;, &#39;vpd&#39;, &#39;smrz&#39;),\
+        &#39;Requested driver &#34;%s&#34; cannot be plotted for GPP&#39; % driver
+    if coefs is not None:
+        assert hasattr(coefs, &#39;index&#39;) and not hasattr(coefs, &#39;title&#39;),\
+        &#34;Argument --coefs expects a list [values,] with NO spaces&#34;
+    coefs0 = [ # Original coefficients
+        self.bplut[driver.lower()][i][self._pft]
+        for i in (0, 1)
+    ]
+
+    # Load APAR and tower GPP data
+    driver_data, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+    apar = np.nanmean(driver_data[&#39;fPAR&#39;], axis = -1) * driver_data[&#39;PAR&#39;]
+    # Based on the bounds, create an empirical ramp function that
+    #   spans the range of the driver
+    bounds = [
+        self.config[&#39;optimization&#39;][&#39;bounds&#39;][f&#39;{driver.lower()}{i}&#39;][i]
+        for i in (0, 1) # i.e., min(tmin0) and max(tmin1)
+    ]
+    domain = np.arange(bounds[0], bounds[1], 0.1)
+    ramp_func_original = linear_constraint(
+        *coefs0, &#39;reversed&#39; if driver.lower() == &#39;vpd&#39; else None)
+    if coefs is not None:
+        ramp_func = linear_constraint(
+            *coefs, &#39;reversed&#39; if driver.lower() == &#39;vpd&#39; else None)
+    if driver.lower() == &#39;vpd&#39;:
+        x0 = driver_data[&#39;VPD&#39;]
+    elif driver.lower() == &#39;tmin&#39;:
+        x0 = driver_data[&#39;Tmin&#39;]
+    elif driver.lower() == &#39;smrz&#39;:
+        x0 = driver_data[&#39;SMRZ&#39;]
+
+    # Update plotting parameters
+    lue = empirical_lue(apar, tower_gpp)
+    # Mask out negative LUE values and values with APAR&lt;2
+    pyplot.scatter(x0, np.where(
+        np.logical_or(lue == 0, apar &lt; 2), np.nan, lue),
+        alpha = alpha, marker = marker)
+    # Plot the original ramp function (black line)
+    pyplot.plot(domain, ramp_func_original(domain) *\
+        self.bplut[&#39;LUE&#39;][:,self._pft], &#39;k-&#39;)
+    # Optionally, plot a proposed ramp function (red line)
+    if coefs is not None:
+        pyplot.plot(domain, ramp_func(domain) *\
+            self.bplut[&#39;LUE&#39;][:,self._pft], &#39;r-&#39;)
+    pyplot.xlabel(&#39;%s (%s)&#39; % (driver, self._metadata[driver][&#39;units&#39;]))
+    pyplot.ylabel(&#39;GPP/APAR (g C MJ-1 d-1)&#39;)
+    if xlim is not None:
+        pyplot.xlim(xlim[0], xlim[1])
+    if ylim is not None:
+        pyplot.ylim(ylim[0], ylim[1])
+    pyplot.title(
+        &#39;%s (PFT %d): GPP Response to &#34;%s&#34;&#39; % (
+            PFT[self._pft][0], self._pft, driver))
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Using the current or optimized BPLUT coefficients, plots the GPP ramp
+function for a given driver. NOTE: Values where APAR &lt; 2.0 are not
+shown.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>driver</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the driver to plot on the horizontal axis</dd>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>coefs</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
+<dd>(Optional) array-like, Instead of using what's in the BPLUT,
+specify the exact parameters, e.g., [tmin0, tmin1]</dd>
+<dt><strong><code>xlim</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>(Optional) A 2-element sequence: The x-axis limits</dd>
+<dt><strong><code>ylim</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>(Optional) A 2-element sequence: The x-axis limits</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Optional) The alpha value (Default: 0.1)</dd>
+<dt><strong><code>marker</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The marker symbol (Default: ".")</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.plot_reco"><code class="name flex">
+<span>def <span class="ident">plot_reco</span></span>(<span>self,<br>driver,<br>filter_length: int = 2,<br>coefs=None,<br>q_rh=75,<br>q_k=50,<br>xlim=None,<br>ylim=None,<br>alpha=0.1,<br>marker='.')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_reco(
+        self, driver, filter_length: int = 2, coefs = None, q_rh = 75,
+        q_k = 50, xlim = None, ylim = None, alpha = 0.1, marker = &#39;.&#39;):
+    &#39;&#39;&#39;
+    Using the current or optimized BPLUT coefficients, plots the RECO ramp
+    function for a given driver. The ramp function is shown on a plot of
+    RH/Cbar, which is equivalent to Kmult (as Cbar is an upper quantile of
+    the RH/Kmult distribution).
+
+    Parameters
+    ----------
+    driver : str
+        Name of the driver to plot on the horizontal axis
+    filter_length : int
+    coefs : list or tuple or numpy.ndarray
+        (Optional) array-like, Instead of using what&#39;s in the BPLUT,
+        specify the exact parameters, e.g., `[tmin0, tmin1]`
+    q_rh : int
+        Additional arguments to `pyl4c.apps.calibration.cbar()`
+    q_k : int
+        Additional arguments to `pyl4c.apps.calibration.cbar()`
+    ylim : list or tuple
+        (Optional) A 2-element sequence: The x-axis limits
+    alpha : float
+        (Optional) The alpha value (Default: 0.1)
+    marker : str
+        (Optional) The marker symbol (Default: &#34;.&#34;)
+    &#39;&#39;&#39;
+    xlabels = {
+        &#39;smsf&#39;: &#39;Surface Soil Moisture&#39;,
+        &#39;tsoil&#39;: &#39;Soil Temperature&#39;
+    }
+    np.seterr(invalid = &#39;ignore&#39;)
+    assert driver.lower() in (&#39;tsoil&#39;, &#39;smsf&#39;),\
+        &#39;Requested driver &#34;%s&#34; cannot be plotted for RECO&#39; % driver
+
+    if coefs is not None:
+        assert hasattr(coefs, &#39;index&#39;) and not hasattr(coefs, &#39;title&#39;),\
+        &#34;Argument --coefs expects a list [values,] with NO spaces&#34;
+    drivers, reco, _ = self._load_reco_data(filter_length)
+    _, _, gpp, _, _ = self._load_gpp_data(filter_length)
+    tsoil, smsf = drivers
+    # Calculate k_mult based on original parameters
+    f_smsf = linear_constraint(*self.bplut[&#39;smsf&#39;][:,self._pft])
+    k_mult = f_smsf(smsf) * arrhenius(tsoil, self.bplut[&#39;tsoil&#39;][0,self._pft])
+    # Calculate RH as (RECO - RA)
+    rh = reco - ((1 - self.bplut[&#39;CUE&#39;][0,self._pft]) * gpp)
+    # Set negative RH values to zero
+    rh = np.where(suppress_warnings(np.less)(rh, 0), 0, rh)
+    cbar0 = suppress_warnings(cbar)(rh, k_mult, q_rh, q_k)
+    gpp = reco = None
+
+    # Update plotting parameters
+    pyplot.scatter( # Plot RH/Cbar against either Tsoil or SMSF
+        tsoil if driver == &#39;tsoil&#39; else smsf,
+        suppress_warnings(np.divide)(rh, cbar0),
+        alpha = alpha, marker = marker)
+
+    if driver == &#39;tsoil&#39;:
+        domain = np.arange(tsoil.min(), tsoil.max(), 0.1)
+        pyplot.plot(domain,
+            arrhenius(domain, self.bplut[&#39;tsoil&#39;][0,self._pft]), &#39;k-&#39;)
+    elif driver == &#39;smsf&#39;:
+        domain = np.arange(smsf.min(), smsf.max(), 0.001)
+        pyplot.plot(domain, f_smsf(domain).ravel(), &#39;k-&#39;)
+
+    if coefs is not None:
+        if driver == &#39;tsoil&#39;:
+            pyplot.plot(domain, arrhenius(domain, *coefs), &#39;r-&#39;)
+        elif driver == &#39;smsf&#39;:
+            pyplot.plot(domain, linear_constraint(*coefs)(domain), &#39;r-&#39;)
+
+    pyplot.xlabel(&#39;%s (%s)&#39; % (
+        xlabels[driver], self._metadata[driver][&#39;units&#39;]))
+    pyplot.ylabel(&#39;RH/Cbar&#39;)
+    if xlim is not None:
+        pyplot.xlim(xlim[0], xlim[1])
+    if ylim is not None:
+        pyplot.ylim(ylim[0], ylim[1])
+    pyplot.title(
+        &#39;%s (PFT %d): RECO Response to &#34;%s&#34;&#39; % (
+            PFT[self._pft][0], self._pft,
+            &#39;SMSF&#39; if driver.lower() == &#39;smsf&#39; else &#39;Tsoil&#39;))
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Using the current or optimized BPLUT coefficients, plots the RECO ramp
+function for a given driver. The ramp function is shown on a plot of
+RH/Cbar, which is equivalent to Kmult (as Cbar is an upper quantile of
+the RH/Kmult distribution).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>driver</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the driver to plot on the horizontal axis</dd>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>coefs</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
+<dd>(Optional) array-like, Instead of using what's in the BPLUT,
+specify the exact parameters, e.g., <code>[tmin0, tmin1]</code></dd>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>Additional arguments to <code><a title="pyl4c.apps.calibration.cbar" href="index.html#pyl4c.apps.calibration.cbar">cbar()</a></code></dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>Additional arguments to <code><a title="pyl4c.apps.calibration.cbar" href="index.html#pyl4c.apps.calibration.cbar">cbar()</a></code></dd>
+<dt><strong><code>ylim</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>(Optional) A 2-element sequence: The x-axis limits</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>(Optional) The alpha value (Default: 0.1)</dd>
+<dt><strong><code>marker</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) The marker symbol (Default: ".")</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.score"><code class="name flex">
+<span>def <span class="ident">score</span></span>(<span>self, model: str, filter_length: int = 2, q_rh: int = 75, q_k: int = 50)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def score(
+        self, model: str, filter_length: int = 2,
+        q_rh: int = 75, q_k: int = 50):
+    &#39;&#39;&#39;
+    Scores the current model (for a specific PFT) based on the parameters
+    in the BPLUT.
+
+    Parameters
+    ----------
+    model : str
+        One of: &#34;GPP&#34; or &#34;RECO&#34;
+    filter_length : int
+        The window size for the smoothing filter, applied to the observed
+        data
+    &#39;&#39;&#39;
+    gpp_drivers, gpp_drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+        self._load_gpp_data(filter_length)
+    if model.upper() == &#39;GPP&#39;:
+        observed = tower_gpp_flat
+    elif model.upper() == &#39;RECO&#39;:
+        reco_drivers, tower_reco, weights =\
+            self._load_reco_data(filter_length)
+        observed = tower_reco
+    # Print the parameters table
+    old_params = restore_bplut_flat(self.config[&#39;BPLUT&#39;])
+    old_params = [
+        old_params[k][:,self._pft]
+        for k in self._required_parameters[model.upper()]
+    ]
+    params = self._get_params(model.upper())
+    self._report(old_params, params, model.upper())
+    # Get goodness-of-fit statistics
+    if model.upper() == &#39;GPP&#39;:
+        predicted = self.gpp(params, *gpp_drivers_flat).mean(axis = -1)
+    elif model.upper() == &#39;RECO&#39;:
+        predicted = self.reco(
+            params, tower_reco, tower_gpp, *reco_drivers,
+            q_rh = q_rh, q_k = q_k)
+    r2, rmse_score, ub_rmse, bias = report_fit_stats(
+        observed, predicted, weights, verbose = False)
+    print(f&#39;{model.upper()} model goodness-of-fit statistics:&#39;)
+    print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;R-squared:&#39;, &#39;%.3f&#39; % r2))
+    print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;RMSE:&#39;, &#39;%.2f&#39; % rmse_score))
+    print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;Unbised RMSE:&#39;, &#39;%.2f&#39; % ub_rmse))
+    print((&#39;-- {:&lt;13} {:&gt;5}&#39;).format(&#39;Bias:&#39;, &#39;%.2f&#39; % bias))</code></pre>
+</details>
+<div class="desc"><p>Scores the current model (for a specific PFT) based on the parameters
+in the BPLUT.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>model</code></strong> :&ensp;<code>str</code></dt>
+<dd>One of: "GPP" or "RECO"</dd>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The window size for the smoothing filter, applied to the observed
+data</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.set"><code class="name flex">
+<span>def <span class="ident">set</span></span>(<span>self, parameter, value)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set(self, parameter, value):
+    &#39;&#39;&#39;
+    Sets the named parameter to the given value for the specified PFT
+    class. This updates the initial parameters, affecting any subsequent
+    optimization.
+
+    Parameters
+    ----------
+    parameter : str
+        Name of the parameter to bet set
+    value : int or float
+        Value of the named parameter to be set
+
+    Returns
+    -------
+    CLI
+    &#39;&#39;&#39;
+    # Update the BPLUT in memory but NOT the file BPLUT (this is temporary)
+    self.bplut.update(self._pft, (value,), (parameter,), flush = False)
+    return self</code></pre>
+</details>
+<div class="desc"><p>Sets the named parameter to the given value for the specified PFT
+class. This updates the initial parameters, affecting any subsequent
+optimization.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>parameter</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the parameter to bet set</dd>
+<dt><strong><code>value</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Value of the named parameter to be set</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>CLI</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_gpp"><code class="name flex">
+<span>def <span class="ident">tune_gpp</span></span>(<span>self, filter_length: int = 2, optimize: bool = True, use_nlopt: bool = True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_gpp(
+        self, filter_length: int = 2, optimize: bool = True,
+        use_nlopt: bool = True):
+    &#39;&#39;&#39;
+    Run the L4C GPP calibration.
+
+    - For GPP data: Removes observations where GPP &lt; 0 or where APAR is
+        &lt; 0.1 MJ m-2 day-1
+
+    Parameters
+    ----------
+    filter_length : int
+        The window size for the smoothing filter, applied to the observed
+        data
+    optimize : bool
+        True to run the optimization (Default) or False if you just want
+        the goodness-of-fit to be reported
+    use_nlopt : bool
+        True to use `nlopt` for optimization (Default)
+    &#39;&#39;&#39;
+    def residuals(params, drivers, observed, weights):
+        gpp0 = self.gpp(params, *drivers).mean(axis = -1)
+        diff = np.subtract(observed, gpp0)
+        # Objective function: Difference between tower GPP and L4C GPP,
+        #   multiplied by the tower weights
+        return (weights * diff)[~np.isnan(diff)]
+
+    init_params = self._get_params(&#39;GPP&#39;)
+    # Load blacklisted sites (if any)
+    blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+
+    print(&#39;Loading driver datasets...&#39;)
+    drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+        self._load_gpp_data(filter_length)
+    print(f&#39;NOTE: Counts of (days, towers) are: {tower_gpp.shape}&#39;)
+
+    # Configure the optimization, get bounds for the parameter search
+    fixed = None
+    if self.config[&#39;optimization&#39;][&#39;fixed&#39;] is not None:
+        fixed = dict([ # Get any fixed parameters as {param: fixed_value}
+            (k, v[self._pft])
+            for k, v in self.config[&#39;optimization&#39;][&#39;fixed&#39;].items()
+        ])
+    step_size_global = [
+        self.config[&#39;optimization&#39;][&#39;step_size&#39;][p]
+        for p in self._required_parameters[&#39;GPP&#39;]
+    ]
+    bounds_dict = self.config[&#39;optimization&#39;][&#39;bounds&#39;]
+    bounds = self._bounds(init_params, bounds_dict, &#39;GPP&#39;, fixed)
+    trials = self.config[&#39;optimization&#39;][&#39;trials&#39;]
+    params = [] # Optimized parameters
+    params0 = [] # Initial (random) parameters
+    scores = []
+    # Will be a (100, P) space, where P is the number of parameters
+    param_space = np.linspace(bounds[0], bounds[1], 100)
+    for t in range(0, trials):
+        # If multiple trials, randomize the initial parameter values
+        #   and score the model in each trial
+        if trials &gt; 1:
+            p = param_space.shape[1] # Number of parameters
+            idx = np.random.randint(0, param_space.shape[0], p)
+            init_params = param_space[idx,np.arange(0, p)]
+            params0.append(init_params)
+        # If we&#39;re optimizing (with any library), define the bounds and
+        #   the objective function
+        if optimize:
+            bounds = self._bounds(init_params, bounds_dict, &#39;GPP&#39;, fixed)
+            # Set initial value to a fixed value if specified
+            if fixed is not None:
+                for key, value in fixed.items():
+                    if value is not None and key in self._required_parameters[&#39;GPP&#39;]:
+                        init_params[self._required_parameters[&#39;GPP&#39;].index(key)] = value
+            objective = partial(
+                residuals, drivers = drivers_flat,
+                observed = tower_gpp_flat, weights = weights)
+        # Apply constrained, non-linear least-squares optimization, using
+        #   either SciPy or NLOPT
+        if optimize and not use_nlopt:
+            solution = solve_least_squares(
+                objective, init_params,
+                labels = self.required_parameters[&#39;GPP&#39;],
+                bounds = bounds, loss = &#39;arctan&#39;)
+            fitted = solution.x.tolist()
+            print(solution.message)
+        elif optimize and use_nlopt:
+            opt = GenericOptimization(
+                objective, bounds, step_size = step_size_global)
+            fitted = opt.solve(init_params)
+        else:
+            fitted = [None for i in range(0, len(init_params))]
+        # Record the found solution and its goodness-of-fit score
+        params.append(fitted)
+        predicted = self.gpp(
+            fitted if optimize else init_params,
+            *drivers_flat).mean(axis = -1)
+        _, rmse_score, _, _ = report_fit_stats(
+            tower_gpp_flat, predicted, weights, verbose = False)
+        print(&#39;[%s/%s] RMSE score of last trial: %.3f&#39; % (
+            str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+        scores.append(rmse_score)
+
+    # Select the fit params with the best score
+    if trials &gt; 1:
+        fitted = params[np.argmin(scores)]
+        init_params = params0[np.argmin(scores)]
+    # Generate and print a report, update the BPLUT parameters
+    self._report(init_params, fitted, &#39;GPP&#39;)
+    if optimize:
+        self.bplut.update(
+            self._pft, fitted, self._required_parameters[&#39;GPP&#39;])</code></pre>
+</details>
+<div class="desc"><p>Run the L4C GPP calibration.</p>
+<ul>
+<li>For GPP data: Removes observations where GPP &lt; 0 or where APAR is
+&lt; 0.1 MJ m-2 day-1</li>
+</ul>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The window size for the smoothing filter, applied to the observed
+data</dd>
+<dt><strong><code>optimize</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to run the optimization (Default) or False if you just want
+the goodness-of-fit to be reported</dd>
+<dt><strong><code>use_nlopt</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use <code>nlopt</code> for optimization (Default)</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_reco"><code class="name flex">
+<span>def <span class="ident">tune_reco</span></span>(<span>self,<br>filter_length: int = 2,<br>q_rh: int = 75,<br>q_k: int = 50,<br>optimize: bool = True,<br>use_nlopt: bool = True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_reco(
+        self, filter_length: int = 2, q_rh: int = 75, q_k: int = 50,
+        optimize: bool = True, use_nlopt: bool = True):
+    &#39;&#39;&#39;
+    Optimizes RECO. The 9-km mean L4C RECO is fit to the tower-observed
+    RECO using constrained, non-linear least-squares optimization.
+    Considerations:
+
+    - Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+    Parameters
+    ----------
+    filter_length : int
+        The window size for the smoothing filter, applied to the observed
+        data
+    optimize : bool
+        False to only report parameters and their fit statistics instead
+        of optimizing (Default: True)
+    use_nlopt : bool
+        True to use the nlopt library for optimization (Default: True)
+    &#39;&#39;&#39;
+    def residuals(
+            params, drivers, observed_reco, observed_gpp, weights,
+            q_rh, q_k):
+        # Objective function: Difference between tower RECO and L4C RECO
+        reco0 = self.reco(
+            params, observed_reco, observed_gpp, *drivers, q_rh, q_k)
+        diff = np.subtract(observed_reco, reco0)
+        missing = np.logical_or(np.isnan(observed_reco), np.isnan(reco0))
+        # Multiply by the tower weights
+        return (weights * diff)[~missing]
+
+    assert q_rh &gt;= 0 and q_rh &lt;= 100 and q_k &gt;= 0 and q_k &lt;= 100,\
+        &#39;Invalid setting for &#34;q_rh&#34; or &#34;q_k&#34; parameters&#39;
+
+    init_params = self._get_params(&#39;RECO&#39;)
+    # Load blacklisted sites (if any)
+    blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+
+    print(&#39;Loading driver datasets...&#39;)
+    _, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+    drivers, tower_reco, weights = self._load_reco_data(filter_length)
+    print(f&#39;NOTE: Counts of (days, towers) are: {tower_reco.shape}&#39;)
+
+    # Configure the optimization, get bounds for the parameter search
+    fixed = None
+    if self.config[&#39;optimization&#39;][&#39;fixed&#39;] is not None:
+        fixed = dict([ # Get any fixed parameters as {param: fixed_value}
+            (k, v[self._pft])
+            for k, v in self.config[&#39;optimization&#39;][&#39;fixed&#39;].items()
+        ])
+    step_size_global = [
+        self.config[&#39;optimization&#39;][&#39;step_size&#39;][p]
+        for p in self._required_parameters[&#39;RECO&#39;]
+    ]
+    bounds_dict = self.config[&#39;optimization&#39;][&#39;bounds&#39;]
+    bounds = self._bounds(init_params, bounds_dict, &#39;RECO&#39;, fixed)
+    trials = self.config[&#39;optimization&#39;][&#39;trials&#39;]
+    params = [] # Optimized parameters
+    params0 = [] # Initial (random) parameters
+    scores = []
+    # Will be a (100, P) space, where P is the number of parameters
+    param_space = np.linspace(bounds[0], bounds[1], 100)
+    for t in range(0, trials):
+        # If multiple trials, randomize the initial parameter values
+        #   and score the model in each trial
+        if trials &gt; 1:
+            p = param_space.shape[1] # Number of parameters
+            idx = np.random.randint(0, param_space.shape[0], p)
+            init_params = param_space[idx,np.arange(0, p)]
+            params0.append(init_params)
+        # If we&#39;re optimizing (with any library), define the bounds and
+        #   the objective function
+        if optimize:
+            bounds = self._bounds(init_params, bounds_dict, &#39;RECO&#39;, fixed)
+            # Set initial value to a fixed value if specified
+            for key, value in fixed.items():
+                if value is not None and key in self._required_parameters[&#39;RECO&#39;]:
+                    init_params[self._required_parameters[&#39;RECO&#39;].index(key)] = value
+            objective = partial(
+                residuals, drivers = drivers, weights = weights,
+                observed_gpp = tower_gpp, observed_reco = tower_reco,
+                q_rh = q_rh, q_k = q_k)
+        # Apply constrained, non-linear least-squares optimization, using
+        #   either SciPy or NLOPT
+        if optimize and not use_nlopt:
+            solution = solve_least_squares(
+                objective, init_params,
+                labels = self.required_parameters[&#39;RECO&#39;],
+                bounds = bounds, loss = &#39;arctan&#39;)
+            fitted = solution.x.tolist()
+            print(solution.message)
+        elif optimize and use_nlopt:
+            opt = GenericOptimization(
+                objective, bounds, step_size = step_size_global)
+            fitted = opt.solve(init_params)
+        else:
+            fitted = [None for i in range(0, len(init_params))]
+        # Record the found solution and its goodness-of-fit score
+        params.append(fitted)
+        predicted = self.reco(
+            fitted if optimize else init_params, tower_reco, tower_gpp,
+            *drivers, q_rh = q_rh, q_k = q_k)
+        _, rmse_score, _, _ = report_fit_stats(
+            tower_reco, predicted, weights, verbose = False)
+        print(&#39;[%s/%s] RMSE score of last trial: %.3f&#39; % (
+            str(t + 1).zfill(2), str(trials).zfill(2), rmse_score))
+        scores.append(rmse_score)
+
+    # Select the fit params with the best score
+    if trials &gt; 1:
+        fitted = params[np.argmin(scores)]
+        init_params = params0[np.argmin(scores)]
+    # Generate and print a report, update the BPLUT parameters
+    self._report(init_params, fitted, &#39;RECO&#39;)
+    if optimize:
+        self.bplut.update(
+            self._pft, fitted, self._required_parameters[&#39;RECO&#39;])</code></pre>
+</details>
+<div class="desc"><p>Optimizes RECO. The 9-km mean L4C RECO is fit to the tower-observed
+RECO using constrained, non-linear least-squares optimization.
+Considerations:</p>
+<ul>
+<li>Negative RH values (i.e., NPP &gt; RECO) are set to zero.</li>
+</ul>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The window size for the smoothing filter, applied to the observed
+data</dd>
+<dt><strong><code>optimize</code></strong> :&ensp;<code>bool</code></dt>
+<dd>False to only report parameters and their fit statistics instead
+of optimizing (Default: True)</dd>
+<dt><strong><code>use_nlopt</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to use the nlopt library for optimization (Default: True)</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_soc"><code class="name flex">
+<span>def <span class="ident">tune_soc</span></span>(<span>self, filter_length: int = 2, xlim=None, alpha=0.6)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_soc(self, filter_length: int = 2, xlim = None, alpha = 0.6):
+    &#39;&#39;&#39;
+    Starts interactive calibration procedure for the soil organic carbon
+    (SOC) decay parameters for a given PFT. Uses any updated parameters
+    in the attached storage: `optimization.backend` in the configuration
+    file.
+
+    Parameters
+    ----------
+    filter_length : int
+        The window size for the smoothing filter, applied to the observed
+        data
+    xlim : int or None
+        The largest SOC value that should be shown on the plot (i.e.,
+        the X and Y axis limit, for a square plot); if None, defaults to
+        the largest value in the inventory dataset
+    alpha : float
+        The alpha applied to the SOC scatterplot points (Default: 0.6)
+    &#39;&#39;&#39;
+    soc_file = self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;file&#39;]
+    # Load SOC pit measurements
+    with h5py.File(soc_file, &#39;r&#39;) as hdf:
+        dates = hdf[
+            self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;fields&#39;][&#39;time&#39;]
+        ][:]
+        dates = [datetime.date(*ymd) for ymd in dates.tolist()]
+        field = self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;fields&#39;][&#39;observed&#39;]
+        field_pft = self.config[&#39;data&#39;][&#39;soil_organic_carbon&#39;][&#39;fields&#39;][&#39;PFT&#39;]
+        pft_mask = hdf[field_pft][:]
+        target_soc = hdf[field][:][pft_mask == self._pft]
+
+    print(&#39;Loading driver datasets...&#39;)
+    drivers_for_gpp, _, _, _, _ = self._load_gpp_data(
+        filter_length, store = soc_file, prefix = &#39;ISCN/&#39;,
+        load_gpp = False, check_validity = False)
+    drivers_for_reco, _, weights = self._load_reco_data(
+        filter_length, store = soc_file, prefix = &#39;ISCN/&#39;,
+        load_reco = False, check_validity = False)
+    drivers_for_reco = [ # Convert from dict to list
+        drivers_for_reco[key] for key in self._required_drivers[&#39;RECO&#39;]
+    ]
+
+    # Calculate GPP based on the updated parameters
+    init_params = restore_bplut_flat(self.config[&#39;BPLUT&#39;])
+    params_gpp = self._get_params(&#39;GPP&#39;)
+    params_reco = self._get_params(&#39;RECO&#39;)
+    gpp = self.gpp(params_gpp, *[
+        drivers_for_gpp[d] if d != &#39;fPAR&#39; else np.nanmean(drivers_for_gpp[d], axis = -1)
+        for d in self._required_drivers[&#39;GPP&#39;]
+    ])
+
+    # Calculate a 365-day climatology of NPP
+    cue = params_reco[self._required_parameters[&#39;RECO&#39;].index(&#39;CUE&#39;)]
+    npp = gpp * cue
+    # Make the time axis (currently 0) be the trailing axis
+    npp_clim = climatology365(npp.swapaxes(0, 1), dates)
+    # Calculate litterfall
+    litter = npp_clim.sum(axis = 0) / 365
+    # Calculate a 365-day climatology of Kmult
+    kmult = self.k_mult(params_reco, *drivers_for_reco)
+    # Make the time axis (currently 0) be the trailing axis
+    kmult_clim = climatology365(kmult.swapaxes(0, 1), dates)
+    sigma = npp_clim.sum(axis = 0) / kmult_clim.sum(axis = 0)
+
+    # Inferred steady-state storage
+    fmet = init_params[&#39;f_metabolic&#39;][:,self._pft][0]
+    fstr = init_params[&#39;f_structural&#39;][:,self._pft][0]
+    decay_rates = self._get_params(&#39;SOC&#39;)
+    decay_rates = decay_rates[:,np.newaxis]
+    # Begin user-interaction loop to manually calibrate decay rates
+    prev = None
+    while True:
+        init_soc = soc_analytical_spinup(
+            litter, kmult_clim, fmet, fstr, decay_rates)
+        soc, _ = soc_numerical_spinup(
+            np.stack(init_soc), litter, kmult_clim, fmet, fstr, decay_rates,
+            verbose = True)
+        soc = np.stack(soc).sum(axis = 0)
+        _, ax = pyplot.subplots(figsize = (6,6))
+        ax.plot([0, 1], [0, 1], transform = ax.transAxes, linestyle = &#39;dotted&#39;)
+        if prev is not None:
+            pyplot.plot(
+                target_soc / 1e3, prev / 1e3, &#39;o&#39;, c = &#39;gray&#39;, alpha = alpha / 2)
+        try:
+            pyplot.plot(target_soc / 1e3, soc / 1e3, &#39;o&#39;, alpha = alpha)
+        except:
+            import ipdb
+            ipdb.set_trace()#FIXME
+
+        xmin, xmax = np.nanpercentile(target_soc / 1e3, (0, 100))
+        print(f&#39;-- Min/Max of Inventory SOC: {xmin.round(1), xmax.round(1)}&#39;)
+        print(f&#39;-- Min/Max of Predicted SOC: {np.nanmin(soc / 1e3).round(1), np.nanmax(soc / 1e3).round(1)}&#39;)
+        pyplot.xlim(0, xmax if xlim is None else xlim)
+        pyplot.ylim(0, xmax if xlim is None else xlim)
+        pyplot.xlabel(&#39;Inventory SOC (kg m$^{-2}$)&#39;)
+        pyplot.ylabel(&#39;Modeled Equilibrium SOC (kg m$^{-2}$)&#39;)
+        pyplot.title(f&#39;For PFT={self._pft}&#39;)
+        pyplot.show()
+        # Calculate correlation coefficient
+        mask = np.isnan(target_soc)
+        r = np.corrcoef(target_soc[~mask], soc[~mask])[0,1]
+        rmse = rmsd(target_soc[~mask], soc[~mask])
+        print(f&#39;Current metabolic rate (r={r.round(3)}, RMSE={round(rmse, 1)}):&#39;)
+        print(&#39;%.5f\n&#39; % decay_rates[0])
+        proposal = input(&#39;New metabolic rate [Q to quit]:\n&#39;)
+        if proposal == &#39;Q&#39;:
+            break
+        value = float(proposal)
+        # NOTE: The &#34;structural&#34; and &#34;recalcitrant&#34; pool decay rates
+        #   here should be the actual decay rates, i.e., the &#34;metabolic&#34;
+        #   rate scaled by fixed constants
+        decay_rates = np.array([
+            value, value * 0.4, value * 0.0093
+        ]).reshape((3, 1))
+        prev = soc.copy()
+    print(f&#39;Updated BPLUT decay rates for PFT={self._pft}&#39;)
+    self.bplut.update(
+        self._pft, decay_rates.ravel(),
+        [&#39;decay_rates0&#39;, &#39;decay_rates1&#39;, &#39;decay_rates2&#39;])</code></pre>
+</details>
+<div class="desc"><p>Starts interactive calibration procedure for the soil organic carbon
+(SOC) decay parameters for a given PFT. Uses any updated parameters
+in the attached storage: <code>optimization.backend</code> in the configuration
+file.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The window size for the smoothing filter, applied to the observed
+data</dd>
+<dt><strong><code>xlim</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
+<dd>The largest SOC value that should be shown on the plot (i.e.,
+the X and Y axis limit, for a square plot); if None, defaults to
+the largest value in the inventory dataset</dd>
+<dt><strong><code>alpha</code></strong> :&ensp;<code>float</code></dt>
+<dd>The alpha applied to the SOC scatterplot points (Default: 0.6)</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+<dt id="pyl4c.apps.calibration.optimize.GenericOptimization"><code class="flex name class">
+<span>class <span class="ident">GenericOptimization</span></span>
+<span>(</span><span>func, bounds, method: int = 39, step_size=None, verbose=True)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GenericOptimization(object):
+    &#39;&#39;&#39;
+    A more generic and expansive tool for optimization; includes many more
+    algorithms for minimization/ maximization problems, including sequential
+    quadratic programming (SQP), which is the default here and is closest to
+    what is performed in Matlab&#39;s `fmincon`. Despite the similarity to `fmincon`,
+    SQP will tend to deviate strongly from the initial parameters derived via
+    fmincon. This solver is SLOW for gradient descent methods relative to
+    `scipy.optimize.least_squares()`, because the gradient is calculated with
+    a finite element approach.
+
+        opt = GenericOptimization(residuals, OPT_BOUNDS[&#39;gpp&#39;],
+            step_size = (0.01, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.05))
+        opt.solve(init_params)
+
+    See: https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/
+
+    Parameters
+    ----------
+    func : function
+        Function to calculate the residuals
+    bounds : list or tuple
+        2-element sequence of (lower, upper) bounds where each element is an
+        array
+    method : str
+        One of the nlopt algorithms
+    step_size : list or tuple or numpy.ndarray
+        Sequence of steps to take in gradient descent; not needed for
+        derivative-free methods
+    verbose : bool
+        True to print all output to the screen
+    &#39;&#39;&#39;
+    def __init__(
+            self, func, bounds, method: int = nlopt.LD_SLSQP,
+            step_size = None, verbose = True):
+        # https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#slsqp
+        assert isinstance(method, int), &#39;Did not recognize &#34;method&#34; argument&#39;
+        self._bounds = bounds
+        self._method = method
+        self._residuals = func
+        self._step_size = step_size
+        self._verbose = verbose
+
+    def solve(self, init_params, ftol = 1e-8, xtol = 1e-8, maxeval = 500):
+        &#39;&#39;&#39;
+        Using the sum-of-squared errors (SSE) as the objective function,
+        solves a minimization problem.
+
+        Parameters
+        ----------
+        init_params : list or tuple or numpy.ndarray
+            Sequence of starting parameters (or &#34;initial guesses&#34;)
+        ftol : float
+        xtol : float
+        maxeval : int
+            Maximum number of objective function evaluations
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        @suppress_warnings
+        def sse(x):
+            return np.power(self._residuals(x), 2).sum()
+
+        @suppress_warnings
+        def objf(x, grad):
+            if grad.size &gt; 0:
+                # Approximate the gradient using finite element method
+                grad[...] = optimize.approx_fprime(
+                    x, sse, self._step_size)
+            return sse(x)
+
+        opt = nlopt.opt(self._method, len(init_params))
+        # https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/#localsubsidiary-optimization-algorithm
+        if self._method == nlopt.G_MLSL_LDS:
+            opt.set_local_optimizer(
+                nlopt.opt(nlopt.LN_COBYLA, len(init_params)))
+        opt.set_min_objective(objf)
+        opt.set_lower_bounds(self._bounds[0])
+        opt.set_upper_bounds(self._bounds[1])
+        opt.set_ftol_abs(ftol)
+        opt.set_xtol_abs(xtol)
+        opt.set_maxeval(maxeval)
+        if self._verbose:
+            print(&#39;Solving...&#39;)
+        return opt.optimize(init_params)</code></pre>
+</details>
+<div class="desc"><p>A more generic and expansive tool for optimization; includes many more
+algorithms for minimization/ maximization problems, including sequential
+quadratic programming (SQP), which is the default here and is closest to
+what is performed in Matlab's <code>fmincon</code>. Despite the similarity to <code>fmincon</code>,
+SQP will tend to deviate strongly from the initial parameters derived via
+fmincon. This solver is SLOW for gradient descent methods relative to
+<code>scipy.optimize.least_squares()</code>, because the gradient is calculated with
+a finite element approach.</p>
+<pre><code>opt = GenericOptimization(residuals, OPT_BOUNDS['gpp'],
+    step_size = (0.01, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.05))
+opt.solve(init_params)
+</code></pre>
+<p>See: <a href="https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/">https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/</a></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>func</code></strong> :&ensp;<code>function</code></dt>
+<dd>Function to calculate the residuals</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>2-element sequence of (lower, upper) bounds where each element is an
+array</dd>
+<dt><strong><code>method</code></strong> :&ensp;<code>str</code></dt>
+<dd>One of the nlopt algorithms</dd>
+<dt><strong><code>step_size</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
+<dd>Sequence of steps to take in gradient descent; not needed for
+derivative-free methods</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to print all output to the screen</dd>
+</dl></div>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.optimize.GenericOptimization.solve"><code class="name flex">
+<span>def <span class="ident">solve</span></span>(<span>self, init_params, ftol=1e-08, xtol=1e-08, maxeval=500)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def solve(self, init_params, ftol = 1e-8, xtol = 1e-8, maxeval = 500):
+    &#39;&#39;&#39;
+    Using the sum-of-squared errors (SSE) as the objective function,
+    solves a minimization problem.
+
+    Parameters
+    ----------
+    init_params : list or tuple or numpy.ndarray
+        Sequence of starting parameters (or &#34;initial guesses&#34;)
+    ftol : float
+    xtol : float
+    maxeval : int
+        Maximum number of objective function evaluations
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    @suppress_warnings
+    def sse(x):
+        return np.power(self._residuals(x), 2).sum()
+
+    @suppress_warnings
+    def objf(x, grad):
+        if grad.size &gt; 0:
+            # Approximate the gradient using finite element method
+            grad[...] = optimize.approx_fprime(
+                x, sse, self._step_size)
+        return sse(x)
+
+    opt = nlopt.opt(self._method, len(init_params))
+    # https://nlopt.readthedocs.io/en/latest/NLopt_Python_Reference/#localsubsidiary-optimization-algorithm
+    if self._method == nlopt.G_MLSL_LDS:
+        opt.set_local_optimizer(
+            nlopt.opt(nlopt.LN_COBYLA, len(init_params)))
+    opt.set_min_objective(objf)
+    opt.set_lower_bounds(self._bounds[0])
+    opt.set_upper_bounds(self._bounds[1])
+    opt.set_ftol_abs(ftol)
+    opt.set_xtol_abs(xtol)
+    opt.set_maxeval(maxeval)
+    if self._verbose:
+        print(&#39;Solving...&#39;)
+    return opt.optimize(init_params)</code></pre>
+</details>
+<div class="desc"><p>Using the sum-of-squared errors (SSE) as the objective function,
+solves a minimization problem.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>init_params</code></strong> :&ensp;<code>list</code> or <code>tuple</code> or <code>numpy.ndarray</code></dt>
+<dd>Sequence of starting parameters (or "initial guesses")</dd>
+<dt><strong><code>ftol</code></strong> :&ensp;<code>float</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>xtol</code></strong> :&ensp;<code>float</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>maxeval</code></strong> :&ensp;<code>int</code></dt>
+<dd>Maximum number of objective function evaluations</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.apps.calibration" href="index.html">pyl4c.apps.calibration</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI" href="#pyl4c.apps.calibration.optimize.CalibrationAPI">CalibrationAPI</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.e_mult" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.e_mult">e_mult</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.gpp" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.gpp">gpp</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.k_mult" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.k_mult">k_mult</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.pft" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.pft">pft</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.plot_gpp" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.plot_gpp">plot_gpp</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.plot_reco" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.plot_reco">plot_reco</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.reco" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.reco">reco</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.score" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.score">score</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.set" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.set">set</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_gpp" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.tune_gpp">tune_gpp</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_reco" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.tune_reco">tune_reco</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_soc" href="#pyl4c.apps.calibration.optimize.CalibrationAPI.tune_soc">tune_soc</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.optimize.GenericOptimization" href="#pyl4c.apps.calibration.optimize.GenericOptimization">GenericOptimization</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.calibration.optimize.GenericOptimization.solve" href="#pyl4c.apps.calibration.optimize.GenericOptimization.solve">solve</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
+</footer>
+</body>
+</html>

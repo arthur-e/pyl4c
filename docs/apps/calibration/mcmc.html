@@ -1,0 +1,2535 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
+<title>pyl4c.apps.calibration.mcmc API documentation</title>
+<meta name="description" content="Calibration of L4C using Markov Chain Monte Carlo (MCMC). Example use: …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pyl4c.apps.calibration.mcmc</code></h1>
+</header>
+<section id="section-intro">
+<p>Calibration of L4C using Markov Chain Monte Carlo (MCMC). Example use:</p>
+<pre><code>python mcmc.py pft &lt;pft&gt; tune-gpp --config=&lt;config_file&gt;
+python mcmc.py pft &lt;pft&gt; tune-reco --config=&lt;config_file&gt;
+</code></pre>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler"><code class="flex name class">
+<span>class <span class="ident">AbstractSampler</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AbstractSampler(object):
+    &#39;&#39;&#39;
+    Generic algorithm for fitting a model to data based on observed values
+    similar to what we can produce with our model. Not intended to be called
+    directly.
+    &#39;&#39;&#39;
+
+    def get_posterior(self, thin: int = 1) -&gt; np.ndarray:
+        &#39;&#39;&#39;
+        Returns a stacked posterior array, with optional thinning, combining
+        all the chains together.
+
+        Parameters
+        ----------
+        thin : int
+
+        Returns
+        -------
+        numpy.ndarray
+        &#39;&#39;&#39;
+        trace = az.from_netcdf(self.backend)
+        return np.stack([ # i.e., get every ith element, each chain
+            trace[&#39;posterior&#39;][p].values[:,::thin].ravel()
+            for p in self.required_parameters[self.name]
+        ], axis = -1)
+
+    def get_trace(
+            self, thin: int = None, burn: int = None
+        ) -&gt; az.data.inference_data.InferenceData:
+        &#39;&#39;&#39;
+        Extracts the trace from the backend data store.
+
+        Parameters
+        ----------
+        thin : int
+            Thinning rate
+        burn : int
+            The burn-in (i.e., first N samples to discard)
+        &#39;&#39;&#39;
+        trace = az.from_netcdf(self.backend)
+        if thin is None and burn is None:
+            return trace
+        return trace.sel(draw = slice(burn, None, thin))
+
+    def plot_autocorr(self, thin: int = None, burn: int = None, **kwargs):
+        &#39;&#39;&#39;
+        Auto-correlation plot for an MCMC sample.
+
+        Parameters
+        ----------
+        thin : int
+            Thinning rate
+        burn : int
+            The burn-in (i.e., first N samples to discard)
+        **kwargs
+            Additional keyword arguments to `arviz.plot_autocorr()`.
+        &#39;&#39;&#39;
+        assert os.path.exists(self.backend),\
+            &#39;Could not find file backend!&#39;
+        trace = az.from_netcdf(self.backend)
+        kwargs.setdefault(&#39;combined&#39;, True)
+        if thin is None:
+            az.plot_autocorr(trace, **kwargs)
+        else:
+            burn = 0 if burn is None else burn
+            az.plot_autocorr(
+                trace.sel(draw = slice(burn, None, thin))[&#39;posterior&#39;],
+                **kwargs)
+        pyplot.show()
+
+    def plot_forest(self, thin: int = None, burn: int = None, **kwargs):
+        &#39;&#39;&#39;
+        Forest plot for an MCMC sample.
+
+        Parameters
+        ----------
+        thin : int
+            Thinning rate
+        burn : int
+            The burn-in (i.e., first N samples to discard)
+        **kwargs
+            Additional keyword arguments to `arviz.plot_forest()`.
+
+        In particular:
+
+        - `hdi_prob`: A float indicating the highest density interval (HDF) to
+            plot
+        &#39;&#39;&#39;
+        assert os.path.exists(self.backend),\
+            &#39;Could not find file backend!&#39;
+        trace = az.from_netcdf(self.backend)
+        if thin is None:
+            az.plot_forest(trace, **kwargs)
+        else:
+            burn = 0 if burn is None else burn
+            az.plot_forest(
+                trace.sel(draw = slice(burn, None, thin))[&#39;posterior&#39;],
+                **kwargs)
+        pyplot.show()
+
+    def plot_pair(self, **kwargs):
+        &#39;&#39;&#39;
+        Paired variables plot for an MCMC sample.
+
+        Parameters
+        ----------
+        **kwargs
+            Additional keyword arguments to `arviz.plot_pair()`.
+        &#39;&#39;&#39;
+        assert os.path.exists(self.backend),\
+            &#39;Could not find file backend!&#39;
+        trace = az.from_netcdf(self.backend)
+        az.plot_pair(trace, **kwargs)
+        pyplot.show()
+
+    def plot_posterior(self, **kwargs):
+        &#39;&#39;&#39;
+        Plots the posterior distribution for an MCMC sample.
+
+        Parameters
+        ----------
+        **kwargs
+            Additional keyword arguments to `arviz.plot_posterior()`.
+        &#39;&#39;&#39;
+        assert os.path.exists(self.backend),\
+            &#39;Could not find file backend!&#39;
+        trace = az.from_netcdf(self.backend)
+        az.plot_posterior(trace, **kwargs)
+        pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Generic algorithm for fitting a model to data based on observed values
+similar to what we can produce with our model. Not intended to be called
+directly.</p></div>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.calibration.mcmc.StochasticSampler" href="#pyl4c.apps.calibration.mcmc.StochasticSampler">StochasticSampler</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler.get_posterior"><code class="name flex">
+<span>def <span class="ident">get_posterior</span></span>(<span>self, thin: int = 1) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_posterior(self, thin: int = 1) -&gt; np.ndarray:
+    &#39;&#39;&#39;
+    Returns a stacked posterior array, with optional thinning, combining
+    all the chains together.
+
+    Parameters
+    ----------
+    thin : int
+
+    Returns
+    -------
+    numpy.ndarray
+    &#39;&#39;&#39;
+    trace = az.from_netcdf(self.backend)
+    return np.stack([ # i.e., get every ith element, each chain
+        trace[&#39;posterior&#39;][p].values[:,::thin].ravel()
+        for p in self.required_parameters[self.name]
+    ], axis = -1)</code></pre>
+</details>
+<div class="desc"><p>Returns a stacked posterior array, with optional thinning, combining
+all the chains together.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>thin</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler.get_trace"><code class="name flex">
+<span>def <span class="ident">get_trace</span></span>(<span>self, thin: int = None, burn: int = None) ‑> arviz.data.inference_data.InferenceData</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_trace(
+        self, thin: int = None, burn: int = None
+    ) -&gt; az.data.inference_data.InferenceData:
+    &#39;&#39;&#39;
+    Extracts the trace from the backend data store.
+
+    Parameters
+    ----------
+    thin : int
+        Thinning rate
+    burn : int
+        The burn-in (i.e., first N samples to discard)
+    &#39;&#39;&#39;
+    trace = az.from_netcdf(self.backend)
+    if thin is None and burn is None:
+        return trace
+    return trace.sel(draw = slice(burn, None, thin))</code></pre>
+</details>
+<div class="desc"><p>Extracts the trace from the backend data store.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>thin</code></strong> :&ensp;<code>int</code></dt>
+<dd>Thinning rate</dd>
+<dt><strong><code>burn</code></strong> :&ensp;<code>int</code></dt>
+<dd>The burn-in (i.e., first N samples to discard)</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_autocorr"><code class="name flex">
+<span>def <span class="ident">plot_autocorr</span></span>(<span>self, thin: int = None, burn: int = None, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_autocorr(self, thin: int = None, burn: int = None, **kwargs):
+    &#39;&#39;&#39;
+    Auto-correlation plot for an MCMC sample.
+
+    Parameters
+    ----------
+    thin : int
+        Thinning rate
+    burn : int
+        The burn-in (i.e., first N samples to discard)
+    **kwargs
+        Additional keyword arguments to `arviz.plot_autocorr()`.
+    &#39;&#39;&#39;
+    assert os.path.exists(self.backend),\
+        &#39;Could not find file backend!&#39;
+    trace = az.from_netcdf(self.backend)
+    kwargs.setdefault(&#39;combined&#39;, True)
+    if thin is None:
+        az.plot_autocorr(trace, **kwargs)
+    else:
+        burn = 0 if burn is None else burn
+        az.plot_autocorr(
+            trace.sel(draw = slice(burn, None, thin))[&#39;posterior&#39;],
+            **kwargs)
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Auto-correlation plot for an MCMC sample.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>thin</code></strong> :&ensp;<code>int</code></dt>
+<dd>Thinning rate</dd>
+<dt><strong><code>burn</code></strong> :&ensp;<code>int</code></dt>
+<dd>The burn-in (i.e., first N samples to discard)</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional keyword arguments to <code>arviz.plot_autocorr()</code>.</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_forest"><code class="name flex">
+<span>def <span class="ident">plot_forest</span></span>(<span>self, thin: int = None, burn: int = None, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_forest(self, thin: int = None, burn: int = None, **kwargs):
+    &#39;&#39;&#39;
+    Forest plot for an MCMC sample.
+
+    Parameters
+    ----------
+    thin : int
+        Thinning rate
+    burn : int
+        The burn-in (i.e., first N samples to discard)
+    **kwargs
+        Additional keyword arguments to `arviz.plot_forest()`.
+
+    In particular:
+
+    - `hdi_prob`: A float indicating the highest density interval (HDF) to
+        plot
+    &#39;&#39;&#39;
+    assert os.path.exists(self.backend),\
+        &#39;Could not find file backend!&#39;
+    trace = az.from_netcdf(self.backend)
+    if thin is None:
+        az.plot_forest(trace, **kwargs)
+    else:
+        burn = 0 if burn is None else burn
+        az.plot_forest(
+            trace.sel(draw = slice(burn, None, thin))[&#39;posterior&#39;],
+            **kwargs)
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Forest plot for an MCMC sample.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>thin</code></strong> :&ensp;<code>int</code></dt>
+<dd>Thinning rate</dd>
+<dt><strong><code>burn</code></strong> :&ensp;<code>int</code></dt>
+<dd>The burn-in (i.e., first N samples to discard)</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional keyword arguments to <code>arviz.plot_forest()</code>.</dd>
+</dl>
+<p>In particular:</p>
+<ul>
+<li><code>hdi_prob</code>: A float indicating the highest density interval (HDF) to
+plot</li>
+</ul></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_pair"><code class="name flex">
+<span>def <span class="ident">plot_pair</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_pair(self, **kwargs):
+    &#39;&#39;&#39;
+    Paired variables plot for an MCMC sample.
+
+    Parameters
+    ----------
+    **kwargs
+        Additional keyword arguments to `arviz.plot_pair()`.
+    &#39;&#39;&#39;
+    assert os.path.exists(self.backend),\
+        &#39;Could not find file backend!&#39;
+    trace = az.from_netcdf(self.backend)
+    az.plot_pair(trace, **kwargs)
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Paired variables plot for an MCMC sample.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional keyword arguments to <code>arviz.plot_pair()</code>.</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_posterior"><code class="name flex">
+<span>def <span class="ident">plot_posterior</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_posterior(self, **kwargs):
+    &#39;&#39;&#39;
+    Plots the posterior distribution for an MCMC sample.
+
+    Parameters
+    ----------
+    **kwargs
+        Additional keyword arguments to `arviz.plot_posterior()`.
+    &#39;&#39;&#39;
+    assert os.path.exists(self.backend),\
+        &#39;Could not find file backend!&#39;
+    trace = az.from_netcdf(self.backend)
+    az.plot_posterior(trace, **kwargs)
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Plots the posterior distribution for an MCMC sample.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional keyword arguments to <code>arviz.plot_posterior()</code>.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood"><code class="flex name class">
+<span>class <span class="ident">BlackBoxLikelihood</span></span>
+<span>(</span><span>model: Callable,<br>observed: Sequence,<br>x: Sequence = None,<br>weights: Sequence = None,<br>objective: str = 'rmsd')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BlackBoxLikelihood(pt.Op):
+    &#39;&#39;&#39;
+    A custom Theano operator that calculates the &#34;likelihood&#34; of model
+    parameters; it takes a vector of values (the parameters that define our
+    model) and returns a single &#34;scalar&#34; value (the log-likelihood).
+
+    Parameters
+    ----------
+    model : Callable
+        An arbitrary &#34;black box&#34; function that takes two arguments: the
+        model parameters (&#34;params&#34;) and the forcing data (&#34;x&#34;)
+    observed : numpy.ndarray
+        The &#34;observed&#34; data that our log-likelihood function takes in
+    x : numpy.ndarray or None
+        The forcing data (input drivers) that our model requires, or None
+        if no driver data are required
+    weights : Sequence or None
+        Optional sequence of weights applied to the model residuals (as in
+        weighted least squares)
+    objective : str
+        Name of the objective (or &#34;loss&#34;) function to use, one of
+        (&#39;rmsd&#39;, &#39;gaussian&#39;, &#39;kge&#39;); defaults to &#34;rmsd&#34;
+    &#39;&#39;&#39;
+    itypes = [pt.dvector] # Expects a vector of parameter values when called
+    otypes = [pt.dscalar] # Outputs a single scalar value (the log likelihood)
+
+    def __init__(
+            self, model: Callable, observed: Sequence, x: Sequence = None,
+            weights: Sequence = None, objective: str = &#39;rmsd&#39;):
+        &#39;&#39;&#39;
+        Initialise the Op with various things that our log-likelihood function
+        requires. The observed data (&#34;observed&#34;) and drivers (&#34;x&#34;) must be
+        stored on the instance so the Theano Op can work seamlessly.
+        &#39;&#39;&#39;
+        self.model = model
+        self.observed = observed
+        self.x = x
+        self.weights = weights
+        if objective in (&#39;rmsd&#39;, &#39;rmse&#39;):
+            self._loglik = self.loglik
+        elif objective == &#39;gaussian&#39;:
+            self._loglik = self.loglik_gaussian
+        elif objective == &#39;kge&#39;:
+            self._loglik = self.loglik_kge
+        else:
+            raise ValueError(&#39;Unknown &#34;objective&#34; function specified&#39;)
+
+    def loglik(
+            self, params: Sequence, observed: Sequence,
+            x: Sequence = None) -&gt; Number:
+        &#39;&#39;&#39;
+        Pseudo-log likelihood, based on the root-mean squared deviation
+        (RMSD). The sign of the RMSD is forced to be negative so as to allow
+        for maximization of this objective function.
+
+        Parameters
+        ----------
+        params : Sequence
+            One or more model parameters
+        observed : Sequence
+            The observed values
+        x : Sequence or None
+            Input driver data
+
+        Returns
+        -------
+        Number
+            The (negative) root-mean squared deviation (RMSD) between the
+            predicted and observed values
+        &#39;&#39;&#39;
+        predicted = self.model(params, *x)
+        if self.weights is not None:
+            return -np.sqrt(
+                np.nanmean(((predicted - observed) * self.weights) ** 2))
+        return -np.sqrt(np.nanmean(((predicted - observed)) ** 2))
+
+    def loglik_gaussian(
+            self, params: Sequence, observed: Sequence,
+            x: Sequence = None) -&gt; Number:
+        &#39;&#39;&#39;
+        Gaussian log-likelihood, assuming independent, identically distributed
+        observations.
+
+        Parameters
+        ----------
+        params : Sequence
+            One or more model parameters
+        observed : Sequence
+            The observed values
+        x : Sequence or None
+            Input driver data
+
+        Returns
+        -------
+        Number
+            The (negative) log-likelihood
+        &#39;&#39;&#39;
+        predicted = self.model(params, *x)
+        sigma = params[-1]
+        # Gaussian log-likelihood;
+        # -\frac{N}{2}\,\mathrm{log}(2\pi\hat{\sigma}^2)
+        #   - \frac{1}{2\hat{\sigma}^2} \sum (\hat{y} - y)^2
+        return -0.5 * np.log(2 * np.pi * sigma**2) - (0.5 / sigma**2) *\
+            np.nansum((predicted - observed)**2)
+
+    def loglik_kge(
+            self, params: Sequence, observed: Sequence,
+            x: Sequence = None) -&gt; Number:
+        r&#39;&#39;&#39;
+        Kling-Gupta efficiency.
+
+        $$
+        KGE = 1 - \sqrt{(r - 1)^2 + (\alpha - 1)^2 + (\beta - 1)^2}
+        $$
+
+        Parameters
+        ----------
+        params : Sequence
+            One or more model parameters
+        observed : Sequence
+            The observed values
+        x : Sequence or None
+            Input driver data
+
+        Returns
+        -------
+        Number
+            The Kling-Gupta efficiency
+        &#39;&#39;&#39;
+        predicted = self.model(params, *x)
+        r = np.corrcoef(predicted, observed)[0, 1]
+        alpha = np.std(predicted) / np.std(observed)
+        beta = np.sum(predicted) / np.sum(observed)
+        return 1 - np.sqrt((r - 1)**2 + (alpha - 1)**2 + (beta - 1)**2)
+
+    def perform(self, node, inputs, outputs):
+        &#39;&#39;&#39;
+        The method that is used when calling the Op.
+
+        Parameters
+        ----------
+        node
+        inputs : Sequence
+        outputs : Sequence
+        &#39;&#39;&#39;
+        (params,) = inputs
+        logl = self._loglik(params, self.observed, self.x)
+        outputs[0][0] = np.array(logl) # Output the log-likelihood</code></pre>
+</details>
+<div class="desc"><p>A custom Theano operator that calculates the "likelihood" of model
+parameters; it takes a vector of values (the parameters that define our
+model) and returns a single "scalar" value (the log-likelihood).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>model</code></strong> :&ensp;<code>Callable</code></dt>
+<dd>An arbitrary "black box" function that takes two arguments: the
+model parameters ("params") and the forcing data ("x")</dd>
+<dt><strong><code>observed</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The "observed" data that our log-likelihood function takes in</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>None</code></dt>
+<dd>The forcing data (input drivers) that our model requires, or None
+if no driver data are required</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>Sequence</code> or <code>None</code></dt>
+<dd>Optional sequence of weights applied to the model residuals (as in
+weighted least squares)</dd>
+<dt><strong><code>objective</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the objective (or "loss") function to use, one of
+('rmsd', 'gaussian', 'kge'); defaults to "rmsd"</dd>
+</dl>
+<p>Initialise the Op with various things that our log-likelihood function
+requires. The observed data ("observed") and drivers ("x") must be
+stored on the instance so the Theano Op can work seamlessly.</p></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pytensor.graph.op.Op</li>
+<li>pytensor.graph.utils.MetaObject</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.itypes"><code class="name">var <span class="ident">itypes</span> : collections.abc.Sequence['Type'] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.otypes"><code class="name">var <span class="ident">otypes</span> : collections.abc.Sequence['Type'] | None</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik"><code class="name flex">
+<span>def <span class="ident">loglik</span></span>(<span>self, params: Sequence, observed: Sequence, x: Sequence = None) ‑> numbers.Number</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def loglik(
+        self, params: Sequence, observed: Sequence,
+        x: Sequence = None) -&gt; Number:
+    &#39;&#39;&#39;
+    Pseudo-log likelihood, based on the root-mean squared deviation
+    (RMSD). The sign of the RMSD is forced to be negative so as to allow
+    for maximization of this objective function.
+
+    Parameters
+    ----------
+    params : Sequence
+        One or more model parameters
+    observed : Sequence
+        The observed values
+    x : Sequence or None
+        Input driver data
+
+    Returns
+    -------
+    Number
+        The (negative) root-mean squared deviation (RMSD) between the
+        predicted and observed values
+    &#39;&#39;&#39;
+    predicted = self.model(params, *x)
+    if self.weights is not None:
+        return -np.sqrt(
+            np.nanmean(((predicted - observed) * self.weights) ** 2))
+    return -np.sqrt(np.nanmean(((predicted - observed)) ** 2))</code></pre>
+</details>
+<div class="desc"><p>Pseudo-log likelihood, based on the root-mean squared deviation
+(RMSD). The sign of the RMSD is forced to be negative so as to allow
+for maximization of this objective function.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>One or more model parameters</dd>
+<dt><strong><code>observed</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>The observed values</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>Sequence</code> or <code>None</code></dt>
+<dd>Input driver data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Number</code></dt>
+<dd>The (negative) root-mean squared deviation (RMSD) between the
+predicted and observed values</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik_gaussian"><code class="name flex">
+<span>def <span class="ident">loglik_gaussian</span></span>(<span>self, params: Sequence, observed: Sequence, x: Sequence = None) ‑> numbers.Number</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def loglik_gaussian(
+        self, params: Sequence, observed: Sequence,
+        x: Sequence = None) -&gt; Number:
+    &#39;&#39;&#39;
+    Gaussian log-likelihood, assuming independent, identically distributed
+    observations.
+
+    Parameters
+    ----------
+    params : Sequence
+        One or more model parameters
+    observed : Sequence
+        The observed values
+    x : Sequence or None
+        Input driver data
+
+    Returns
+    -------
+    Number
+        The (negative) log-likelihood
+    &#39;&#39;&#39;
+    predicted = self.model(params, *x)
+    sigma = params[-1]
+    # Gaussian log-likelihood;
+    # -\frac{N}{2}\,\mathrm{log}(2\pi\hat{\sigma}^2)
+    #   - \frac{1}{2\hat{\sigma}^2} \sum (\hat{y} - y)^2
+    return -0.5 * np.log(2 * np.pi * sigma**2) - (0.5 / sigma**2) *\
+        np.nansum((predicted - observed)**2)</code></pre>
+</details>
+<div class="desc"><p>Gaussian log-likelihood, assuming independent, identically distributed
+observations.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>One or more model parameters</dd>
+<dt><strong><code>observed</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>The observed values</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>Sequence</code> or <code>None</code></dt>
+<dd>Input driver data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Number</code></dt>
+<dd>The (negative) log-likelihood</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik_kge"><code class="name flex">
+<span>def <span class="ident">loglik_kge</span></span>(<span>self, params: Sequence, observed: Sequence, x: Sequence = None) ‑> numbers.Number</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def loglik_kge(
+        self, params: Sequence, observed: Sequence,
+        x: Sequence = None) -&gt; Number:
+    r&#39;&#39;&#39;
+    Kling-Gupta efficiency.
+
+    $$
+    KGE = 1 - \sqrt{(r - 1)^2 + (\alpha - 1)^2 + (\beta - 1)^2}
+    $$
+
+    Parameters
+    ----------
+    params : Sequence
+        One or more model parameters
+    observed : Sequence
+        The observed values
+    x : Sequence or None
+        Input driver data
+
+    Returns
+    -------
+    Number
+        The Kling-Gupta efficiency
+    &#39;&#39;&#39;
+    predicted = self.model(params, *x)
+    r = np.corrcoef(predicted, observed)[0, 1]
+    alpha = np.std(predicted) / np.std(observed)
+    beta = np.sum(predicted) / np.sum(observed)
+    return 1 - np.sqrt((r - 1)**2 + (alpha - 1)**2 + (beta - 1)**2)</code></pre>
+</details>
+<div class="desc"><p>Kling-Gupta efficiency.</p>
+<p><span><span class="MathJax_Preview">
+KGE = 1 - \sqrt{(r - 1)^2 + (\alpha - 1)^2 + (\beta - 1)^2}
+</span><script type="math/tex; mode=display">
+KGE = 1 - \sqrt{(r - 1)^2 + (\alpha - 1)^2 + (\beta - 1)^2}
+</script></span></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>One or more model parameters</dd>
+<dt><strong><code>observed</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>The observed values</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>Sequence</code> or <code>None</code></dt>
+<dd>Input driver data</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Number</code></dt>
+<dd>The Kling-Gupta efficiency</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.perform"><code class="name flex">
+<span>def <span class="ident">perform</span></span>(<span>self, node, inputs, outputs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def perform(self, node, inputs, outputs):
+    &#39;&#39;&#39;
+    The method that is used when calling the Op.
+
+    Parameters
+    ----------
+    node
+    inputs : Sequence
+    outputs : Sequence
+    &#39;&#39;&#39;
+    (params,) = inputs
+    logl = self._loglik(params, self.observed, self.x)
+    outputs[0][0] = np.array(logl) # Output the log-likelihood</code></pre>
+</details>
+<div class="desc"><p>The method that is used when calling the Op.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>node</code></strong></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>inputs</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>outputs</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI"><code class="flex name class">
+<span>class <span class="ident">CalibrationAPI</span></span>
+<span>(</span><span>config: str = None, pft: int = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CalibrationAPI(object):
+    &#39;&#39;&#39;
+    Convenience class for calibrating the L4C GPP and RECO models. Meant to
+    be used with `fire.Fire()`. Uses:
+
+        # Run the calibration for a specific PFT
+        python mcmc.py tune-gpp &lt;pft&gt;
+
+        # Get access to the sampler (and debugger), after calibration is run
+        python mcmc.py tune-gpp &lt;pft&gt; --ipdb
+    &#39;&#39;&#39;
+    def __init__(self, config: str = None, pft: int = None):
+        config_file = config
+        if config_file is None:
+            config_file = os.path.join(
+                L4C_DIR, &#39;data/files/config_L4C_MCMC_calibration.yaml&#39;)
+        print(f&#39;Using configuration file: {config_file}&#39;)
+        with open(config_file, &#39;r&#39;) as file:
+            self.config = yaml.safe_load(file)
+        if pft is not None:
+            assert pft in PFT_VALID, f&#39;Invalid PFT: {pft}&#39;
+            self._pft = pft
+        self.hdf5 = self.config[&#39;data&#39;][&#39;file&#39;]
+
+    def _clean(
+            self, raw: Sequence, drivers: Sequence, protocol: str = &#39;GPP&#39;,
+            num_std: int = 5):
+        &#39;Cleans up data values according to a prescribed protocol&#39;
+        if protocol == &#39;GPP&#39;:
+            # Filter out observed GPP values when GPP is negative or when
+            #   APAR &lt; 0.1 g C m-2 day-1
+            apar = drivers[&#39;fPAR&#39;] * drivers[&#39;PAR&#39;]
+            cleaned = np.where(
+                apar &lt; 0.1, np.nan, np.where(raw &lt; 0, np.nan, raw))
+            return np.apply_along_axis(
+                lambda x: np.where(
+                    x &gt; (num_std * np.nanstd(x)), np.nan, x), 0, cleaned)
+        elif protocol == &#39;RECO&#39;:
+            # Remove negative values
+            return np.where(raw &lt; 0, np.nan, raw)
+
+    def _filter(self, raw: Sequence, size: int):
+        &#39;Apply a smoothing filter with zero phase offset&#39;
+        if size &gt; 1:
+            window = np.ones(size) / size
+            return np.apply_along_axis(
+                lambda x: signal.filtfilt(window, np.ones(1), x), 0, raw)
+        return raw # Or, revert to the raw data
+
+    def _get_params(self, model):
+        # Filter the parameters to just those for the PFT of interest
+        params_dict = restore_bplut_flat(self.config[&#39;BPLUT&#39;])
+        return dict([
+            (k, params_dict[k].ravel()[self._pft])
+            for k in L4CStochasticSampler.required_parameters[model]
+        ])
+
+    def _load_gpp_data(self, filter_length):
+        &#39;Load the required datasets for GPP, for a single PFT&#39;
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+        with h5py.File(self.hdf5, &#39;r&#39;) as hdf:
+            sites = hdf[&#39;site_id&#39;][:]
+            if hasattr(sites[0], &#39;decode&#39;):
+                sites = list(map(lambda x: x.decode(&#39;utf-8&#39;), sites))
+            # Get dominant PFT
+            pft_map = pft_dominant(hdf[&#39;state/PFT&#39;][:], sites)
+            # Blacklist validation sites
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+            drivers = dict()
+            field_map = self.config[&#39;data&#39;][&#39;fields&#39;]
+            for field in L4CStochasticSampler.required_drivers[&#39;GPP&#39;]:
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        drivers[field] = hdf[field_map[field]][:,pft_mask]
+                elif field == &#39;PAR&#39;:
+                    if &#39;SWGDN&#39; not in field_map:
+                        raise ValueError(f&#34;Could not find PAR or SWGDN data&#34;)
+                    drivers[field] = par(hdf[field_map[&#39;SWGDN&#39;]][:,pft_mask])
+                elif field == &#39;VPD&#39;:
+                    qv2m = hdf[field_map[&#39;QV2M&#39;]][:,pft_mask]
+                    ps   = hdf[field_map[&#39;PS&#39;]][:,pft_mask]
+                    t2m  = hdf[field_map[&#39;T2M&#39;]][:,pft_mask]
+                    drivers[field] = vpd(qv2m, ps, t2m)
+                elif field == &#39;SMRZ&#39;:
+                    smrz = hdf[field_map[&#39;SMRZ0&#39;]][:,pft_mask]
+                    smrz_min = smrz.min(axis = 0)
+                    drivers[field] = rescale_smrz(smrz, smrz_min)
+                elif field == &#39;FT&#39;:
+                    tsurf = hdf[field_map[&#39;Tsurf&#39;]][:,pft_mask]
+                    # Classify soil as frozen (FT=0) or unfrozen (FT=1) based
+                    #   on threshold freezing point of water
+                    drivers[field] = np.where(tsurf &lt;= 273.15, 0, 1)
+
+            # Check units on fPAR, average sub-grid heterogeneity
+            if np.nanmax(drivers[&#39;fPAR&#39;][:]) &gt; 10:
+                drivers[&#39;fPAR&#39;] /= 100
+            if drivers[&#39;fPAR&#39;].ndim == 3 and drivers[&#39;fPAR&#39;].shape[-1] == 81:
+                drivers[&#39;fPAR&#39;] = np.nanmean(drivers[f&#39;fPAR&#39;], axis = -1)
+            assert len(set(L4CStochasticSampler.required_drivers[&#39;GPP&#39;])\
+                .difference(set(drivers.keys()))) == 0,\
+                &#39;Did not find all required drivers for the GPP model!&#39;
+
+            # If RMSE is used, then we want to pay attention to weighting
+            weights = None
+            if &#39;weights&#39; in hdf.keys():
+                weights = hdf[&#39;weights&#39;][pft_mask][np.newaxis,:]\
+                    .repeat(t2m.shape[0], axis = 0)
+            else:
+                print(&#39;WARNING - &#34;weights&#34; not found in HDF5 file!&#39;)
+            if &#39;GPP&#39; not in hdf.keys():
+                with h5py.File(
+                        self.config[&#39;data&#39;][&#39;supplemental_file&#39;], &#39;r&#39;) as _hdf:
+                    tower_gpp = _hdf[&#39;GPP&#39;][:][:,pft_mask]
+            else:
+                tower_gpp = hdf[&#39;GPP&#39;][:][:,pft_mask]
+
+        # Check that driver data do not contain NaNs
+        for field in drivers.keys():
+            assert not np.isnan(drivers[field]).any(),\
+                f&#39;Driver dataset &#34;{field}&#34; contains NaNs&#39;
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_gpp = self._filter(tower_gpp, filter_length)
+        tower_gpp = self._clean(tower_gpp, drivers, protocol = &#39;GPP&#39;)
+        tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
+        # Subset all datasets to just the valid observation site-days
+        if weights is not None:
+            weights = weights[~np.isnan(tower_gpp)]
+        drivers_flat = dict()
+        for field in drivers.keys():
+            drivers_flat[field] = drivers[field][~np.isnan(tower_gpp)]
+        return (drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights)
+
+    def _load_reco_data(self, filter_length):
+        &#39;Load the required datasets for RECO, for a single PFT&#39;
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+        with h5py.File(self.hdf5, &#39;r&#39;) as hdf:
+            n_steps = hdf[&#39;time&#39;].shape[0]
+            sites = hdf[&#39;site_id&#39;][:]
+            if hasattr(sites[0], &#39;decode&#39;):
+                sites = list(map(lambda x: x.decode(&#39;utf-8&#39;), sites))
+            # Get dominant PFT
+            pft_map = pft_dominant(hdf[&#39;state/PFT&#39;][:], sites)
+            # Blacklist validation sites
+            pft_mask = np.logical_and(
+                np.in1d(pft_map, self._pft), ~np.in1d(sites, blacklist))
+            drivers = dict()
+            field_map = self.config[&#39;data&#39;][&#39;fields&#39;]
+            for field in (&#39;SMSF&#39;, &#39;Tsoil&#39;):
+                # Try reading the field exactly as described in config file
+                if field in field_map:
+                    if field_map[field] in hdf:
+                        drivers[field] = hdf[field_map[field]][:,pft_mask]
+
+            # If RMSE is used, then we want to pay attention to weighting
+            weights = None
+            if &#39;weights&#39; in hdf.keys():
+                weights = hdf[&#39;weights&#39;][pft_mask][np.newaxis,:]\
+                    .repeat(n_steps, axis = 0)
+            else:
+                print(&#39;WARNING - &#34;weights&#34; not found in HDF5 file!&#39;)
+            if &#39;RECO&#39; not in hdf.keys():
+                with h5py.File(
+                        self.config[&#39;data&#39;][&#39;supplemental_file&#39;], &#39;r&#39;) as _hdf:
+                    tower_reco = _hdf[&#39;RECO&#39;][:][:,pft_mask]
+            else:
+                tower_reco = hdf[&#39;RECO&#39;][:][:,pft_mask]
+
+        # Check that driver data do not contain NaNs
+        for field in drivers.keys():
+            assert not np.isnan(drivers[field]).any(),\
+                f&#39;Driver dataset &#34;{field}&#34; contains NaNs&#39;
+        # Clean observations, then mask out driver data where the are no
+        #   observations
+        tower_reco = self._filter(tower_reco, filter_length)
+        tower_reco = self._clean(tower_reco, drivers, protocol = &#39;RECO&#39;)
+        drivers = [drivers[k] for k in (&#39;SMSF&#39;, &#39;Tsoil&#39;)]
+        return (drivers, tower_reco, weights)
+
+    def _preplot(self, model: str):
+        &#39;Loads the data and parameters required for plotting&#39;
+        params_dict = self._get_params(self._pft, model)
+        backend = self.config[&#39;optimization&#39;][&#39;backend_template&#39;].format(
+            model = model, pft = self._pft)
+        sampler = L4CStochasticSampler(
+            self.config, getattr(L4CStochasticSampler, f&#39;_{model.lower()}&#39;),
+            params_dict, backend = backend)
+        return (sampler, backend)
+
+    def pft(self, pft):
+        &#39;&#39;&#39;
+        Sets the PFT class for the next calibration step.
+
+        Parameters
+        ----------
+        pft : int
+            The PFT class to use in calibration
+
+        Returns
+        -------
+        CLI
+        &#39;&#39;&#39;
+        assert pft in range(1, 9), &#39;Unrecognized PFT class&#39;
+        self._pft = pft
+        return self
+
+    def plot_autocorr(self, model: str, **kwargs):
+        &#39;Plots the autocorrelation in the trace for each parameter&#39;
+        sampler, backend = self._preplot(self._pft, model)
+        sampler.plot_autocorr(**kwargs)
+
+    def plot_posterior(self, model: str, **kwargs):
+        &#39;Plots the posterior density for each parameter&#39;
+        sampler, backend = self._preplot(self._pft, model)
+        sampler.plot_posterior()
+
+    def plot_trace(self, model: str, **kwargs):
+        &#39;Plots the trace for each parameter&#39;
+        sampler, backend = self._preplot(self._pft, model)
+        trace = sampler.get_trace(
+            burn = kwargs.get(&#39;burn&#39;, None), thin = kwargs.get(&#39;thin&#39;))
+        az.plot_trace(trace, kwargs.get(&#39;var_names&#39;, None))
+        pyplot.show()
+
+    def tune_gpp(
+            self, filter_length: int = 2, plot: str = None,
+            ipdb: bool = False, save_fig: bool = False, **kwargs):
+        &#39;&#39;&#39;
+        Run the L4C GPP calibration.
+
+        - For GPP data: Removes observations where GPP &lt; 0 or where APAR is
+            &lt; 0.1 MJ m-2 day-1
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        plot : str or None
+            Plot either: the &#34;trace&#34; for a previous calibration run; an
+            &#34;exemplar&#34;, or single time series showing tower observations and
+            simulations using new and old parameters; a &#34;scatter&#34; plot
+            showing simulations, using new and old parameters, against
+            observations, with RMSE; or the &#34;posterior&#34; plot, an HDI plot
+            of the posterior distribution(s). If None, calibration will
+            proceed (calibration is not performed if plotting).
+        ipdb : bool
+            True to drop the user into an ipdb prompt, prior to and instead of
+            running calibration
+        save_fig : bool
+            True to save figures to files instead of showing them
+            (Default: False)
+        **kwargs
+            Additional keyword arguments passed to
+            `L4CStochasticSampler.run()`
+        &#39;&#39;&#39;
+        assert self._pft in PFT_VALID, f&#39;Invalid PFT: {self._pft}&#39;
+        # IMPORTANT: Set the &#34;name&#34; property of the configuration file;
+        #   this is used by StochasticSampler classes to figure out how
+        #   to compile the model
+        self.config[&#39;name&#39;] = &#39;GPP&#39;
+        # Pass configuration parameters to L4CStochasticSampler.run()
+        for key in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;):
+            if key in self.config[&#39;optimization&#39;].keys() and not key in kwargs.keys():
+                kwargs[key] = self.config[&#39;optimization&#39;][key]
+        params_dict = self._get_params(&#39;GPP&#39;)
+        # Load blacklisted sites (if any)
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+        objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower()
+
+        print(&#39;Loading driver datasets...&#39;)
+        drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+            self._load_gpp_data(filter_length)
+
+        print(&#39;Initializing sampler...&#39;)
+        backend = self.config[&#39;optimization&#39;][&#39;backend_template&#39;].format(
+            model = &#39;GPP&#39;, pft = self._pft)
+        model_func = getattr( # e.g., L4CStochasticSampler._gpp
+            L4CStochasticSampler,
+            self.config[&#39;optimization&#39;][&#39;function&#39;][&#39;GPP&#39;])
+        sampler = L4CStochasticSampler(
+            self.config, model_func, params_dict,
+            backend = backend, weights = weights)
+
+        # Get (informative) priors for just those parameters that have them
+        with open(self.config[&#39;optimization&#39;][&#39;prior&#39;], &#39;r&#39;) as file:
+            prior = yaml.safe_load(file)
+        prior_params = filter(
+            lambda p: p in prior.keys(), sampler.required_parameters[&#39;GPP&#39;])
+        prior = dict([
+            (p, dict([(k, v[self._pft]) for k, v in prior[p].items()]))
+            for p in prior_params
+        ])
+
+        # For diganostics or plotting representative sites
+        if ipdb or plot in (&#39;exemplar&#39;, &#39;scatter&#39;):
+            # Get the tower with the most available data
+            idx = np.apply_along_axis(
+                lambda x: x.size - np.isnan(x).sum(), 0, tower_gpp).argmax()
+            # The BPLUT has a different representation of ramp function
+            #   parameters: translate &#34;param1&#34; into (&#34;param1&#34; - &#34;param0&#34;)
+            params0 = [
+                params_dict[k] if k[-1] != &#39;1&#39; else params_dict[k] - params_dict[k.replace(&#39;1&#39;, &#39;0&#39;)]
+                for k in sampler.required_parameters[&#39;GPP&#39;]
+            ]
+            # Get proposed (new) parameters, if provided
+            params1 = []
+            for k, key in enumerate(sampler.required_parameters[&#39;GPP&#39;]):
+                if key in kwargs.keys():
+                    params1.append(kwargs[key])
+                else:
+                    params1.append(params0[k])
+            if plot == &#39;exemplar&#39;:
+                _drivers = [
+                    drivers[k][:,idx] for k in sampler.required_drivers[&#39;GPP&#39;]
+                ]
+                gpp0 = model_func(params0, *_drivers)
+                gpp1 = model_func(params1, *_drivers)
+                pyplot.plot(tower_gpp[:,idx], &#39;g-&#39;, label = &#39;Tower GPP&#39;)
+                pyplot.plot(gpp0, &#39;r-&#39;, alpha = 0.5, label = &#39;Old Simulation&#39;)
+                pyplot.plot(gpp1, &#39;k-&#39;, label = &#39;New Simulation&#39;)
+            elif plot == &#39;scatter&#39;:
+                tidx = np.random.randint( # Random 20% sample
+                    0, tower_gpp.size, size = tower_gpp.size // 5)
+                _drivers = [
+                    drivers[k].ravel()[tidx] for k in sampler.required_drivers[&#39;GPP&#39;]
+                ]
+                _obs = tower_gpp.ravel()[tidx]
+                gpp0 = model_func(params0, *_drivers)
+                gpp1 = model_func(params1, *_drivers)
+                # Calculate (parameters of) trend lines
+                mask = np.isnan(_obs)
+                a0, b0 = np.polyfit(_obs[~mask], gpp0[~mask], deg = 1)
+                a1, b1 = np.polyfit(_obs[~mask], gpp1[~mask], deg = 1)
+                # Create a scatter plot
+                fig = pyplot.figure(figsize = (6, 6))
+                pyplot.scatter(
+                    _obs, gpp0, s = 2, c = &#39;k&#39;, alpha = 0.2,
+                    label = &#39;Old (RMSE=%.2f, r=%.2f)&#39; % (
+                        rmsd(_obs, gpp0), np.corrcoef(_obs[~mask], gpp0[~mask])[0,1]))
+                pyplot.plot(_obs, a0 * _obs + b0, &#39;k-&#39;, alpha = 0.8)
+                pyplot.scatter(
+                    _obs, gpp1, s = 2, c = &#39;r&#39;, alpha = 0.2,
+                    label = &#39;New (RMSE=%.2f, r=%.2f)&#39; % (
+                        rmsd(_obs, gpp1), np.corrcoef(_obs[~mask], gpp1[~mask])[0,1]))
+                pyplot.plot(_obs, a1 * _obs + b1, &#39;r-&#39;, alpha = 0.8)
+                ax = fig.get_axes()
+                ax[0].set_aspect(1)
+                ax[0].plot([0, 1], [0, 1],
+                    transform = ax[0].transAxes, linestyle = &#39;dashed&#39;,
+                    c = &#39;k&#39;, alpha = 0.5)
+                pyplot.xlabel(&#39;Observed&#39;)
+                pyplot.ylabel(&#39;Predicted&#39;)
+                pyplot.title(&#39;\n&#39;.join(wrap(f&#39;PFT {self._pft} with: &#39; + &#39;, &#39;.join(list(map(
+                    lambda x: f&#39;{x[0]}={x[1]}&#39;, zip(
+                    sampler.required_parameters[&#39;GPP&#39;], params1)))))))
+            pyplot.legend()
+            pyplot.show()
+            # For diagnostics
+            if ipdb:
+                trace = sampler.get_trace(
+                    burn = kwargs.get(&#39;burn&#39;, None), thin = kwargs.get(&#39;thin&#39;))
+                import ipdb
+                ipdb.set_trace()
+            return
+
+        # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
+        #   those with priors
+        var_names = list(filter(
+            lambda x: x in prior.keys(), sampler.required_parameters[&#39;GPP&#39;]))
+        # Convert drivers from a dict to a sequence, then run sampler
+        drivers_flat = [drivers_flat[d] for d in sampler.required_drivers[&#39;GPP&#39;]]
+        # Remove any kwargs that don&#39;t belong
+        for k in list(kwargs.keys()):
+            if k not in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;, &#39;save_fig&#39;, &#39;var_names&#39;):
+                del kwargs[k]
+        sampler.run(
+            tower_gpp_flat, drivers_flat, prior = prior, save_fig = save_fig,
+            **kwargs)
+
+    def tune_reco(
+            self, filter_length: int = 2, q_rh: int = 75, q_k: int = 50,
+            plot: str = None, ipdb: bool = False, save_fig: bool = False,
+            **kwargs):
+        &#39;&#39;&#39;
+        Run the L4C RECO calibration.
+
+        - Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+        Parameters
+        ----------
+        filter_length : int
+            The window size for the smoothing filter, applied to the observed
+            data
+        q_rh : int
+            The percentile of RH/Kmult to use in calculating Cbar
+        q_k : int
+            The percentile of Kmult below which RH/Kmult values are masked
+        plot : str or None
+            Plot either: the &#34;trace&#34; for a previous calibration run; an
+            &#34;exemplar&#34;, or single time series showing tower observations and
+            simulations using new and old parameters; a &#34;scatter&#34; plot
+            showing simulations, using new and old parameters, against
+            observations, with RMSE; or the &#34;posterior&#34; plot, an HDI plot
+            of the posterior distribution(s). If None, calibration will
+            proceed (calibration is not performed if plotting).
+        ipdb : bool
+            True to drop the user into an ipdb prompt, prior to and instead of
+            running calibration
+        save_fig : bool
+            True to save figures to files instead of showing them
+            (Default: False)
+        **kwargs
+            Additional keyword arguments passed to
+            `L4CStochasticSampler.run()`
+        &#39;&#39;&#39;
+        assert self._pft in PFT_VALID, f&#39;Invalid PFT: {self._pft}&#39;
+        # IMPORTANT: Set the &#34;name&#34; property of the configuration file;
+        #   this is used by StochasticSampler classes to figure out how
+        #   to compile the model
+        self.config[&#39;name&#39;] = &#39;RECO&#39;
+        # Pass configuration parameters to MOD17StochasticSampler.run()
+        for key in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;):
+            if key in self.config[&#39;optimization&#39;].keys() and not key in kwargs.keys():
+                kwargs[key] = self.config[&#39;optimization&#39;][key]
+        params_dict = self._get_params(&#39;RECO&#39;)
+        # Load blacklisted sites (if any)
+        blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+        objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower()
+
+        print(&#39;Loading driver datasets...&#39;)
+        _, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+        drivers, tower_reco, weights = self._load_reco_data(filter_length)
+        # For simplicity and consistency with StochasticSampler.run(), the
+        #   observed data and hyperparamters become part of the &#34;driver&#34; data
+        drivers = [tower_reco, tower_gpp, *drivers, q_rh, q_k]
+
+        print(&#39;Initializing sampler...&#39;)
+        backend = self.config[&#39;optimization&#39;][&#39;backend_template&#39;].format(
+            model = &#39;RECO&#39;, pft = self._pft)
+        model_func = getattr( # e.g., L4CStochasticSampler._reco
+            L4CStochasticSampler,
+            self.config[&#39;optimization&#39;][&#39;function&#39;][&#39;RECO&#39;])
+        sampler = L4CStochasticSampler(
+            self.config, model_func, params_dict,
+            backend = backend, weights = weights)
+
+        # Get (informative) priors for just those parameters that have them
+        with open(self.config[&#39;optimization&#39;][&#39;prior&#39;], &#39;r&#39;) as file:
+            prior = yaml.safe_load(file)
+        prior_params = filter(
+            lambda p: p in prior.keys(), sampler.required_parameters[&#39;RECO&#39;])
+        prior = dict([
+            (p, dict([(k, v[self._pft]) for k, v in prior[p].items()]))
+            for p in prior_params
+        ])
+
+        # For diagnostics
+        if ipdb:
+            trace = sampler.get_trace(
+                burn = kwargs.get(&#39;burn&#39;, None), thin = kwargs.get(&#39;thin&#39;))
+            import ipdb
+            ipdb.set_trace()
+
+        # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
+        #   those with priors
+        var_names = list(filter(
+            lambda x: x in prior.keys(), sampler.required_parameters[&#39;RECO&#39;]))
+        # Remove any kwargs that don&#39;t belong
+        for k in list(kwargs.keys()):
+            if k not in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;, &#39;save_fig&#39;, &#39;var_names&#39;):
+                del kwargs[k]
+        sampler.run(
+            tower_reco, drivers, prior = prior, save_fig = save_fig, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>Convenience class for calibrating the L4C GPP and RECO models. Meant to
+be used with <code>fire.Fire()</code>. Uses:</p>
+<pre><code># Run the calibration for a specific PFT
+python mcmc.py tune-gpp &lt;pft&gt;
+
+# Get access to the sampler (and debugger), after calibration is run
+python mcmc.py tune-gpp &lt;pft&gt; --ipdb
+</code></pre></div>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI.pft"><code class="name flex">
+<span>def <span class="ident">pft</span></span>(<span>self, pft)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pft(self, pft):
+    &#39;&#39;&#39;
+    Sets the PFT class for the next calibration step.
+
+    Parameters
+    ----------
+    pft : int
+        The PFT class to use in calibration
+
+    Returns
+    -------
+    CLI
+    &#39;&#39;&#39;
+    assert pft in range(1, 9), &#39;Unrecognized PFT class&#39;
+    self._pft = pft
+    return self</code></pre>
+</details>
+<div class="desc"><p>Sets the PFT class for the next calibration step.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pft</code></strong> :&ensp;<code>int</code></dt>
+<dd>The PFT class to use in calibration</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>CLI</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_autocorr"><code class="name flex">
+<span>def <span class="ident">plot_autocorr</span></span>(<span>self, model: str, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_autocorr(self, model: str, **kwargs):
+    &#39;Plots the autocorrelation in the trace for each parameter&#39;
+    sampler, backend = self._preplot(self._pft, model)
+    sampler.plot_autocorr(**kwargs)</code></pre>
+</details>
+<div class="desc"><p>Plots the autocorrelation in the trace for each parameter</p></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_posterior"><code class="name flex">
+<span>def <span class="ident">plot_posterior</span></span>(<span>self, model: str, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_posterior(self, model: str, **kwargs):
+    &#39;Plots the posterior density for each parameter&#39;
+    sampler, backend = self._preplot(self._pft, model)
+    sampler.plot_posterior()</code></pre>
+</details>
+<div class="desc"><p>Plots the posterior density for each parameter</p></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_trace"><code class="name flex">
+<span>def <span class="ident">plot_trace</span></span>(<span>self, model: str, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_trace(self, model: str, **kwargs):
+    &#39;Plots the trace for each parameter&#39;
+    sampler, backend = self._preplot(self._pft, model)
+    trace = sampler.get_trace(
+        burn = kwargs.get(&#39;burn&#39;, None), thin = kwargs.get(&#39;thin&#39;))
+    az.plot_trace(trace, kwargs.get(&#39;var_names&#39;, None))
+    pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Plots the trace for each parameter</p></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI.tune_gpp"><code class="name flex">
+<span>def <span class="ident">tune_gpp</span></span>(<span>self,<br>filter_length: int = 2,<br>plot: str = None,<br>ipdb: bool = False,<br>save_fig: bool = False,<br>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_gpp(
+        self, filter_length: int = 2, plot: str = None,
+        ipdb: bool = False, save_fig: bool = False, **kwargs):
+    &#39;&#39;&#39;
+    Run the L4C GPP calibration.
+
+    - For GPP data: Removes observations where GPP &lt; 0 or where APAR is
+        &lt; 0.1 MJ m-2 day-1
+
+    Parameters
+    ----------
+    filter_length : int
+        The window size for the smoothing filter, applied to the observed
+        data
+    plot : str or None
+        Plot either: the &#34;trace&#34; for a previous calibration run; an
+        &#34;exemplar&#34;, or single time series showing tower observations and
+        simulations using new and old parameters; a &#34;scatter&#34; plot
+        showing simulations, using new and old parameters, against
+        observations, with RMSE; or the &#34;posterior&#34; plot, an HDI plot
+        of the posterior distribution(s). If None, calibration will
+        proceed (calibration is not performed if plotting).
+    ipdb : bool
+        True to drop the user into an ipdb prompt, prior to and instead of
+        running calibration
+    save_fig : bool
+        True to save figures to files instead of showing them
+        (Default: False)
+    **kwargs
+        Additional keyword arguments passed to
+        `L4CStochasticSampler.run()`
+    &#39;&#39;&#39;
+    assert self._pft in PFT_VALID, f&#39;Invalid PFT: {self._pft}&#39;
+    # IMPORTANT: Set the &#34;name&#34; property of the configuration file;
+    #   this is used by StochasticSampler classes to figure out how
+    #   to compile the model
+    self.config[&#39;name&#39;] = &#39;GPP&#39;
+    # Pass configuration parameters to L4CStochasticSampler.run()
+    for key in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;):
+        if key in self.config[&#39;optimization&#39;].keys() and not key in kwargs.keys():
+            kwargs[key] = self.config[&#39;optimization&#39;][key]
+    params_dict = self._get_params(&#39;GPP&#39;)
+    # Load blacklisted sites (if any)
+    blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+    objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower()
+
+    print(&#39;Loading driver datasets...&#39;)
+    drivers, drivers_flat, tower_gpp, tower_gpp_flat, weights =\
+        self._load_gpp_data(filter_length)
+
+    print(&#39;Initializing sampler...&#39;)
+    backend = self.config[&#39;optimization&#39;][&#39;backend_template&#39;].format(
+        model = &#39;GPP&#39;, pft = self._pft)
+    model_func = getattr( # e.g., L4CStochasticSampler._gpp
+        L4CStochasticSampler,
+        self.config[&#39;optimization&#39;][&#39;function&#39;][&#39;GPP&#39;])
+    sampler = L4CStochasticSampler(
+        self.config, model_func, params_dict,
+        backend = backend, weights = weights)
+
+    # Get (informative) priors for just those parameters that have them
+    with open(self.config[&#39;optimization&#39;][&#39;prior&#39;], &#39;r&#39;) as file:
+        prior = yaml.safe_load(file)
+    prior_params = filter(
+        lambda p: p in prior.keys(), sampler.required_parameters[&#39;GPP&#39;])
+    prior = dict([
+        (p, dict([(k, v[self._pft]) for k, v in prior[p].items()]))
+        for p in prior_params
+    ])
+
+    # For diganostics or plotting representative sites
+    if ipdb or plot in (&#39;exemplar&#39;, &#39;scatter&#39;):
+        # Get the tower with the most available data
+        idx = np.apply_along_axis(
+            lambda x: x.size - np.isnan(x).sum(), 0, tower_gpp).argmax()
+        # The BPLUT has a different representation of ramp function
+        #   parameters: translate &#34;param1&#34; into (&#34;param1&#34; - &#34;param0&#34;)
+        params0 = [
+            params_dict[k] if k[-1] != &#39;1&#39; else params_dict[k] - params_dict[k.replace(&#39;1&#39;, &#39;0&#39;)]
+            for k in sampler.required_parameters[&#39;GPP&#39;]
+        ]
+        # Get proposed (new) parameters, if provided
+        params1 = []
+        for k, key in enumerate(sampler.required_parameters[&#39;GPP&#39;]):
+            if key in kwargs.keys():
+                params1.append(kwargs[key])
+            else:
+                params1.append(params0[k])
+        if plot == &#39;exemplar&#39;:
+            _drivers = [
+                drivers[k][:,idx] for k in sampler.required_drivers[&#39;GPP&#39;]
+            ]
+            gpp0 = model_func(params0, *_drivers)
+            gpp1 = model_func(params1, *_drivers)
+            pyplot.plot(tower_gpp[:,idx], &#39;g-&#39;, label = &#39;Tower GPP&#39;)
+            pyplot.plot(gpp0, &#39;r-&#39;, alpha = 0.5, label = &#39;Old Simulation&#39;)
+            pyplot.plot(gpp1, &#39;k-&#39;, label = &#39;New Simulation&#39;)
+        elif plot == &#39;scatter&#39;:
+            tidx = np.random.randint( # Random 20% sample
+                0, tower_gpp.size, size = tower_gpp.size // 5)
+            _drivers = [
+                drivers[k].ravel()[tidx] for k in sampler.required_drivers[&#39;GPP&#39;]
+            ]
+            _obs = tower_gpp.ravel()[tidx]
+            gpp0 = model_func(params0, *_drivers)
+            gpp1 = model_func(params1, *_drivers)
+            # Calculate (parameters of) trend lines
+            mask = np.isnan(_obs)
+            a0, b0 = np.polyfit(_obs[~mask], gpp0[~mask], deg = 1)
+            a1, b1 = np.polyfit(_obs[~mask], gpp1[~mask], deg = 1)
+            # Create a scatter plot
+            fig = pyplot.figure(figsize = (6, 6))
+            pyplot.scatter(
+                _obs, gpp0, s = 2, c = &#39;k&#39;, alpha = 0.2,
+                label = &#39;Old (RMSE=%.2f, r=%.2f)&#39; % (
+                    rmsd(_obs, gpp0), np.corrcoef(_obs[~mask], gpp0[~mask])[0,1]))
+            pyplot.plot(_obs, a0 * _obs + b0, &#39;k-&#39;, alpha = 0.8)
+            pyplot.scatter(
+                _obs, gpp1, s = 2, c = &#39;r&#39;, alpha = 0.2,
+                label = &#39;New (RMSE=%.2f, r=%.2f)&#39; % (
+                    rmsd(_obs, gpp1), np.corrcoef(_obs[~mask], gpp1[~mask])[0,1]))
+            pyplot.plot(_obs, a1 * _obs + b1, &#39;r-&#39;, alpha = 0.8)
+            ax = fig.get_axes()
+            ax[0].set_aspect(1)
+            ax[0].plot([0, 1], [0, 1],
+                transform = ax[0].transAxes, linestyle = &#39;dashed&#39;,
+                c = &#39;k&#39;, alpha = 0.5)
+            pyplot.xlabel(&#39;Observed&#39;)
+            pyplot.ylabel(&#39;Predicted&#39;)
+            pyplot.title(&#39;\n&#39;.join(wrap(f&#39;PFT {self._pft} with: &#39; + &#39;, &#39;.join(list(map(
+                lambda x: f&#39;{x[0]}={x[1]}&#39;, zip(
+                sampler.required_parameters[&#39;GPP&#39;], params1)))))))
+        pyplot.legend()
+        pyplot.show()
+        # For diagnostics
+        if ipdb:
+            trace = sampler.get_trace(
+                burn = kwargs.get(&#39;burn&#39;, None), thin = kwargs.get(&#39;thin&#39;))
+            import ipdb
+            ipdb.set_trace()
+        return
+
+    # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
+    #   those with priors
+    var_names = list(filter(
+        lambda x: x in prior.keys(), sampler.required_parameters[&#39;GPP&#39;]))
+    # Convert drivers from a dict to a sequence, then run sampler
+    drivers_flat = [drivers_flat[d] for d in sampler.required_drivers[&#39;GPP&#39;]]
+    # Remove any kwargs that don&#39;t belong
+    for k in list(kwargs.keys()):
+        if k not in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;, &#39;save_fig&#39;, &#39;var_names&#39;):
+            del kwargs[k]
+    sampler.run(
+        tower_gpp_flat, drivers_flat, prior = prior, save_fig = save_fig,
+        **kwargs)</code></pre>
+</details>
+<div class="desc"><p>Run the L4C GPP calibration.</p>
+<ul>
+<li>For GPP data: Removes observations where GPP &lt; 0 or where APAR is
+&lt; 0.1 MJ m-2 day-1</li>
+</ul>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The window size for the smoothing filter, applied to the observed
+data</dd>
+<dt><strong><code>plot</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>Plot either: the "trace" for a previous calibration run; an
+"exemplar", or single time series showing tower observations and
+simulations using new and old parameters; a "scatter" plot
+showing simulations, using new and old parameters, against
+observations, with RMSE; or the "posterior" plot, an HDI plot
+of the posterior distribution(s). If None, calibration will
+proceed (calibration is not performed if plotting).</dd>
+<dt><strong><code>ipdb</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to drop the user into an ipdb prompt, prior to and instead of
+running calibration</dd>
+<dt><strong><code>save_fig</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to save figures to files instead of showing them
+(Default: False)</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional keyword arguments passed to
+<code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.run" href="#pyl4c.apps.calibration.mcmc.StochasticSampler.run">StochasticSampler.run()</a></code></dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.CalibrationAPI.tune_reco"><code class="name flex">
+<span>def <span class="ident">tune_reco</span></span>(<span>self,<br>filter_length: int = 2,<br>q_rh: int = 75,<br>q_k: int = 50,<br>plot: str = None,<br>ipdb: bool = False,<br>save_fig: bool = False,<br>**kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tune_reco(
+        self, filter_length: int = 2, q_rh: int = 75, q_k: int = 50,
+        plot: str = None, ipdb: bool = False, save_fig: bool = False,
+        **kwargs):
+    &#39;&#39;&#39;
+    Run the L4C RECO calibration.
+
+    - Negative RH values (i.e., NPP &gt; RECO) are set to zero.
+
+    Parameters
+    ----------
+    filter_length : int
+        The window size for the smoothing filter, applied to the observed
+        data
+    q_rh : int
+        The percentile of RH/Kmult to use in calculating Cbar
+    q_k : int
+        The percentile of Kmult below which RH/Kmult values are masked
+    plot : str or None
+        Plot either: the &#34;trace&#34; for a previous calibration run; an
+        &#34;exemplar&#34;, or single time series showing tower observations and
+        simulations using new and old parameters; a &#34;scatter&#34; plot
+        showing simulations, using new and old parameters, against
+        observations, with RMSE; or the &#34;posterior&#34; plot, an HDI plot
+        of the posterior distribution(s). If None, calibration will
+        proceed (calibration is not performed if plotting).
+    ipdb : bool
+        True to drop the user into an ipdb prompt, prior to and instead of
+        running calibration
+    save_fig : bool
+        True to save figures to files instead of showing them
+        (Default: False)
+    **kwargs
+        Additional keyword arguments passed to
+        `L4CStochasticSampler.run()`
+    &#39;&#39;&#39;
+    assert self._pft in PFT_VALID, f&#39;Invalid PFT: {self._pft}&#39;
+    # IMPORTANT: Set the &#34;name&#34; property of the configuration file;
+    #   this is used by StochasticSampler classes to figure out how
+    #   to compile the model
+    self.config[&#39;name&#39;] = &#39;RECO&#39;
+    # Pass configuration parameters to MOD17StochasticSampler.run()
+    for key in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;):
+        if key in self.config[&#39;optimization&#39;].keys() and not key in kwargs.keys():
+            kwargs[key] = self.config[&#39;optimization&#39;][key]
+    params_dict = self._get_params(&#39;RECO&#39;)
+    # Load blacklisted sites (if any)
+    blacklist = self.config[&#39;data&#39;][&#39;sites_blacklisted&#39;]
+    objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower()
+
+    print(&#39;Loading driver datasets...&#39;)
+    _, _, tower_gpp, _, _ = self._load_gpp_data(filter_length)
+    drivers, tower_reco, weights = self._load_reco_data(filter_length)
+    # For simplicity and consistency with StochasticSampler.run(), the
+    #   observed data and hyperparamters become part of the &#34;driver&#34; data
+    drivers = [tower_reco, tower_gpp, *drivers, q_rh, q_k]
+
+    print(&#39;Initializing sampler...&#39;)
+    backend = self.config[&#39;optimization&#39;][&#39;backend_template&#39;].format(
+        model = &#39;RECO&#39;, pft = self._pft)
+    model_func = getattr( # e.g., L4CStochasticSampler._reco
+        L4CStochasticSampler,
+        self.config[&#39;optimization&#39;][&#39;function&#39;][&#39;RECO&#39;])
+    sampler = L4CStochasticSampler(
+        self.config, model_func, params_dict,
+        backend = backend, weights = weights)
+
+    # Get (informative) priors for just those parameters that have them
+    with open(self.config[&#39;optimization&#39;][&#39;prior&#39;], &#39;r&#39;) as file:
+        prior = yaml.safe_load(file)
+    prior_params = filter(
+        lambda p: p in prior.keys(), sampler.required_parameters[&#39;RECO&#39;])
+    prior = dict([
+        (p, dict([(k, v[self._pft]) for k, v in prior[p].items()]))
+        for p in prior_params
+    ])
+
+    # For diagnostics
+    if ipdb:
+        trace = sampler.get_trace(
+            burn = kwargs.get(&#39;burn&#39;, None), thin = kwargs.get(&#39;thin&#39;))
+        import ipdb
+        ipdb.set_trace()
+
+    # Set var_names to tell ArviZ to plot only the free parameters; i.e.,
+    #   those with priors
+    var_names = list(filter(
+        lambda x: x in prior.keys(), sampler.required_parameters[&#39;RECO&#39;]))
+    # Remove any kwargs that don&#39;t belong
+    for k in list(kwargs.keys()):
+        if k not in (&#39;chains&#39;, &#39;draws&#39;, &#39;tune&#39;, &#39;scaling&#39;, &#39;save_fig&#39;, &#39;var_names&#39;):
+            del kwargs[k]
+    sampler.run(
+        tower_reco, drivers, prior = prior, save_fig = save_fig, **kwargs)</code></pre>
+</details>
+<div class="desc"><p>Run the L4C RECO calibration.</p>
+<ul>
+<li>Negative RH values (i.e., NPP &gt; RECO) are set to zero.</li>
+</ul>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>filter_length</code></strong> :&ensp;<code>int</code></dt>
+<dd>The window size for the smoothing filter, applied to the observed
+data</dd>
+<dt><strong><code>q_rh</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of RH/Kmult to use in calculating Cbar</dd>
+<dt><strong><code>q_k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The percentile of Kmult below which RH/Kmult values are masked</dd>
+<dt><strong><code>plot</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>Plot either: the "trace" for a previous calibration run; an
+"exemplar", or single time series showing tower observations and
+simulations using new and old parameters; a "scatter" plot
+showing simulations, using new and old parameters, against
+observations, with RMSE; or the "posterior" plot, an HDI plot
+of the posterior distribution(s). If None, calibration will
+proceed (calibration is not performed if plotting).</dd>
+<dt><strong><code>ipdb</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to drop the user into an ipdb prompt, prior to and instead of
+running calibration</dd>
+<dt><strong><code>save_fig</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to save figures to files instead of showing them
+(Default: False)</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional keyword arguments passed to
+<code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.run" href="#pyl4c.apps.calibration.mcmc.StochasticSampler.run">StochasticSampler.run()</a></code></dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.L4CStochasticSampler"><code class="flex name class">
+<span>class <span class="ident">L4CStochasticSampler</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class L4CStochasticSampler(StochasticSampler):
+    &#39;&#39;&#39;
+    A Markov Chain-Monte Carlo (MCMC) sampler for L4C. The specific sampler
+    used is the Differential Evolution (DE) MCMC algorithm described by
+    Ter Braak (2008), though the implementation is specific to the PyMC3
+    library.
+
+    Considerations:
+
+    1. Tower GPP is censored when values are &lt; 0 or when APAR is
+        &lt; 0.1 MJ m-2 d-1.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    model : Callable or None
+        The function to call (with driver data and parameters); this function
+        should have a Sequence of model parameters as its first argument and
+        then each driver dataset as a following positional argument; it should
+        require no external state. If `None`, will look for a static method
+        defined on this class called `_name()` where `name` is the model name
+        defined in the configuration file.
+    params_dict : dict or None
+        Dictionary of model parameters, to be used as initial values and as
+        the basis for constructing a new dictionary of optimized parameters
+    backend : str or None
+        Path to a NetCDF4 file backend (Default: None)
+    weights : Sequence or None
+        Optional sequence of weights applied to the model residuals (as in
+        weighted least squares)
+    &#39;&#39;&#39;
+    required_parameters = {
+        &#39;GPP&#39;:  [&#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;],
+        &#39;RECO&#39;: [&#39;CUE&#39;, &#39;tsoil&#39;, &#39;smsf0&#39;, &#39;smsf1&#39;],
+    }
+    required_drivers = {
+        # Tsurf = Surface skin temperature; Tmin = Minimum daily temperature
+        &#39;GPP&#39;:  [&#39;fPAR&#39;, &#39;PAR&#39;, &#39;Tmin&#39;, &#39;VPD&#39;, &#39;SMRZ&#39;, &#39;FT&#39;],
+        &#39;RECO&#39;: [&#39;tower_RECO&#39;, &#39;tower_GPP&#39;, &#39;SMSF&#39;, &#39;Tsoil&#39;, &#39;q_rh&#39;, &#39;q_k&#39;]
+    }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.model is None:
+            self.model = getattr(self, f&#39;_{self.name}&#39;)
+        # Set the model&#39;s prior distribution assumptions
+        self.prior = dict()
+        if self.params is not None:
+            for key in self.required_parameters[self.name]:
+                # NOTE: This is the default only for LUE_max; other parameters,
+                #   with Uniform distributions, don&#39;t use anything here
+                self.prior.setdefault(key, {
+                    &#39;mu&#39;: self.params[key],
+                    &#39;sigma&#39;: 2e-4
+                })
+
+    @staticmethod
+    def _gpp(params, fpar, par, tmin, vpd, smrz, ft):
+        &#39;L4C GPP function&#39;
+        # Calculate E_mult based on current parameters:
+        #   &#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;
+        try:
+            f_tmin = linear_constraint(params[1], params[2])
+        except AssertionError:
+            raise AssertionError(f&#34;FAILED in linear_constraint() with parameters: {params[1:3]}&#34;)
+        try:
+            f_vpd  = linear_constraint(params[3], params[4], &#39;reversed&#39;)
+        except AssertionError:
+            raise AssertionError(f&#34;FAILED in linear_constraint(form = &#39;reversed&#39;) with parameters: {params[3:5]}&#34;)
+        try:
+            f_smrz = linear_constraint(params[5], params[6])
+        except AssertionError:
+            raise AssertionError(f&#34;FAILED in linear_constraint() with parameters: {params[5:7]}&#34;)
+        f_ft   = linear_constraint(params[7], 1.0, &#39;binary&#39;)
+        e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
+        # Calculate GPP based on the provided BPLUT parameters
+        return fpar * par * params[0] * e_mult
+
+    @staticmethod
+    def _gpp2(params, fpar, par, tmin, vpd, smrz, ft):
+        &#39;&#39;&#39;
+        L4C GPP function, with alternate parameters, where the ramp functions
+        are defined in terms of the left edge (lowest value) and the width of
+        the ramp function interval.
+        &#39;&#39;&#39;
+        # Calculate E_mult based on current parameters:
+        #   &#39;LUE&#39;, &#39;tmin0&#39;, &#39;tmin1&#39;, &#39;vpd0&#39;, &#39;vpd1&#39;, &#39;smrz0&#39;, &#39;smrz1&#39;, &#39;ft0&#39;
+        f_tmin = linear_constraint(params[1], params[1] + params[2])
+        f_vpd  = linear_constraint(params[3], params[3] + params[4], &#39;reversed&#39;)
+        f_smrz = linear_constraint(params[5], params[5] + params[6])
+        f_ft   = linear_constraint(params[7], 1.0, &#39;binary&#39;)
+        e_mult = f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
+        # Calculate GPP based on the provided BPLUT parameters
+        return fpar * par * params[0] * e_mult
+
+    @staticmethod
+    def _reco(params, tower_reco, tower_gpp, smsf, tsoil, q_rh, q_k):
+        &#39;&#39;&#39;
+        L4C RECO function, with standard parameters.
+        &#39;&#39;&#39;
+        # Calculate RH as (RECO - RA) or (RECO - (faut * GPP))
+        ra = ((1 - params[0]) * tower_gpp)
+        rh = tower_reco - ra
+        rh = np.where(rh &lt; 0, 0, rh) # Mask out negative RH values
+        f_tsoil = partial(arrhenius, beta0 = params[1])
+        f_smsf = linear_constraint(params[2], params[3])
+        kmult0 = f_tsoil(tsoil) * f_smsf(smsf)
+        cbar0 = cbar(rh, kmult0, q_rh, q_k)
+        return ra + (kmult0 * cbar0)
+
+    def compile_gpp_model(
+            self, observed: Sequence, drivers: Sequence) -&gt; pm.Model:
+        &#39;&#39;&#39;
+        Creates a new GPP model based on the prior distribution. Model can be
+        re-compiled multiple times, e.g., for cross validation.
+
+        Parameters
+        ----------
+        observed : Sequence
+            Sequence of observed values that will be used to calibrate the model;
+            i.e., model is scored by how close its predicted values are to the
+            observed values
+        drivers : list or tuple
+            Sequence of driver datasets to be supplied, in order, to the
+            model&#39;s run function
+
+        Returns
+        -------
+        pm.Model
+        &#39;&#39;&#39;
+        # Define the objective/ likelihood function
+        log_likelihood = BlackBoxLikelihood(
+            self.model, observed, x = drivers, weights = self.weights,
+            objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower())
+        # With this context manager, &#34;all PyMC3 objects introduced in the indented
+        #   code block...are added to the model behind the scenes.&#34;
+        with pm.Model() as model:
+            # NOTE: LUE is unbounded on the right side
+            LUE = pm.TruncatedNormal(&#39;LUE&#39;, **self.prior[&#39;LUE&#39;])
+            tmin0 = pm.Uniform(&#39;tmin0&#39;, **self.prior[&#39;tmin0&#39;])
+            tmin1 = pm.Uniform(&#39;tmin1&#39;, **self.prior[&#39;tmin1&#39;])
+            vpd0 = pm.Uniform(&#39;vpd0&#39;, **self.prior[&#39;vpd0&#39;])
+            vpd1 = pm.Uniform(&#39;vpd1&#39;, **self.prior[&#39;vpd1&#39;])
+            # NOTE: Fixing lower-bound on SMRZ at zero
+            smrz0 = pm.Uniform(&#39;smrz0&#39;, **self.prior[&#39;smrz0&#39;])
+            smrz1 = pm.Uniform(&#39;smrz1&#39;, **self.prior[&#39;smrz1&#39;])
+            ft0 = pm.Uniform(&#39;ft0&#39;, **self.prior[&#39;ft0&#39;])
+            # Convert model parameters to a tensor vector
+            params_list = [LUE, tmin0, tmin1, vpd0, vpd1, smrz0, smrz1, ft0]
+            params = pt.as_tensor_variable(params_list)
+            # Key step: Define the log-likelihood as an added potential
+            pm.Potential(&#39;likelihood&#39;, log_likelihood(params))
+        return model
+
+    def compile_reco_model(
+            self, observed: Sequence, drivers: Sequence) -&gt; pm.Model:
+        &#39;&#39;&#39;
+        Creates a new RECO model based on the prior distribution. Model can be
+        re-compiled multiple times, e.g., for cross validation.
+
+        Parameters
+        ----------
+        observed : Sequence
+            Sequence of observed values that will be used to calibrate the model;
+            i.e., model is scored by how close its predicted values are to the
+            observed values
+        drivers : list or tuple
+            Sequence of driver datasets to be supplied, in order, to the
+            model&#39;s run function
+
+        Returns
+        -------
+        pm.Model
+        &#39;&#39;&#39;
+        log_likelihood = BlackBoxLikelihood(
+            self.model, observed, x = drivers, weights = self.weights,
+            objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower())
+        with pm.Model() as model:
+            # (Stochstic) Priors for unknown model parameters
+            CUE = pm.Beta(&#39;CUE&#39;, **self.prior[&#39;CUE&#39;])
+            tsoil = pm.Uniform(&#39;tsoil&#39;, **self.prior[&#39;tsoil&#39;])
+            smsf0 = 0.0 # NOTE: Left edge fixed at 0.0
+            smsf1 = pm.Uniform(&#39;smsf1&#39;, **self.prior[&#39;smsf1&#39;])
+            # Convert model parameters to a tensor vector
+            params_list = [CUE, tsoil, smsf0, smsf1]
+            params = pt.as_tensor_variable(params_list)
+            # Key step: Define the log-likelihood as an added potential
+            pm.Potential(&#39;likelihood&#39;, log_likelihood(params))
+        return model</code></pre>
+</details>
+<div class="desc"><p>A Markov Chain-Monte Carlo (MCMC) sampler for L4C. The specific sampler
+used is the Differential Evolution (DE) MCMC algorithm described by
+Ter Braak (2008), though the implementation is specific to the PyMC3
+library.</p>
+<p>Considerations:</p>
+<ol>
+<li>Tower GPP is censored when values are &lt; 0 or when APAR is
+&lt; 0.1 MJ m-2 d-1.</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of configuration parameters</dd>
+<dt><strong><code>model</code></strong> :&ensp;<code>Callable</code> or <code>None</code></dt>
+<dd>The function to call (with driver data and parameters); this function
+should have a Sequence of model parameters as its first argument and
+then each driver dataset as a following positional argument; it should
+require no external state. If <code>None</code>, will look for a static method
+defined on this class called <code>_name()</code> where <code>name</code> is the model name
+defined in the configuration file.</dd>
+<dt><strong><code>params_dict</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Dictionary of model parameters, to be used as initial values and as
+the basis for constructing a new dictionary of optimized parameters</dd>
+<dt><strong><code>backend</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>Path to a NetCDF4 file backend (Default: None)</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>Sequence</code> or <code>None</code></dt>
+<dd>Optional sequence of weights applied to the model residuals (as in
+weighted least squares)</dd>
+</dl></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.calibration.mcmc.StochasticSampler" href="#pyl4c.apps.calibration.mcmc.StochasticSampler">StochasticSampler</a></li>
+<li><a title="pyl4c.apps.calibration.mcmc.AbstractSampler" href="#pyl4c.apps.calibration.mcmc.AbstractSampler">AbstractSampler</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.required_drivers"><code class="name">var <span class="ident">required_drivers</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.required_parameters"><code class="name">var <span class="ident">required_parameters</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.compile_gpp_model"><code class="name flex">
+<span>def <span class="ident">compile_gpp_model</span></span>(<span>self, observed: Sequence, drivers: Sequence) ‑> pymc.model.core.Model</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compile_gpp_model(
+        self, observed: Sequence, drivers: Sequence) -&gt; pm.Model:
+    &#39;&#39;&#39;
+    Creates a new GPP model based on the prior distribution. Model can be
+    re-compiled multiple times, e.g., for cross validation.
+
+    Parameters
+    ----------
+    observed : Sequence
+        Sequence of observed values that will be used to calibrate the model;
+        i.e., model is scored by how close its predicted values are to the
+        observed values
+    drivers : list or tuple
+        Sequence of driver datasets to be supplied, in order, to the
+        model&#39;s run function
+
+    Returns
+    -------
+    pm.Model
+    &#39;&#39;&#39;
+    # Define the objective/ likelihood function
+    log_likelihood = BlackBoxLikelihood(
+        self.model, observed, x = drivers, weights = self.weights,
+        objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower())
+    # With this context manager, &#34;all PyMC3 objects introduced in the indented
+    #   code block...are added to the model behind the scenes.&#34;
+    with pm.Model() as model:
+        # NOTE: LUE is unbounded on the right side
+        LUE = pm.TruncatedNormal(&#39;LUE&#39;, **self.prior[&#39;LUE&#39;])
+        tmin0 = pm.Uniform(&#39;tmin0&#39;, **self.prior[&#39;tmin0&#39;])
+        tmin1 = pm.Uniform(&#39;tmin1&#39;, **self.prior[&#39;tmin1&#39;])
+        vpd0 = pm.Uniform(&#39;vpd0&#39;, **self.prior[&#39;vpd0&#39;])
+        vpd1 = pm.Uniform(&#39;vpd1&#39;, **self.prior[&#39;vpd1&#39;])
+        # NOTE: Fixing lower-bound on SMRZ at zero
+        smrz0 = pm.Uniform(&#39;smrz0&#39;, **self.prior[&#39;smrz0&#39;])
+        smrz1 = pm.Uniform(&#39;smrz1&#39;, **self.prior[&#39;smrz1&#39;])
+        ft0 = pm.Uniform(&#39;ft0&#39;, **self.prior[&#39;ft0&#39;])
+        # Convert model parameters to a tensor vector
+        params_list = [LUE, tmin0, tmin1, vpd0, vpd1, smrz0, smrz1, ft0]
+        params = pt.as_tensor_variable(params_list)
+        # Key step: Define the log-likelihood as an added potential
+        pm.Potential(&#39;likelihood&#39;, log_likelihood(params))
+    return model</code></pre>
+</details>
+<div class="desc"><p>Creates a new GPP model based on the prior distribution. Model can be
+re-compiled multiple times, e.g., for cross validation.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>observed</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>Sequence of observed values that will be used to calibrate the model;
+i.e., model is scored by how close its predicted values are to the
+observed values</dd>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of driver datasets to be supplied, in order, to the
+model's run function</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pm.Model</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.compile_reco_model"><code class="name flex">
+<span>def <span class="ident">compile_reco_model</span></span>(<span>self, observed: Sequence, drivers: Sequence) ‑> pymc.model.core.Model</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compile_reco_model(
+        self, observed: Sequence, drivers: Sequence) -&gt; pm.Model:
+    &#39;&#39;&#39;
+    Creates a new RECO model based on the prior distribution. Model can be
+    re-compiled multiple times, e.g., for cross validation.
+
+    Parameters
+    ----------
+    observed : Sequence
+        Sequence of observed values that will be used to calibrate the model;
+        i.e., model is scored by how close its predicted values are to the
+        observed values
+    drivers : list or tuple
+        Sequence of driver datasets to be supplied, in order, to the
+        model&#39;s run function
+
+    Returns
+    -------
+    pm.Model
+    &#39;&#39;&#39;
+    log_likelihood = BlackBoxLikelihood(
+        self.model, observed, x = drivers, weights = self.weights,
+        objective = self.config[&#39;optimization&#39;][&#39;objective&#39;].lower())
+    with pm.Model() as model:
+        # (Stochstic) Priors for unknown model parameters
+        CUE = pm.Beta(&#39;CUE&#39;, **self.prior[&#39;CUE&#39;])
+        tsoil = pm.Uniform(&#39;tsoil&#39;, **self.prior[&#39;tsoil&#39;])
+        smsf0 = 0.0 # NOTE: Left edge fixed at 0.0
+        smsf1 = pm.Uniform(&#39;smsf1&#39;, **self.prior[&#39;smsf1&#39;])
+        # Convert model parameters to a tensor vector
+        params_list = [CUE, tsoil, smsf0, smsf1]
+        params = pt.as_tensor_variable(params_list)
+        # Key step: Define the log-likelihood as an added potential
+        pm.Potential(&#39;likelihood&#39;, log_likelihood(params))
+    return model</code></pre>
+</details>
+<div class="desc"><p>Creates a new RECO model based on the prior distribution. Model can be
+re-compiled multiple times, e.g., for cross validation.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>observed</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>Sequence of observed values that will be used to calibrate the model;
+i.e., model is scored by how close its predicted values are to the
+observed values</dd>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of driver datasets to be supplied, in order, to the
+model's run function</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>pm.Model</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.calibration.mcmc.StochasticSampler" href="#pyl4c.apps.calibration.mcmc.StochasticSampler">StochasticSampler</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.get_posterior" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.get_posterior">get_posterior</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.get_trace" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.get_trace">get_trace</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.plot_autocorr" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_autocorr">plot_autocorr</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.plot_forest" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_forest">plot_forest</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.plot_pair" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_pair">plot_pair</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.plot_posterior" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_posterior">plot_posterior</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.run" href="#pyl4c.apps.calibration.mcmc.StochasticSampler.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="pyl4c.apps.calibration.mcmc.StochasticSampler"><code class="flex name class">
+<span>class <span class="ident">StochasticSampler</span></span>
+<span>(</span><span>config: dict,<br>model: Callable = None,<br>params_dict: dict = None,<br>backend: str = None,<br>weights: Sequence = None)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StochasticSampler(AbstractSampler):
+    &#39;&#39;&#39;
+    A Markov Chain-Monte Carlo (MCMC) sampler for an arbitrary model. The
+    specific sampler used is the Differential Evolution (DE) MCMC algorithm
+    described by Ter Braak (2008), though the implementation is specific to
+    the PyMC3 library.
+
+    Parameters
+    ----------
+    config : dict
+        Dictionary of configuration parameters
+    model : Callable or None
+        The function to call (with driver data and parameters); this function
+        should have a Sequence of model parameters as its first argument and
+        then each driver dataset as a following positional argument; it should
+        require no external state. If `None`, will look for a static method
+        defined on this class called `_name()` where `name` is the model name
+        defined in the configuration file.
+    params_dict : dict or None
+        Dictionary of model parameters, to be used as initial values and as
+        the basis for constructing a new dictionary of optimized parameters
+    backend : str or None
+        Path to a netCDF4 file backend (Default: None)
+    weights : Sequence or None
+        Optional sequence of weights applied to the model residuals (as in
+        weighted least squares)
+    &#39;&#39;&#39;
+    def __init__(
+            self, config: dict, model: Callable = None,
+            params_dict: dict = None, backend: str = None,
+            weights: Sequence = None):
+        self.backend = backend
+        self.config = config
+        self.model = model
+        self.name = config[&#39;name&#39;]
+        self.params = params_dict
+        self.weights = weights
+        assert os.path.exists(os.path.dirname(backend))
+
+    def run(
+            self, observed: Sequence, drivers: Sequence,
+            draws = 1000, chains = 3, tune = &#39;lambda&#39;,
+            scaling: float = 1e-3, prior: dict = dict(),
+            check_shape: bool = False, save_fig: bool = False,
+            var_names: Sequence = None) -&gt; None:
+        &#39;&#39;&#39;
+        Fits the model using DE-MCMCz approach. `tune=&#34;lambda&#34;` (default) is
+        recommended; lambda is related to the scale of the jumps learned from
+        other chains, but epsilon (&#34;scaling&#34;) controls the scale directly.
+        Using a larger value for `scaling` (Default: 1e-3) will produce larger
+        jumps and may directly address &#34;sticky&#34; chains.
+
+        Parameters
+        ----------
+        observed : Sequence
+            Sequence of observed values that will be used to calibrate the model;
+            i.e., model is scored by how close its predicted values are to the
+            observed values
+        drivers : list or tuple
+            Sequence of driver datasets to be supplied, in order, to the
+            model&#39;s run function
+        draws : int
+            Number of samples to draw (on each chain); defaults to 1000
+        chains : int
+            Number of chains; defaults to 3
+        tune : str or None
+            Which hyperparameter to tune: Defaults to &#39;lambda&#39;, but can also
+            be &#39;scaling&#39; or None.
+        scaling : float
+            Initial scale factor for epsilon (Default: 1e-3)
+        prior : dict
+        check_shape : bool
+            True to require that input driver datasets have the same shape as
+            the observed values (Default: False)
+        save_fig : bool
+            True to save figures to files instead of showing them
+            (Default: False)
+        var_names : Sequence
+            One or more variable names to show in the plot
+        &#39;&#39;&#39;
+        assert not check_shape or drivers[0].shape == observed.shape,\
+            &#39;Driver data should have the same shape as the &#34;observed&#34; data&#39;
+        assert len(drivers) == len(self.required_drivers[self.name]),\
+            &#39;Did not receive expected number of driver datasets!&#39;
+        assert tune in (&#39;lambda&#39;, &#39;scaling&#39;) or tune is None
+        # Update prior assumptions
+        self.prior.update(prior)
+        # Generate an initial goodness-of-fit score
+        if self.params is not None:
+            predicted = self.model([
+                self.params[p] for p in self.required_parameters[self.name]
+            ], *drivers)
+        if self.weights is not None:
+            score = np.sqrt(
+                np.nanmean(((predicted - observed) * self.weights) ** 2))
+        else:
+            score = np.sqrt(np.nanmean(((predicted - observed)) ** 2))
+        print(&#39;-- RMSD at the initial point: %.3f&#39; % score)
+        print(&#39;Compiling model...&#39;)
+        try:
+            compiler = getattr(self, &#39;compile_%s_model&#39; % self.name.lower())
+        except AttributeError:
+            raise AttributeError(&#39;&#39;&#39;Could not find a compiler for model named
+            &#34;%s&#34;; make sure that a function &#34;compile_%s_model()&#34; is defined on
+             this class&#39;&#39;&#39; % (self.name, self.name.lower()))
+        with compiler(observed, drivers) as model:
+            with warnings.catch_warnings():
+                warnings.simplefilter(&#39;ignore&#39;)
+                step_func = pm.DEMetropolisZ(tune = tune, scaling = scaling)
+                trace = pm.sample(
+                    draws = draws, step = step_func, cores = chains,
+                    chains = chains, idata_kwargs = {&#39;log_likelihood&#39;: True})
+            if self.backend is not None:
+                print(&#39;Writing results to file...&#39;)
+                trace.to_netcdf(self.backend)
+            if var_names is None:
+                az.plot_trace(trace, var_names = [&#39;~log_likelihood&#39;])
+            else:
+                az.plot_trace(trace, var_names = var_names)
+            if save_fig:
+                pyplot.savefig(&#39;.&#39;.join(self.backend.split(&#39;.&#39;)[:-1]) + &#39;.png&#39;)
+            else:
+                pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>A Markov Chain-Monte Carlo (MCMC) sampler for an arbitrary model. The
+specific sampler used is the Differential Evolution (DE) MCMC algorithm
+described by Ter Braak (2008), though the implementation is specific to
+the PyMC3 library.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>config</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of configuration parameters</dd>
+<dt><strong><code>model</code></strong> :&ensp;<code>Callable</code> or <code>None</code></dt>
+<dd>The function to call (with driver data and parameters); this function
+should have a Sequence of model parameters as its first argument and
+then each driver dataset as a following positional argument; it should
+require no external state. If <code>None</code>, will look for a static method
+defined on this class called <code>_name()</code> where <code>name</code> is the model name
+defined in the configuration file.</dd>
+<dt><strong><code>params_dict</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>Dictionary of model parameters, to be used as initial values and as
+the basis for constructing a new dictionary of optimized parameters</dd>
+<dt><strong><code>backend</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>Path to a netCDF4 file backend (Default: None)</dd>
+<dt><strong><code>weights</code></strong> :&ensp;<code>Sequence</code> or <code>None</code></dt>
+<dd>Optional sequence of weights applied to the model residuals (as in
+weighted least squares)</dd>
+</dl></div>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.calibration.mcmc.AbstractSampler" href="#pyl4c.apps.calibration.mcmc.AbstractSampler">AbstractSampler</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler" href="#pyl4c.apps.calibration.mcmc.L4CStochasticSampler">L4CStochasticSampler</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="pyl4c.apps.calibration.mcmc.StochasticSampler.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self,<br>observed: Sequence,<br>drivers: Sequence,<br>draws=1000,<br>chains=3,<br>tune='lambda',<br>scaling: float = 0.001,<br>prior: dict = {},<br>check_shape: bool = False,<br>save_fig: bool = False,<br>var_names: Sequence = None) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(
+        self, observed: Sequence, drivers: Sequence,
+        draws = 1000, chains = 3, tune = &#39;lambda&#39;,
+        scaling: float = 1e-3, prior: dict = dict(),
+        check_shape: bool = False, save_fig: bool = False,
+        var_names: Sequence = None) -&gt; None:
+    &#39;&#39;&#39;
+    Fits the model using DE-MCMCz approach. `tune=&#34;lambda&#34;` (default) is
+    recommended; lambda is related to the scale of the jumps learned from
+    other chains, but epsilon (&#34;scaling&#34;) controls the scale directly.
+    Using a larger value for `scaling` (Default: 1e-3) will produce larger
+    jumps and may directly address &#34;sticky&#34; chains.
+
+    Parameters
+    ----------
+    observed : Sequence
+        Sequence of observed values that will be used to calibrate the model;
+        i.e., model is scored by how close its predicted values are to the
+        observed values
+    drivers : list or tuple
+        Sequence of driver datasets to be supplied, in order, to the
+        model&#39;s run function
+    draws : int
+        Number of samples to draw (on each chain); defaults to 1000
+    chains : int
+        Number of chains; defaults to 3
+    tune : str or None
+        Which hyperparameter to tune: Defaults to &#39;lambda&#39;, but can also
+        be &#39;scaling&#39; or None.
+    scaling : float
+        Initial scale factor for epsilon (Default: 1e-3)
+    prior : dict
+    check_shape : bool
+        True to require that input driver datasets have the same shape as
+        the observed values (Default: False)
+    save_fig : bool
+        True to save figures to files instead of showing them
+        (Default: False)
+    var_names : Sequence
+        One or more variable names to show in the plot
+    &#39;&#39;&#39;
+    assert not check_shape or drivers[0].shape == observed.shape,\
+        &#39;Driver data should have the same shape as the &#34;observed&#34; data&#39;
+    assert len(drivers) == len(self.required_drivers[self.name]),\
+        &#39;Did not receive expected number of driver datasets!&#39;
+    assert tune in (&#39;lambda&#39;, &#39;scaling&#39;) or tune is None
+    # Update prior assumptions
+    self.prior.update(prior)
+    # Generate an initial goodness-of-fit score
+    if self.params is not None:
+        predicted = self.model([
+            self.params[p] for p in self.required_parameters[self.name]
+        ], *drivers)
+    if self.weights is not None:
+        score = np.sqrt(
+            np.nanmean(((predicted - observed) * self.weights) ** 2))
+    else:
+        score = np.sqrt(np.nanmean(((predicted - observed)) ** 2))
+    print(&#39;-- RMSD at the initial point: %.3f&#39; % score)
+    print(&#39;Compiling model...&#39;)
+    try:
+        compiler = getattr(self, &#39;compile_%s_model&#39; % self.name.lower())
+    except AttributeError:
+        raise AttributeError(&#39;&#39;&#39;Could not find a compiler for model named
+        &#34;%s&#34;; make sure that a function &#34;compile_%s_model()&#34; is defined on
+         this class&#39;&#39;&#39; % (self.name, self.name.lower()))
+    with compiler(observed, drivers) as model:
+        with warnings.catch_warnings():
+            warnings.simplefilter(&#39;ignore&#39;)
+            step_func = pm.DEMetropolisZ(tune = tune, scaling = scaling)
+            trace = pm.sample(
+                draws = draws, step = step_func, cores = chains,
+                chains = chains, idata_kwargs = {&#39;log_likelihood&#39;: True})
+        if self.backend is not None:
+            print(&#39;Writing results to file...&#39;)
+            trace.to_netcdf(self.backend)
+        if var_names is None:
+            az.plot_trace(trace, var_names = [&#39;~log_likelihood&#39;])
+        else:
+            az.plot_trace(trace, var_names = var_names)
+        if save_fig:
+            pyplot.savefig(&#39;.&#39;.join(self.backend.split(&#39;.&#39;)[:-1]) + &#39;.png&#39;)
+        else:
+            pyplot.show()</code></pre>
+</details>
+<div class="desc"><p>Fits the model using DE-MCMCz approach. <code>tune="lambda"</code> (default) is
+recommended; lambda is related to the scale of the jumps learned from
+other chains, but epsilon ("scaling") controls the scale directly.
+Using a larger value for <code>scaling</code> (Default: 1e-3) will produce larger
+jumps and may directly address "sticky" chains.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>observed</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>Sequence of observed values that will be used to calibrate the model;
+i.e., model is scored by how close its predicted values are to the
+observed values</dd>
+<dt><strong><code>drivers</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of driver datasets to be supplied, in order, to the
+model's run function</dd>
+<dt><strong><code>draws</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of samples to draw (on each chain); defaults to 1000</dd>
+<dt><strong><code>chains</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of chains; defaults to 3</dd>
+<dt><strong><code>tune</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>Which hyperparameter to tune: Defaults to 'lambda', but can also
+be 'scaling' or None.</dd>
+<dt><strong><code>scaling</code></strong> :&ensp;<code>float</code></dt>
+<dd>Initial scale factor for epsilon (Default: 1e-3)</dd>
+<dt><strong><code>prior</code></strong> :&ensp;<code>dict</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>check_shape</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to require that input driver datasets have the same shape as
+the observed values (Default: False)</dd>
+<dt><strong><code>save_fig</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to save figures to files instead of showing them
+(Default: False)</dd>
+<dt><strong><code>var_names</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>One or more variable names to show in the plot</dd>
+</dl></div>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="pyl4c.apps.calibration.mcmc.AbstractSampler" href="#pyl4c.apps.calibration.mcmc.AbstractSampler">AbstractSampler</a></b></code>:
+<ul class="hlist">
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.get_posterior" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.get_posterior">get_posterior</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.get_trace" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.get_trace">get_trace</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_autocorr" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_autocorr">plot_autocorr</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_forest" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_forest">plot_forest</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_pair" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_pair">plot_pair</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_posterior" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_posterior">plot_posterior</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="SMAP Mission Homepage" href="https://smap.jpl.nasa.gov/">
+<img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
+</a>
+</header>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pyl4c.apps.calibration" href="index.html">pyl4c.apps.calibration</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler" href="#pyl4c.apps.calibration.mcmc.AbstractSampler">AbstractSampler</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.get_posterior" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.get_posterior">get_posterior</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.get_trace" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.get_trace">get_trace</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_autocorr" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_autocorr">plot_autocorr</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_forest" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_forest">plot_forest</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_pair" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_pair">plot_pair</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.AbstractSampler.plot_posterior" href="#pyl4c.apps.calibration.mcmc.AbstractSampler.plot_posterior">plot_posterior</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood">BlackBoxLikelihood</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.itypes" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.itypes">itypes</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik">loglik</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik_gaussian" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik_gaussian">loglik_gaussian</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik_kge" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.loglik_kge">loglik_kge</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.otypes" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.otypes">otypes</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.perform" href="#pyl4c.apps.calibration.mcmc.BlackBoxLikelihood.perform">perform</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI">CalibrationAPI</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI.pft" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI.pft">pft</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_autocorr" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_autocorr">plot_autocorr</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_posterior" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_posterior">plot_posterior</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_trace" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI.plot_trace">plot_trace</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI.tune_gpp" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI.tune_gpp">tune_gpp</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.CalibrationAPI.tune_reco" href="#pyl4c.apps.calibration.mcmc.CalibrationAPI.tune_reco">tune_reco</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler" href="#pyl4c.apps.calibration.mcmc.L4CStochasticSampler">L4CStochasticSampler</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.compile_gpp_model" href="#pyl4c.apps.calibration.mcmc.L4CStochasticSampler.compile_gpp_model">compile_gpp_model</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.compile_reco_model" href="#pyl4c.apps.calibration.mcmc.L4CStochasticSampler.compile_reco_model">compile_reco_model</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.required_drivers" href="#pyl4c.apps.calibration.mcmc.L4CStochasticSampler.required_drivers">required_drivers</a></code></li>
+<li><code><a title="pyl4c.apps.calibration.mcmc.L4CStochasticSampler.required_parameters" href="#pyl4c.apps.calibration.mcmc.L4CStochasticSampler.required_parameters">required_parameters</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler" href="#pyl4c.apps.calibration.mcmc.StochasticSampler">StochasticSampler</a></code></h4>
+<ul class="">
+<li><code><a title="pyl4c.apps.calibration.mcmc.StochasticSampler.run" href="#pyl4c.apps.calibration.mcmc.StochasticSampler.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
+</footer>
+</body>
+</html>

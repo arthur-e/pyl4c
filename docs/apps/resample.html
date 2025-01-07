@@ -2,19 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.apps.resample API documentation</title>
-<meta name="description" content="Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means …" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<meta name="description" content="Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -28,8 +43,9 @@
 <pre><code>nested = NestedGrid(subset_id = "CONUS")
 arr = nested.pft_mask(8) # 1-km map of PFT 8
 with h5py.File("something.h5", "r") as hdf:
-    nested.downscale_hdf5_by_pft(hdf, "GPP/gpp_pft%d_mean")
+    nested.downscale_hdf_by_pft(hdf, "GPP/gpp_pft%d_mean")
 </code></pre>
+<p>The following attribute will provide the offsets</p>
 <p>The above example assumes that you have official SPL4CMDL HDF5 granules from
 NSIDC or EarthData Search. It's also possible to downscale netCDF4 granules
 from NASA AppEEARS, including granules that represent spatial subsets:</p>
@@ -61,385 +77,6 @@ and GPP).</strong></p>
 <ol>
 <li><a href="https://nsidc.org/ease/ease-grid-projection-gt">https://nsidc.org/ease/ease-grid-projection-gt</a></li>
 </ol>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means.
-
-    nested = NestedGrid(subset_id = &#34;CONUS&#34;)
-    arr = nested.pft_mask(8) # 1-km map of PFT 8
-    with h5py.File(&#34;something.h5&#34;, &#34;r&#34;) as hdf:
-        nested.downscale_hdf5_by_pft(hdf, &#34;GPP/gpp_pft%d_mean&#34;)
-
-The above example assumes that you have official SPL4CMDL HDF5 granules from
-NSIDC or EarthData Search. It&#39;s also possible to downscale netCDF4 granules
-from NASA AppEEARS, including granules that represent spatial subsets:
-
-    nc = netCDF4.Dataset(&#39;AppEEARS_granule.nc&#39;)
-
-    # Read the EASE-Grid 2.0 coordinate arrays, get bounds
-    xmin, xmax = min(nc[&#39;fakedim1&#39;][:]), max(nc[&#39;fakedim1&#39;][:])
-    ymin, ymax = min(nc[&#39;fakedim0&#39;][:]), max(nc[&#39;fakedim0&#39;][:])
-
-    AOI = (xmin, ymin, xmax, ymax)
-    # It may be necessary to provide a &#34;shape&#34; argument to ensure that
-    #   the land-cover/ PFT data are forced to the shape of the netCDF4 data
-    nested = NestedGrid(
-        subset_bbox = AOI, shape = nc.variables[&#39;SOC_soc_mean&#39;][0].shape)
-    result = nested.downscale_netcdf_by_pft(
-        nc, field = &#39;SOC_soc_pft%d_mean&#39;, dtype = np.float32)
-
-All of the SMAP Level 4 Carbon (L4C) flux and soil organic carbon (SOC) state
-variables are computed on a global, 1-km equal-area grid. We spatially average
-the data to 9-km to meet operational constraints on data storage. However,
-within each 9-km cell, we save the mean values for each Plant Functional Type
-(PFT); e.g., the mean SOC density at all the &#34;Evergreen Needleleaf&#34; pixels in
-a 9-km cell (between 0 and 81 pixels) is recorded, along with the means of up
-to eight other PFTs. This allows a reconstruction of finer-scale detail, using
-the 1-km map of PFT and assigning the mean values within each 9-km cell. The
-9-km and 1-km grids are designed to nest perfectly [1]. **Therefore, it is
-possible to generate a down-scaled 1-km map of SOC density (and of RH, NEE,
-and GPP).**
-
-1. https://nsidc.org/ease/ease-grid-projection-gt
-&#39;&#39;&#39;
-
-import os
-import tempfile
-import h5py
-import numpy as np
-from affine import Affine
-from osgeo import gdal
-from scipy.ndimage import zoom
-from cached_property import cached_property
-from pyl4c.data.fixtures import EASE2_GRID_PARAMS
-from pyl4c.ease2 import ease2_coords
-from pyl4c.utils import get_pft_array
-from pyl4c.spatial import ease2_to_geotiff
-from pyl4c.lib.cli import CommandLineInterface, ProgressBar
-
-class NestedGrid(object):
-    &#39;&#39;&#39;
-    Represents a nested L4C data structure, where each grid cell has a mean
-    value for each sub-grid PFT class. This allows the reconstruction of a
-    finer scale grid by applying the PFT mean values to the subgrid. The
-    arguments `subset_id` and `subset_bbox` are mutually exclusive.
-
-    Parameters
-    ----------
-    pft : tuple
-        PFT values to use in downscaling
-    shape : Sequence
-        (Optional) The intended shape (at 9-km resolution) of the L4C data
-        that will be downscaled. If not provided, should the shape of the
-        data not match the PFT map, an error will be raised.
-    subset_bbox : Sequence
-        (Optional) An optional bounding box, `(xmin, ymin, xmax, ymax)`,
-        specifying a spatial subset that will be downscaled
-    &#39;&#39;&#39;
-    def __init__(self, pft = range(1, 9), shape = None, subset_bbox = None):
-        self._offsets = (0, 0)
-        self._pft_codes = pft
-        self._shp_1km = EASE2_GRID_PARAMS[&#39;M01&#39;][&#39;shape&#39;]
-        self._shp_9km = EASE2_GRID_PARAMS[&#39;M09&#39;][&#39;shape&#39;]
-        self._slice_idx_1km = None
-        self._slice_idx_9km = None
-        self._subset_bbox = subset_bbox
-        self._ul_coords = (subset_bbox[0], subset_bbox[-1]) # Upper-left coordinates
-        self._lr_coords = (subset_bbox[-2], subset_bbox[1]) # Lower-right coordinates
-        # This is the &#34;global&#34; affine transformation
-        self._transform_1km = Affine.from_gdal(*EASE2_GRID_PARAMS[&#39;M01&#39;][&#39;geotransform&#39;])
-        self._transform_9km = Affine.from_gdal(*EASE2_GRID_PARAMS[&#39;M09&#39;][&#39;geotransform&#39;])
-        # This is the &#34;output&#34; (1-km) affine transformation
-        self._transform = self._transform_1km * self._transform_1km.scale(1)
-        if subset_bbox is not None:
-            # Need to calculate &#34;local&#34; transformation
-            gt = list(self._transform_9km.to_gdal())
-            gt[0] = self._ul_coords[0]
-            gt[3] = self._ul_coords[1]
-            transform_9km = Affine.from_gdal(*gt)
-            transform_1km = transform_9km * transform_9km.scale(1/9)
-            # Figure out row-column coordinates of upper-left corner and
-            #   the 9-km extent
-            x0, y0 = list(map(int, ~self._transform_9km * self._ul_coords))
-            x1, y1 = list(map(int, ~transform_9km * self._lr_coords))
-            self._shp_9km = (y1, x1)
-            self._slice_idx_9km = [(y0, y0 + y1), (x0, x0 + x1)]
-            # Same for the 1-km extent
-            x2, y2 = list(map(int, ~self._transform_1km * self._ul_coords))
-            x3, y3 = list(map(int, ~transform_1km * self._lr_coords))
-            self._shp_1km = (y3, x3)
-            # Check that this is the expected shape; because of coordinate
-            #   transformations with different libraries, we may need to
-            #   fudge things a big
-            if shape is not None:
-                if self._shp_9km != shape:
-                    print(f&#39;WARNING: Expected shape {str(shape)} did not match actual shape {str(self._shp_9km)}; using expected shape&#39;)
-                    # Adjust the width and height at the bottom-right corner
-                    deltas = np.array(shape) - np.array(self._shp_9km)
-                    self._shp_9km = shape
-                    self._shp_1km = tuple(np.array(self._shp_9km) * 9)
-                    self._slice_idx_9km = [
-                        (y0, y0 + y1 + deltas[0]),
-                        (x0, x0 + x1 + deltas[1])
-                    ]
-            self._slice_idx_1km = (np.array(self._slice_idx_9km) * 9).tolist()
-            # Update the output 1-km transformation
-            self._transform = transform_1km
-
-    @cached_property
-    def pft(self):
-        &#39;The 1-km PFT map&#39;
-        return get_pft_array(
-            &#39;M01&#39;, slice_idx = self._slice_idx_1km).astype(np.uint8)[np.newaxis,...]
-
-    @property
-    def shape(self):
-        &#39;Returns the 1-km array shape&#39;
-        return self._shp_1km
-
-    def _downscale(self, downscaled, scale = 1, dtype = np.float32, nodata = -9999):
-        # Where the PFT map is in the valid range, return data, else NoData
-        return np.where(
-            np.logical_and(
-                np.in1d(self.pft.ravel(), self._pft_codes),
-                downscaled.ravel() != nodata),
-            np.multiply(downscaled.ravel(), scale), nodata)\
-            .reshape(self._shp_1km)\
-            .astype(dtype)
-
-    def pft_mask(self, p):
-        &#39;&#39;&#39;
-        An (M x N) mask for selecting pixels matching specified PFT class.
-
-        Parameters
-        ----------
-        p : int
-            The numeric code for the PFT of interest
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        return np.where(self.pft == p, 1, 0)
-
-    def downscale_hdf5_by_pft(*args, **kwargs):
-        &#39;&#39;&#39;
-        DEPRECATED. Use `NestedGrid.downscale_hdf_by_pft()` instead.
-        &#39;&#39;&#39;
-        self.downscale_hdf_by_pft(*args, **kwargs)
-
-    def downscale_hdf_by_pft(
-            self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
-        &#39;&#39;&#39;
-        Resamples 9-km L4C data to 1-km scale by repeating the spatial mean
-        values for each PFT on the 1-km land-cover grid.
-
-        Will subset the *arrays if they are not the expected shape of the
-        subset at 9-km scale. This function assumes that the grouped dataset,
-        `hdf`, is either an official SPL4CMDL HDF5 granule or a netCDF4 file
-        generated by NASA AppEEARS.
-
-        NOTE: Use scale = 1e6 if a total flux (e.g., total GPP) is required;
-        `1e6` is the number of square meters in a 1-km L4C pixel.
-
-        Parameters
-        ----------
-        hdf : h5py.File or netCDF4.Dataset
-        field : str
-            Template for PFT-mean field in the HDF5 granule, e.g.,
-            &#34;GPP/gpp_pft%d_mean&#34;
-        scale : int or float
-        dtype : numpy.dtype
-        nodata : int or float
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        if nodata &lt; 0:
-            assert dtype not in (np.uint0, np.uint8, np.uint16, np.uint32, np.uint64),\
-                &#34;Can&#39;t use an unsigned data type with a negative NoData value&#34;
-        opts = { # Options to zoom()
-            &#39;order&#39;: 0, &#39;zoom&#39;: 9, &#39;mode&#39;: &#39;grid-constant&#39;, &#39;grid_mode&#39;: True
-        }
-        if self._subset_bbox is not None:
-            y_idx, x_idx = self._slice_idx_9km
-            ymin, ymax = y_idx
-            xmin, xmax = x_idx
-
-        downscaled = np.zeros(self._shp_1km, dtype = dtype)
-        for p in self._pft_codes:
-            # Allow for the possibility of either netCDF4 or h5py datasets
-            if hasattr(hdf, &#39;variables&#39;):
-                source = hdf.variables[field % p]
-            else:
-                source = hdf[field % p]
-            # If needed, subset the 9-km arrays, then down-scale to 1-km
-            if self._subset_bbox is None:
-                arr = source[:]
-            else:
-                arr = source[ymin:ymax, xmin:xmax]
-            # Resize, multiply by PFT mask, then add to output where != NoData
-            downscaled = np.add(
-                downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
-        return self._downscale(downscaled, scale, dtype, nodata)
-
-    def downscale_netcdf_by_pft(
-            self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
-        &#39;&#39;&#39;
-        Resamples 9-km L4C data to 1-km scale by repeating the spatial mean
-        values for each PFT on the 1-km land-cover grid.
-
-        This function assumes that the grouped dataset, `hdf`, is a netCDF4
-        dataset from a file granule generated by NASA AppEEARS. If the granule
-        is a spatial subset, that subset matches the bounds defined by the
-        `subset_bbox` to `NestedGrid`. It allows for the netCDF4 granule to
-        represent multiple time steps; i.e., arrays can be of the shape
-        `(T, M, N)` where `T` is one or more time steps.
-
-        NOTE: Use scale = 1e6 if a total flux (e.g., total GPP) is required;
-        `1e6` is the number of square meters in a 1-km L4C pixel.
-
-        Parameters
-        ----------
-        hdf : netCDF4.Dataset
-        field : str
-            Template for PFT-mean field in the HDF5 granule, e.g.,
-            &#34;GPP/gpp_pft%d_mean&#34;
-        scale : int or float
-        dtype : numpy.dtype
-        nodata : int or float
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        if nodata &lt; 0:
-            assert dtype not in (np.uint0, np.uint8, np.uint16, np.uint32, np.uint64),\
-                &#34;Can&#39;t use an unsigned data type with a negative NoData value&#34;
-        opts = { # Options to zoom()
-            &#39;order&#39;: 0, &#39;zoom&#39;: 9, &#39;mode&#39;: &#39;grid-constant&#39;, &#39;grid_mode&#39;: True
-        }
-        # Get the shape of the input 9-km arrays
-        shp = hdf.variables[field % self._pft_codes[0]].shape
-        # In NASA AppEEARS, it is possible to request multiple dates of data,
-        #   in which case the resulting netCDF4 granule has 3D arrays where
-        #   the first is the time axis
-        if len(shp) &gt; 2:
-            if len(shp) &gt; 3:
-                raise ValueError(f&#39;Too many dimensions in &#34;{field % self._pft_codes[0]}&#34; array; expected 2 or 3&#39;)
-            # Assumes the first axis is a time axis
-            dates = shp[0]
-        else:
-            dates = 1
-
-        result = np.zeros((dates, *self._shp_1km), dtype = dtype)
-        with ProgressBar(dates, &#39;Downscaling...&#39;) as progress:
-            for t in range(0, dates):
-                downscaled = np.zeros(self._shp_1km, dtype = dtype)
-                for p in self._pft_codes:
-                    # Allow for the possibility of either netCDF4 or h5py datasets
-                    if hasattr(hdf, &#39;variables&#39;):
-                        source = hdf.variables[field % p]
-                    else:
-                        source = hdf[field % p]
-                    if dates &gt; 1:
-                        arr = source[t,:]
-                    else:
-                        arr = source[:]
-                    # Resize, multiply by PFT mask, then add to output where != NoData
-                    downscaled = np.add(
-                        downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
-                result[t] = self._downscale(downscaled, scale, dtype, nodata)
-                progress.update(t)
-        return result
-
-
-class CLI(CommandLineInterface):
-    &#39;&#39;&#39;
-    Command-line interface for running the downscaling procedure.
-
-        python resample.py run &lt;hdf5_granule&gt; --field=&#34;GPP/gpp_pft%d_mean&#34;
-            --subset-id=&#34;CONUS&#34;
-
-    Parameters
-    ----------
-    output_path : str
-        The output file path
-    pft : list or tuple
-        The PFT codes to use in down-scaling; should probably be `range(1, 9)`
-        (Default)
-    field : str
-        A Python formatting string representing the SPL4CMDL HDF5 data field
-        name to be down-scaled, e.g., `&#34;SOC/soc_pft%d_mean&#34;` (Default) where
-        `&#34;%d&#34;` will be filled-in with the numeric PFT code
-    subset_id : str
-        The name of a well-known geographic subset, see:
-        `pyl4c.data.fixtures.SUBSETS_BBOX`
-    scale : int or float
-        A number to multiply pixels values against, e.g., `1e6` (1,000 square
-        kilometers) to convert (g C m-2 day-1) to (g C day-1)
-    nodata : int or float
-        The NoData value (Default: -9999)
-    dtype : str
-        The NumPy data type (Default: `&#34;float32&#34;`)
-    verbose : bool
-        True to print information about the progress
-    &#39;&#39;&#39;
-
-    def __init__(
-            self, output_path, pft = range(1, 9),
-            field = &#39;SOC/soc_pft%d_mean&#39;, subset_id = None, scale = 1,
-            nodata = -9999, dtype = &#39;float32&#39;, verbose = True):
-        self._dtype = self.lookup_dtype(dtype)
-        self._field_tpl = field
-        self._nodata = nodata
-        self._output_path = output_path
-        self._pft = pft
-        self._scale = scale
-        self._subset_id = subset_id
-        self._verbose = verbose
-
-    def run(self, hdf5_path, compress = True):
-        &#39;&#39;&#39;
-        Downscales an L4C variable from the given HDF5 granule.
-
-        Parameters
-        ----------
-        hdf5_path : str
-            File path to an HDF5 granule
-        compress : bool
-            True to compress the output file (Default: True)
-        &#39;&#39;&#39;
-        nested = NestedGrid(self._pft, self._subset_id)
-        with h5py.File(hdf5_path, &#39;r&#39;) as hdf:
-            arr = nested.downscale_hdf5_by_pft(
-                hdf, self._field_tpl, self._scale)
-            if self._verbose:
-                print(&#39;Downscaling...&#39;)
-        xoff, yoff = nested.offsets
-        output_path = self._output_path
-        if compress:
-            tmp = tempfile.NamedTemporaryFile()
-            output_path = tmp.name
-        # Write initial file
-        ease2_to_geotiff(arr, output_path, &#39;M01&#39;, xoff = xoff, yoff = yoff)
-        if not compress:
-            return # Done
-        # Optionally, compress the output file
-        opts = gdal.TranslateOptions(
-            format = &#39;GTiff&#39;, creationOptions = [&#39;COMPRESS=LZW&#39;])
-        # Note that &#34;output_path&#34; is the temporary file
-        gdal.Translate(self._output_path, output_path, options = opts)
-
-
-if __name__ == &#39;__main__&#39;:
-    import fire
-    fire.Fire(CLI)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -452,37 +89,9 @@ if __name__ == &#39;__main__&#39;:
 <dl>
 <dt id="pyl4c.apps.resample.CLI"><code class="flex name class">
 <span>class <span class="ident">CLI</span></span>
-<span>(</span><span>output_path, pft=range(1, 9), field='SOC/soc_pft%d_mean', subset_id=None, scale=1, nodata=-9999, dtype='float32', verbose=True)</span>
+<span>(</span><span>output_path,<br>pft=range(1, 9),<br>field='SOC/soc_pft%d_mean',<br>subset_id=None,<br>scale=1,<br>nodata=-9999,<br>dtype='float32',<br>verbose=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Command-line interface for running the downscaling procedure.</p>
-<pre><code>python resample.py run &lt;hdf5_granule&gt; --field="GPP/gpp_pft%d_mean"
-    --subset-id="CONUS"
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The output file path</dd>
-<dt><strong><code>pft</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>The PFT codes to use in down-scaling; should probably be <code>range(1, 9)</code>
-(Default)</dd>
-<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
-<dd>A Python formatting string representing the SPL4CMDL HDF5 data field
-name to be down-scaled, e.g., <code>"SOC/soc_pft%d_mean"</code> (Default) where
-<code>"%d"</code> will be filled-in with the numeric PFT code</dd>
-<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of a well-known geographic subset, see:
-<code>pyl4c.data.fixtures.SUBSETS_BBOX</code></dd>
-<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>A number to multiply pixels values against, e.g., <code>1e6</code> (1,000 square
-kilometers) to convert (g C m-2 day-1) to (g C day-1)</dd>
-<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>The NoData value (Default: -9999)</dd>
-<dt><strong><code>dtype</code></strong> :&ensp;<code>str</code></dt>
-<dd>The NumPy data type (Default: <code>"float32"</code>)</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to print information about the progress</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -564,6 +173,34 @@ kilometers) to convert (g C m-2 day-1) to (g C day-1)</dd>
         # Note that &#34;output_path&#34; is the temporary file
         gdal.Translate(self._output_path, output_path, options = opts)</code></pre>
 </details>
+<div class="desc"><p>Command-line interface for running the downscaling procedure.</p>
+<pre><code>python resample.py run &lt;hdf5_granule&gt; --field="GPP/gpp_pft%d_mean"
+    --subset-id="CONUS"
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The output file path</dd>
+<dt><strong><code>pft</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>The PFT codes to use in down-scaling; should probably be <code>range(1, 9)</code>
+(Default)</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>A Python formatting string representing the SPL4CMDL HDF5 data field
+name to be down-scaled, e.g., <code>"SOC/soc_pft%d_mean"</code> (Default) where
+<code>"%d"</code> will be filled-in with the numeric PFT code</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of a well-known geographic subset, see:
+<code>pyl4c.data.fixtures.SUBSETS_BBOX</code></dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>A number to multiply pixels values against, e.g., <code>1e6</code> (1,000 square
+kilometers) to convert (g C m-2 day-1) to (g C day-1)</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>The NoData value (Default: -9999)</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>str</code></dt>
+<dd>The NumPy data type (Default: <code>"float32"</code>)</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to print information about the progress</dd>
+</dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="pyl4c.lib.cli.CommandLineInterface" href="../lib/cli.html#pyl4c.lib.cli.CommandLineInterface">CommandLineInterface</a></li>
@@ -574,14 +211,6 @@ kilometers) to convert (g C m-2 day-1) to (g C day-1)</dd>
 <span>def <span class="ident">run</span></span>(<span>self, hdf5_path, compress=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Downscales an L4C variable from the given HDF5 granule.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>hdf5_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>File path to an HDF5 granule</dd>
-<dt><strong><code>compress</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to compress the output file (Default: True)</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -618,6 +247,14 @@ kilometers) to convert (g C m-2 day-1) to (g C day-1)</dd>
     # Note that &#34;output_path&#34; is the temporary file
     gdal.Translate(self._output_path, output_path, options = opts)</code></pre>
 </details>
+<div class="desc"><p>Downscales an L4C variable from the given HDF5 granule.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf5_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>File path to an HDF5 granule</dd>
+<dt><strong><code>compress</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to compress the output file (Default: True)</dd>
+</dl></div>
 </dd>
 </dl>
 <h3>Inherited members</h3>
@@ -636,25 +273,9 @@ kilometers) to convert (g C m-2 day-1) to (g C day-1)</dd>
 </dd>
 <dt id="pyl4c.apps.resample.NestedGrid"><code class="flex name class">
 <span>class <span class="ident">NestedGrid</span></span>
-<span>(</span><span>pft=range(1, 9), shape=None, subset_bbox=None)</span>
+<span>(</span><span>pft=range(1, 9), shape=None, subset_id=None, subset_bbox=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Represents a nested L4C data structure, where each grid cell has a mean
-value for each sub-grid PFT class. This allows the reconstruction of a
-finer scale grid by applying the PFT mean values to the subgrid. The
-arguments <code>subset_id</code> and <code>subset_bbox</code> are mutually exclusive.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>pft</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>PFT values to use in downscaling</dd>
-<dt><strong><code>shape</code></strong> :&ensp;<code>Sequence</code></dt>
-<dd>(Optional) The intended shape (at 9-km resolution) of the L4C data
-that will be downscaled. If not provided, should the shape of the
-data not match the PFT map, an error will be raised.</dd>
-<dt><strong><code>subset_bbox</code></strong> :&ensp;<code>Sequence</code></dt>
-<dd>(Optional) An optional bounding box, <code>(xmin, ymin, xmax, ymax)</code>,
-specifying a spatial subset that will be downscaled</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -674,26 +295,45 @@ specifying a spatial subset that will be downscaled</dd>
         (Optional) The intended shape (at 9-km resolution) of the L4C data
         that will be downscaled. If not provided, should the shape of the
         data not match the PFT map, an error will be raised.
+    subset_id : str
+        (Optional) A string name that codes for a bounding box, e.g., &#34;CONUS&#34;;
+        if `subset_id` and `subset_bbox` are both provided, `subset_bbox` will
+        be ignored.
     subset_bbox : Sequence
         (Optional) An optional bounding box, `(xmin, ymin, xmax, ymax)`,
         specifying a spatial subset that will be downscaled
     &#39;&#39;&#39;
-    def __init__(self, pft = range(1, 9), shape = None, subset_bbox = None):
-        self._offsets = (0, 0)
+    offsets = (0, 0)
+
+    def __init__(
+            self, pft = range(1, 9), shape = None, subset_id = None, 
+            subset_bbox = None):
         self._pft_codes = pft
         self._shp_1km = EASE2_GRID_PARAMS[&#39;M01&#39;][&#39;shape&#39;]
         self._shp_9km = EASE2_GRID_PARAMS[&#39;M09&#39;][&#39;shape&#39;]
         self._slice_idx_1km = None
         self._slice_idx_9km = None
         self._subset_bbox = subset_bbox
-        self._ul_coords = (subset_bbox[0], subset_bbox[-1]) # Upper-left coordinates
-        self._lr_coords = (subset_bbox[-2], subset_bbox[1]) # Lower-right coordinates
+        # If a well-known geographic subset is requested
+        if subset_id is not None:
+            assert subset_id in SUBSETS_BBOX.keys(), &#39;Unknown subset_id&#39;
+            # Look-up the bounding box of the well-known subset, translate
+            #    from WGS84 to EASE-2.0 coordinates
+            bbox = SUBSETS_BBOX[subset_id]
+            bb_ul = translate_row_col_to_ease2(ease2_from_wgs84(bbox[0:2]))
+            bb_lr = translate_row_col_to_ease2(ease2_from_wgs84(bbox[2:]))
+            self._subset_bbox = list(bb_ul)
+            self._subset_bbox.extend(bb_lr)
+        # If any subset is requested...
+        if self._subset_bbox is not None:
+            self._ul_coords = (self._subset_bbox[0], self._subset_bbox[-1]) # Upper-left coordinates
+            self._lr_coords = (self._subset_bbox[-2], self._subset_bbox[1]) # Lower-right coordinates
         # This is the &#34;global&#34; affine transformation
         self._transform_1km = Affine.from_gdal(*EASE2_GRID_PARAMS[&#39;M01&#39;][&#39;geotransform&#39;])
         self._transform_9km = Affine.from_gdal(*EASE2_GRID_PARAMS[&#39;M09&#39;][&#39;geotransform&#39;])
         # This is the &#34;output&#34; (1-km) affine transformation
         self._transform = self._transform_1km * self._transform_1km.scale(1)
-        if subset_bbox is not None:
+        if self._subset_bbox is not None:
             # Need to calculate &#34;local&#34; transformation
             gt = list(self._transform_9km.to_gdal())
             gt[0] = self._ul_coords[0]
@@ -728,16 +368,20 @@ specifying a spatial subset that will be downscaled</dd>
             # Update the output 1-km transformation
             self._transform = transform_1km
 
+    @property
+    def offsets(self):
+        &#39;The offset (in pixels) along each axis for an output, cropped image&#39;
+        return list(map(int, ~self._transform_1km * self._ul_coords))
+
     @cached_property
     def pft(self):
         &#39;The 1-km PFT map&#39;
-        return get_pft_array(
-            &#39;M01&#39;, slice_idx = self._slice_idx_1km).astype(np.uint8)[np.newaxis,...]
-
-    @property
-    def shape(self):
-        &#39;Returns the 1-km array shape&#39;
-        return self._shp_1km
+        # shp = self._shp_1km
+        _pft = get_pft_array(
+            &#39;M01&#39;, slice_idx = self._slice_idx_1km).astype(np.uint8)
+        # if _pft.size &lt; shp[0]*shp[1]:
+        #     _pft = np.add(np.zeros(shp)[:_pft.shape[0],:_pft.shape[1]], _pft)
+        return _pft[np.newaxis,...]
 
     def _downscale(self, downscaled, scale = 1, dtype = np.float32, nodata = -9999):
         # Where the PFT map is in the valid range, return data, else NoData
@@ -746,7 +390,7 @@ specifying a spatial subset that will be downscaled</dd>
                 np.in1d(self.pft.ravel(), self._pft_codes),
                 downscaled.ravel() != nodata),
             np.multiply(downscaled.ravel(), scale), nodata)\
-            .reshape(self._shp_1km)\
+            .reshape(self.pft.shape)\
             .astype(dtype)
 
     def pft_mask(self, p):
@@ -764,11 +408,11 @@ specifying a spatial subset that will be downscaled</dd>
         &#39;&#39;&#39;
         return np.where(self.pft == p, 1, 0)
 
-    def downscale_hdf5_by_pft(*args, **kwargs):
+    def downscale_hdf5_by_pft(self, *args, **kwargs):
         &#39;&#39;&#39;
         DEPRECATED. Use `NestedGrid.downscale_hdf_by_pft()` instead.
         &#39;&#39;&#39;
-        self.downscale_hdf_by_pft(*args, **kwargs)
+        self.downscale_hdf_by_pft(self, *args, **kwargs)
 
     def downscale_hdf_by_pft(
             self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
@@ -809,7 +453,7 @@ specifying a spatial subset that will be downscaled</dd>
             ymin, ymax = y_idx
             xmin, xmax = x_idx
 
-        downscaled = np.zeros(self._shp_1km, dtype = dtype)
+        downscaled = np.zeros(self.pft.shape, dtype = dtype)
         for p in self._pft_codes:
             # Allow for the possibility of either netCDF4 or h5py datasets
             if hasattr(hdf, &#39;variables&#39;):
@@ -822,8 +466,11 @@ specifying a spatial subset that will be downscaled</dd>
             else:
                 arr = source[ymin:ymax, xmin:xmax]
             # Resize, multiply by PFT mask, then add to output where != NoData
+            mask = self.pft_mask(p)
+            if mask.shape[0] == 1:
+                mask = mask[0]
             downscaled = np.add(
-                downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
+                downscaled, np.multiply(mask, zoom(arr, **opts)))
         return self._downscale(downscaled, scale, dtype, nodata)
 
     def downscale_netcdf_by_pft(
@@ -896,11 +543,43 @@ specifying a spatial subset that will be downscaled</dd>
                 progress.update(t)
         return result</code></pre>
 </details>
+<div class="desc"><p>Represents a nested L4C data structure, where each grid cell has a mean
+value for each sub-grid PFT class. This allows the reconstruction of a
+finer scale grid by applying the PFT mean values to the subgrid. The
+arguments <code>subset_id</code> and <code>subset_bbox</code> are mutually exclusive.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pft</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>PFT values to use in downscaling</dd>
+<dt><strong><code>shape</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>(Optional) The intended shape (at 9-km resolution) of the L4C data
+that will be downscaled. If not provided, should the shape of the
+data not match the PFT map, an error will be raised.</dd>
+<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
+<dd>(Optional) A string name that codes for a bounding box, e.g., "CONUS";
+if <code>subset_id</code> and <code>subset_bbox</code> are both provided, <code>subset_bbox</code> will
+be ignored.</dd>
+<dt><strong><code>subset_bbox</code></strong> :&ensp;<code>Sequence</code></dt>
+<dd>(Optional) An optional bounding box, <code>(xmin, ymin, xmax, ymax)</code>,
+specifying a spatial subset that will be downscaled</dd>
+</dl></div>
 <h3>Instance variables</h3>
 <dl>
+<dt id="pyl4c.apps.resample.NestedGrid.offsets"><code class="name">prop <span class="ident">offsets</span></code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def offsets(self):
+    &#39;The offset (in pixels) along each axis for an output, cropped image&#39;
+    return list(map(int, ~self._transform_1km * self._ul_coords))</code></pre>
+</details>
+<div class="desc"><p>The offset (in pixels) along each axis for an output, cropped image</p></div>
+</dd>
 <dt id="pyl4c.apps.resample.NestedGrid.pft"><code class="name">var <span class="ident">pft</span></code></dt>
 <dd>
-<div class="desc"><p>The 1-km PFT map</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -915,70 +594,31 @@ specifying a spatial subset that will be downscaled</dd>
     value = obj.__dict__[self.func.__name__] = self.func(obj)
     return value</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.apps.resample.NestedGrid.shape"><code class="name">var <span class="ident">shape</span></code></dt>
-<dd>
-<div class="desc"><p>Returns the 1-km array shape</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@property
-def shape(self):
-    &#39;Returns the 1-km array shape&#39;
-    return self._shp_1km</code></pre>
-</details>
+<div class="desc"><p>The 1-km PFT map</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
 <dt id="pyl4c.apps.resample.NestedGrid.downscale_hdf5_by_pft"><code class="name flex">
-<span>def <span class="ident">downscale_hdf5_by_pft</span></span>(<span>*args, **kwargs)</span>
+<span>def <span class="ident">downscale_hdf5_by_pft</span></span>(<span>self, *args, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>DEPRECATED. Use <code><a title="pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft" href="#pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft">NestedGrid.downscale_hdf_by_pft()</a></code> instead.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def downscale_hdf5_by_pft(*args, **kwargs):
+<pre><code class="python">def downscale_hdf5_by_pft(self, *args, **kwargs):
     &#39;&#39;&#39;
     DEPRECATED. Use `NestedGrid.downscale_hdf_by_pft()` instead.
     &#39;&#39;&#39;
-    self.downscale_hdf_by_pft(*args, **kwargs)</code></pre>
+    self.downscale_hdf_by_pft(self, *args, **kwargs)</code></pre>
 </details>
+<div class="desc"><p>DEPRECATED. Use <code><a title="pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft" href="#pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft">NestedGrid.downscale_hdf_by_pft()</a></code> instead.</p></div>
 </dd>
 <dt id="pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft"><code class="name flex">
 <span>def <span class="ident">downscale_hdf_by_pft</span></span>(<span>self, hdf, field, scale=1, dtype=numpy.float32, nodata=-9999)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Resamples 9-km L4C data to 1-km scale by repeating the spatial mean
-values for each PFT on the 1-km land-cover grid.</p>
-<p>Will subset the *arrays if they are not the expected shape of the
-subset at 9-km scale. This function assumes that the grouped dataset,
-<code>hdf</code>, is either an official SPL4CMDL HDF5 granule or a netCDF4 file
-generated by NASA AppEEARS.</p>
-<p>NOTE: Use scale = 1e6 if a total flux (e.g., total GPP) is required;
-<code>1e6</code> is the number of square meters in a 1-km L4C pixel.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code> or <code>netCDF4.Dataset</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
-<dd>Template for PFT-mean field in the HDF5 granule, e.g.,
-"GPP/gpp_pft%d_mean"</dd>
-<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>dtype</code></strong> :&ensp;<code>numpy.dtype</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1022,7 +662,7 @@ generated by NASA AppEEARS.</p>
         ymin, ymax = y_idx
         xmin, xmax = x_idx
 
-    downscaled = np.zeros(self._shp_1km, dtype = dtype)
+    downscaled = np.zeros(self.pft.shape, dtype = dtype)
     for p in self._pft_codes:
         # Allow for the possibility of either netCDF4 or h5py datasets
         if hasattr(hdf, &#39;variables&#39;):
@@ -1035,28 +675,24 @@ generated by NASA AppEEARS.</p>
         else:
             arr = source[ymin:ymax, xmin:xmax]
         # Resize, multiply by PFT mask, then add to output where != NoData
+        mask = self.pft_mask(p)
+        if mask.shape[0] == 1:
+            mask = mask[0]
         downscaled = np.add(
-            downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
+            downscaled, np.multiply(mask, zoom(arr, **opts)))
     return self._downscale(downscaled, scale, dtype, nodata)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.apps.resample.NestedGrid.downscale_netcdf_by_pft"><code class="name flex">
-<span>def <span class="ident">downscale_netcdf_by_pft</span></span>(<span>self, hdf, field, scale=1, dtype=numpy.float32, nodata=-9999)</span>
-</code></dt>
-<dd>
 <div class="desc"><p>Resamples 9-km L4C data to 1-km scale by repeating the spatial mean
 values for each PFT on the 1-km land-cover grid.</p>
-<p>This function assumes that the grouped dataset, <code>hdf</code>, is a netCDF4
-dataset from a file granule generated by NASA AppEEARS. If the granule
-is a spatial subset, that subset matches the bounds defined by the
-<code>subset_bbox</code> to <code><a title="pyl4c.apps.resample.NestedGrid" href="#pyl4c.apps.resample.NestedGrid">NestedGrid</a></code>. It allows for the netCDF4 granule to
-represent multiple time steps; i.e., arrays can be of the shape
-<code>(T, M, N)</code> where <code>T</code> is one or more time steps.</p>
+<p>Will subset the *arrays if they are not the expected shape of the
+subset at 9-km scale. This function assumes that the grouped dataset,
+<code>hdf</code>, is either an official SPL4CMDL HDF5 granule or a netCDF4 file
+generated by NASA AppEEARS.</p>
 <p>NOTE: Use scale = 1e6 if a total flux (e.g., total GPP) is required;
 <code>1e6</code> is the number of square meters in a 1-km L4C pixel.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>hdf</code></strong> :&ensp;<code>netCDF4.Dataset</code></dt>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code> or <code>netCDF4.Dataset</code></dt>
 <dd>&nbsp;</dd>
 <dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
 <dd>Template for PFT-mean field in the HDF5 granule, e.g.,
@@ -1073,6 +709,11 @@ represent multiple time steps; i.e., arrays can be of the shape
 <dt><code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.apps.resample.NestedGrid.downscale_netcdf_by_pft"><code class="name flex">
+<span>def <span class="ident">downscale_netcdf_by_pft</span></span>(<span>self, hdf, field, scale=1, dtype=numpy.float32, nodata=-9999)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1147,22 +788,40 @@ represent multiple time steps; i.e., arrays can be of the shape
             progress.update(t)
     return result</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.apps.resample.NestedGrid.pft_mask"><code class="name flex">
-<span>def <span class="ident">pft_mask</span></span>(<span>self, p)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>An (M x N) mask for selecting pixels matching specified PFT class.</p>
+<div class="desc"><p>Resamples 9-km L4C data to 1-km scale by repeating the spatial mean
+values for each PFT on the 1-km land-cover grid.</p>
+<p>This function assumes that the grouped dataset, <code>hdf</code>, is a netCDF4
+dataset from a file granule generated by NASA AppEEARS. If the granule
+is a spatial subset, that subset matches the bounds defined by the
+<code>subset_bbox</code> to <code><a title="pyl4c.apps.resample.NestedGrid" href="#pyl4c.apps.resample.NestedGrid">NestedGrid</a></code>. It allows for the netCDF4 granule to
+represent multiple time steps; i.e., arrays can be of the shape
+<code>(T, M, N)</code> where <code>T</code> is one or more time steps.</p>
+<p>NOTE: Use scale = 1e6 if a total flux (e.g., total GPP) is required;
+<code>1e6</code> is the number of square meters in a 1-km L4C pixel.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>p</code></strong> :&ensp;<code>int</code></dt>
-<dd>The numeric code for the PFT of interest</dd>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>netCDF4.Dataset</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>Template for PFT-mean field in the HDF5 granule, e.g.,
+"GPP/gpp_pft%d_mean"</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>numpy.dtype</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.apps.resample.NestedGrid.pft_mask"><code class="name flex">
+<span>def <span class="ident">pft_mask</span></span>(<span>self, p)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1182,6 +841,17 @@ represent multiple time steps; i.e., arrays can be of the shape
     &#39;&#39;&#39;
     return np.where(self.pft == p, 1, 0)</code></pre>
 </details>
+<div class="desc"><p>An (M x N) mask for selecting pixels matching specified PFT class.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>p</code></strong> :&ensp;<code>int</code></dt>
+<dd>The numeric code for the PFT of interest</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -1194,7 +864,6 @@ represent multiple time steps; i.e., arrays can be of the shape
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -1218,9 +887,9 @@ represent multiple time steps; i.e., arrays can be of the shape
 <li><code><a title="pyl4c.apps.resample.NestedGrid.downscale_hdf5_by_pft" href="#pyl4c.apps.resample.NestedGrid.downscale_hdf5_by_pft">downscale_hdf5_by_pft</a></code></li>
 <li><code><a title="pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft" href="#pyl4c.apps.resample.NestedGrid.downscale_hdf_by_pft">downscale_hdf_by_pft</a></code></li>
 <li><code><a title="pyl4c.apps.resample.NestedGrid.downscale_netcdf_by_pft" href="#pyl4c.apps.resample.NestedGrid.downscale_netcdf_by_pft">downscale_netcdf_by_pft</a></code></li>
+<li><code><a title="pyl4c.apps.resample.NestedGrid.offsets" href="#pyl4c.apps.resample.NestedGrid.offsets">offsets</a></code></li>
 <li><code><a title="pyl4c.apps.resample.NestedGrid.pft" href="#pyl4c.apps.resample.NestedGrid.pft">pft</a></code></li>
 <li><code><a title="pyl4c.apps.resample.NestedGrid.pft_mask" href="#pyl4c.apps.resample.NestedGrid.pft_mask">pft_mask</a></code></li>
-<li><code><a title="pyl4c.apps.resample.NestedGrid.shape" href="#pyl4c.apps.resample.NestedGrid.shape">shape</a></code></li>
 </ul>
 </li>
 </ul>
@@ -1229,7 +898,7 @@ represent multiple time steps; i.e., arrays can be of the shape
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

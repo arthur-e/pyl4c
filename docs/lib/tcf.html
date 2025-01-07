@@ -2,19 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.lib.tcf API documentation</title>
-<meta name="description" content="Utilities related to the TCF code developed by Joe Glassy, Lucas Jones. Use: …" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<meta name="description" content="Utilities related to the TCF code developed by Joe Glassy, Lucas Jones. Use: …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -42,489 +57,6 @@ storing a large ancillary array:</p>
 the number of stored distances increases with the sparseness of the
 array; 0 indicates the adjacent cell (raveled) is valid.</li>
 </ul>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-Utilities related to the TCF code developed by Joe Glassy, Lucas Jones. Use:
-
-    $ python pyl4c/lib/tcf.py run /anx_lagr3/laj/smap/natv72/prelaunch/land/Y2000/D*
-        --output_dir=&#34;/home/user/&#34;
-
-
-TODO:
-
-- Support for reading spatial subsets; a kind of reverse sparse row-column
-    mapping, e.g.:
-
-        np.repeat(np.arange(0, 3856).reshape((1, 3856)), 1624, axis = 0)
-
-Ideas for an alternative sparse array subsetting that can be done without
-storing a large ancillary array:
-
-- Count distance, in elements, between valid cells in the raveled array;
-  the number of stored distances increases with the sparseness of the
-  array; 0 indicates the adjacent cell (raveled) is valid.
-&#39;&#39;&#39;
-
-import datetime
-import glob
-import os
-import re
-import h5py
-import numpy as np
-from itertools import product
-from cached_property import cached_property
-from pyl4c.data.fixtures import ANCILLARY_DATA_PATHS, HDF_PATHS, EASE2_GRID_PARAMS
-from pyl4c.utils import summarize, summarize_by_class
-
-FIELD_MAP = { # Mapping TCF field names to L4C Ops field names
-    &#39;Ctot&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;SOC&#39;],
-    &#39;Ctot*&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;SOC*&#39;],
-    &#39;gpp&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;GPP&#39;],
-    &#39;gpp*&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;GPP*&#39;],
-    &#39;nee&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;NEE&#39;],
-    &#39;nee*&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;NEE*&#39;],
-    &#39;rhtot&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;RH&#39;],
-    &#39;rhtot*&#39;: HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;RH*&#39;],
-    &#39;Tmult&#39;: &#39;EC/tmult_mean&#39;,
-    &#39;Wmult&#39;: &#39;EC/wmult_mean&#39;,
-    &#39;Emult&#39;: &#39;EC/emult_mean&#39;
-}
-
-TYPE_MAP = {
-    &#39;flt32&#39;: np.float32,
-    &#39;flt16&#39;: np.float16,
-    &#39;int16&#39;: np.int16,
-    &#39;uint16&#39;: np.uint16,
-    &#39;int8&#39;: np.int8,
-    &#39;uint8&#39;: np.uint8
-}
-
-REV_FIELD_MAP = dict([(v, k) for k, v in FIELD_MAP.items()])
-REV_TYPE_MAP = dict([(v, k) for k, v in TYPE_MAP.items()])
-
-
-class MetaSparseArray(type):
-    &#39;&#39;&#39;
-    NOTE: These are potentially expensive, but necessary, operations; they are
-    exposed at the global scope because I don&#39;t want successive instances of
-    `SparseArray()` to do this lookup, and allocate more memory, each time.
-    &#39;&#39;&#39;
-    @property
-    def sparse_row_idx(cls):
-        if getattr(cls, &#39;_sparse_row_idx&#39;, None) is None:
-            cls._sparse_row_idx = np.fromfile(ANCILLARY_DATA_PATHS[&#39;smap_l4c_9km_sparse_row_index&#39;],
-                dtype = np.uint16)
-
-        return cls._sparse_row_idx
-
-    @property
-    def sparse_col_idx(cls):
-        if getattr(cls, &#39;_sparse_col_idx&#39;, None) is None:
-            cls._sparse_col_idx = np.fromfile(ANCILLARY_DATA_PATHS[&#39;smap_l4c_9km_sparse_col_index&#39;],
-                dtype = np.uint16)
-
-        return cls._sparse_col_idx
-
-
-class SparseArray(object, metaclass = MetaSparseArray):
-    &#39;&#39;&#39;
-    Represents a &#34;sparse&#34; or &#34;land&#34; array such as that output from the
-    TCF C codebase.
-
-    Parameters
-    ----------
-    source : str or numpy.ndarray
-        Either a file system path to a stored output array in &#34;sparse&#34; form
-        (assumes that the filename incorporates the data type, e.g.,
-        `foo.flt32` or `foo.uint8`) or an extant `numpy.ndarray` (either
-        sparse or not).
-    grid : str
-        The EASE-Grid 2.0 designation, e.g., &#34;M09&#34; for a 9-km grid or &#34;M01&#34;
-        for a 1-km grid
-    dtype : type
-        The NumPy data type used to represent numbers (Default: None); must
-        be specified when reading a NumPy or HDF5 array
-    field : str
-        Name of the HDF5 field to read
-    &#39;&#39;&#39;
-    def __init__(self, source, grid, dtype = None, field = None):
-        self._dtype = dtype
-        self._grid = grid
-        self._field = field
-        self._nodata = None
-
-        # Incorporate information from the filename
-        if isinstance(source, str):
-            self.filename = source
-            self._deflated = True
-            self._ftype = self.filename.split(&#39;.&#39;)[-1]
-            # Attempt to read the array data
-            assert os.path.exists(source), &#39;File not found: %s&#39; % source
-            assert self._ftype in TYPE_MAP.keys(), &#39;Unrecognized file extension; could not determine data type&#39;
-            self.data = np.fromfile(source, dtype = TYPE_MAP[self._ftype])
-        elif isinstance(source, np.ndarray):
-            self.filename = None
-            self._deflated = source.ndim == 1
-            self._ftype = None
-            assert self._dtype is not None,\
-                &#39;Must indicate the data type when reading an array!&#39;
-            assert source.ndim &lt;= 2, &#39;No support for more than 2 axes&#39;
-            self.data = source
-        elif isinstance(source, h5py.File):
-            # NOTE: Trying to deflate the HDF5 array while reading it is
-            #   inefficient because it requires looping over multiple index
-            #   operations; it will never be faster than deflating the entire
-            #   array one time
-            assert self._field is not None, &#34;__init__() missing 1 required positional argument: &#39;field&#39;&#34;
-            self.filename = source.filename
-            self._ftype = None
-            self.data = source[self._field][:]
-            self._deflated = self.data.ndim == 1
-            assert self._dtype is not None,\
-                &#39;Must indicate the data type when reading an array!&#39;
-        else:
-            raise TypeError(&#39;Must provide either a binary file path or a numpy.ndarray instance&#39;)
-
-    def __nested_src_idx__(self, x, y, ny):
-        # Serialization offset for nested grid elements, e.g., 0 through 8
-        #   for a 1-km grid nested in a 9-km grid
-        return (x * ny) + y
-
-    def __nested_dst_idx__(self, x, y, m, n, nn, ny):
-        # Serialization offset for a grid nested within a 9-km grid
-        # x, y correspond to 9-km grid indices; m, n to nested grid indices;
-        #   nn is number of nested columns (e.g., 9 for 1-km grid) and ny
-        #   is the number of columns in the overall 2D grid (e.g., 34704)
-        return (((x * nn) + m) * ny) + (y * nn) + n
-
-    def __inflate_1km_grid__(self, nodata = -9999):
-        # This is SLOW; it shouldn&#39;t be used in production, but just in case
-        #   a pure Python version of mkgrid for 1-km grids is ever needed...
-        shp = EASE2_GRID_PARAMS[self._grid][&#39;shape&#39;]
-        # NOTE: 1-km destination array starts raveled
-        result = np.ones((shp[0] * shp[1],)) * nodata
-        # Source array has first 81 pixels, then second 81 pixels, etc...
-        nested_grid = product(range(0, 9), range(0, 9))
-        for i in range(0, self.__class__.sparse_row_idx.shape[0]):
-            row = self.__class__.sparse_row_idx[i]
-            col = self.__class__.sparse_col_idx[i]
-            for m, n in nested_grid:
-                # This is a translation of the function from spland.c
-                #   in the l4c-utils/mkgrid C library
-                src = self.__nested_src_idx__(
-                    i, self.__nested_src_idx__(m, n, 9), 81)
-                dst = self.__nested_dst_idx__(row, col, m, n, 9, shp[1])
-                result[dst] = self.data[src]
-
-    @property
-    def shape(self):
-        &#34;Alias for the array data&#39;s shape&#34;
-        return self.data.shape
-
-    @classmethod
-    def get_deflated_idx(cls, coords):
-        &#39;&#39;&#39;
-        Translates (row, column) coordinates in the inflated array to the
-        corresponding 1D index in the deflated (sparse) array.
-
-        Parameters
-        ----------
-        coords : tuple or list
-            Sequence of (row, column) integer indices
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        row, col = coords
-        return np.arange(0, cls.sparse_row_idx.shape[0])[
-            np.logical_and(cls.sparse_col_idx == col, cls.sparse_row_idx == row)
-        ]
-
-    @classmethod
-    def sparse_selector(cls, slice_idx, grid = &#39;M09&#39;):
-        &#39;&#39;&#39;
-        Returns a 1D array with values in `[np.nan, 1]` where 1 is assigned to
-        those cells inside the desired spatial subset of the corresponding
-        2D array. This allows efficient summarization, for instance, of the
-        sparse (1D) data array without having to inflate it.
-
-        Parameters
-        ----------
-        slice_idx : tuple or list
-            Sequence of nested bounding box coordinates in pixel space, e.g.:
-            `((xmin, xmax), (ymin, ymax))`
-        grid : str
-            EASE-Grid 2.0 designation describing the size of the grid that
-            should be restored, e.g., &#34;M09&#34; or &#34;M01&#34;
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        shp = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
-        x_idx, y_idx = slice_idx
-        xmin, xmax = x_idx
-        ymin, ymax = y_idx
-
-        # If the array is already deflated, we need to generate a
-        #   corresponding 1D array to &#34;select&#34; values
-        # Get a grid of NaNs, then fill in 1 where the subset fits
-        selector_deflated = np.ones(cls.sparse_row_idx.shape) * np.nan
-        selector = np.ones(shp) * np.nan
-        selector[ymin:ymax, xmin:xmax] = 1
-        # Exactly like self.inflate() but selector is the &#34;data&#39;&#34;
-        for i in range(0, cls.sparse_row_idx.shape[0]):
-            row = cls.sparse_row_idx[i]
-            col = cls.sparse_col_idx[i]
-            selector_deflated[i] = selector[row, col]
-
-        return selector_deflated
-
-    @classmethod
-    def ordinal_to_date(cls, year, ordinal):
-        &#39;&#39;&#39;
-        Returns a `datetime.date()` instance based on year, ordinal day.
-
-        Parameters
-        ----------
-        year : int
-        ordinal : int
-            Day of the year on interval [1, 366]
-
-        Returns
-        -------
-        datetime.date
-        &#39;&#39;&#39;
-        assert ordinal &lt;= 366, &#39;Ordinal out of range [1, 366]&#39;
-        assert year in range(1800, 2100), &#39;Year out of range [1800, 2100]&#39;
-        # In leap years, for days after February 29, subtract 1 so that
-        #   we obtain the &#34;regular&#34; date
-        if year % 4 == 0:
-            if ordinal == 60:
-                return datetime.date(year, 2, 29)
-                if ordinal &gt; 60:
-                    ordinal -= 1
-                    d = datetime.date.fromordinal(ordinal)
-                    return datetime.date(year, d.month, d.day)
-
-    def deflate(self, nodata = -9999):
-        &#39;&#39;&#39;
-        Inverse of `SparseArray.inflate()`; converts a 2D array to a &#34;sparse&#34;
-        or &#34;land&#34; representation.
-
-        Parameters
-        ----------
-        nodata : int or float
-            The NoData value to output in resulting array
-        &#39;&#39;&#39;
-        # If the array is already deflated but a different NoData value was
-        #   requested, update that value
-        if self._deflated:
-            if self._nodata is not None and nodata != self._nodata:
-                self.data = np.where(
-                    self.data == self._nodata, nodata, self.data)
-            else:
-                return None # Otherwise, return nothing
-
-        # Initialize an empty array (fill with NoData)
-        result = np.ones(
-            self.__class__.sparse_row_idx.shape, self._dtype) * nodata
-        for i in range(0, self.__class__.sparse_row_idx.shape[0]):
-            row = self.__class__.sparse_row_idx[i]
-            col = self.__class__.sparse_col_idx[i]
-            result[i] = self.data[row, col]
-        self._deflated = True
-        self.data = result
-        result = None
-
-    def inflate(self, nodata = -9999):
-        &#39;&#39;&#39;
-        Converts from a &#34;sparse&#34; or &#34;land&#34; array to an EASE-Grid 2.0 array. The
-        sparse format was developed by Joe Glassy and Lucas Jones. Special files
-        are needed to index the sparse data correctly (it is not simply a raveled
-        array filtered to land pixels).
-
-        Parameters
-        ----------
-        nodata : int or float
-            The NoData value to output in resulting array
-        &#39;&#39;&#39;
-        # If the array is already inflated but a different NoData value was
-        #   requested, update that value
-        if not self._deflated:
-            if self._nodata is not None and nodata != self._nodata:
-                self.data = np.where(
-                    self.data == self._nodata, nodata, self.data)
-            else:
-                return None # Otherwise, return nothing
-
-        # Initialize an empty array (fill with NoData)
-        shp = EASE2_GRID_PARAMS[self._grid][&#39;shape&#39;]
-        result = np.ones(shp, self._dtype) * nodata
-        for i in range(0, self.__class__.sparse_row_idx.shape[0]):
-            row = self.__class__.sparse_row_idx[i]
-            col = self.__class__.sparse_col_idx[i]
-            result[row, col] = self.data[i]
-        self._deflated = False
-        self.data = result
-        result = None
-
-    def inflate_subset(self, slice_idx, nodata = -9999):
-        &#39;&#39;&#39;
-        Returns a subset view of the inflated array, for convenience. This is
-        not faster than subsetting the inflated array.
-
-        Parameters
-        ----------
-        slice_idx : tuple or list
-            `((xmin, xmax), (ymin, ymax))` in pixel space
-        nodata : int or float
-            The NoData value to output in resulting array
-
-        Returns
-        -------
-        numpy.ndarray
-        &#39;&#39;&#39;
-        x_idx, y_idx = slice_idx
-        if not self._deflated:
-            return self.data[y_idx[0]:y_idx[1], x_idx[0]:x_idx[1]]
-
-        selector = self.__class__.sparse_selector(slice_idx, self._grid)
-        xs = x_idx[1] - x_idx[0] # Get the output array size
-        ys = y_idx[1] - y_idx[0]
-        shp = (ys, xs)
-        data = np.multiply(self.data, selector)
-        # Initialize an empty array (fill with NoData)
-        result = np.ones(shp) * nodata
-        for i in range(0, self.__class__.sparse_row_idx.shape[0]):
-            row = self.__class__.sparse_row_idx[i]
-            col = self.__class__.sparse_col_idx[i]
-            if row &lt; y_idx[1] and col &lt; x_idx[1]:
-                row -= y_idx[0]
-                col -= x_idx[0]
-                if row &gt;= 0 and col &gt;= 0:
-                    result[row, col] = data[i]
-        return result
-
-    def replace(self, old, new):
-        &#39;&#39;&#39;
-        Replace &#34;old&#34; values with &#34;new&#34; values, e.g., replace old NoData
-        values with a new value.
-
-        Parameters
-        ----------
-        old : int or float
-            Value to be replaced
-        new : int or float
-            Value to replace the old value
-        &#39;&#39;&#39;
-        self.data[self.data == old] = new
-
-    def summarize(self, selector = None, **kwargs):
-        &#39;&#39;&#39;
-        Summarize the values of an array (inflated or deflated) without
-        inflating it, optionally for a spatial subset.
-
-        Parameters
-        ----------
-        selector : numpy.ndarray
-            An array that describes which which values should be summarized;
-            all non-NaN entries correspond to entries in the data array that
-            will be summarized.
-        **kwargs
-            Additional arguments to `pyl4c.utils.summarize()` or
-            `pyl4c.utils.summarize_by_class()`
-
-        Returns
-        -------
-        dict
-        &#39;&#39;&#39;
-        shp = EASE2_GRID_PARAMS[self._grid][&#39;shape&#39;]
-        ymin = xmin = 0 # Default is full extent of grid
-        ymax, xmax = shp
-        if not self._deflated:
-            return summarize(self.data[ymin:ymax, xmin:xmax], **kwargs)
-        if selector is None:
-            selector = np.ones(self.shape)
-        # Selector multiplies NaN against areas outside the subset
-        return summarize(np.multiply(self.data, selector), **kwargs)
-
-    def summarize_by_class(
-            self, selector = None, class_array = None, **kwargs):
-        &#39;&#39;&#39;
-        Summarize the values of an array (inflated or deflated) without
-        inflating it, optionally for a spatial subset.
-
-        Parameters
-        ----------
-        selector : numpy.ndarray
-            An array that describes which which values should be summarized;
-            all non-NaN entries correspond to entries in the data array that
-            will be summarize
-        class_array : numpy.ndarray
-            An array that has discrete class labels (e.g., decimal numbers);
-            values that share a class will be aggregated in the summary
-        **kwargs
-            Additional arguments to `pyl4c.utils.summarize()` or
-            `pyl4c.utils.summarize_by_class()`
-
-        Returns
-        -------
-        dict
-        &#39;&#39;&#39;
-        assert class_array.shape == self.shape, &#39;class_array does not have the same shape!&#39;
-        shp = EASE2_GRID_PARAMS[self._grid][&#39;shape&#39;]
-        ymin = xmin = 0 # Default is full extent of grid
-        ymax, xmax = shp
-        if not self._deflated:
-            return summarize_by_class(
-                self.data[ymin:ymax, xmin:xmax], class_array, **kwargs)
-        if selector is None:
-            selector = np.ones(self.shape)
-        # Selector multiplies NaN against areas outside the subset
-        return summarize_by_class(np.multiply(self.data, selector),
-            np.multiply(class_array, selector), **kwargs)
-
-    def timestamp(self):
-        &#39;&#39;&#39;
-        Returns the ISO 8601 timestamp of the file.
-
-        Returns
-        -------
-        datetime.date
-        &#39;&#39;&#39;
-        cls = self.__class__
-        match = cls.date_regex.match(os.path.dirname(self.filename))
-        if match is None:
-            return match
-
-        return cls.ordinal_to_date(*map(int, match.groups()))
-
-
-class TCFArray(SparseArray, metaclass = MetaSparseArray):
-    &#39;&#39;&#39;
-    Represents a &#34;sparse&#34; or &#34;land&#34; array, output from the TCF C codebase.
-
-    Parameters
-    ----------
-    file_path : str
-        File system path to a stored output TCF array in &#34;sparse&#34; form;
-        assumes that the filename incorporates the data type, e.g.,
-        `foo.flt32` or `foo.uint8`.
-    &#39;&#39;&#39;
-    file_regex = re.compile(r&#39;^tcf_.*_(?P&lt;field&gt;Ctot|gpp|nee|rhtot)_avg_(?P&lt;pft&gt;pft\d{1})?_?.*\.(?P&lt;ftype&gt;%s$)&#39; % &#39;|&#39;.join(TYPE_MAP.keys()))
-    date_regex = re.compile(r&#39;.*/Y(?P&lt;year&gt;\d{4})/D(?P&lt;day&gt;\d{3})/?$&#39;)
-
-    def __init__(self, file_path, grid = &#39;M09&#39;):
-        super(TCFArray, self).__init__(file_path, grid)
-        match = self.file_regex.match(os.path.basename(self.filename))
-        self._field, self._pft, self._ftype = match.groups()
-        self._field_l4c = FIELD_MAP[self._field] # L4C field name</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -540,9 +72,6 @@ class TCFArray(SparseArray, metaclass = MetaSparseArray):
 <span>(</span><span>*args, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>NOTE: These are potentially expensive, but necessary, operations; they are
-exposed at the global scope because I don't want successive instances of
-<code><a title="pyl4c.lib.tcf.SparseArray" href="#pyl4c.lib.tcf.SparseArray">SparseArray</a></code> to do this lookup, and allocate more memory, each time.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -569,15 +98,17 @@ exposed at the global scope because I don't want successive instances of
 
         return cls._sparse_col_idx</code></pre>
 </details>
+<div class="desc"><p>NOTE: These are potentially expensive, but necessary, operations; they are
+exposed at the global scope because I don't want successive instances of
+<code><a title="pyl4c.lib.tcf.SparseArray" href="#pyl4c.lib.tcf.SparseArray">SparseArray</a></code> to do this lookup, and allocate more memory, each time.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li>builtins.type</li>
 </ul>
 <h3>Instance variables</h3>
 <dl>
-<dt id="pyl4c.lib.tcf.MetaSparseArray.sparse_col_idx"><code class="name">var <span class="ident">sparse_col_idx</span></code></dt>
+<dt id="pyl4c.lib.tcf.MetaSparseArray.sparse_col_idx"><code class="name">prop <span class="ident">sparse_col_idx</span></code></dt>
 <dd>
-<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -590,10 +121,10 @@ def sparse_col_idx(cls):
 
     return cls._sparse_col_idx</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.tcf.MetaSparseArray.sparse_row_idx"><code class="name">var <span class="ident">sparse_row_idx</span></code></dt>
-<dd>
 <div class="desc"></div>
+</dd>
+<dt id="pyl4c.lib.tcf.MetaSparseArray.sparse_row_idx"><code class="name">prop <span class="ident">sparse_row_idx</span></code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -606,6 +137,7 @@ def sparse_row_idx(cls):
 
     return cls._sparse_row_idx</code></pre>
 </details>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -614,24 +146,6 @@ def sparse_row_idx(cls):
 <span>(</span><span>source, grid, dtype=None, field=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Represents a "sparse" or "land" array such as that output from the
-TCF C codebase.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>source</code></strong> :&ensp;<code>str</code> or <code>numpy.ndarray</code></dt>
-<dd>Either a file system path to a stored output array in "sparse" form
-(assumes that the filename incorporates the data type, e.g.,
-<code>foo.flt32</code> or <code>foo.uint8</code>) or an extant <code>numpy.ndarray</code> (either
-sparse or not).</dd>
-<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
-<dd>The EASE-Grid 2.0 designation, e.g., "M09" for a 9-km grid or "M01"
-for a 1-km grid</dd>
-<dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt>
-<dd>The NumPy data type used to represent numbers (Default: None); must
-be specified when reading a NumPy or HDF5 array</dd>
-<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
-<dd>Name of the HDF5 field to read</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1011,6 +525,24 @@ be specified when reading a NumPy or HDF5 array</dd>
 
         return cls.ordinal_to_date(*map(int, match.groups()))</code></pre>
 </details>
+<div class="desc"><p>Represents a "sparse" or "land" array such as that output from the
+TCF C codebase.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>source</code></strong> :&ensp;<code>str</code> or <code>numpy.ndarray</code></dt>
+<dd>Either a file system path to a stored output array in "sparse" form
+(assumes that the filename incorporates the data type, e.g.,
+<code>foo.flt32</code> or <code>foo.uint8</code>) or an extant <code>numpy.ndarray</code> (either
+sparse or not).</dd>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation, e.g., "M09" for a 9-km grid or "M01"
+for a 1-km grid</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>type</code></dt>
+<dd>The NumPy data type used to represent numbers (Default: None); must
+be specified when reading a NumPy or HDF5 array</dd>
+<dt><strong><code>field</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the HDF5 field to read</dd>
+</dl></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="pyl4c.lib.tcf.TCFArray" href="#pyl4c.lib.tcf.TCFArray">TCFArray</a></li>
@@ -1033,30 +565,6 @@ corresponding 1D index in the deflated (sparse) array.</p>
 <dt><code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def get_deflated_idx(cls, coords):
-    &#39;&#39;&#39;
-    Translates (row, column) coordinates in the inflated array to the
-    corresponding 1D index in the deflated (sparse) array.
-
-    Parameters
-    ----------
-    coords : tuple or list
-        Sequence of (row, column) integer indices
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    row, col = coords
-    return np.arange(0, cls.sparse_row_idx.shape[0])[
-        np.logical_and(cls.sparse_col_idx == col, cls.sparse_row_idx == row)
-    ]</code></pre>
-</details>
 </dd>
 <dt id="pyl4c.lib.tcf.SparseArray.ordinal_to_date"><code class="name flex">
 <span>def <span class="ident">ordinal_to_date</span></span>(<span>year, ordinal)</span>
@@ -1075,37 +583,6 @@ def get_deflated_idx(cls, coords):
 <dt><code>datetime.date</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def ordinal_to_date(cls, year, ordinal):
-    &#39;&#39;&#39;
-    Returns a `datetime.date()` instance based on year, ordinal day.
-
-    Parameters
-    ----------
-    year : int
-    ordinal : int
-        Day of the year on interval [1, 366]
-
-    Returns
-    -------
-    datetime.date
-    &#39;&#39;&#39;
-    assert ordinal &lt;= 366, &#39;Ordinal out of range [1, 366]&#39;
-    assert year in range(1800, 2100), &#39;Year out of range [1800, 2100]&#39;
-    # In leap years, for days after February 29, subtract 1 so that
-    #   we obtain the &#34;regular&#34; date
-    if year % 4 == 0:
-        if ordinal == 60:
-            return datetime.date(year, 2, 29)
-            if ordinal &gt; 60:
-                ordinal -= 1
-                d = datetime.date.fromordinal(ordinal)
-                return datetime.date(year, d.month, d.day)</code></pre>
-</details>
 </dd>
 <dt id="pyl4c.lib.tcf.SparseArray.sparse_selector"><code class="name flex">
 <span>def <span class="ident">sparse_selector</span></span>(<span>slice_idx, grid='M09')</span>
@@ -1129,57 +606,12 @@ should be restored, e.g., "M09" or "M01"</dd>
 <dt><code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">@classmethod
-def sparse_selector(cls, slice_idx, grid = &#39;M09&#39;):
-    &#39;&#39;&#39;
-    Returns a 1D array with values in `[np.nan, 1]` where 1 is assigned to
-    those cells inside the desired spatial subset of the corresponding
-    2D array. This allows efficient summarization, for instance, of the
-    sparse (1D) data array without having to inflate it.
-
-    Parameters
-    ----------
-    slice_idx : tuple or list
-        Sequence of nested bounding box coordinates in pixel space, e.g.:
-        `((xmin, xmax), (ymin, ymax))`
-    grid : str
-        EASE-Grid 2.0 designation describing the size of the grid that
-        should be restored, e.g., &#34;M09&#34; or &#34;M01&#34;
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    shp = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
-    x_idx, y_idx = slice_idx
-    xmin, xmax = x_idx
-    ymin, ymax = y_idx
-
-    # If the array is already deflated, we need to generate a
-    #   corresponding 1D array to &#34;select&#34; values
-    # Get a grid of NaNs, then fill in 1 where the subset fits
-    selector_deflated = np.ones(cls.sparse_row_idx.shape) * np.nan
-    selector = np.ones(shp) * np.nan
-    selector[ymin:ymax, xmin:xmax] = 1
-    # Exactly like self.inflate() but selector is the &#34;data&#39;&#34;
-    for i in range(0, cls.sparse_row_idx.shape[0]):
-        row = cls.sparse_row_idx[i]
-        col = cls.sparse_col_idx[i]
-        selector_deflated[i] = selector[row, col]
-
-    return selector_deflated</code></pre>
-</details>
 </dd>
 </dl>
 <h3>Instance variables</h3>
 <dl>
-<dt id="pyl4c.lib.tcf.SparseArray.shape"><code class="name">var <span class="ident">shape</span></code></dt>
+<dt id="pyl4c.lib.tcf.SparseArray.shape"><code class="name">prop <span class="ident">shape</span></code></dt>
 <dd>
-<div class="desc"><p>Alias for the array data's shape</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1189,6 +621,7 @@ def shape(self):
     &#34;Alias for the array data&#39;s shape&#34;
     return self.data.shape</code></pre>
 </details>
+<div class="desc"><p>Alias for the array data's shape</p></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -1197,13 +630,6 @@ def shape(self):
 <span>def <span class="ident">deflate</span></span>(<span>self, nodata=-9999)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Inverse of <code><a title="pyl4c.lib.tcf.SparseArray.inflate" href="#pyl4c.lib.tcf.SparseArray.inflate">SparseArray.inflate()</a></code>; converts a 2D array to a "sparse"
-or "land" representation.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>The NoData value to output in resulting array</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1238,20 +664,18 @@ or "land" representation.</p>
     self.data = result
     result = None</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.tcf.SparseArray.inflate"><code class="name flex">
-<span>def <span class="ident">inflate</span></span>(<span>self, nodata=-9999)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Converts from a "sparse" or "land" array to an EASE-Grid 2.0 array. The
-sparse format was developed by Joe Glassy and Lucas Jones. Special files
-are needed to index the sparse data correctly (it is not simply a raveled
-array filtered to land pixels).</p>
+<div class="desc"><p>Inverse of <code><a title="pyl4c.lib.tcf.SparseArray.inflate" href="#pyl4c.lib.tcf.SparseArray.inflate">SparseArray.inflate()</a></code>; converts a 2D array to a "sparse"
+or "land" representation.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
 <dd>The NoData value to output in resulting array</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.tcf.SparseArray.inflate"><code class="name flex">
+<span>def <span class="ident">inflate</span></span>(<span>self, nodata=-9999)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1288,25 +712,20 @@ array filtered to land pixels).</p>
     self.data = result
     result = None</code></pre>
 </details>
+<div class="desc"><p>Converts from a "sparse" or "land" array to an EASE-Grid 2.0 array. The
+sparse format was developed by Joe Glassy and Lucas Jones. Special files
+are needed to index the sparse data correctly (it is not simply a raveled
+array filtered to land pixels).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>The NoData value to output in resulting array</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.tcf.SparseArray.inflate_subset"><code class="name flex">
 <span>def <span class="ident">inflate_subset</span></span>(<span>self, slice_idx, nodata=-9999)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a subset view of the inflated array, for convenience. This is
-not faster than subsetting the inflated array.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>slice_idx</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd><code>((xmin, xmax), (ymin, ymax))</code> in pixel space</dd>
-<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>The NoData value to output in resulting array</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1348,20 +767,25 @@ not faster than subsetting the inflated array.</p>
                 result[row, col] = data[i]
     return result</code></pre>
 </details>
+<div class="desc"><p>Returns a subset view of the inflated array, for convenience. This is
+not faster than subsetting the inflated array.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>slice_idx</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd><code>((xmin, xmax), (ymin, ymax))</code> in pixel space</dd>
+<dt><strong><code>nodata</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>The NoData value to output in resulting array</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.tcf.SparseArray.replace"><code class="name flex">
 <span>def <span class="ident">replace</span></span>(<span>self, old, new)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Replace "old" values with "new" values, e.g., replace old NoData
-values with a new value.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>old</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>Value to be replaced</dd>
-<dt><strong><code>new</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>Value to replace the old value</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1380,28 +804,20 @@ values with a new value.</p>
     &#39;&#39;&#39;
     self.data[self.data == old] = new</code></pre>
 </details>
+<div class="desc"><p>Replace "old" values with "new" values, e.g., replace old NoData
+values with a new value.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>old</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Value to be replaced</dd>
+<dt><strong><code>new</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>Value to replace the old value</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.tcf.SparseArray.summarize"><code class="name flex">
 <span>def <span class="ident">summarize</span></span>(<span>self, selector=None, **kwargs)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Summarize the values of an array (inflated or deflated) without
-inflating it, optionally for a spatial subset.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>selector</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>An array that describes which which values should be summarized;
-all non-NaN entries correspond to entries in the data array that
-will be summarized.</dd>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Additional arguments to <code><a title="pyl4c.utils.summarize" href="../utils.html#pyl4c.utils.summarize">summarize()</a></code> or
-<code><a title="pyl4c.utils.summarize_by_class" href="../utils.html#pyl4c.utils.summarize_by_class">summarize_by_class()</a></code></dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1435,11 +851,6 @@ will be summarized.</dd>
     # Selector multiplies NaN against areas outside the subset
     return summarize(np.multiply(self.data, selector), **kwargs)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.tcf.SparseArray.summarize_by_class"><code class="name flex">
-<span>def <span class="ident">summarize_by_class</span></span>(<span>self, selector=None, class_array=None, **kwargs)</span>
-</code></dt>
-<dd>
 <div class="desc"><p>Summarize the values of an array (inflated or deflated) without
 inflating it, optionally for a spatial subset.</p>
 <h2 id="parameters">Parameters</h2>
@@ -1447,10 +858,7 @@ inflating it, optionally for a spatial subset.</p>
 <dt><strong><code>selector</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>An array that describes which which values should be summarized;
 all non-NaN entries correspond to entries in the data array that
-will be summarize</dd>
-<dt><strong><code>class_array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>An array that has discrete class labels (e.g., decimal numbers);
-values that share a class will be aggregated in the summary</dd>
+will be summarized.</dd>
 <dt><strong><code>**kwargs</code></strong></dt>
 <dd>Additional arguments to <code><a title="pyl4c.utils.summarize" href="../utils.html#pyl4c.utils.summarize">summarize()</a></code> or
 <code><a title="pyl4c.utils.summarize_by_class" href="../utils.html#pyl4c.utils.summarize_by_class">summarize_by_class()</a></code></dd>
@@ -1460,6 +868,11 @@ values that share a class will be aggregated in the summary</dd>
 <dt><code>dict</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.tcf.SparseArray.summarize_by_class"><code class="name flex">
+<span>def <span class="ident">summarize_by_class</span></span>(<span>self, selector=None, class_array=None, **kwargs)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1500,17 +913,31 @@ values that share a class will be aggregated in the summary</dd>
     return summarize_by_class(np.multiply(self.data, selector),
         np.multiply(class_array, selector), **kwargs)</code></pre>
 </details>
+<div class="desc"><p>Summarize the values of an array (inflated or deflated) without
+inflating it, optionally for a spatial subset.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>selector</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>An array that describes which which values should be summarized;
+all non-NaN entries correspond to entries in the data array that
+will be summarize</dd>
+<dt><strong><code>class_array</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>An array that has discrete class labels (e.g., decimal numbers);
+values that share a class will be aggregated in the summary</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Additional arguments to <code><a title="pyl4c.utils.summarize" href="../utils.html#pyl4c.utils.summarize">summarize()</a></code> or
+<code><a title="pyl4c.utils.summarize_by_class" href="../utils.html#pyl4c.utils.summarize_by_class">summarize_by_class()</a></code></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.tcf.SparseArray.timestamp"><code class="name flex">
 <span>def <span class="ident">timestamp</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the ISO 8601 timestamp of the file.</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>datetime.date</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1530,6 +957,12 @@ values that share a class will be aggregated in the summary</dd>
 
     return cls.ordinal_to_date(*map(int, match.groups()))</code></pre>
 </details>
+<div class="desc"><p>Returns the ISO 8601 timestamp of the file.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>datetime.date</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -1538,14 +971,6 @@ values that share a class will be aggregated in the summary</dd>
 <span>(</span><span>file_path, grid='M09')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Represents a "sparse" or "land" array, output from the TCF C codebase.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>File system path to a stored output TCF array in "sparse" form;
-assumes that the filename incorporates the data type, e.g.,
-<code>foo.flt32</code> or <code>foo.uint8</code>.</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1570,6 +995,14 @@ assumes that the filename incorporates the data type, e.g.,
         self._field, self._pft, self._ftype = match.groups()
         self._field_l4c = FIELD_MAP[self._field] # L4C field name</code></pre>
 </details>
+<div class="desc"><p>Represents a "sparse" or "land" array, output from the TCF C codebase.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>File system path to a stored output TCF array in "sparse" form;
+assumes that the filename incorporates the data type, e.g.,
+<code>foo.flt32</code> or <code>foo.uint8</code>.</dd>
+</dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="pyl4c.lib.tcf.SparseArray" href="#pyl4c.lib.tcf.SparseArray">SparseArray</a></li>
@@ -1613,7 +1046,6 @@ assumes that the filename incorporates the data type, e.g.,
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -1661,7 +1093,7 @@ assumes that the filename incorporates the data type, e.g.,
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

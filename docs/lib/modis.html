@@ -2,21 +2,36 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.lib.modis API documentation</title>
 <meta name="description" content="MODIS sinusoidal projection forward and backward coordinate transformations,
 courtesy of Giglio et al. (2018), Collection 6 MODIS Burned Area Product
-…" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+…">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -31,295 +46,6 @@ courtesy of Giglio et al. (2018), Collection 6 MODIS Burned Area Product
 User's Guide, Version 1, Appendix B:</p>
 <pre><code>&lt;https://modis-fire.umd.edu/files/MODIS_C6_BA_User_Guide_1.2.pdf&gt;
 </code></pre>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-MODIS sinusoidal projection forward and backward coordinate transformations,
-courtesy of Giglio et al. (2018), Collection 6 MODIS Burned Area Product
-User&#39;s Guide, Version 1, Appendix B:
-
-    https://modis-fire.umd.edu/files/MODIS_C6_BA_User_Guide_1.2.pdf
-&#39;&#39;&#39;
-
-import re
-import numpy as np
-
-SPHERE_RADIUS = 6371007.181 # Radius of ideal sphere, meters
-TILE_LINES = {250: 5000, 500: 2400, 1000: 1200} # Num. lines by nominal res.
-TILE_SIZE = 1111950 # Width and height of MODIS tile in projection plane
-XMIN = -20015109 # Western limit of projection plane, meters
-YMAX = 10007555 # Northern limit of projection plane, meters
-VIIRS_METADATA = re.compile(
-    r&#39;.*XDim=(?P&lt;xdim&gt;\d+)&#39;
-    r&#39;.*YDim=(?P&lt;ydim&gt;\d+)&#39;
-    r&#39;.*UpperLeftPointMtrs=\((?P&lt;ul&gt;[0-9,\-\.]+)\)&#39;
-    r&#39;.*LowerRightMtrs=\((?P&lt;lr&gt;[0-9,\-\.]+)\).*&#39;, re.DOTALL)
-VIIRS_H5_ROOT = &#39;HDFEOS/GRIDS/VNP_Grid_VNP15A2H/Data Fields&#39;
-
-def dec2bin_unpack(x):
-    &#39;&#39;&#39;
-    Unpacks an arbitrary decimal NumPy array into a binary representation
-    along a new axis. Assumes decimal digits are on the interval [0, 255],
-    i.e., that only 8-bit representations are needed.
-
-    Parameters
-    ----------
-    x : numpy.ndarray
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    # Make sure the bit representation is enumerated along a new axis, the
-    #   very last axis
-    axis = x.ndim
-    # unpackbits() returns the bit representation in big-endian order, so we
-    #   flip the array (with -8) to get litte-endian order
-    return np.unpackbits(x[...,None], axis = axis)[...,-8:]
-
-
-def geotransform(
-        hdf, ps = 463.31271653, nrow = 2400, ncol = 2400,
-        metadata = VIIRS_METADATA):
-    &#39;&#39;&#39;
-    Prescribe a geotransform tuple for the output GeoTIFF. For MODIS/VIIRS
-    sinsuoidal projections, the lower right corner coordinates are &#34;the only
-    metadata that accurately reflect the extreme corners of the gridded image&#34;
-    (Myneni et al. 2018, VIIRS LAI/fPAR User Guide). So, instead of using the
-    reported upper-left (UL) corner coordinates, it is more accurate to use
-    the lower-right (LR) corner coordinates and calculate the position of the
-    UL corner based on the width and height of the image and the pixel size.
-    NOTE that a rather odd pixel size is required to get the correct results
-    verified against the HDF-EOS-to-GeoTIFF (HEG) Conversion Tool; see also
-    Giglio et al. (2018), &#34;Collection 6 MODIS Burned Area Product User&#39;s
-    Guide, Version 1&#34; Table 1.
-
-        https://modis-land.gsfc.nasa.gov/pdf/MODIS_C6_BA_User_Guide_1.2.pdf
-
-    Parameters
-    ----------
-    hdf : h5py.File
-    ps : int or float
-        The pixel size; in units matching the linear units of the SRS
-        (Default: 463.3127 meters)
-    nrow : int
-        Number of rows in the output image (Default: 2400 for MODIS/VIIRS)
-    ncol : int
-        Number of columns in the output image (Default: 2400 for MODIS/VIIRS)
-    metadata : re.Pattern
-        Compiled regex that captures important metadata fields
-
-    Returns
-    -------
-    tuple
-        (x_min, pixel_width, 0, y_max, 0, -pixel_height)
-    &#39;&#39;&#39;
-    meta = hdf[&#39;HDFEOS INFORMATION/StructMetadata.0&#39;][()].decode()
-    lr = VIIRS_METADATA.match(meta).groupdict()[&#39;lr&#39;].split(&#39;,&#39;)
-    return ( # Subtract distance (meters) from LR corner to obtain UR corner
-        float(lr[0]) - (ncol * ps), ps, 0, float(lr[1]) + (nrow * ps), 0, -ps)
-
-
-def mod15a2h_qc_fail(x):
-    &#39;&#39;&#39;
-    Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
-    `FparLai_QC` band: Bad pixels have either `1` in the first bit (&#34;Pixel not
-    produced at all&#34;) or anything other than `00` (&#34;clear&#34;) in bits 3-4.
-    Output array is True wherever the array fails QC criteria. Compare to:
-
-        np.vectorize(lambda v: v[0] == 1 or v[3:5] != &#39;00&#39;)
-
-    Parameters
-    ----------
-    x : numpy.ndarray
-        Array where the last axis enumerates the unpacked bits
-        (ones and zeros)
-
-    Returns
-    -------
-    numpy.ndarray
-        Boolean array with True wherever QC criteria are failed
-    &#39;&#39;&#39;
-    y = dec2bin_unpack(x)
-    # Emit 1 = FAIL if these two bits are not == &#34;00&#34;
-    c1 = y[...,3:5].sum(axis = -1).astype(np.uint8)
-    # Emit 1 = FAIL if 1st bit == 1 (&#34;Pixel not produced at all&#34;)
-    c2 = y[...,0]
-    # Intermediate arrays are 1 = FAIL, 0 = PASS
-    return (c1 + c2) &gt; 0
-
-
-def modis_from_wgs84(coords):
-    &#39;&#39;&#39;
-    Given longitude-latitude coordinates, return the coordinates on the
-    sinusoidal projection plane.
-
-    Parameters
-    ----------
-    coords : tuple or list
-        (Longitude, Latitude) coordinate pair
-
-    Returns
-    -------
-    tuple
-        (X, Y) coordinate pair in MODIS sinusoidal projection
-    &#39;&#39;&#39;
-    x, y = map(np.deg2rad, coords)
-    return (SPHERE_RADIUS * x * np.cos(y), SPHERE_RADIUS * y)
-
-
-def modis_to_wgs84(coords):
-    &#39;&#39;&#39;
-    Convert coordinates on the MODIS sinusoidal plane to longitude-latitude
-    coordinates (WGS84).
-
-    Parameters
-    ----------
-    coords : tuple or list
-        (X, Y) coordinate pair in MODIS sinusoidal projection
-
-    Returns
-    -------
-    tuple
-        (Longitude, Latitude) coordinate pair
-    &#39;&#39;&#39;
-    x, y = coords
-    lat = y / SPHERE_RADIUS
-    lng = x / (SPHERE_RADIUS * np.cos(lat))
-    return tuple(map(np.rad2deg, (lng, lat)))
-
-
-def modis_tile_from_wgs84(coords):
-    &#39;&#39;&#39;
-    Given longitude-latitude coordinates, return the MODIS tile (H,V) that
-    contains them.
-
-    Parameters
-    ----------
-    coords : tuple or list
-        (Longitude, Latitude) coordinate pair
-
-    Returns
-    -------
-    tuple
-        (H,V) tile identifier
-    &#39;&#39;&#39;
-    x, y = modis_from_wgs84(coords) # Get coordinates in the projection plane
-    return (
-        np.floor((x - XMIN) / TILE_SIZE),
-        np.floor((YMAX - y) / TILE_SIZE))
-
-
-def modis_row_col_from_wgs84(coords, nominal = 500):
-    &#39;&#39;&#39;
-    Given longitude-latitude coordinates, return the corresponding row-column
-    coordinates within a MODIS tile. NOTE: You&#39;ll need to determine which
-    MODIS tile contains this row-column index with `modis_tile_from_wgs84()`.
-
-    Parameters
-    ----------
-    coords : tuple or list
-        (X, Y) coordinate pair in MODIS sinusoidal projection
-    nominal : int
-        Nominal resolution of MODIS raster: 250 (meters), 500, or 1000
-
-    Returns
-    -------
-    tuple
-        (Row, Column) coordinates
-    &#39;&#39;&#39;
-    x, y = modis_from_wgs84(coords) # Get coordinates in the projection plane
-    # Get actual size of, e.g., &#34;500-m&#34; MODIS sinusoidal cell
-    res = TILE_SIZE / float(TILE_LINES[nominal])
-    return (
-        np.floor((((YMAX - y) % TILE_SIZE) / res) - 0.5),
-        np.floor((((x - XMIN) % TILE_SIZE) / res) - 0.5),
-    )
-
-
-def modis_row_col_to_wgs84(coords, h, v, nominal = 500):
-    &#39;&#39;&#39;
-    Convert pixel coordinates in a specific MODIS tile to longitude-latitude
-    coordinates.
-
-    Parameters
-    ----------
-    coords : tuple or list
-        (X, Y) coordinate pair in MODIS sinusoidal projection
-    h : int
-        MODIS tile &#34;h&#34; index
-    v : int
-        MODIS tile &#34;v&#34; index
-    nominal : int
-        Nominal resolution of MODIS raster: 250 (meters), 500, or 1000
-
-    Returns
-    -------
-    tuple
-        (Longitude, Latitude) coordinates
-    &#39;&#39;&#39;
-    r, c = coords
-    lines = TILE_LINES[nominal]
-    assert (0 &lt;= r &lt;= (lines - 1)) and (0 &lt;= c &lt;= (lines - 1)),\
-        &#39;Row and column indices must be in the range [0, %d]&#39; % (lines - 1)
-    # Get actual size of, e.g., &#34;500-m&#34; MODIS sinusoidal cell
-    res = TILE_SIZE / float(TILE_LINES[nominal])
-    x = ((c + 0.5) * res) + (h * TILE_SIZE) + XMIN
-    y = YMAX - ((r + 0.5) * res) - (v * TILE_SIZE)
-    return modis_to_wgs84((x, y))
-
-
-def vnp15a2h_qc_fail(x):
-    &#39;&#39;&#39;
-    Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
-    `FparLai_QC` band: Bad pixels have either `11` in the first two bits
-    (&#34;Fill Value&#34;) or anything other than `0` in the 3rd least-significant
-    bits, which combines &#34;Pixel not produced at all&#34;. For example, see decimal
-    number 80:
-
-        0101|0|000 where &#34;000&#34; is the combined (Fill bit | Retrieval quality)
-
-    Parameters
-    ----------
-    x : numpy.ndarray
-        Unsigned, 8-bit integer array
-
-    Returns
-    -------
-    numpy.ndarray
-        Boolean array
-    &#39;&#39;&#39;
-    y = dec2bin_unpack(x)
-    # Emit 1 = FAIL if sum(&#34;11&#34;) == 2; &#34;BiomeType&#34; == &#34;Filled Value&#34;
-    c1 = np.where(y[...,0:2].sum(axis = -1) == 2, 1, 0).astype(np.uint8)
-    # Emit 1 = FAIL if 3rd bit == 1; &#34;SCF_QC&#34; == &#34;Pixel not produced at all&#34;
-    c2 = y[...,5]
-    # Intermediate arrays are 1 = FAIL, 0 = PASS
-    return (c1 + c2) &gt; 0
-
-
-def vnp15a2h_cloud_fail(x):
-    &#39;&#39;&#39;
-    Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
-    `FparExtra_QC` band (cloud QC band): Bad pixels have anything OTHER THAN
-    `1` second least-significant bit; `00` and `01` being acceptable cloud QC
-    flags (&#34;Confident clear&#34; and &#34;Probably clear&#34;, respectively).
-
-    Parameters
-    ----------
-    x : numpy.ndarray
-        Unsigned, 8-bit integer array
-
-    Returns
-    -------
-    numpy.ndarray
-        Boolean array
-    &#39;&#39;&#39;
-    y = dec2bin_unpack(x)
-    return y[...,-2] &gt; 0</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -332,19 +58,6 @@ def vnp15a2h_cloud_fail(x):
 <span>def <span class="ident">dec2bin_unpack</span></span>(<span>x)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Unpacks an arbitrary decimal NumPy array into a binary representation
-along a new axis. Assumes decimal digits are on the interval [0, 255],
-i.e., that only 8-bit representations are needed.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -370,43 +83,24 @@ i.e., that only 8-bit representations are needed.</p>
     #   flip the array (with -8) to get litte-endian order
     return np.unpackbits(x[...,None], axis = axis)[...,-8:]</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.modis.geotransform"><code class="name flex">
-<span>def <span class="ident">geotransform</span></span>(<span>hdf, ps=463.31271653, nrow=2400, ncol=2400, metadata=re.compile(&#x27;.*XDim=(?P&lt;xdim&gt;\\d+).*YDim=(?P&lt;ydim&gt;\\d+).*UpperLeftPointMtrs=\\((?P&lt;ul&gt;[0-9,\\-\\.]+)\\).*LowerRightMtrs=\\((?P&lt;lr&gt;[0-9,\\-\\.]+)\\).*&#x27;, re.DOTALL))</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Prescribe a geotransform tuple for the output GeoTIFF. For MODIS/VIIRS
-sinsuoidal projections, the lower right corner coordinates are "the only
-metadata that accurately reflect the extreme corners of the gridded image"
-(Myneni et al. 2018, VIIRS LAI/fPAR User Guide). So, instead of using the
-reported upper-left (UL) corner coordinates, it is more accurate to use
-the lower-right (LR) corner coordinates and calculate the position of the
-UL corner based on the width and height of the image and the pixel size.
-NOTE that a rather odd pixel size is required to get the correct results
-verified against the HDF-EOS-to-GeoTIFF (HEG) Conversion Tool; see also
-Giglio et al. (2018), "Collection 6 MODIS Burned Area Product User's
-Guide, Version 1" Table 1.</p>
-<pre><code>&lt;https://modis-land.gsfc.nasa.gov/pdf/MODIS_C6_BA_User_Guide_1.2.pdf&gt;
-</code></pre>
+<div class="desc"><p>Unpacks an arbitrary decimal NumPy array into a binary representation
+along a new axis. Assumes decimal digits are on the interval [0, 255],
+i.e., that only 8-bit representations are needed.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
-<dt><strong><code>ps</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
-<dd>The pixel size; in units matching the linear units of the SRS
-(Default: 463.3127 meters)</dd>
-<dt><strong><code>nrow</code></strong> :&ensp;<code>int</code></dt>
-<dd>Number of rows in the output image (Default: 2400 for MODIS/VIIRS)</dd>
-<dt><strong><code>ncol</code></strong> :&ensp;<code>int</code></dt>
-<dd>Number of columns in the output image (Default: 2400 for MODIS/VIIRS)</dd>
-<dt><strong><code>metadata</code></strong> :&ensp;<code>re.Pattern</code></dt>
-<dd>Compiled regex that captures important metadata fields</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>tuple</code></dt>
-<dd>(x_min, pixel_width, 0, y_max, 0, -pixel_height)</dd>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.modis.geotransform"><code class="name flex">
+<span>def <span class="ident">geotransform</span></span>(<span>hdf,<br>ps=463.31271653,<br>nrow=2400,<br>ncol=2400,<br>metadata=re.compile(&#x27;.*XDim=(?P&lt;xdim&gt;\\d+).*YDim=(?P&lt;ydim&gt;\\d+).*UpperLeftPointMtrs=\\((?P&lt;ul&gt;[0-9,\\-\\.]+)\\).*LowerRightMtrs=\\((?P&lt;lr&gt;[0-9,\\-\\.]+)\\).*&#x27;, re.DOTALL))</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -452,28 +146,43 @@ Guide, Version 1" Table 1.</p>
     return ( # Subtract distance (meters) from LR corner to obtain UR corner
         float(lr[0]) - (ncol * ps), ps, 0, float(lr[1]) + (nrow * ps), 0, -ps)</code></pre>
 </details>
+<div class="desc"><p>Prescribe a geotransform tuple for the output GeoTIFF. For MODIS/VIIRS
+sinsuoidal projections, the lower right corner coordinates are "the only
+metadata that accurately reflect the extreme corners of the gridded image"
+(Myneni et al. 2018, VIIRS LAI/fPAR User Guide). So, instead of using the
+reported upper-left (UL) corner coordinates, it is more accurate to use
+the lower-right (LR) corner coordinates and calculate the position of the
+UL corner based on the width and height of the image and the pixel size.
+NOTE that a rather odd pixel size is required to get the correct results
+verified against the HDF-EOS-to-GeoTIFF (HEG) Conversion Tool; see also
+Giglio et al. (2018), "Collection 6 MODIS Burned Area Product User's
+Guide, Version 1" Table 1.</p>
+<pre><code>&lt;https://modis-land.gsfc.nasa.gov/pdf/MODIS_C6_BA_User_Guide_1.2.pdf&gt;
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>ps</code></strong> :&ensp;<code>int</code> or <code>float</code></dt>
+<dd>The pixel size; in units matching the linear units of the SRS
+(Default: 463.3127 meters)</dd>
+<dt><strong><code>nrow</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of rows in the output image (Default: 2400 for MODIS/VIIRS)</dd>
+<dt><strong><code>ncol</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of columns in the output image (Default: 2400 for MODIS/VIIRS)</dd>
+<dt><strong><code>metadata</code></strong> :&ensp;<code>re.Pattern</code></dt>
+<dd>Compiled regex that captures important metadata fields</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(x_min, pixel_width, 0, y_max, 0, -pixel_height)</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.modis.mod15a2h_qc_fail"><code class="name flex">
 <span>def <span class="ident">mod15a2h_qc_fail</span></span>(<span>x)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
-<code>FparLai_QC</code> band: Bad pixels have either <code>1</code> in the first bit ("Pixel not
-produced at all") or anything other than <code>00</code> ("clear") in bits 3-4.
-Output array is True wherever the array fails QC criteria. Compare to:</p>
-<pre><code>np.vectorize(lambda v: v[0] == 1 or v[3:5] != '00')
-</code></pre>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Array where the last axis enumerates the unpacked bits
-(ones and zeros)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>Boolean array with True wherever QC criteria are failed</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -506,23 +215,28 @@ Output array is True wherever the array fails QC criteria. Compare to:</p>
     # Intermediate arrays are 1 = FAIL, 0 = PASS
     return (c1 + c2) &gt; 0</code></pre>
 </details>
+<div class="desc"><p>Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
+<code>FparLai_QC</code> band: Bad pixels have either <code>1</code> in the first bit ("Pixel not
+produced at all") or anything other than <code>00</code> ("clear") in bits 3-4.
+Output array is True wherever the array fails QC criteria. Compare to:</p>
+<pre><code>np.vectorize(lambda v: v[0] == 1 or v[3:5] != '00')
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Array where the last axis enumerates the unpacked bits
+(ones and zeros)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>Boolean array with True wherever QC criteria are failed</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.modis.modis_from_wgs84"><code class="name flex">
 <span>def <span class="ident">modis_from_wgs84</span></span>(<span>coords)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Given longitude-latitude coordinates, return the coordinates on the
-sinusoidal projection plane.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>(Longitude, Latitude) coordinate pair</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -545,26 +259,23 @@ sinusoidal projection plane.</p>
     x, y = map(np.deg2rad, coords)
     return (SPHERE_RADIUS * x * np.cos(y), SPHERE_RADIUS * y)</code></pre>
 </details>
+<div class="desc"><p>Given longitude-latitude coordinates, return the coordinates on the
+sinusoidal projection plane.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>(Longitude, Latitude) coordinate pair</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.modis.modis_row_col_from_wgs84"><code class="name flex">
 <span>def <span class="ident">modis_row_col_from_wgs84</span></span>(<span>coords, nominal=500)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Given longitude-latitude coordinates, return the corresponding row-column
-coordinates within a MODIS tile. NOTE: You'll need to determine which
-MODIS tile contains this row-column index with <code><a title="pyl4c.lib.modis.modis_tile_from_wgs84" href="#pyl4c.lib.modis.modis_tile_from_wgs84">modis_tile_from_wgs84()</a></code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
-<dt><strong><code>nominal</code></strong> :&ensp;<code>int</code></dt>
-<dd>Nominal resolution of MODIS raster: 250 (meters), 500, or 1000</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>(Row, Column) coordinates</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -578,7 +289,7 @@ MODIS tile contains this row-column index with <code><a title="pyl4c.lib.modis.m
     Parameters
     ----------
     coords : tuple or list
-        (X, Y) coordinate pair in MODIS sinusoidal projection
+        (X, Y) coordinate pair in WGS84 (longitude, latitude)
     nominal : int
         Nominal resolution of MODIS raster: 250 (meters), 500, or 1000
 
@@ -595,29 +306,26 @@ MODIS tile contains this row-column index with <code><a title="pyl4c.lib.modis.m
         np.floor((((x - XMIN) % TILE_SIZE) / res) - 0.5),
     )</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.modis.modis_row_col_to_wgs84"><code class="name flex">
-<span>def <span class="ident">modis_row_col_to_wgs84</span></span>(<span>coords, h, v, nominal=500)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Convert pixel coordinates in a specific MODIS tile to longitude-latitude
-coordinates.</p>
+<div class="desc"><p>Given longitude-latitude coordinates, return the corresponding row-column
+coordinates within a MODIS tile. NOTE: You'll need to determine which
+MODIS tile contains this row-column index with <code><a title="pyl4c.lib.modis.modis_tile_from_wgs84" href="#pyl4c.lib.modis.modis_tile_from_wgs84">modis_tile_from_wgs84()</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
-<dt><strong><code>h</code></strong> :&ensp;<code>int</code></dt>
-<dd>MODIS tile "h" index</dd>
-<dt><strong><code>v</code></strong> :&ensp;<code>int</code></dt>
-<dd>MODIS tile "v" index</dd>
+<dd>(X, Y) coordinate pair in WGS84 (longitude, latitude)</dd>
 <dt><strong><code>nominal</code></strong> :&ensp;<code>int</code></dt>
 <dd>Nominal resolution of MODIS raster: 250 (meters), 500, or 1000</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>tuple</code></dt>
-<dd>(Longitude, Latitude) coordinates</dd>
+<dd>(Row, Column) coordinates</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.modis.modis_row_col_to_wgs84"><code class="name flex">
+<span>def <span class="ident">modis_row_col_to_wgs84</span></span>(<span>coords, h, v, nominal=500)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -653,23 +361,29 @@ coordinates.</p>
     y = YMAX - ((r + 0.5) * res) - (v * TILE_SIZE)
     return modis_to_wgs84((x, y))</code></pre>
 </details>
+<div class="desc"><p>Convert pixel coordinates in a specific MODIS tile to longitude-latitude
+coordinates.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
+<dt><strong><code>h</code></strong> :&ensp;<code>int</code></dt>
+<dd>MODIS tile "h" index</dd>
+<dt><strong><code>v</code></strong> :&ensp;<code>int</code></dt>
+<dd>MODIS tile "v" index</dd>
+<dt><strong><code>nominal</code></strong> :&ensp;<code>int</code></dt>
+<dd>Nominal resolution of MODIS raster: 250 (meters), 500, or 1000</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(Longitude, Latitude) coordinates</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.modis.modis_tile_from_wgs84"><code class="name flex">
 <span>def <span class="ident">modis_tile_from_wgs84</span></span>(<span>coords)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Given longitude-latitude coordinates, return the MODIS tile (H,V) that
-contains them.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>(Longitude, Latitude) coordinate pair</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>(H,V) tile identifier</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -694,23 +408,23 @@ contains them.</p>
         np.floor((x - XMIN) / TILE_SIZE),
         np.floor((YMAX - y) / TILE_SIZE))</code></pre>
 </details>
+<div class="desc"><p>Given longitude-latitude coordinates, return the MODIS tile (H,V) that
+contains them.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>(Longitude, Latitude) coordinate pair</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(H,V) tile identifier</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.modis.modis_to_wgs84"><code class="name flex">
 <span>def <span class="ident">modis_to_wgs84</span></span>(<span>coords)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Convert coordinates on the MODIS sinusoidal plane to longitude-latitude
-coordinates (WGS84).</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
-<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>(Longitude, Latitude) coordinate pair</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -735,25 +449,23 @@ coordinates (WGS84).</p>
     lng = x / (SPHERE_RADIUS * np.cos(lat))
     return tuple(map(np.rad2deg, (lng, lat)))</code></pre>
 </details>
+<div class="desc"><p>Convert coordinates on the MODIS sinusoidal plane to longitude-latitude
+coordinates (WGS84).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>tuple</code> or <code>list</code></dt>
+<dd>(X, Y) coordinate pair in MODIS sinusoidal projection</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(Longitude, Latitude) coordinate pair</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.lib.modis.vnp15a2h_cloud_fail"><code class="name flex">
 <span>def <span class="ident">vnp15a2h_cloud_fail</span></span>(<span>x)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
-<code>FparExtra_QC</code> band (cloud QC band): Bad pixels have anything OTHER THAN
-<code>1</code> second least-significant bit; <code>00</code> and <code>01</code> being acceptable cloud QC
-flags ("Confident clear" and "Probably clear", respectively).</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Unsigned, 8-bit integer array</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>Boolean array</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -778,18 +490,10 @@ flags ("Confident clear" and "Probably clear", respectively).</p>
     y = dec2bin_unpack(x)
     return y[...,-2] &gt; 0</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.lib.modis.vnp15a2h_qc_fail"><code class="name flex">
-<span>def <span class="ident">vnp15a2h_qc_fail</span></span>(<span>x)</span>
-</code></dt>
-<dd>
 <div class="desc"><p>Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
-<code>FparLai_QC</code> band: Bad pixels have either <code>11</code> in the first two bits
-("Fill Value") or anything other than <code>0</code> in the 3rd least-significant
-bits, which combines "Pixel not produced at all". For example, see decimal
-number 80:</p>
-<pre><code>0101|0|000 where "000" is the combined (Fill bit | Retrieval quality)
-</code></pre>
+<code>FparExtra_QC</code> band (cloud QC band): Bad pixels have anything OTHER THAN
+<code>1</code> second least-significant bit; <code>00</code> and <code>01</code> being acceptable cloud QC
+flags ("Confident clear" and "Probably clear", respectively).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
@@ -800,6 +504,11 @@ number 80:</p>
 <dt><code>numpy.ndarray</code></dt>
 <dd>Boolean array</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.lib.modis.vnp15a2h_qc_fail"><code class="name flex">
+<span>def <span class="ident">vnp15a2h_qc_fail</span></span>(<span>x)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -832,6 +541,23 @@ number 80:</p>
     # Intermediate arrays are 1 = FAIL, 0 = PASS
     return (c1 + c2) &gt; 0</code></pre>
 </details>
+<div class="desc"><p>Returns pass/fail for QC flags based on the L4C fPAR QC protocol for the
+<code>FparLai_QC</code> band: Bad pixels have either <code>11</code> in the first two bits
+("Fill Value") or anything other than <code>0</code> in the 3rd least-significant
+bits, which combines "Pixel not produced at all". For example, see decimal
+number 80:</p>
+<pre><code>0101|0|000 where "000" is the combined (Fill bit | Retrieval quality)
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Unsigned, 8-bit integer array</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>Boolean array</dd>
+</dl></div>
 </dd>
 </dl>
 </section>
@@ -844,7 +570,6 @@ number 80:</p>
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -872,7 +597,7 @@ number 80:</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

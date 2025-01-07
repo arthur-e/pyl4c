@@ -2,20 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.ease2 API documentation</title>
 <meta name="description" content="Functions for affine transformations between geographic coordinates (WGS84)
-and EASE-Grid 2.0 row-column coordinates …" />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+and EASE-Grid 2.0 row-column coordinates …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -32,276 +47,6 @@ to the center of a grid cell, which can be confirmed by:</p>
 <pre><code>&gt;&gt;&gt; ease2_from_wgs84(ease2_to_wgs84((0, 0), 'M09'), 'M01')
 (4, 4)
 </code></pre>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-Functions for affine transformations between geographic coordinates (WGS84)
-and EASE-Grid 2.0 row-column coordinates.
-
-NOTE: The `ease2_from_wgs84()` and `ease2_to_wgs84()` functions should refer
-to the center of a grid cell, which can be confirmed by:
-
-    &gt;&gt;&gt; ease2_from_wgs84(ease2_to_wgs84((0, 0), &#39;M09&#39;), &#39;M01&#39;)
-    (4, 4)
-&#39;&#39;&#39;
-
-import numpy as np
-from functools import partial
-from itertools import product
-from pyl4c import haversine
-from pyl4c.data.fixtures import EASE2_GRID_PARAMS
-
-EARTH_RADIUS = 6378137.0 # WGS84 sphere
-WGS84_ECCENTRICITY = 0.081819190843
-
-
-def ease2_coords(grid: str, in_1d: bool = True):
-    &#39;&#39;&#39;
-    Returns EASE-Grid 2.0 coordinate arrays; coordinates are WGS84 longitude-
-    or latitude.
-
-    Parameters
-    ----------
-    grid : str
-        The EASE-Grid 2.0 designation: M01, M09, etc.
-    in_1d : bool
-        True to produce 1D arrays (Default: True)
-
-    Returns
-    -------
-    tuple
-        Two elements, the longitude and latitude coordinate arrays:
-        (numpy.ndarray, numpy.ndarray)
-    &#39;&#39;&#39;
-    nrows, ncols = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
-    rows = np.arange(0, nrows)
-    cols = np.arange(0, ncols)
-    e2ll = partial(ease2_to_wgs84, grid = grid)
-    x_coords = np.array(list(map(lambda c: e2ll((0, c))[0], cols.tolist())))
-    y_coords = np.array(list(map(lambda r: e2ll((r, 0))[1], rows.tolist())))
-    if in_1d:
-        return (x_coords, y_coords)
-    return ( # Otherwise, return two 2D arrays with duplicates
-        np.repeat(x_coords.reshape((1, ncols)), nrows, axis = 0),
-        np.repeat(y_coords.reshape((nrows, 1)), ncols, axis = 1))
-
-
-def ease2_nested_cells(coords, k: int, grid = &#39;M01&#39;):
-    &#39;&#39;&#39;
-    Finds the row-column coordinates of all EASE-Grid 2.0 cells nested within
-    a larger cell. The finer or target grid resolution is specified by `grid`;
-    it is assumed that the WGS84 `coords` provided refer to the center of a
-    larger cell.
-
-    Parameters
-    ----------
-    coords : list or tuple
-        The longitude-latitude pair for which to find the nearest grid cells
-    k : int
-        The search radius; corresponds to the number of rows and
-            columns away from the defined coordinates
-    grid : str
-        The EASE-Grid 2.0 designation: M01, M09, etc.
-
-    Returns
-    -------
-    list
-    &#39;&#39;&#39;
-    # Translate WGS84 to row-column indices
-    row, col = ease2_from_wgs84(coords, grid)
-    potential_rows = np.arange(row - k, row + k + 1, 1)
-    potential_cols = np.arange(col - k, col + k + 1, 1)
-    return list(product(potential_rows, potential_cols))
-
-
-def ease2_search_radius(coords, k: int, grid = &#39;M09&#39;):
-    &#39;&#39;&#39;
-    Finds the nearest EASE-Grid 2.0 grid cells using a search radius of k grid
-    cells; returns a list of grid cell indices sorted by distance ascending.
-    The row-column indices that correspond to the affine transformation of the
-    given coordinates will always be the nearest, but this can be useful for
-    finding the next-nearest row-column coordinates. See
-    `pyl4c.ease2.ease2_nested_cells()`.
-
-    Parameters
-    ----------
-    coords : list or tuple
-        The longitude-latitude pair for which to find the nearest grid cells
-    k : int
-        The search radius; corresponds to the number of rows and
-            columns away from the defined coordinates
-    grid : str
-        The EASE-Grid 2.0 designation: M01, M09, etc.
-
-    Returns
-    -------
-    list
-    &#39;&#39;&#39;
-    choices_idx = ease2_nested_cells(coords, k, grid)
-    choices_wgs84 = [ # Convert from row-column to longitude-latitude
-        ease2_to_wgs84(pair, grid) for pair in choices_idx
-    ]
-    dists = [ # Calculate every pair-wise distance
-        haversine(coords, choices_wgs84[i]) for i in range(0, len(choices_idx))
-    ]
-    # Return indices sorted by distance ascending
-    return np.array(choices_idx)[np.argsort(dists),:].tolist()
-
-
-def ease2_from_wgs84(coords, grid: str = &#39;M09&#39;, exact: bool = False):
-    &#39;&#39;&#39;
-    Given a longitude-latitude coordinate pair, derive EASE-Grid 2.0
-    row-column coordinates. This is translated directly from the gridutil C
-    code (easegrid_wgs84_transforms.c) which, in turn, was translated from
-    Brodzik&#39;s IDL code. NOTE: Only supports the global EASE-Grid 2.0
-    projection for now. NOTE: The `ease2_from_wgs84()` and `ease2_to_wgs84()`
-    functions are only consistent (i.e., reversible) if `exact=True` is used.
-
-    Parameters
-    ----------
-    coords : list or tuple
-        Sequence of two floats, the longitude and latitude, respectively
-    grid : str
-        String, the EASE-Grid 2.0 designation: M01, M09, etc.
-    exact : bool
-        True to return grid cell indices as floating point instead of integer
-        type (Default: False)
-
-    Returns
-    -------
-    tuple
-        The (row, column) coordinates corresponding to the given
-        latitude-longitude coordinates
-    &#39;&#39;&#39;
-    # Unpack longitude and latitude
-    user_lng, user_lat = coords
-
-    # Define projection parameters for WGS84 and the EASE-Grid 2.0 projections
-    e2 = np.power(WGS84_ECCENTRICITY, 2)
-    epsilon = 1e-6
-
-    # Unique to global EASE-Grid 2.0 projection
-    ref_lat = ref_lng = 0.0
-    ref_lat2 = 30.0
-    sin_phi1 = np.sin(np.deg2rad(ref_lat2))
-    cos_phi1 = np.cos(np.deg2rad(ref_lat2))
-    kz = cos_phi1 / np.sqrt(1 - e2 * sin_phi1 * sin_phi1)
-
-    # Get grid shape and resolution
-    nrows, ncols = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
-    resolution = EASE2_GRID_PARAMS[grid][&#39;resolution&#39;]
-    r0 = (ncols - 1) / 2.0 # Column mapped to reference latitude
-    s0 = (nrows - 1) / 2.0 # Row mapped to reference latitude(?)
-
-    # Start transformation of user coordinates
-    dlng = user_lng - ref_lng
-    assert abs(dlng) &lt;= 180, &#39;Longitude error&#39;
-
-    # Convert to radians
-    phi = np.deg2rad(user_lat)
-    lam = np.deg2rad(dlng)
-
-    q = (1.0 - e2) * ((np.sin(phi) / (1.0 - e2 * np.sin(phi) * np.sin(phi))) - (1.0 / (2.0 * WGS84_ECCENTRICITY)) * np.log((1.0 - WGS84_ECCENTRICITY * np.sin(phi)) / (1.0 + WGS84_ECCENTRICITY * np.sin(phi))))
-    qp = 1.0 - ((1.0 - e2) / (2.0 * WGS84_ECCENTRICITY) * np.log((1.0 - WGS84_ECCENTRICITY) / (1.0 + WGS84_ECCENTRICITY)))
-
-    # Unique to global EASE-Grid 2.0 projection
-    x = EARTH_RADIUS * kz * lam
-    y = EARTH_RADIUS * (q / (2.0 * kz))
-
-    result = (s0 - (y / resolution), r0 + (x / resolution))
-    if exact:
-        return result
-
-    return tuple(map(lambda c: int(round(c)), result))
-
-
-def ease2_to_wgs84(coords, grid = &#39;M09&#39;):
-    &#39;&#39;&#39;
-    Given a row-column coordinate pair from an EASE-Grid 2.0, derive the
-    corresponding WGS84 longitude-latitude coordinates. This is translated
-    directly from the gridutil C code (easegrid_wgs84_transforms.c) which, in
-    turn, was translated from Brodzik&#39;s IDL code. NOTE: Only supports the
-    global EASE-Grid 2.0 projection for now. NOTE: The `ease2_from_wgs84()`
-    and `ease2_to_wgs84()` functions are only consistent (i.e., reversible) if
-    `exact=True` is used (in `ease2_from_wgs84()`).
-
-    Parameters
-    ----------
-    coords : list or tuple
-        Sequence of two integers, the row and column coordinates
-    grid : str
-        The EASE-Grid 2.0 designation: M01, M09, etc.
-
-    Returns
-    -------
-    tuple
-        The (longitude, latitude) coordinates corresponding to the given
-        row-column coordinates
-    &#39;&#39;&#39;
-    e2 = np.power(WGS84_ECCENTRICITY, 2)
-    e4 = np.power(WGS84_ECCENTRICITY, 4)
-    e6 = np.power(WGS84_ECCENTRICITY, 6)
-    epsilon = 1e-6
-
-    # Unique to global EASE-Grid 2.0 projection
-    ref_lat = ref_lng = 0.0
-    ref_lat2 = 30.0
-    sin_phi1 = np.sin(np.deg2rad(ref_lat2))
-    cos_phi1 = np.cos(np.deg2rad(ref_lat2))
-    kz = cos_phi1 / np.sqrt(1 - e2 * sin_phi1 * sin_phi1)
-
-    # Convert (row, column) to (x, y) coordinates for this projection
-    x, y = translate_row_col_to_ease2(coords, grid)
-
-    qp = (1.0 - e2) * ((1.0 / (1.0 - e2)) - (1.0 / (2.0 * WGS84_ECCENTRICITY)) * np.log((1.0 - WGS84_ECCENTRICITY) / (1.0 + WGS84_ECCENTRICITY)))
-
-    # Unique to global EASE-Grid 2.0 projection
-    beta = np.arcsin(2.0 * y * kz / (EARTH_RADIUS * qp))
-    lam  = x / (EARTH_RADIUS * kz)
-
-    phi = beta \
-        + (((e2 / 3.0) + ((31.0 / 180.0) * e4) \
-              + ((517.0 / 5040.0) * e6)) * np.sin(2.0 * beta)) \
-        + ((((23.0 / 360.0) * e4) \
-              + ((251.0 / 3780.0) * e6)) * np.sin(4.0 * beta)) \
-        + (((761.0 / 45360.0) * e6) * np.sin(6.0 * beta))
-
-    return ((180.0 * (lam / np.pi)) + ref_lng, (180.0 * phi / np.pi))
-
-
-def translate_row_col_to_ease2(coords, grid = &#39;M09&#39;):
-    &#39;&#39;&#39;
-    Returns the EASE-Grid 2.0 coordinates at the given row-column index.
-
-    Parameters
-    ----------
-    coords : list or tuple
-        Sequence of two integers, the row and column coordinates
-    grid : str
-        The EASE-Grid 2.0 designation: M01, M09, etc.
-
-    Returns
-    -------
-    tuple
-        The EASE-Grid 2.0 (X, Y) coordinates corresponding to the given
-        row-column coordinates
-    &#39;&#39;&#39;
-    # Unpack row, column coordinates
-    user_row, user_col = coords
-
-    # Get grid shape and resolution
-    nrows, ncols = EASE2_GRID_PARAMS[grid][&#39;shape&#39;]
-    resolution = EASE2_GRID_PARAMS[grid][&#39;resolution&#39;]
-    r0 = (ncols - 1) / 2.0 # Column mapped to reference latitude
-    s0 = (nrows - 1) / 2.0 # Row mapped to reference latitude(?)
-
-    # Convert (row, column) to (x, y) coordinates for this projection
-    x = (user_col - r0) * resolution
-    y = (s0 - user_row) * resolution
-    return (x, y)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -314,21 +59,6 @@ def translate_row_col_to_ease2(coords, grid = &#39;M09&#39;):
 <span>def <span class="ident">ease2_coords</span></span>(<span>grid: str, in_1d: bool = True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns EASE-Grid 2.0 coordinate arrays; coordinates are WGS84 longitude-
-or latitude.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
-<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
-<dt><strong><code>in_1d</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to produce 1D arrays (Default: True)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>Two elements, the longitude and latitude coordinate arrays:
-(numpy.ndarray, numpy.ndarray)</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -363,33 +93,26 @@ or latitude.</p>
         np.repeat(x_coords.reshape((1, ncols)), nrows, axis = 0),
         np.repeat(y_coords.reshape((nrows, 1)), ncols, axis = 1))</code></pre>
 </details>
+<div class="desc"><p>Returns EASE-Grid 2.0 coordinate arrays; coordinates are WGS84 longitude-
+or latitude.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+<dt><strong><code>in_1d</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to produce 1D arrays (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>Two elements, the longitude and latitude coordinate arrays:
+(numpy.ndarray, numpy.ndarray)</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.ease2.ease2_from_wgs84"><code class="name flex">
 <span>def <span class="ident">ease2_from_wgs84</span></span>(<span>coords, grid: str = 'M09', exact: bool = False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Given a longitude-latitude coordinate pair, derive EASE-Grid 2.0
-row-column coordinates. This is translated directly from the gridutil C
-code (easegrid_wgs84_transforms.c) which, in turn, was translated from
-Brodzik's IDL code. NOTE: Only supports the global EASE-Grid 2.0
-projection for now. NOTE: The <code><a title="pyl4c.ease2.ease2_from_wgs84" href="#pyl4c.ease2.ease2_from_wgs84">ease2_from_wgs84()</a></code> and <code><a title="pyl4c.ease2.ease2_to_wgs84" href="#pyl4c.ease2.ease2_to_wgs84">ease2_to_wgs84()</a></code>
-functions are only consistent (i.e., reversible) if <code>exact=True</code> is used.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>Sequence of two floats, the longitude and latitude, respectively</dd>
-<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
-<dd>String, the EASE-Grid 2.0 designation: M01, M09, etc.</dd>
-<dt><strong><code>exact</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to return grid cell indices as floating point instead of integer
-type (Default: False)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>The (row, column) coordinates corresponding to the given
-latitude-longitude coordinates</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -460,30 +183,33 @@ latitude-longitude coordinates</dd>
 
     return tuple(map(lambda c: int(round(c)), result))</code></pre>
 </details>
+<div class="desc"><p>Given a longitude-latitude coordinate pair, derive EASE-Grid 2.0
+row-column coordinates. This is translated directly from the gridutil C
+code (easegrid_wgs84_transforms.c) which, in turn, was translated from
+Brodzik's IDL code. NOTE: Only supports the global EASE-Grid 2.0
+projection for now. NOTE: The <code><a title="pyl4c.ease2.ease2_from_wgs84" href="#pyl4c.ease2.ease2_from_wgs84">ease2_from_wgs84()</a></code> and <code><a title="pyl4c.ease2.ease2_to_wgs84" href="#pyl4c.ease2.ease2_to_wgs84">ease2_to_wgs84()</a></code>
+functions are only consistent (i.e., reversible) if <code>exact=True</code> is used.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of two floats, the longitude and latitude, respectively</dd>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>String, the EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+<dt><strong><code>exact</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to return grid cell indices as floating point instead of integer
+type (Default: False)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>The (row, column) coordinates corresponding to the given
+latitude-longitude coordinates</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.ease2.ease2_nested_cells"><code class="name flex">
 <span>def <span class="ident">ease2_nested_cells</span></span>(<span>coords, k: int, grid='M01')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Finds the row-column coordinates of all EASE-Grid 2.0 cells nested within
-a larger cell. The finer or target grid resolution is specified by <code>grid</code>;
-it is assumed that the WGS84 <code>coords</code> provided refer to the center of a
-larger cell.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>The longitude-latitude pair for which to find the nearest grid cells</dd>
-<dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
-<dd>The search radius; corresponds to the number of rows and
-columns away from the defined coordinates</dd>
-<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
-<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>list</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -515,17 +241,10 @@ columns away from the defined coordinates</dd>
     potential_cols = np.arange(col - k, col + k + 1, 1)
     return list(product(potential_rows, potential_cols))</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.ease2.ease2_search_radius"><code class="name flex">
-<span>def <span class="ident">ease2_search_radius</span></span>(<span>coords, k: int, grid='M09')</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Finds the nearest EASE-Grid 2.0 grid cells using a search radius of k grid
-cells; returns a list of grid cell indices sorted by distance ascending.
-The row-column indices that correspond to the affine transformation of the
-given coordinates will always be the nearest, but this can be useful for
-finding the next-nearest row-column coordinates. See
-<code><a title="pyl4c.ease2.ease2_nested_cells" href="#pyl4c.ease2.ease2_nested_cells">ease2_nested_cells()</a></code>.</p>
+<div class="desc"><p>Finds the row-column coordinates of all EASE-Grid 2.0 cells nested within
+a larger cell. The finer or target grid resolution is specified by <code>grid</code>;
+it is assumed that the WGS84 <code>coords</code> provided refer to the center of a
+larger cell.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
@@ -541,6 +260,11 @@ columns away from the defined coordinates</dd>
 <dt><code>list</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.ease2.ease2_search_radius"><code class="name flex">
+<span>def <span class="ident">ease2_search_radius</span></span>(<span>coords, k: int, grid='M09')</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -578,31 +302,32 @@ columns away from the defined coordinates</dd>
     # Return indices sorted by distance ascending
     return np.array(choices_idx)[np.argsort(dists),:].tolist()</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.ease2.ease2_to_wgs84"><code class="name flex">
-<span>def <span class="ident">ease2_to_wgs84</span></span>(<span>coords, grid='M09')</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Given a row-column coordinate pair from an EASE-Grid 2.0, derive the
-corresponding WGS84 longitude-latitude coordinates. This is translated
-directly from the gridutil C code (easegrid_wgs84_transforms.c) which, in
-turn, was translated from Brodzik's IDL code. NOTE: Only supports the
-global EASE-Grid 2.0 projection for now. NOTE: The <code><a title="pyl4c.ease2.ease2_from_wgs84" href="#pyl4c.ease2.ease2_from_wgs84">ease2_from_wgs84()</a></code>
-and <code><a title="pyl4c.ease2.ease2_to_wgs84" href="#pyl4c.ease2.ease2_to_wgs84">ease2_to_wgs84()</a></code> functions are only consistent (i.e., reversible) if
-<code>exact=True</code> is used (in <code><a title="pyl4c.ease2.ease2_from_wgs84" href="#pyl4c.ease2.ease2_from_wgs84">ease2_from_wgs84()</a></code>).</p>
+<div class="desc"><p>Finds the nearest EASE-Grid 2.0 grid cells using a search radius of k grid
+cells; returns a list of grid cell indices sorted by distance ascending.
+The row-column indices that correspond to the affine transformation of the
+given coordinates will always be the nearest, but this can be useful for
+finding the next-nearest row-column coordinates. See
+<code><a title="pyl4c.ease2.ease2_nested_cells" href="#pyl4c.ease2.ease2_nested_cells">ease2_nested_cells()</a></code>.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>Sequence of two integers, the row and column coordinates</dd>
+<dd>The longitude-latitude pair for which to find the nearest grid cells</dd>
+<dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
+<dd>The search radius; corresponds to the number of rows and
+columns away from the defined coordinates</dd>
 <dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
 <dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>tuple</code></dt>
-<dd>The (longitude, latitude) coordinates corresponding to the given
-row-column coordinates</dd>
+<dt><code>list</code></dt>
+<dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.ease2.ease2_to_wgs84"><code class="name flex">
+<span>def <span class="ident">ease2_to_wgs84</span></span>(<span>coords, grid='M09')</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -660,12 +385,13 @@ row-column coordinates</dd>
 
     return ((180.0 * (lam / np.pi)) + ref_lng, (180.0 * phi / np.pi))</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.ease2.translate_row_col_to_ease2"><code class="name flex">
-<span>def <span class="ident">translate_row_col_to_ease2</span></span>(<span>coords, grid='M09')</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Returns the EASE-Grid 2.0 coordinates at the given row-column index.</p>
+<div class="desc"><p>Given a row-column coordinate pair from an EASE-Grid 2.0, derive the
+corresponding WGS84 longitude-latitude coordinates. This is translated
+directly from the gridutil C code (easegrid_wgs84_transforms.c) which, in
+turn, was translated from Brodzik's IDL code. NOTE: Only supports the
+global EASE-Grid 2.0 projection for now. NOTE: The <code><a title="pyl4c.ease2.ease2_from_wgs84" href="#pyl4c.ease2.ease2_from_wgs84">ease2_from_wgs84()</a></code>
+and <code><a title="pyl4c.ease2.ease2_to_wgs84" href="#pyl4c.ease2.ease2_to_wgs84">ease2_to_wgs84()</a></code> functions are only consistent (i.e., reversible) if
+<code>exact=True</code> is used (in <code><a title="pyl4c.ease2.ease2_from_wgs84" href="#pyl4c.ease2.ease2_from_wgs84">ease2_from_wgs84()</a></code>).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
@@ -676,9 +402,14 @@ row-column coordinates</dd>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>tuple</code></dt>
-<dd>The EASE-Grid 2.0 (X, Y) coordinates corresponding to the given
+<dd>The (longitude, latitude) coordinates corresponding to the given
 row-column coordinates</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.ease2.translate_row_col_to_ease2"><code class="name flex">
+<span>def <span class="ident">translate_row_col_to_ease2</span></span>(<span>coords, grid='M09')</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -714,6 +445,20 @@ row-column coordinates</dd>
     y = (s0 - user_row) * resolution
     return (x, y)</code></pre>
 </details>
+<div class="desc"><p>Returns the EASE-Grid 2.0 coordinates at the given row-column index.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>coords</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of two integers, the row and column coordinates</dd>
+<dt><strong><code>grid</code></strong> :&ensp;<code>str</code></dt>
+<dd>The EASE-Grid 2.0 designation: M01, M09, etc.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>The EASE-Grid 2.0 (X, Y) coordinates corresponding to the given
+row-column coordinates</dd>
+</dl></div>
 </dd>
 </dl>
 </section>
@@ -726,7 +471,6 @@ row-column coordinates</dd>
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -750,7 +494,7 @@ row-column coordinates</dd>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>

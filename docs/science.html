@@ -2,20 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.10.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
 <title>pyl4c.science API documentation</title>
 <meta name="description" content="Specialized scientific functions for biogeophysical variables and L4C model
-processes." />
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
-<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
-<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
-<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+processes.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } });</script>
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
-<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
 <style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:35%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
 </head>
 <body>
@@ -27,915 +42,6 @@ processes." />
 <section id="section-intro">
 <p>Specialized scientific functions for biogeophysical variables and L4C model
 processes.</p>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">&#39;&#39;&#39;
-Specialized scientific functions for biogeophysical variables and L4C model
-processes.
-&#39;&#39;&#39;
-
-import numpy as np
-from functools import partial
-from scipy.ndimage import generic_filter
-from scipy.linalg import solve_banded
-from scipy.sparse import dia_matrix
-from pyl4c import suppress_warnings
-from pyl4c.data.fixtures import HDF_PATHS, BPLUT
-from pyl4c.utils import get_pft_array, subset
-from pyl4c.stats import ols, ols_variance, linear_constraint
-
-def arrhenius(
-        tsoil, beta0: float, beta1: float = 66.02, beta2: float = 227.13):
-    r&#39;&#39;&#39;
-    The Arrhenius equation for response of enzymes to (soil) temperature,
-    constrained to lie on the closed interval [0, 1].
-
-    $$
-    f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
-        \frac{1}{T_{SOIL} - \beta_2} \right) \right]
-    $$
-
-    Parameters
-    ----------
-    tsoil : numpy.ndarray
-        Array of soil temperature in degrees K
-    beta0 : float
-        Coefficient for soil temperature (deg K)
-    beta1 : float
-        Coefficient for ... (deg K)
-    beta2 : float
-        Coefficient for ... (deg K)
-
-    Returns
-    -------
-    numpy.ndarray
-        Array of soil temperatures mapped through the Arrhenius function
-    &#39;&#39;&#39;
-    a = (1.0 / beta1)
-    b = np.divide(1.0, np.subtract(tsoil, beta2))
-    # This is the simple answer, but it takes on values &gt;1
-    y0 = np.exp(np.multiply(beta0, np.subtract(a, b)))
-    # Constrain the output to the interval [0, 1]
-    return np.where(y0 &gt; 1, 1, np.where(y0 &lt; 0, 0, y0))
-
-
-def bias_correction_parameters(
-        series, npoly: int = 1, cutoff: float = 1, var_cutoff: float = None,
-        add_intercept: bool = True):
-    &#39;&#39;&#39;
-    Calculate the bias correction parameters for two overlapping time series,
-    nominally the Nature Run and L4C Operational products, of a given
-    variable using quantile mapping. For example, can correct the bias in
-    Nature Run (2000-2017) against the L4C Ops record (2015-Present) by
-    fitting bias correction parameters for the overlap period 2015-2017.
-    Model can be specified:
-
-        y = alpha + X beta_0 + X^2 beta_1 + ...
-
-    NOTE: Because Nature Run and L4C Ops compare very well in some locations,
-    a degree-1 polynomial (straight line) is fit first (regardless of npoly);
-    if this solution produces corrections that are &lt;1 gC m^-2, the degree-1
-    solution is used. In some areas, there is a strong linear correspondence
-    between most measurements but a small number have a super-linear
-    relationship that is poorly fit by a degree-2 polynomial; in these cases
-    (where model variance of the degree-2 fit is &gt; var_cutoff), the degree-1
-    solution is used. Forcing the line of best fit through the origin (with
-    intercept=False) is also not recommended.
-
-    Parameters
-    ----------
-    series : numpy.ndarray
-        A (t x 2) NumPy array where t rows correspond to t time steps and
-        each column is a product; the first column is the reference product
-        or dependent variable in the linear bias correction.
-    npoly : int
-        Degree of the polynomial to use in bias correction (Default: 1)
-    cutoff : float
-        Cutoff for the degree-1 bias correction, in data units (e.g.,
-        1 g C m-2 day-1); defaults to 1.0, i.e., the residual after correction
-        must be greater than 1 g C m-2 day-1, which is the average impact of
-        L4SM versus model-only observations. If this cutoff is exceeded, the
-        degree-1 solution is returned.
-    var_cutoff : float or None
-        Cutoff in variance for higher-order solutions; if the residual model
-        variance exceeds this threshold for the degree-N solution, then return
-        the degree (N-1) solution (Default: None)
-    add_intercept : bool
-        True to add a the y-intercept term (Default: True)
-
-    Returns
-    -------
-    numpy.ndarray
-        A vector of length N + 1 where N is the degree of the polynomial
-        fit requested
-    &#39;&#39;&#39;
-    def xmat(x, npoly):
-        # Creates the design/ model matrix for a polynomial series
-        # Add a column for each power of the requested polynomial series
-        x = np.repeat(x.reshape((t, 1)), npoly, axis = 1)
-        for i in range(1, npoly):
-            # Calculate X^n for n up to N powers
-            x[:,i] = np.power(x[:,0], npoly + 1)
-        return x
-
-    def fit(x, y, npoly):
-        # Fits the model using OLS
-        # If all of the Y values are NaN
-        if np.all(np.isnan(y)): return np.ones((npoly + 1,)) * np.nan
-        try:
-            return ols(xmat(x, npoly), y, add_intercept)
-        except np.linalg.linalg.LinAlgError:
-            return np.ones((npoly + 1,)) * np.nan
-
-    # Sort the input series from low -&gt; high
-    t = series.shape[0]
-    y = np.sort(series[:,0])
-    x = np.sort(series[:,1])
-
-    # For some pixels, the time series has zero variance, and this can produce
-    #   unstable OLS estimates (e.g., zero slope)
-    if np.var(y) == 0 or np.var(x) == 0:
-        # Return coefficients: (0, 1, 0, ..., 0)
-        return np.hstack(((0, 1), list(0 for i in range(1, npoly))))
-
-    if np.var(y) == 0 and np.var(x) == 0:
-        # Intercept (mean) is the only necessary predictor
-        return np.hstack(((1, 0), list(0 for i in range(1, npoly))))
-
-    fit1 = np.hstack(
-        (fit(x, y, npoly = 1), list(0 for i in range(1, npoly))))
-    if npoly == 1:
-        return fit1
-
-    # First, try a degree-1 polynomial (straight-line) fit; if the bias
-    #   correction slope is such that the correction is &lt; 1 gC/m^-2,
-    #   which is similar to the average impact of L4SM vs. model-only
-    #   observations, then use the degree-1 fit parameters
-    if x.mean() - (fit1[1] * x.mean()) &lt; cutoff:
-        return fit1
-
-    # Second, starting with the simpler model, check if progressively more
-    #   complicated models (up to a maximum of npoly) really do fit the data
-    #   better; if not, or if the model variance is above a cutoff, use the
-    #   next most-complicated model (last_model)
-    last_model = fit1 # Starting with the simplest model...
-    for p in range(2, npoly + 1):
-        model = fit(x, y, npoly = p)
-        # Calculates unbiased estimate of model variance
-        model_var = ols_variance(xmat(x, p), y, model, add_intercept)
-        # Without a cutoff for guidance, if the model variance of the degree-1
-        #   fit is lower than that of the degree-2 fit...
-        if var_cutoff is None:
-            if model_var &gt; ols_variance(
-                    xmat(x, 1), y, last_model[0:p], add_intercept):
-                return last_model
-        else:
-            if model_var &gt; var_cutoff:
-                return last_model
-
-        last_model = model
-
-    # Unless a simpler model was better, return coefficients for the requested
-    #   polynomial degree
-    return model
-
-
-def climatology365(series, dates, ignore_leap = True):
-    &#39;&#39;&#39;
-    Computes a 365-day climatology for different locations from a time series
-    of length T. The climatology could then be indexed using ordinals
-    generated by `ordinals365()`. Setting `ignore_leap = False` may be useful
-    if the time series has regular dropouts; e.g., for MODIS 8-day composite
-    data, there are only 46 days each year with valid data.
-
-    Parameters
-    ----------
-    series : numpy.ndarray
-        T x ... array of data
-    dates : list or tuple
-        Sequence of datetime.datetime or datetime.date instances
-    ignore_leap : bool
-        True to convert DOY to (DOY-1) in leap years, effectively ignoring
-        Leap Day (Default); if False, DOY numbers are unchanged
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    @suppress_warnings
-    def calc_climatology(x):
-        return np.array([
-            np.nanmean(x[ordinal == day,...], axis = 0)
-            for day in range(1, 366)
-        ])
-    # Get first and last day of the year (DOY)
-    ordinal = np.array([
-        # Finally, subtract 1 from each day in a leap year after Leap Day
-        (doy - 1) if (
-            ignore_leap and (dates[i].year % 4 == 0) and doy &gt;= 60) else doy
-        for i, doy in enumerate([
-            # Next, fill in 0 wherever Leap Day occurs
-            0 if (dates[i].year % 4 == 0 and doy == 60) else doy
-            for i, doy in enumerate([
-                # First, convert datetime.datetime to ordinal day-of-year (DOY)
-                int(dt.strftime(&#39;%j&#39;)) for dt in dates
-            ])
-        ])
-    ])
-    return calc_climatology(series)
-
-
-def daynight_partition(arr_24hr, updown, reducer = &#39;mean&#39;):
-    &#39;&#39;&#39;
-    Partitions a 24-hour time series array into daytime and nighttime values,
-    then calculates the mean in each group. Daytime is defined as when the sun
-    is above the horizon; nighttime is the complement.
-
-    Parameters
-    ----------
-    arr_24hr : numpy.ndarray
-        A size (24 x ...) array; the first axis must have 24 elements
-        corresponding to the measurement in each hour
-    updown: numpy.ndarray
-        A size (2 x ...) array, compatible with arr_24hr, where the first axis
-        has the hour of sunrise and sunset, in that order, for each element
-    reducer : str
-        One of &#34;mean&#34; or &#34;sum&#34; indicating whether an average or a total of the
-        daytime/ nighttime values should be calculated; e.g., for &#34;mean&#34;, the
-        hourly values from daytime hours are added up and divided by the
-        length of the day (in hours).
-
-    Returns
-    -------
-    numpy.ndarray
-        A size (2 x ...) array where the first axis enumerates the daytime and
-        nighttime mean values, respectively
-    &#39;&#39;&#39;
-    assert reducer in (&#39;mean&#39;, &#39;sum&#39;),\
-        &#39;Argument &#34;reducer&#34; must be one of: &#34;mean&#34;, &#34;sum&#34;&#39;
-    # Prepare single-valued output array
-    arr_daytime = np.zeros(arr_24hr.shape[1:])
-    arr_nighttime = arr_daytime.copy()
-    daylight_hrs = arr_daytime.copy().astype(np.int16)
-    # Do sunrise and sunset define an interval? (Sunset &gt; Sunrise)?
-    inside_interval = np.apply_along_axis(lambda x: x[1] &gt; x[0], 0, updown)
-    # Or is the sun never up?
-    never_up = np.logical_and(updown[0,...] == -1, updown[1,...] == -1)
-    # Iteratively sum daytime VPD and temperature values
-    for hr in range(0, 24):
-        # Given only hour of sunrise/set on a 24-hour clock...
-        #   if sun rises and sets on same day: SUNRISE &lt;= HOUR &lt;= SUNSET;
-        #   if sun sets on next day: either SUNRISE &lt;= HOUR or HOUR &lt;= SUNSET;
-        sun_is_up = np.logical_or( # Either...
-            np.logical_and(inside_interval, # ...Rises and sets same day
-                np.logical_and(updown[0,...] &lt;= hr, hr &lt;= updown[1,...])),
-            np.logical_and(~inside_interval, # ...Sets on next day
-                np.logical_or(updown[0,...] &lt;= hr, hr &lt;= updown[1,...])))
-        # For simplicity, compute a 24-hour mean even if the sun never rises;
-        #   there&#39;s no way to know what the &#34;correct&#34; daytime value is
-        mask = np.logical_or(never_up, sun_is_up)
-        np.add(np.where(
-            mask, arr_24hr[hr,...], 0), arr_daytime, out = arr_daytime)
-        np.add(np.where(
-            ~mask, arr_24hr[hr,...], 0), arr_nighttime, out = arr_nighttime)
-        # Keep track of the denominator (hours) for calculating the mean;
-        #   note that this over-estimates actual daylight hours by 1 hour
-        #   but results in the correct denominator for the sums above
-        np.add(np.where(mask, 1, 0), daylight_hrs, out = daylight_hrs)
-    arr_24hr = None
-    # Calculate mean quantities
-    if reducer == &#39;mean&#39;:
-        arr_daytime = np.divide(arr_daytime, daylight_hrs)
-        arr_nighttime = np.divide(arr_nighttime, 24 - daylight_hrs)
-        # For sites where the sun is always above/ below the horizon, set missing
-        #   nighttime values to zero
-        arr_nighttime[~np.isfinite(arr_nighttime)] = 0
-    return np.stack((arr_daytime, arr_nighttime))
-
-
-def degree_lengths(phi, a = 6378137, b = 6356752.3142):
-    &#39;&#39;&#39;
-    Returns the approximate length of degrees of latitude and longitude.
-    Source:
-
-        https://en.wikipedia.org/wiki/Latitude
-
-    phi : Number
-        Latitude, in degrees
-    a : Number
-        Radius of the Earth (major axis) in meters
-    b : Number
-        Length of minor axis of the Earth in meters
-
-    Returns
-    -------
-    tuple
-        Length of a degree of (longitude, latitude), respectively
-    &#39;&#39;&#39;
-    e2 = ((a**2) - (b**2)) / (a**2)
-    # Approximate length of a degree of latitude
-    lat_m = 111132.954 - (559.822 * np.cos(2 * np.deg2rad(phi))) +\
-        (1.175 * np.cos(4 * np.deg2rad(phi)))
-    lng_m = (np.pi * a * np.cos(np.deg2rad(phi))) / (
-        180 * np.sqrt(1 - (e2 * np.sin(np.deg2rad(phi))**2)))
-    return (lng_m, lat_m)
-
-
-def e_mult(params, tmin, vpd, smrz, ft):
-    &#39;&#39;&#39;
-    Calculate environmental constraint multiplier for gross primary
-    productivity (GPP), E_mult, based on current model parameters. The
-    expected parameter names are &#34;LUE&#34; for the maximum light-use
-    efficiency; &#34;smrz0&#34; and &#34;smrz1&#34; for the lower and upper bounds on root-
-    zone soil moisture; &#34;vpd0&#34; and &#34;vpd1&#34; for the lower and upper bounds on
-    vapor pressure deficity (VPD); &#34;tmin0&#34; and &#34;tmin1&#34; for the lower and
-    upper bounds on minimum temperature; and &#34;ft0&#34; for the multiplier during
-    frozen ground conditions.
-
-    Parameters
-    ----------
-    params : dict
-        A dict-like data structure with named model parameters
-    tmin : numpy.ndarray
-        (T x N) vector of minimum air temperature (deg K), where T is the
-        number of time steps, N the number of sites
-    vpd : numpy.ndarray
-        (T x N) vector of vapor pressure deficit (Pa), where T is the number
-        of time steps, N the number of sites
-    smrz : numpy.ndarray
-        (T x N) vector of root-zone soil moisture wetness (%), where T is the
-        number of time steps, N the number of sites
-    ft : numpy.ndarray
-        (T x N) vector of the (binary) freeze-thaw status, where T is the
-        number of time steps, N the number of sites (Frozen = 0, Thawed = 1)
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    # Calculate E_mult based on current parameters
-    f_tmin = linear_constraint(params[&#39;tmin0&#39;], params[&#39;tmin1&#39;])
-    f_vpd  = linear_constraint(params[&#39;vpd0&#39;], params[&#39;vpd1&#39;], &#39;reversed&#39;)
-    f_smrz = linear_constraint(params[&#39;smrz0&#39;], params[&#39;smrz1&#39;])
-    f_ft   = linear_constraint(params[&#39;ft0&#39;], 1.0, &#39;binary&#39;)
-    return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)
-
-
-def k_mult(params, tsoil, smsf):
-    &#39;&#39;&#39;
-    Calculate environmental constraint multiplier for soil heterotrophic
-    respiration (RH), K_mult, based on current model parameters. The expected
-    parameter names are &#34;tsoil&#34; for the Arrhenius function of soil temperature
-    and &#34;smsf0&#34; and &#34;smsf1&#34; for the lower and upper bounds of the ramp
-    function on surface soil moisture.
-
-    Parameters
-    ----------
-    params : dict
-        A dict-like data structure with named model parameters
-    tsoil : numpy.ndarray
-        (T x N) vector of soil temperature (deg K), where T is the number of
-        time steps, N the number of sites
-    smsf : numpy.ndarray
-        (T x N) vector of surface soil wetness (%), where T is the number of
-        time steps, N the number of sites
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    f_tsoil = partial(arrhenius, beta0 = params[&#39;tsoil&#39;])
-    f_smsf  = linear_constraint(params[&#39;smsf0&#39;], params[&#39;smsf1&#39;])
-    return f_tsoil(tsoil) * f_smsf(smsf)
-
-
-def litterfall_casa(lai, years, dt = 1/365):
-    &#39;&#39;&#39;
-    Calculates daily litterfall fraction after the CASA model (Randerson et
-    al. 1996). Computes the fraction of evergreen versus deciduous canopy and
-    allocates a constant daily fraction (out of the year) for evergreen canopy
-    but a varying daily fraction for deciduous, where the fraction varies with
-    &#34;leaf loss,&#34; a function of leaf area index (LAI). Canopies are assumed to
-    be a mix of evergreen and deciduous, so the litterfall fraction is a sum
-    of these two approaches.
-
-    Randerson, J. T., Thompson, M. V, Malmstrom, C. M., Field, C. B., &amp;
-      Fung, I. Y. (1996). Substrate limitations for heterotrophs: Implications
-      for models that estimate the seasonal cycle of atmospheric CO2.
-      *Global Biogeochemical Cycles,* 10(4), 585–602.
-
-    The approach here is a bit different from Randerson et al. (1996) because
-    we re- calculate the evergreen fraction each year; however, this is a
-    reasonable elaboration that, incidentally, accounts for potential changes
-    in the evergreen-vs-deciduous mix of the canopy. The result is an array
-    of daily litterfall fractions, i.e., the result multiplied by the annual
-    NPP sum (for a given site and year) obtains the daily litterfall.
-
-    Parameters
-    ----------
-    lai : numpy.ndarray
-        The (T x N) leaf-area index (LAI) array, for T time steps and N sites
-    years : numpy.ndarray
-        A length-T 1D array indexing the years, e.g., [2001, 2001, 2001, ...];
-        used to identify which of T time steps belong to a year, so that
-        litterfall fractions sum to one over a year
-    dt : float
-        The fraction of a year that each time step represents, e.g., for daily
-        time steps, should be close to 1/365 (Default: 1/365)
-
-    Returns
-    -------
-    numpy.ndarray
-        The fraction of available inputs (e.g., annual NPP) that should be
-        allocated to litterfall at each time step
-    &#39;&#39;&#39;
-    def leaf_loss(lai):
-        # Leaf loss function from CASA, a triangular averaging function
-        #   centered on the current date, where the right limb of the
-        #   triangle is subtracted from the left limb (leading minus
-        #   lagged LAI is equated to leaf loss)
-        ll = generic_filter(
-            lai, lambda x: (0.5 * x[0] + x[1]) - (x[3] + 0.5 * x[4]),
-            size = 5, mode = &#39;mirror&#39;)
-        return np.where(ll &lt; 0, 0, ll) # Leaf loss cannot be &lt; 0
-
-    # Get leaf loss at each site (column-wise)
-    ll = np.apply_along_axis(leaf_loss, 0, lai)
-    ll = np.where(np.isnan(ll), 0, ll) # Fill NaNs with zero leaf loss
-    unique_years = np.unique(years).tolist()
-    unique_years.sort()
-    for each_year in unique_years:
-        # For those dates in this year...
-        idx = years == each_year
-        # Calculate the evergreen fraction (ratio of min LAI to mean LAI over
-        #   the course of a year)
-        efrac = np.apply_along_axis(
-            lambda x: np.nanmin(x) / np.nanmean(x), 0, lai[idx,:])
-        # Calculate sum of 1/AnnualNPP (Evergreen input) plus daily leaf loss
-        #   fraction (Deciduous input); Evergreen canopies have constant daily
-        #   inputs
-        ll[idx,:] = (efrac * dt) + (1 - efrac) * np.divide(
-            ll[idx,:], ll[idx,:].sum(axis = 0))
-    return ll
-
-
-def mean_residence_time(
-        hdf, units = &#39;years&#39;, subset_id = None, nodata = -9999):
-    &#39;&#39;&#39;
-    Calculates the mean residence time (MRT) of soil organic carbon (SOC)
-    pools as the quotient of SOC stock size and heterotrophic respiration
-    (RH). Chen et al. (2013, Global and Planetary Change), provide a formal
-    equation for mean residence time: (SOC/R_H).
-
-    Parameters
-    ----------
-    hdf : h5py.File
-        The HDF5 file / h5py.File object
-    units : str
-        Either &#34;years&#34; (default) or &#34;days&#34;
-    subset_id : str
-        (Optional) Can provide keyword designating the desired subset area
-    nodata : float
-        (Optional) The NoData or Fill value (Default: -9999)
-
-    Returns
-    -------
-    tuple
-        Tuple of: subset array, xoff, yoff, i.e., (numpy.ndarray, Int, Int)
-    &#39;&#39;&#39;
-    assert units in (&#39;days&#39;, &#39;years&#39;), &#39;The units argument must be one of: &#34;days&#34; or &#34;years&#34;&#39;
-    soc_field = HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;SOC&#39;]
-    rh_field = HDF_PATHS[&#39;SPL4CMDL&#39;][&#39;4&#39;][&#39;RH&#39;]
-    if subset_id is not None:
-        # Get X- and Y-offsets while we&#39;re at it
-        soc, xoff, yoff = subset(
-            hdf, soc_path, None, None, subset_id = subset_id)
-        rh, _, _ = subset(
-            hdf, rh_path, None, None, subset_id = subset_id)
-    else:
-        xoff = yoff = 0
-        soc = hdf[soc_path][:]
-        rh = hdf[rh_path][:]
-
-    # Find those areas of NoData in either array
-    mask = np.logical_or(soc == nodata, rh == nodata)
-    mrt = np.divide(soc, rh)
-    if units == &#39;years&#39;:
-        # NOTE: No need to guard against NaNs/ NoData here because of mask
-        mrt = np.divide(mrt, 365.0)
-    np.place(mrt, mask, nodata) # Put NoData values back in
-    return (mrt, xoff, yoff)
-
-
-def npp(
-        hdf, use_subgrid = False, subset_id = None, subset_bbox = None,
-        nodata = -9999):
-    &#39;&#39;&#39;
-    Calculates net primary productivity (NPP), based on the carbon use
-    efficiency (CUE) of each plant functional type (PFT). NPP is derived
-    as: `NPP = GPP * CUE`, where `CUE = NPP/GPP`.
-
-    Parameters
-    ----------
-    hdf : h5py.File
-        The HDF5 file / h5py.File object
-    use_subgrid : bool
-        True to use the 1-km subgrid; requires iterating through the PFT means
-    subset_id : str
-        (Optional) Can provide keyword designating the desired subset area
-    subset_bbox : list or tuple
-        (Optional) Can provide a bounding box to define a desired subset area
-    nodata : float
-        The NoData value to mask (Default: -9999)
-
-    Returns
-    -------
-    numpy.ndarray
-        NPP values on an EASE-Grid 2.0 array
-    &#39;&#39;&#39;
-    grid = &#39;M01&#39; if use_subgrid else &#39;M09&#39;
-    cue_array = cue(get_pft_array(grid, subset_id, subset_bbox))
-    if not use_subgrid:
-        if subset_id is not None or subset_bbox is not None:
-            gpp, _, _ = subset(
-                hdf, &#39;GPP/gpp_mean&#39;, subset_id = subset_id,
-                subset_bbox = subset_bbox)
-        else:
-            gpp = hdf[&#39;GPP/gpp_mean&#39;][:]
-    else:
-        raise NotImplementedError(&#39;No support for the 1-km subgrid&#39;)
-    gpp[gpp == nodata] = np.nan
-    return np.multiply(gpp, cue_array)
-
-
-def ordinals365(dates):
-    &#39;&#39;&#39;
-    Returns a length-T sequence of ordinals on [1,365]. Can be used for
-    indexing a 365-day climatology; see `climatology365()`.
-
-    Parameters
-    ----------
-    dates : list or tuple
-        Sequence of datetime.datetime or datetime.date instances
-
-    Returns
-    -------
-    list
-    &#39;&#39;&#39;
-    return [
-        t - 1 if (year % 4 == 0 and t &gt;= 60) else t
-        for t, year in [(int(t.strftime(&#39;%j&#39;)), t.year) for t in dates]
-    ]
-
-
-def rescale_smrz(smrz0, smrz_min, smrz_max = 100):
-    &#39;&#39;&#39;
-    Rescales root-zone soil-moisture (SMRZ); original SMRZ is in percent
-    saturation units. NOTE: Although Jones et al. (2017) write &#34;SMRZ_wp is
-    the plant wilting point moisture level determined by ancillary soil
-    texture data provided by L4SM...&#34; in actuality it is just `smrz_min`.
-
-    Parameters
-    ----------
-    smrz0 : numpy.ndarray
-        (T x N) array of original SMRZ data, in percent (%) saturation units
-        for N sites and T time steps
-    smrz_min : numpy.ndarray or float
-        Site-level long-term minimum SMRZ (percent saturation)
-    smrz_max : numpy.ndarray or float
-        Site-level long-term maximum SMRZ (percent saturation); can optionally
-        provide a fixed upper-limit on SMRZ; useful for calculating SMRZ100.
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    if smrz_min.ndim == 1:
-        smrz_min = smrz_min[np.newaxis,:]
-    assert smrz0.ndim == 2,\
-        &#39;Expected smrz0 to be a 2D array&#39;
-    assert smrz0.shape[1] == smrz_min.shape[1],\
-        &#39;smrz_min should have one value per site&#39;
-    # Clip input SMRZ to the lower, upper bounds
-    smrz0 = np.where(smrz0 &lt; smrz_min, smrz_min, smrz0)
-    smrz0 = np.where(smrz0 &gt; smrz_max, smrz_max, smrz0)
-    smrz_norm = np.add(np.multiply(100, np.divide(
-        np.subtract(smrz0, smrz_min),
-        np.subtract(smrz_max, smrz_min))), 1)
-    # Log-transform normalized data and rescale to range between
-    #   5.0 and 100% saturation)
-    return np.add(
-        np.multiply(95, np.divide(np.log(smrz_norm), np.log(101))), 5)
-
-
-def soc_analytical_spinup(litterfall, k_mult, fmet, fstr, decay_rates):
-    r&#39;&#39;&#39;
-    Using the solution to the differential equations governing change in the
-    soil organic carbon (SOC) pools, calculates the steady-state size of each
-    SOC pool.
-
-    The analytical steady-state value for the metabolic (&#34;fast&#34;) pool is:
-    $$
-    C_{met} = \frac{f_{met} \sum NPP}{R_{opt} \sum K_{mult}}
-    $$
-
-    The analytical steady-state value for the structural (&#34;medium&#34;) pool is:
-    $$
-    C_{str} = \frac{(1 - f_{met})\sum NPP}{R_{opt}\, k_{str} \sum K_{mult}}
-    $$
-
-    The analytical steady-state value for the recalcitrant (&#34;slow&#34;) pool is:
-    $$
-    C_{rec} = \frac{f_{str}\, k_{str}\, C_{str}}{k_{rec}}
-    $$
-
-    Parameters
-    ----------
-    litterfall : numpy.ndarray
-        Average daily litterfall, a (N x ...) array
-    k_mult : numpy.ndarray
-        The K_mult climatology, i.e., a (365 x N x ...) array of the long-term
-        average K_mult value at each of N sites (optionally, with 81 1-km
-        subgrid sites, e.g., 365 x N x 81)
-    fmet : numpy.ndarray
-        The f_metabolic model parameter, as an (N x ...) array
-    fstr : numpy.ndarray
-        The f_structural model parameter, as an (N x ...) array
-    decay_rates : numpy.ndarray
-        The optimal decay rates for each SOC pool, as a (3 x N x ...) array
-
-    NOTE: If a 3 or more axes are used, those axes must match for all arrays;
-    i.e., if (x ...) is used, it must be the same for all.
-
-    Returns
-    -------
-    tuple
-        A 3-element tuple, each element the steady-state values for that pool,
-        i.e., `(metabolic, structural, recalcitrant)`
-    &#39;&#39;&#39;
-    # NOTE: litterfall is average daily litterfall (see upstream where we
-    #   divided by 365), so, to obtain annual sum, multiply by 365
-    c0 = np.divide(
-        fmet * (litterfall * 365),
-        decay_rates[0,...] * np.sum(k_mult, axis = 0))
-    c1 = np.divide(
-        (1 - fmet) * (litterfall * 365),
-        decay_rates[1,...] * np.sum(k_mult, axis = 0))
-    # NOTE: k_mult disappears because it is in both the numerator and
-    #   denominator
-    c2 = np.divide(fstr * decay_rates[1,...] * c1, decay_rates[2,...])
-    c0[~np.isfinite(c0)] = 0
-    c1[~np.isfinite(c1)] = 0
-    c2[~np.isfinite(c2)] = 0
-    return (c0, c1, c2)
-
-
-def soc_numerical_spinup(
-        soc, litterfall, k_mult, fmet, fstr, decay_rates, threshold = 0.1,
-        verbose = False):
-    &#39;&#39;&#39;
-    Numerical spin-up of C pools.
-
-    Parameters
-    ----------
-    soc : numpy.ndarray
-        SOC in each pool in g C m-3 units, a (3 x N x ...) array
-    litterfall : numpy.ndarray
-        Daily litterfall in g C m-2 units, a (N x ...) array
-    k_mult : numpy.ndarray
-        The K_mult climatology, i.e., a (365 x N x ...) array of the long-term
-        average K_mult value at each of N sites (with ... 1-km subgrid sites)
-    fmet : numpy.ndarray
-        The f_metabolic model parameter, as an (N x ...) array
-    fstr : numpy.ndarray
-        The f_structural model parameter, as an (N x ...) array
-    decay_rates : numpy.ndarray
-        The optimal decay rates for each SOC pool, as a (3 x N x ...) array
-    threshold : float
-        Goal for the NEE tolerance check; i.e., change in NEE between
-        climatological years should be less than or equal to the threshold
-        for all pixels (Default: 0.1 g C m-2 yr-1)
-    verbose : bool
-        True to print messages to the screen
-
-    Returns
-    -------
-    tuple
-        2-element tuple of `((soc0, soc1, soc2), tol)` where the first
-        element is a 3-tuple of the SOC in each pool; second element is the
-        final tolerance
-    &#39;&#39;&#39;
-    tsize = k_mult.shape[0] # Whether 365 (days) or T days
-    tol = np.inf
-    i = 0
-    # Jones et al. (2017) write that goal is NEE tolerance &lt;=
-    #   1 g C m-2 year-1, but we can do better
-    if verbose:
-        print(&#39;Iterating...&#39;)
-    while not np.all(abs(tol) &lt;= threshold):
-        diffs = np.zeros(k_mult.shape)
-        for t in range(0, tsize):
-            rh = k_mult[t,...] * decay_rates * soc
-            # Calculate change in C pools (g C m-2 units)
-            dc0 = np.subtract(np.multiply(litterfall, fmet), rh[0])
-            dc1 = np.subtract(np.multiply(litterfall, 1 - fmet), rh[1])
-            dc2 = np.subtract(np.multiply(fstr, rh[1]), rh[2])
-            soc[0] += dc0
-            soc[1] += dc1
-            soc[2] += dc2
-            diffs[t,:] += (dc0 + dc1 + dc2)
-        # Calculate total annual change in NEE (&#34;mean tolerance&#34;) at each
-        #   site over the year
-        if i &gt; 0:
-            # Tolerance goes to zero as each successive year brings fewer
-            #   changes in NEE
-            tol = last_year - np.nansum(diffs, axis = 0)
-        last_year = np.nansum(diffs, axis = 0)
-        tol = np.where(np.isnan(tol), 0, tol)
-        # Calculate mean absolute tolerance across sites
-        if verbose:
-            print(&#39;[%d] Mean (Max) abs. tolerance: %.4f (%.4f)&#39; % (
-                i, np.abs(tol).mean(), np.abs(tol).max()))
-        i += 1
-    return ((soc[0], soc[1], soc[2]), tol)
-
-
-def soc_numerical_spinup2(
-        soc, litterfall, k_mult, fmet, fstr, decay_rates, cue,
-        threshold = 0.1, verbose = False):
-    &#39;&#39;&#39;
-    Numerical spin-up of C pools; here, the &#34;tolerance&#34; of spin-up is equal
-    the annual NEE sum.
-
-    Parameters
-    ----------
-    soc : numpy.ndarray
-        SOC in each pool in g C m-3 units, a (3 x N x ...) array
-    litterfall : numpy.ndarray
-        Daily litterfall in g C m-2 units, a (N x ...) array
-    k_mult : numpy.ndarray
-        The K_mult climatology, i.e., a (365 x N x ...) array of the long-term
-        average K_mult value at each of N sites (with ... 1-km subgrid sites)
-    fmet : numpy.ndarray
-        The f_metabolic model parameter, as an (N x ...) array
-    fstr : numpy.ndarray
-        The f_structural model parameter, as an (N x ...) array
-    decay_rates : numpy.ndarray
-        The optimal decay rates for each SOC pool, as a (3 x N x ...) array
-    cue : numpy.ndarray
-        The carbon use efficiency (CUE), a (N x ...) array
-    threshold : float
-        Goal for the NEE tolerance check; i.e., change in NEE between
-        climatological years should be less than or equal to the threshold
-        for all pixels (Default: 0.1 g C m-2 yr-1)
-    verbose : bool
-        True to print messages to the screen
-
-    Returns
-    -------
-    tuple
-        2-element tuple of `((soc0, soc1, soc2), tol)` where the first
-        element is a 3-tuple of the SOC in each pool; second element is the
-        final tolerance
-    &#39;&#39;&#39;
-    tsize = k_mult.shape[0] # Whether 365 (days) or T days
-    tol = np.inf
-    i = 0
-    # Jones et al. (2017) write that goal is NEE tolerance &lt;=
-    #   1 g C m-2 year-1, but we can do better
-    if verbose:
-        print(&#39;Iterating...&#39;)
-    while not np.all(abs(tol) &lt;= threshold):
-        nee = np.zeros(k_mult.shape)
-        for t in range(0, tsize):
-            rh = k_mult[t] * decay_rates[0] * soc
-            # Calculate change in C pools (g C m-2 units)
-            dc0 = np.subtract(np.multiply(litterfall, fmet), rh[0])
-            dc1 = np.subtract(np.multiply(litterfall, 1 - fmet), rh[1])
-            dc2 = np.subtract(np.multiply(fstr, rh[1]), rh[2])
-            soc[0] += dc0
-            soc[1] += dc1
-            soc[2] += dc2
-            # Adjust structural RH pool for material transferred to recalcitrant
-            rh[1] = rh[2] * (1 - fstr)
-            # Compute (mean daily) GPP as the (mean daily NPP):CUE ratio, then
-            #   compute RA as (GPP - NPP)
-            gpp = litterfall / cue
-            # While it looks like we can optimize above+below, we&#39;ll need to
-            #   re-use &#34;gpp&#34; later to calculate NEE (&#34;diffs&#34;)
-            ra = gpp - litterfall
-            nee[t] = (ra + rh.sum(axis = 0)) - gpp
-        if i &gt; 0:
-            # Tolerance goes to zero as each successive year brings fewer
-            #   changes in NEE
-            tol = last_year - np.nansum(nee, axis = 0)
-        last_year = np.nansum(nee, axis = 0)
-        tol = np.where(np.isnan(tol), 0, tol)
-        # Calculate mean absolute tolerance across sites
-        if verbose:
-            print(&#39;[%d] Mean (Max) abs. tolerance: %.4f (%.4f)&#39; % (
-                i, np.abs(tol).mean(), np.abs(tol).max()))
-        i += 1
-    return ((soc[0], soc[1], soc[2]), tol)
-
-
-def tridiag_solver(tri, r, kl = 1, ku = 1, banded = None):
-    &#39;&#39;&#39;
-    Solution to the tridiagonal equation by solving the system of equations
-    in sparse form. Creates a banded matrix consisting of the diagonals,
-    starting with the lowest diagonal and moving up, e.g., for matrix:
-
-        A = [[10.,  2.,  0.,  0.],
-             [ 3., 10.,  4.,  0.],
-             [ 0.,  1.,  7.,  5.],
-             [ 0.,  0.,  3.,  4.]]
-        banded = [[ 3.,  1.,  3.,  0.],
-                  [10., 10.,  7.,  4.],
-                  [ 0.,  2.,  4.,  5.]]
-
-    The banded matrix is what should be provided to the optoinal &#34;banded&#34;
-    argument, which should be used if the banded matrix can be created faster
-    than `scipy.sparse.dia_matrix()`.
-
-    Parameters
-    ----------
-    tri : numpy.ndarray
-        A tridiagonal matrix (N x N)
-    r : numpy.ndarray
-        Vector of solutions to the system, Ax = r, where A is the tridiagonal
-        matrix
-    kl : int
-        Lower bandwidth (number of lower diagonals) (Default: 1)
-    ku : int
-        Upper bandwidth (number of upper diagonals) (Default: 1)
-    banded : numpy.ndarray
-        (Optional) Provide the banded matrix with diagonals along the rows;
-        this can be faster than scipy.sparse.dia_matrix()
-
-    Returns
-    -------
-    numpy.ndarray
-    &#39;&#39;&#39;
-    assert tri.ndim == 2 and (tri.shape[0] == tri.shape[1]),\
-        &#39;Only supports 2-dimensional square matrices&#39;
-    if banded is None:
-        banded = dia_matrix(tri).data
-    # If it is necessary, in a future implementation, to extract diagonals;
-    #   this is a starting point for problems where kl = ku = 1
-    # n = tri.shape[0]
-    # a, b, c = [ # (n-1, n, n-1) refer to the lengths of each vector
-    #     sparse[(i+1),(max(0,i)):j]
-    #     for i, j in zip(range(-1, 2), (n-1, n, n+1))
-    # ]
-    return solve_banded((kl, ku), np.flipud(banded), r)
-
-
-def vpd(qv2m, ps, temp_k):
-        r&#39;&#39;&#39;
-    Calculates vapor pressure deficit (VPD); unfortunately, the provenance
-    of this formula cannot be properly attributed. It is taken from the
-    SMAP L4C Science code base, so it is exactly how L4C calculates VPD.
-
-    $$
-    \mathrm{VPD} = 610.7 \times \mathrm{exp}\left(
-    \frac{17.38 \times T_C}{239 + T_C}
-    \right) - \frac{(P \times [\mathrm{QV2M}]}{0.622 + (0.378 \times [\mathrm{QV2M}])}
-    $$
-
-    Where P is the surface pressure (Pa), QV2M is the water vapor mixing
-    ratio at 2-meter height, and T is the temperature in degrees C (though
-    this function requires units of Kelvin when called).
-
-    NOTE: A variation on this formula can be found in the text:
-
-    Monteith, J. L. and M. H. Unsworth. 1990.
-    Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.
-
-    See also:
-        https://glossary.ametsoc.org/wiki/Mixing_ratio
-
-    Parameters
-    ----------
-    qv2m : numpy.ndarray or float
-        QV2M, the water vapor mixing ratio at 2-m height
-    ps : numpy.ndarray or float
-        The surface pressure, in Pascals
-    temp_k : numpy.ndarray or float
-        The temperature at 2-m height in degrees Kelvin
-
-    Returns
-    -------
-    numpy.ndarray or float
-        VPD in Pascals
-    &#39;&#39;&#39;
-        temp_c = temp_k - 273.15 # Convert temperature to degrees C
-        avp = np.divide(np.multiply(qv2m, ps), 0.622 + (0.378 * qv2m))
-        x = np.divide(17.38 * temp_c, (239 + temp_c))
-        esat = 610.7 * np.exp(x)
-        return np.subtract(esat, avp)</code></pre>
-</details>
 </section>
 <section>
 </section>
@@ -948,31 +54,6 @@ def vpd(qv2m, ps, temp_k):
 <span>def <span class="ident">arrhenius</span></span>(<span>tsoil, beta0: float, beta1: float = 66.02, beta2: float = 227.13)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>The Arrhenius equation for response of enzymes to (soil) temperature,
-constrained to lie on the closed interval [0, 1].</p>
-<p><span><span class="MathJax_Preview">
-f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
-\frac{1}{T_{SOIL} - \beta_2} \right) \right]
-</span><script type="math/tex; mode=display">
-f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
-\frac{1}{T_{SOIL} - \beta_2} \right) \right]
-</script></span></p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>tsoil</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Array of soil temperature in degrees K</dd>
-<dt><strong><code>beta0</code></strong> :&ensp;<code>float</code></dt>
-<dd>Coefficient for soil temperature (deg K)</dd>
-<dt><strong><code>beta1</code></strong> :&ensp;<code>float</code></dt>
-<dd>Coefficient for &hellip; (deg K)</dd>
-<dt><strong><code>beta2</code></strong> :&ensp;<code>float</code></dt>
-<dd>Coefficient for &hellip; (deg K)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>Array of soil temperatures mapped through the Arrhenius function</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1011,55 +92,36 @@ f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
     # Constrain the output to the interval [0, 1]
     return np.where(y0 &gt; 1, 1, np.where(y0 &lt; 0, 0, y0))</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.science.bias_correction_parameters"><code class="name flex">
-<span>def <span class="ident">bias_correction_parameters</span></span>(<span>series, npoly: int = 1, cutoff: float = 1, var_cutoff: float = None, add_intercept: bool = True)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Calculate the bias correction parameters for two overlapping time series,
-nominally the Nature Run and L4C Operational products, of a given
-variable using quantile mapping. For example, can correct the bias in
-Nature Run (2000-2017) against the L4C Ops record (2015-Present) by
-fitting bias correction parameters for the overlap period 2015-2017.
-Model can be specified:</p>
-<pre><code>y = alpha + X beta_0 + X^2 beta_1 + ...
-</code></pre>
-<p>NOTE: Because Nature Run and L4C Ops compare very well in some locations,
-a degree-1 polynomial (straight line) is fit first (regardless of npoly);
-if this solution produces corrections that are &lt;1 gC m^-2, the degree-1
-solution is used. In some areas, there is a strong linear correspondence
-between most measurements but a small number have a super-linear
-relationship that is poorly fit by a degree-2 polynomial; in these cases
-(where model variance of the degree-2 fit is &gt; var_cutoff), the degree-1
-solution is used. Forcing the line of best fit through the origin (with
-intercept=False) is also not recommended.</p>
+<div class="desc"><p>The Arrhenius equation for response of enzymes to (soil) temperature,
+constrained to lie on the closed interval [0, 1].</p>
+<p><span><span class="MathJax_Preview">
+f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
+\frac{1}{T_{SOIL} - \beta_2} \right) \right]
+</span><script type="math/tex; mode=display">
+f(T_{SOIL}) = \mathrm{exp}\left[\beta_0\left( \frac{1}{\beta_1} -
+\frac{1}{T_{SOIL} - \beta_2} \right) \right]
+</script></span></p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>series</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>A (t x 2) NumPy array where t rows correspond to t time steps and
-each column is a product; the first column is the reference product
-or dependent variable in the linear bias correction.</dd>
-<dt><strong><code>npoly</code></strong> :&ensp;<code>int</code></dt>
-<dd>Degree of the polynomial to use in bias correction (Default: 1)</dd>
-<dt><strong><code>cutoff</code></strong> :&ensp;<code>float</code></dt>
-<dd>Cutoff for the degree-1 bias correction, in data units (e.g.,
-1 g C m-2 day-1); defaults to 1.0, i.e., the residual after correction
-must be greater than 1 g C m-2 day-1, which is the average impact of
-L4SM versus model-only observations. If this cutoff is exceeded, the
-degree-1 solution is returned.</dd>
-<dt><strong><code>var_cutoff</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
-<dd>Cutoff in variance for higher-order solutions; if the residual model
-variance exceeds this threshold for the degree-N solution, then return
-the degree (N-1) solution (Default: None)</dd>
-<dt><strong><code>add_intercept</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to add a the y-intercept term (Default: True)</dd>
+<dt><strong><code>tsoil</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Array of soil temperature in degrees K</dd>
+<dt><strong><code>beta0</code></strong> :&ensp;<code>float</code></dt>
+<dd>Coefficient for soil temperature (deg K)</dd>
+<dt><strong><code>beta1</code></strong> :&ensp;<code>float</code></dt>
+<dd>Coefficient for &hellip; (deg K)</dd>
+<dt><strong><code>beta2</code></strong> :&ensp;<code>float</code></dt>
+<dd>Coefficient for &hellip; (deg K)</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>numpy.ndarray</code></dt>
-<dd>A vector of length N + 1 where N is the degree of the polynomial
-fit requested</dd>
+<dd>Array of soil temperatures mapped through the Arrhenius function</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.science.bias_correction_parameters"><code class="name flex">
+<span>def <span class="ident">bias_correction_parameters</span></span>(<span>series,<br>npoly: int = 1,<br>cutoff: float = 1,<br>var_cutoff: float = None,<br>add_intercept: bool = True)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1184,31 +246,55 @@ fit requested</dd>
     #   polynomial degree
     return model</code></pre>
 </details>
+<div class="desc"><p>Calculate the bias correction parameters for two overlapping time series,
+nominally the Nature Run and L4C Operational products, of a given
+variable using quantile mapping. For example, can correct the bias in
+Nature Run (2000-2017) against the L4C Ops record (2015-Present) by
+fitting bias correction parameters for the overlap period 2015-2017.
+Model can be specified:</p>
+<pre><code>y = alpha + X beta_0 + X^2 beta_1 + ...
+</code></pre>
+<p>NOTE: Because Nature Run and L4C Ops compare very well in some locations,
+a degree-1 polynomial (straight line) is fit first (regardless of npoly);
+if this solution produces corrections that are &lt;1 gC m^-2, the degree-1
+solution is used. In some areas, there is a strong linear correspondence
+between most measurements but a small number have a super-linear
+relationship that is poorly fit by a degree-2 polynomial; in these cases
+(where model variance of the degree-2 fit is &gt; var_cutoff), the degree-1
+solution is used. Forcing the line of best fit through the origin (with
+intercept=False) is also not recommended.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>series</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A (t x 2) NumPy array where t rows correspond to t time steps and
+each column is a product; the first column is the reference product
+or dependent variable in the linear bias correction.</dd>
+<dt><strong><code>npoly</code></strong> :&ensp;<code>int</code></dt>
+<dd>Degree of the polynomial to use in bias correction (Default: 1)</dd>
+<dt><strong><code>cutoff</code></strong> :&ensp;<code>float</code></dt>
+<dd>Cutoff for the degree-1 bias correction, in data units (e.g.,
+1 g C m-2 day-1); defaults to 1.0, i.e., the residual after correction
+must be greater than 1 g C m-2 day-1, which is the average impact of
+L4SM versus model-only observations. If this cutoff is exceeded, the
+degree-1 solution is returned.</dd>
+<dt><strong><code>var_cutoff</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
+<dd>Cutoff in variance for higher-order solutions; if the residual model
+variance exceeds this threshold for the degree-N solution, then return
+the degree (N-1) solution (Default: None)</dd>
+<dt><strong><code>add_intercept</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to add a the y-intercept term (Default: True)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>A vector of length N + 1 where N is the degree of the polynomial
+fit requested</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.climatology365"><code class="name flex">
 <span>def <span class="ident">climatology365</span></span>(<span>series, dates, ignore_leap=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Computes a 365-day climatology for different locations from a time series
-of length T. The climatology could then be indexed using ordinals
-generated by <code><a title="pyl4c.science.ordinals365" href="#pyl4c.science.ordinals365">ordinals365()</a></code>. Setting <code>ignore_leap = False</code> may be useful
-if the time series has regular dropouts; e.g., for MODIS 8-day composite
-data, there are only 46 days each year with valid data.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>series</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>T x &hellip; array of data</dd>
-<dt><strong><code>dates</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>Sequence of datetime.datetime or datetime.date instances</dd>
-<dt><strong><code>ignore_leap</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to convert DOY to (DOY-1) in leap years, effectively ignoring
-Leap Day (Default); if False, DOY numbers are unchanged</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1224,7 +310,7 @@ Leap Day (Default); if False, DOY numbers are unchanged</dd>
     Parameters
     ----------
     series : numpy.ndarray
-        T x ... array of data
+        (... x T) array of data (time should be the trailing axis)
     dates : list or tuple
         Sequence of datetime.datetime or datetime.date instances
     ignore_leap : bool
@@ -1234,11 +320,12 @@ Leap Day (Default); if False, DOY numbers are unchanged</dd>
     Returns
     -------
     numpy.ndarray
+        A (365 x ...) array: the 365-day climatology
     &#39;&#39;&#39;
     @suppress_warnings
     def calc_climatology(x):
         return np.array([
-            np.nanmean(x[ordinal == day,...], axis = 0)
+            np.nanmean(x[...,ordinal == day], axis = -1)
             for day in range(1, 366)
         ])
     # Get first and last day of the year (DOY)
@@ -1257,34 +344,31 @@ Leap Day (Default); if False, DOY numbers are unchanged</dd>
     ])
     return calc_climatology(series)</code></pre>
 </details>
+<div class="desc"><p>Computes a 365-day climatology for different locations from a time series
+of length T. The climatology could then be indexed using ordinals
+generated by <code><a title="pyl4c.science.ordinals365" href="#pyl4c.science.ordinals365">ordinals365()</a></code>. Setting <code>ignore_leap = False</code> may be useful
+if the time series has regular dropouts; e.g., for MODIS 8-day composite
+data, there are only 46 days each year with valid data.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>series</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(&hellip; x T) array of data (time should be the trailing axis)</dd>
+<dt><strong><code>dates</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of datetime.datetime or datetime.date instances</dd>
+<dt><strong><code>ignore_leap</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to convert DOY to (DOY-1) in leap years, effectively ignoring
+Leap Day (Default); if False, DOY numbers are unchanged</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>A (365 x &hellip;) array: the 365-day climatology</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.daynight_partition"><code class="name flex">
 <span>def <span class="ident">daynight_partition</span></span>(<span>arr_24hr, updown, reducer='mean')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Partitions a 24-hour time series array into daytime and nighttime values,
-then calculates the mean in each group. Daytime is defined as when the sun
-is above the horizon; nighttime is the complement.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>arr_24hr</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>A size (24 x &hellip;) array; the first axis must have 24 elements
-corresponding to the measurement in each hour</dd>
-<dt><strong><code>updown</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>A size (2 x &hellip;) array, compatible with arr_24hr, where the first axis
-has the hour of sunrise and sunset, in that order, for each element</dd>
-<dt><strong><code>reducer</code></strong> :&ensp;<code>str</code></dt>
-<dd>One of "mean" or "sum" indicating whether an average or a total of the
-daytime/ nighttime values should be calculated; e.g., for "mean", the
-hourly values from daytime hours are added up and divided by the
-length of the day (in hours).</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>A size (2 x &hellip;) array where the first axis enumerates the daytime and
-nighttime mean values, respectively</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1356,25 +440,34 @@ nighttime mean values, respectively</dd>
         arr_nighttime[~np.isfinite(arr_nighttime)] = 0
     return np.stack((arr_daytime, arr_nighttime))</code></pre>
 </details>
+<div class="desc"><p>Partitions a 24-hour time series array into daytime and nighttime values,
+then calculates the mean in each group. Daytime is defined as when the sun
+is above the horizon; nighttime is the complement.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>arr_24hr</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A size (24 x &hellip;) array; the first axis must have 24 elements
+corresponding to the measurement in each hour</dd>
+<dt><strong><code>updown</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A size (2 x &hellip;) array, compatible with arr_24hr, where the first axis
+has the hour of sunrise and sunset, in that order, for each element</dd>
+<dt><strong><code>reducer</code></strong> :&ensp;<code>str</code></dt>
+<dd>One of "mean" or "sum" indicating whether an average or a total of the
+daytime/ nighttime values should be calculated; e.g., for "mean", the
+hourly values from daytime hours are added up and divided by the
+length of the day (in hours).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>A size (2 x &hellip;) array where the first axis enumerates the daytime and
+nighttime mean values, respectively</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.degree_lengths"><code class="name flex">
 <span>def <span class="ident">degree_lengths</span></span>(<span>phi, a=6378137, b=6356752.3142)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns the approximate length of degrees of latitude and longitude.</p>
-<h2 id="source">Source</h2>
-<p><a href="https://en.wikipedia.org/wiki/Latitude">https://en.wikipedia.org/wiki/Latitude</a></p>
-<p>phi : Number
-Latitude, in degrees
-a : Number
-Radius of the Earth (major axis) in meters
-b : Number
-Length of minor axis of the Earth in meters</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>Length of a degree of (longitude, latitude), respectively</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1406,41 +499,25 @@ Length of minor axis of the Earth in meters</p>
         180 * np.sqrt(1 - (e2 * np.sin(np.deg2rad(phi))**2)))
     return (lng_m, lat_m)</code></pre>
 </details>
+<div class="desc"><p>Returns the approximate length of degrees of latitude and longitude.</p>
+<h2 id="source">Source</h2>
+<p><a href="https://en.wikipedia.org/wiki/Latitude">https://en.wikipedia.org/wiki/Latitude</a></p>
+<p>phi : Number
+Latitude, in degrees
+a : Number
+Radius of the Earth (major axis) in meters
+b : Number
+Length of minor axis of the Earth in meters</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>Length of a degree of (longitude, latitude), respectively</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.e_mult"><code class="name flex">
 <span>def <span class="ident">e_mult</span></span>(<span>params, tmin, vpd, smrz, ft)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculate environmental constraint multiplier for gross primary
-productivity (GPP), E_mult, based on current model parameters. The
-expected parameter names are "LUE" for the maximum light-use
-efficiency; "smrz0" and "smrz1" for the lower and upper bounds on root-
-zone soil moisture; "vpd0" and "vpd1" for the lower and upper bounds on
-vapor pressure deficity (VPD); "tmin0" and "tmin1" for the lower and
-upper bounds on minimum temperature; and "ft0" for the multiplier during
-frozen ground conditions.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
-<dd>A dict-like data structure with named model parameters</dd>
-<dt><strong><code>tmin</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of minimum air temperature (deg K), where T is the
-number of time steps, N the number of sites</dd>
-<dt><strong><code>vpd</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of vapor pressure deficit (Pa), where T is the number
-of time steps, N the number of sites</dd>
-<dt><strong><code>smrz</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of root-zone soil moisture wetness (%), where T is the
-number of time steps, N the number of sites</dd>
-<dt><strong><code>ft</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of the (binary) freeze-thaw status, where T is the
-number of time steps, N the number of sites (Frozen = 0, Thawed = 1)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1484,32 +561,41 @@ number of time steps, N the number of sites (Frozen = 0, Thawed = 1)</dd>
     f_ft   = linear_constraint(params[&#39;ft0&#39;], 1.0, &#39;binary&#39;)
     return f_tmin(tmin) * f_vpd(vpd) * f_smrz(smrz) * f_ft(ft)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.science.k_mult"><code class="name flex">
-<span>def <span class="ident">k_mult</span></span>(<span>params, tsoil, smsf)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Calculate environmental constraint multiplier for soil heterotrophic
-respiration (RH), K_mult, based on current model parameters. The expected
-parameter names are "tsoil" for the Arrhenius function of soil temperature
-and "smsf0" and "smsf1" for the lower and upper bounds of the ramp
-function on surface soil moisture.</p>
+<div class="desc"><p>Calculate environmental constraint multiplier for gross primary
+productivity (GPP), E_mult, based on current model parameters. The
+expected parameter names are "LUE" for the maximum light-use
+efficiency; "smrz0" and "smrz1" for the lower and upper bounds on root-
+zone soil moisture; "vpd0" and "vpd1" for the lower and upper bounds on
+vapor pressure deficity (VPD); "tmin0" and "tmin1" for the lower and
+upper bounds on minimum temperature; and "ft0" for the multiplier during
+frozen ground conditions.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
 <dd>A dict-like data structure with named model parameters</dd>
-<dt><strong><code>tsoil</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of soil temperature (deg K), where T is the number of
-time steps, N the number of sites</dd>
-<dt><strong><code>smsf</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) vector of surface soil wetness (%), where T is the number of
-time steps, N the number of sites</dd>
+<dt><strong><code>tmin</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of minimum air temperature (deg K), where T is the
+number of time steps, N the number of sites</dd>
+<dt><strong><code>vpd</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of vapor pressure deficit (Pa), where T is the number
+of time steps, N the number of sites</dd>
+<dt><strong><code>smrz</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of root-zone soil moisture wetness (%), where T is the
+number of time steps, N the number of sites</dd>
+<dt><strong><code>ft</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of the (binary) freeze-thaw status, where T is the
+number of time steps, N the number of sites (Frozen = 0, Thawed = 1)</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>numpy.ndarray</code></dt>
 <dd>&nbsp;</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.science.k_mult"><code class="name flex">
+<span>def <span class="ident">k_mult</span></span>(<span>params, tsoil, smsf)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1541,46 +627,32 @@ time steps, N the number of sites</dd>
     f_smsf  = linear_constraint(params[&#39;smsf0&#39;], params[&#39;smsf1&#39;])
     return f_tsoil(tsoil) * f_smsf(smsf)</code></pre>
 </details>
+<div class="desc"><p>Calculate environmental constraint multiplier for soil heterotrophic
+respiration (RH), K_mult, based on current model parameters. The expected
+parameter names are "tsoil" for the Arrhenius function of soil temperature
+and "smsf0" and "smsf1" for the lower and upper bounds of the ramp
+function on surface soil moisture.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>params</code></strong> :&ensp;<code>dict</code></dt>
+<dd>A dict-like data structure with named model parameters</dd>
+<dt><strong><code>tsoil</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of soil temperature (deg K), where T is the number of
+time steps, N the number of sites</dd>
+<dt><strong><code>smsf</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) vector of surface soil wetness (%), where T is the number of
+time steps, N the number of sites</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.litterfall_casa"><code class="name flex">
 <span>def <span class="ident">litterfall_casa</span></span>(<span>lai, years, dt=0.0027397260273972603)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculates daily litterfall fraction after the CASA model (Randerson et
-al. 1996). Computes the fraction of evergreen versus deciduous canopy and
-allocates a constant daily fraction (out of the year) for evergreen canopy
-but a varying daily fraction for deciduous, where the fraction varies with
-"leaf loss," a function of leaf area index (LAI). Canopies are assumed to
-be a mix of evergreen and deciduous, so the litterfall fraction is a sum
-of these two approaches.</p>
-<p>Randerson, J. T., Thompson, M. V, Malmstrom, C. M., Field, C. B., &amp;
-Fung, I. Y. (1996). Substrate limitations for heterotrophs: Implications
-for models that estimate the seasonal cycle of atmospheric CO2.
-<em>Global Biogeochemical Cycles,</em> 10(4), 585–602.</p>
-<p>The approach here is a bit different from Randerson et al. (1996) because
-we re- calculate the evergreen fraction each year; however, this is a
-reasonable elaboration that, incidentally, accounts for potential changes
-in the evergreen-vs-deciduous mix of the canopy. The result is an array
-of daily litterfall fractions, i.e., the result multiplied by the annual
-NPP sum (for a given site and year) obtains the daily litterfall.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>lai</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The (T x N) leaf-area index (LAI) array, for T time steps and N sites</dd>
-<dt><strong><code>years</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>A length-T 1D array indexing the years, e.g., [2001, 2001, 2001, &hellip;];
-used to identify which of T time steps belong to a year, so that
-litterfall fractions sum to one over a year</dd>
-<dt><strong><code>dt</code></strong> :&ensp;<code>float</code></dt>
-<dd>The fraction of a year that each time step represents, e.g., for daily
-time steps, should be close to 1/365 (Default: 1/365)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>The fraction of available inputs (e.g., annual NPP) that should be
-allocated to litterfall at each time step</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1654,31 +726,46 @@ allocated to litterfall at each time step</dd>
             ll[idx,:], ll[idx,:].sum(axis = 0))
     return ll</code></pre>
 </details>
+<div class="desc"><p>Calculates daily litterfall fraction after the CASA model (Randerson et
+al. 1996). Computes the fraction of evergreen versus deciduous canopy and
+allocates a constant daily fraction (out of the year) for evergreen canopy
+but a varying daily fraction for deciduous, where the fraction varies with
+"leaf loss," a function of leaf area index (LAI). Canopies are assumed to
+be a mix of evergreen and deciduous, so the litterfall fraction is a sum
+of these two approaches.</p>
+<p>Randerson, J. T., Thompson, M. V, Malmstrom, C. M., Field, C. B., &amp;
+Fung, I. Y. (1996). Substrate limitations for heterotrophs: Implications
+for models that estimate the seasonal cycle of atmospheric CO2.
+<em>Global Biogeochemical Cycles,</em> 10(4), 585–602.</p>
+<p>The approach here is a bit different from Randerson et al. (1996) because
+we re- calculate the evergreen fraction each year; however, this is a
+reasonable elaboration that, incidentally, accounts for potential changes
+in the evergreen-vs-deciduous mix of the canopy. The result is an array
+of daily litterfall fractions, i.e., the result multiplied by the annual
+NPP sum (for a given site and year) obtains the daily litterfall.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>lai</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The (T x N) leaf-area index (LAI) array, for T time steps and N sites</dd>
+<dt><strong><code>years</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A length-T 1D array indexing the years, e.g., [2001, 2001, 2001, &hellip;];
+used to identify which of T time steps belong to a year, so that
+litterfall fractions sum to one over a year</dd>
+<dt><strong><code>dt</code></strong> :&ensp;<code>float</code></dt>
+<dd>The fraction of a year that each time step represents, e.g., for daily
+time steps, should be close to 1/365 (Default: 1/365)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>The fraction of available inputs (e.g., annual NPP) that should be
+allocated to litterfall at each time step</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.mean_residence_time"><code class="name flex">
 <span>def <span class="ident">mean_residence_time</span></span>(<span>hdf, units='years', subset_id=None, nodata=-9999)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculates the mean residence time (MRT) of soil organic carbon (SOC)
-pools as the quotient of SOC stock size and heterotrophic respiration
-(RH). Chen et al. (2013, Global and Planetary Change), provide a formal
-equation for mean residence time: (SOC/R_H).</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
-<dd>The HDF5 file / h5py.File object</dd>
-<dt><strong><code>units</code></strong> :&ensp;<code>str</code></dt>
-<dd>Either "years" (default) or "days"</dd>
-<dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
-<dd>(Optional) Can provide keyword designating the desired subset area</dd>
-<dt><strong><code>nodata</code></strong> :&ensp;<code>float</code></dt>
-<dd>(Optional) The NoData or Fill value (Default: -9999)</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>Tuple of: subset array, xoff, yoff, i.e., (numpy.ndarray, Int, Int)</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1713,13 +800,13 @@ equation for mean residence time: (SOC/R_H).</p>
     if subset_id is not None:
         # Get X- and Y-offsets while we&#39;re at it
         soc, xoff, yoff = subset(
-            hdf, soc_path, None, None, subset_id = subset_id)
+            hdf, soc_field, None, None, subset_id = subset_id)
         rh, _, _ = subset(
-            hdf, rh_path, None, None, subset_id = subset_id)
+            hdf, rh_field, None, None, subset_id = subset_id)
     else:
         xoff = yoff = 0
-        soc = hdf[soc_path][:]
-        rh = hdf[rh_path][:]
+        soc = hdf[soc_field][:]
+        rh = hdf[rh_field][:]
 
     # Find those areas of NoData in either array
     mask = np.logical_or(soc == nodata, rh == nodata)
@@ -1730,93 +817,31 @@ equation for mean residence time: (SOC/R_H).</p>
     np.place(mrt, mask, nodata) # Put NoData values back in
     return (mrt, xoff, yoff)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.science.npp"><code class="name flex">
-<span>def <span class="ident">npp</span></span>(<span>hdf, use_subgrid=False, subset_id=None, subset_bbox=None, nodata=-9999)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Calculates net primary productivity (NPP), based on the carbon use
-efficiency (CUE) of each plant functional type (PFT). NPP is derived
-as: <code>NPP = GPP * CUE</code>, where <code>CUE = NPP/GPP</code>.</p>
+<div class="desc"><p>Calculates the mean residence time (MRT) of soil organic carbon (SOC)
+pools as the quotient of SOC stock size and heterotrophic respiration
+(RH). Chen et al. (2013, Global and Planetary Change), provide a formal
+equation for mean residence time: (SOC/R_H).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>hdf</code></strong> :&ensp;<code>h5py.File</code></dt>
 <dd>The HDF5 file / h5py.File object</dd>
-<dt><strong><code>use_subgrid</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to use the 1-km subgrid; requires iterating through the PFT means</dd>
+<dt><strong><code>units</code></strong> :&ensp;<code>str</code></dt>
+<dd>Either "years" (default) or "days"</dd>
 <dt><strong><code>subset_id</code></strong> :&ensp;<code>str</code></dt>
 <dd>(Optional) Can provide keyword designating the desired subset area</dd>
-<dt><strong><code>subset_bbox</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>(Optional) Can provide a bounding box to define a desired subset area</dd>
 <dt><strong><code>nodata</code></strong> :&ensp;<code>float</code></dt>
-<dd>The NoData value to mask (Default: -9999)</dd>
+<dd>(Optional) The NoData or Fill value (Default: -9999)</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>NPP values on an EASE-Grid 2.0 array</dd>
+<dt><code>tuple</code></dt>
+<dd>Tuple of: subset array, xoff, yoff, i.e., (numpy.ndarray, Int, Int)</dd>
 </dl></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def npp(
-        hdf, use_subgrid = False, subset_id = None, subset_bbox = None,
-        nodata = -9999):
-    &#39;&#39;&#39;
-    Calculates net primary productivity (NPP), based on the carbon use
-    efficiency (CUE) of each plant functional type (PFT). NPP is derived
-    as: `NPP = GPP * CUE`, where `CUE = NPP/GPP`.
-
-    Parameters
-    ----------
-    hdf : h5py.File
-        The HDF5 file / h5py.File object
-    use_subgrid : bool
-        True to use the 1-km subgrid; requires iterating through the PFT means
-    subset_id : str
-        (Optional) Can provide keyword designating the desired subset area
-    subset_bbox : list or tuple
-        (Optional) Can provide a bounding box to define a desired subset area
-    nodata : float
-        The NoData value to mask (Default: -9999)
-
-    Returns
-    -------
-    numpy.ndarray
-        NPP values on an EASE-Grid 2.0 array
-    &#39;&#39;&#39;
-    grid = &#39;M01&#39; if use_subgrid else &#39;M09&#39;
-    cue_array = cue(get_pft_array(grid, subset_id, subset_bbox))
-    if not use_subgrid:
-        if subset_id is not None or subset_bbox is not None:
-            gpp, _, _ = subset(
-                hdf, &#39;GPP/gpp_mean&#39;, subset_id = subset_id,
-                subset_bbox = subset_bbox)
-        else:
-            gpp = hdf[&#39;GPP/gpp_mean&#39;][:]
-    else:
-        raise NotImplementedError(&#39;No support for the 1-km subgrid&#39;)
-    gpp[gpp == nodata] = np.nan
-    return np.multiply(gpp, cue_array)</code></pre>
-</details>
 </dd>
 <dt id="pyl4c.science.ordinals365"><code class="name flex">
 <span>def <span class="ident">ordinals365</span></span>(<span>dates)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Returns a length-T sequence of ordinals on [1,365]. Can be used for
-indexing a 365-day climatology; see <code><a title="pyl4c.science.climatology365" href="#pyl4c.science.climatology365">climatology365()</a></code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>dates</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
-<dd>Sequence of datetime.datetime or datetime.date instances</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>list</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1840,31 +865,93 @@ indexing a 365-day climatology; see <code><a title="pyl4c.science.climatology365
         for t, year in [(int(t.strftime(&#39;%j&#39;)), t.year) for t in dates]
     ]</code></pre>
 </details>
+<div class="desc"><p>Returns a length-T sequence of ordinals on [1,365]. Can be used for
+indexing a 365-day climatology; see <code><a title="pyl4c.science.climatology365" href="#pyl4c.science.climatology365">climatology365()</a></code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>dates</code></strong> :&ensp;<code>list</code> or <code>tuple</code></dt>
+<dd>Sequence of datetime.datetime or datetime.date instances</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>list</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+</dd>
+<dt id="pyl4c.science.par"><code class="name flex">
+<span>def <span class="ident">par</span></span>(<span>sw_rad, period_hrs=1)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def par(sw_rad, period_hrs = 1):
+    &#39;&#39;&#39;
+    Calculates daily total photosynthetically active radiation (PAR) from
+    (hourly) incoming short-wave radiation (`sw_rad`). PAR is assumed to
+    be 45% of `sw_rad`.
+
+    I make a note here, because this is one place someone would come back to
+    when looking for this information: `sw_rad` is a power (energy per unit
+    time), so when working with sub-daily source data, we don&#39;t take, e.g., a
+    24-hour sum but a 24-hour mean. An alternative approach might be to
+    convert the hourly data to energy (Joules) first, but that is not what has
+    historically been done. This was confirmed by comparing an official
+    24-hour MERRA-2 granule with the (apparently averaged) MERRA-2 data used
+    previously in L4C V4, as listed here:
+
+        /anx_v2/laj/smap/code/geog2egv2/list/merra2_gran_swgdn.list
+
+    Parameters
+    ----------
+    sw_rad : int or float or numpy.ndarray
+        Incoming short-wave radiation (W m-2)
+    period_hrs : int
+        Period over which radiation is measured, in hours (Default: 1, i.e.,
+        once-hourly measurements)
+
+    Returns
+    -------
+    int or float or numpy.ndarray
+        Photosynthetically active radiation (MJ m-2)
+    &#39;&#39;&#39;
+    # Convert SW_rad from [W m-2] to [MJ m-2], then take 45%; because
+    #   1 W == 1 J s-1, we multiply 3600 secs hr-1 times
+    #   (1 MJ / 1e6 Joules) == 0.0036
+    return 0.45 * (0.0036 * (24 / period_hrs) * sw_rad)</code></pre>
+</details>
+<div class="desc"><p>Calculates daily total photosynthetically active radiation (PAR) from
+(hourly) incoming short-wave radiation (<code>sw_rad</code>). PAR is assumed to
+be 45% of <code>sw_rad</code>.</p>
+<p>I make a note here, because this is one place someone would come back to
+when looking for this information: <code>sw_rad</code> is a power (energy per unit
+time), so when working with sub-daily source data, we don't take, e.g., a
+24-hour sum but a 24-hour mean. An alternative approach might be to
+convert the hourly data to energy (Joules) first, but that is not what has
+historically been done. This was confirmed by comparing an official
+24-hour MERRA-2 granule with the (apparently averaged) MERRA-2 data used
+previously in L4C V4, as listed here:</p>
+<pre><code>/anx_v2/laj/smap/code/geog2egv2/list/merra2_gran_swgdn.list
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>sw_rad</code></strong> :&ensp;<code>int</code> or <code>float</code> or <code>numpy.ndarray</code></dt>
+<dd>Incoming short-wave radiation (W m-2)</dd>
+<dt><strong><code>period_hrs</code></strong> :&ensp;<code>int</code></dt>
+<dd>Period over which radiation is measured, in hours (Default: 1, i.e.,
+once-hourly measurements)</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code> or <code>float</code> or <code>numpy.ndarray</code></dt>
+<dd>Photosynthetically active radiation (MJ m-2)</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.rescale_smrz"><code class="name flex">
 <span>def <span class="ident">rescale_smrz</span></span>(<span>smrz0, smrz_min, smrz_max=100)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Rescales root-zone soil-moisture (SMRZ); original SMRZ is in percent
-saturation units. NOTE: Although Jones et al. (2017) write "SMRZ_wp is
-the plant wilting point moisture level determined by ancillary soil
-texture data provided by L4SM&hellip;" in actuality it is just <code>smrz_min</code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>smrz0</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(T x N) array of original SMRZ data, in percent (%) saturation units
-for N sites and T time steps</dd>
-<dt><strong><code>smrz_min</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
-<dd>Site-level long-term minimum SMRZ (percent saturation)</dd>
-<dt><strong><code>smrz_max</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
-<dd>Site-level long-term maximum SMRZ (percent saturation); can optionally
-provide a fixed upper-limit on SMRZ; useful for calculating SMRZ100.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1908,56 +995,31 @@ provide a fixed upper-limit on SMRZ; useful for calculating SMRZ100.</dd>
     return np.add(
         np.multiply(95, np.divide(np.log(smrz_norm), np.log(101))), 5)</code></pre>
 </details>
+<div class="desc"><p>Rescales root-zone soil-moisture (SMRZ); original SMRZ is in percent
+saturation units. NOTE: Although Jones et al. (2017) write "SMRZ_wp is
+the plant wilting point moisture level determined by ancillary soil
+texture data provided by L4SM&hellip;" in actuality it is just <code>smrz_min</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>smrz0</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(T x N) array of original SMRZ data, in percent (%) saturation units
+for N sites and T time steps</dd>
+<dt><strong><code>smrz_min</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
+<dd>Site-level long-term minimum SMRZ (percent saturation)</dd>
+<dt><strong><code>smrz_max</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
+<dd>Site-level long-term maximum SMRZ (percent saturation); can optionally
+provide a fixed upper-limit on SMRZ; useful for calculating SMRZ100.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.soc_analytical_spinup"><code class="name flex">
 <span>def <span class="ident">soc_analytical_spinup</span></span>(<span>litterfall, k_mult, fmet, fstr, decay_rates)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Using the solution to the differential equations governing change in the
-soil organic carbon (SOC) pools, calculates the steady-state size of each
-SOC pool.</p>
-<p>The analytical steady-state value for the metabolic ("fast") pool is:
-<span><span class="MathJax_Preview">
-C_{met} = \frac{f_{met} \sum NPP}{R_{opt} \sum K_{mult}}
-</span><script type="math/tex; mode=display">
-C_{met} = \frac{f_{met} \sum NPP}{R_{opt} \sum K_{mult}}
-</script></span></p>
-<p>The analytical steady-state value for the structural ("medium") pool is:
-<span><span class="MathJax_Preview">
-C_{str} = \frac{(1 - f_{met})\sum NPP}{R_{opt}\, k_{str} \sum K_{mult}}
-</span><script type="math/tex; mode=display">
-C_{str} = \frac{(1 - f_{met})\sum NPP}{R_{opt}\, k_{str} \sum K_{mult}}
-</script></span></p>
-<p>The analytical steady-state value for the recalcitrant ("slow") pool is:
-<span><span class="MathJax_Preview">
-C_{rec} = \frac{f_{str}\, k_{str}\, C_{str}}{k_{rec}}
-</span><script type="math/tex; mode=display">
-C_{rec} = \frac{f_{str}\, k_{str}\, C_{str}}{k_{rec}}
-</script></span></p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>litterfall</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Average daily litterfall, a (N x &hellip;) array</dd>
-<dt><strong><code>k_mult</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The K_mult climatology, i.e., a (365 x N x &hellip;) array of the long-term
-average K_mult value at each of N sites (optionally, with 81 1-km
-subgrid sites, e.g., 365 x N x 81)</dd>
-<dt><strong><code>fmet</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The f_metabolic model parameter, as an (N x &hellip;) array</dd>
-<dt><strong><code>fstr</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The f_structural model parameter, as an (N x &hellip;) array</dd>
-<dt><strong><code>decay_rates</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The optimal decay rates for each SOC pool, as a (3 x N x &hellip;) array</dd>
-<dt><strong><code>NOTE</code></strong> :&ensp;<code>If a 3</code> or <code>more axes are used, those axes must match for all arrays;</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<p>i.e., if (x &hellip;) is used, it must be the same for all.</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>A 3-element tuple, each element the steady-state values for that pool,
-i.e., <code>(metabolic, structural, recalcitrant)</code></dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2023,41 +1085,56 @@ i.e., <code>(metabolic, structural, recalcitrant)</code></dd>
     c2[~np.isfinite(c2)] = 0
     return (c0, c1, c2)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.science.soc_numerical_spinup"><code class="name flex">
-<span>def <span class="ident">soc_numerical_spinup</span></span>(<span>soc, litterfall, k_mult, fmet, fstr, decay_rates, threshold=0.1, verbose=False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Numerical spin-up of C pools.</p>
+<div class="desc"><p>Using the solution to the differential equations governing change in the
+soil organic carbon (SOC) pools, calculates the steady-state size of each
+SOC pool.</p>
+<p>The analytical steady-state value for the metabolic ("fast") pool is:
+<span><span class="MathJax_Preview">
+C_{met} = \frac{f_{met} \sum NPP}{R_{opt} \sum K_{mult}}
+</span><script type="math/tex; mode=display">
+C_{met} = \frac{f_{met} \sum NPP}{R_{opt} \sum K_{mult}}
+</script></span></p>
+<p>The analytical steady-state value for the structural ("medium") pool is:
+<span><span class="MathJax_Preview">
+C_{str} = \frac{(1 - f_{met})\sum NPP}{R_{opt}\, k_{str} \sum K_{mult}}
+</span><script type="math/tex; mode=display">
+C_{str} = \frac{(1 - f_{met})\sum NPP}{R_{opt}\, k_{str} \sum K_{mult}}
+</script></span></p>
+<p>The analytical steady-state value for the recalcitrant ("slow") pool is:
+<span><span class="MathJax_Preview">
+C_{rec} = \frac{f_{str}\, k_{str}\, C_{str}}{k_{rec}}
+</span><script type="math/tex; mode=display">
+C_{rec} = \frac{f_{str}\, k_{str}\, C_{str}}{k_{rec}}
+</script></span></p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt><strong><code>soc</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>SOC in each pool in g C m-3 units, a (3 x N x &hellip;) array</dd>
 <dt><strong><code>litterfall</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Daily litterfall in g C m-2 units, a (N x &hellip;) array</dd>
+<dd>Average daily litterfall, a (N x &hellip;) array</dd>
 <dt><strong><code>k_mult</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>The K_mult climatology, i.e., a (365 x N x &hellip;) array of the long-term
-average K_mult value at each of N sites (with &hellip; 1-km subgrid sites)</dd>
+average K_mult value at each of N sites (optionally, with 81 1-km
+subgrid sites, e.g., 365 x N x 81)</dd>
 <dt><strong><code>fmet</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>The f_metabolic model parameter, as an (N x &hellip;) array</dd>
 <dt><strong><code>fstr</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>The f_structural model parameter, as an (N x &hellip;) array</dd>
 <dt><strong><code>decay_rates</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>The optimal decay rates for each SOC pool, as a (3 x N x &hellip;) array</dd>
-<dt><strong><code>threshold</code></strong> :&ensp;<code>float</code></dt>
-<dd>Goal for the NEE tolerance check; i.e., change in NEE between
-climatological years should be less than or equal to the threshold
-for all pixels (Default: 0.1 g C m-2 yr-1)</dd>
-<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to print messages to the screen</dd>
+<dt><strong><code>NOTE</code></strong> :&ensp;<code>If a 3</code> or <code>more axes are used, those axes must match for all arrays;</code></dt>
+<dd>&nbsp;</dd>
 </dl>
+<p>i.e., if (x &hellip;) is used, it must be the same for all.</p>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>tuple</code></dt>
-<dd>2-element tuple of <code>((soc0, soc1, soc2), tol)</code> where the first
-element is a 3-tuple of the SOC in each pool; second element is the
-final tolerance</dd>
+<dd>A 3-element tuple, each element the steady-state values for that pool,
+i.e., <code>(metabolic, structural, recalcitrant)</code></dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.science.soc_numerical_spinup"><code class="name flex">
+<span>def <span class="ident">soc_numerical_spinup</span></span>(<span>soc, litterfall, k_mult, fmet, fstr, decay_rates, threshold=0.1, verbose=False)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2131,13 +1208,7 @@ final tolerance</dd>
         i += 1
     return ((soc[0], soc[1], soc[2]), tol)</code></pre>
 </details>
-</dd>
-<dt id="pyl4c.science.soc_numerical_spinup2"><code class="name flex">
-<span>def <span class="ident">soc_numerical_spinup2</span></span>(<span>soc, litterfall, k_mult, fmet, fstr, decay_rates, cue, threshold=0.1, verbose=False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Numerical spin-up of C pools; here, the "tolerance" of spin-up is equal
-the annual NEE sum.</p>
+<div class="desc"><p>Numerical spin-up of C pools.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>soc</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
@@ -2153,8 +1224,6 @@ average K_mult value at each of N sites (with &hellip; 1-km subgrid sites)</dd>
 <dd>The f_structural model parameter, as an (N x &hellip;) array</dd>
 <dt><strong><code>decay_rates</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>The optimal decay rates for each SOC pool, as a (3 x N x &hellip;) array</dd>
-<dt><strong><code>cue</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>The carbon use efficiency (CUE), a (N x &hellip;) array</dd>
 <dt><strong><code>threshold</code></strong> :&ensp;<code>float</code></dt>
 <dd>Goal for the NEE tolerance check; i.e., change in NEE between
 climatological years should be less than or equal to the threshold
@@ -2169,6 +1238,11 @@ for all pixels (Default: 0.1 g C m-2 yr-1)</dd>
 element is a 3-tuple of the SOC in each pool; second element is the
 final tolerance</dd>
 </dl></div>
+</dd>
+<dt id="pyl4c.science.soc_numerical_spinup2"><code class="name flex">
+<span>def <span class="ident">soc_numerical_spinup2</span></span>(<span>soc, litterfall, k_mult, fmet, fstr, decay_rates, cue, threshold=0.1, verbose=False)</span>
+</code></dt>
+<dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2251,45 +1325,44 @@ final tolerance</dd>
         i += 1
     return ((soc[0], soc[1], soc[2]), tol)</code></pre>
 </details>
+<div class="desc"><p>Numerical spin-up of C pools; here, the "tolerance" of spin-up is equal
+the annual NEE sum.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>soc</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>SOC in each pool in g C m-3 units, a (3 x N x &hellip;) array</dd>
+<dt><strong><code>litterfall</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Daily litterfall in g C m-2 units, a (N x &hellip;) array</dd>
+<dt><strong><code>k_mult</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The K_mult climatology, i.e., a (365 x N x &hellip;) array of the long-term
+average K_mult value at each of N sites (with &hellip; 1-km subgrid sites)</dd>
+<dt><strong><code>fmet</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The f_metabolic model parameter, as an (N x &hellip;) array</dd>
+<dt><strong><code>fstr</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The f_structural model parameter, as an (N x &hellip;) array</dd>
+<dt><strong><code>decay_rates</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The optimal decay rates for each SOC pool, as a (3 x N x &hellip;) array</dd>
+<dt><strong><code>cue</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>The carbon use efficiency (CUE), a (N x &hellip;) array</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>float</code></dt>
+<dd>Goal for the NEE tolerance check; i.e., change in NEE between
+climatological years should be less than or equal to the threshold
+for all pixels (Default: 0.1 g C m-2 yr-1)</dd>
+<dt><strong><code>verbose</code></strong> :&ensp;<code>bool</code></dt>
+<dd>True to print messages to the screen</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>2-element tuple of <code>((soc0, soc1, soc2), tol)</code> where the first
+element is a 3-tuple of the SOC in each pool; second element is the
+final tolerance</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.tridiag_solver"><code class="name flex">
 <span>def <span class="ident">tridiag_solver</span></span>(<span>tri, r, kl=1, ku=1, banded=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Solution to the tridiagonal equation by solving the system of equations
-in sparse form. Creates a banded matrix consisting of the diagonals,
-starting with the lowest diagonal and moving up, e.g., for matrix:</p>
-<pre><code>A = [[10.,  2.,  0.,  0.],
-     [ 3., 10.,  4.,  0.],
-     [ 0.,  1.,  7.,  5.],
-     [ 0.,  0.,  3.,  4.]]
-banded = [[ 3.,  1.,  3.,  0.],
-          [10., 10.,  7.,  4.],
-          [ 0.,  2.,  4.,  5.]]
-</code></pre>
-<p>The banded matrix is what should be provided to the optoinal "banded"
-argument, which should be used if the banded matrix can be created faster
-than <code>scipy.sparse.dia_matrix()</code>.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>tri</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>A tridiagonal matrix (N x N)</dd>
-<dt><strong><code>r</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>Vector of solutions to the system, Ax = r, where A is the tridiagonal
-matrix</dd>
-<dt><strong><code>kl</code></strong> :&ensp;<code>int</code></dt>
-<dd>Lower bandwidth (number of lower diagonals) (Default: 1)</dd>
-<dt><strong><code>ku</code></strong> :&ensp;<code>int</code></dt>
-<dd>Upper bandwidth (number of upper diagonals) (Default: 1)</dd>
-<dt><strong><code>banded</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
-<dd>(Optional) Provide the banded matrix with diagonals along the rows;
-this can be faster than scipy.sparse.dia_matrix()</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code></dt>
-<dd>&nbsp;</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2308,7 +1381,7 @@ this can be faster than scipy.sparse.dia_matrix()</dd>
                   [10., 10.,  7.,  4.],
                   [ 0.,  2.,  4.,  5.]]
 
-    The banded matrix is what should be provided to the optoinal &#34;banded&#34;
+    The banded matrix is what should be provided to the optional &#34;banded&#34;
     argument, which should be used if the banded matrix can be created faster
     than `scipy.sparse.dia_matrix()`.
 
@@ -2344,45 +1417,45 @@ this can be faster than scipy.sparse.dia_matrix()</dd>
     # ]
     return solve_banded((kl, ku), np.flipud(banded), r)</code></pre>
 </details>
+<div class="desc"><p>Solution to the tridiagonal equation by solving the system of equations
+in sparse form. Creates a banded matrix consisting of the diagonals,
+starting with the lowest diagonal and moving up, e.g., for matrix:</p>
+<pre><code>A = [[10.,  2.,  0.,  0.],
+     [ 3., 10.,  4.,  0.],
+     [ 0.,  1.,  7.,  5.],
+     [ 0.,  0.,  3.,  4.]]
+banded = [[ 3.,  1.,  3.,  0.],
+          [10., 10.,  7.,  4.],
+          [ 0.,  2.,  4.,  5.]]
+</code></pre>
+<p>The banded matrix is what should be provided to the optional "banded"
+argument, which should be used if the banded matrix can be created faster
+than <code>scipy.sparse.dia_matrix()</code>.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>tri</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>A tridiagonal matrix (N x N)</dd>
+<dt><strong><code>r</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>Vector of solutions to the system, Ax = r, where A is the tridiagonal
+matrix</dd>
+<dt><strong><code>kl</code></strong> :&ensp;<code>int</code></dt>
+<dd>Lower bandwidth (number of lower diagonals) (Default: 1)</dd>
+<dt><strong><code>ku</code></strong> :&ensp;<code>int</code></dt>
+<dd>Upper bandwidth (number of upper diagonals) (Default: 1)</dd>
+<dt><strong><code>banded</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
+<dd>(Optional) Provide the banded matrix with diagonals along the rows;
+this can be faster than scipy.sparse.dia_matrix()</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
 </dd>
 <dt id="pyl4c.science.vpd"><code class="name flex">
 <span>def <span class="ident">vpd</span></span>(<span>qv2m, ps, temp_k)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Calculates vapor pressure deficit (VPD); unfortunately, the provenance
-of this formula cannot be properly attributed. It is taken from the
-SMAP L4C Science code base, so it is exactly how L4C calculates VPD.</p>
-<p><span><span class="MathJax_Preview">
-\mathrm{VPD} = 610.7 \times \mathrm{exp}\left(
-\frac{17.38 \times T_C}{239 + T_C}
-\right) - \frac{(P \times [\mathrm{QV2M}]}{0.622 + (0.378 \times [\mathrm{QV2M}])}
-</span><script type="math/tex; mode=display">
-\mathrm{VPD} = 610.7 \times \mathrm{exp}\left(
-\frac{17.38 \times T_C}{239 + T_C}
-\right) - \frac{(P \times [\mathrm{QV2M}]}{0.622 + (0.378 \times [\mathrm{QV2M}])}
-</script></span></p>
-<p>Where P is the surface pressure (Pa), QV2M is the water vapor mixing
-ratio at 2-meter height, and T is the temperature in degrees C (though
-this function requires units of Kelvin when called).</p>
-<p>NOTE: A variation on this formula can be found in the text:</p>
-<p>Monteith, J. L. and M. H. Unsworth. 1990.
-Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.</p>
-<p>See also:
-<a href="https://glossary.ametsoc.org/wiki/Mixing_ratio">https://glossary.ametsoc.org/wiki/Mixing_ratio</a></p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>qv2m</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
-<dd>QV2M, the water vapor mixing ratio at 2-m height</dd>
-<dt><strong><code>ps</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
-<dd>The surface pressure, in Pascals</dd>
-<dt><strong><code>temp_k</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
-<dd>The temperature at 2-m height in degrees Kelvin</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>numpy.ndarray</code> or <code>float</code></dt>
-<dd>VPD in Pascals</dd>
-</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2431,6 +1504,40 @@ Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.</p>
         esat = 610.7 * np.exp(x)
         return np.subtract(esat, avp)</code></pre>
 </details>
+<div class="desc"><p>Calculates vapor pressure deficit (VPD); unfortunately, the provenance
+of this formula cannot be properly attributed. It is taken from the
+SMAP L4C Science code base, so it is exactly how L4C calculates VPD.</p>
+<p><span><span class="MathJax_Preview">
+\mathrm{VPD} = 610.7 \times \mathrm{exp}\left(
+\frac{17.38 \times T_C}{239 + T_C}
+\right) - \frac{(P \times [\mathrm{QV2M}]}{0.622 + (0.378 \times [\mathrm{QV2M}])}
+</span><script type="math/tex; mode=display">
+\mathrm{VPD} = 610.7 \times \mathrm{exp}\left(
+\frac{17.38 \times T_C}{239 + T_C}
+\right) - \frac{(P \times [\mathrm{QV2M}]}{0.622 + (0.378 \times [\mathrm{QV2M}])}
+</script></span></p>
+<p>Where P is the surface pressure (Pa), QV2M is the water vapor mixing
+ratio at 2-meter height, and T is the temperature in degrees C (though
+this function requires units of Kelvin when called).</p>
+<p>NOTE: A variation on this formula can be found in the text:</p>
+<p>Monteith, J. L. and M. H. Unsworth. 1990.
+Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.</p>
+<p>See also:
+<a href="https://glossary.ametsoc.org/wiki/Mixing_ratio">https://glossary.ametsoc.org/wiki/Mixing_ratio</a></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>qv2m</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
+<dd>QV2M, the water vapor mixing ratio at 2-m height</dd>
+<dt><strong><code>ps</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
+<dd>The surface pressure, in Pascals</dd>
+<dt><strong><code>temp_k</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>float</code></dt>
+<dd>The temperature at 2-m height in degrees Kelvin</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray</code> or <code>float</code></dt>
+<dd>VPD in Pascals</dd>
+</dl></div>
 </dd>
 </dl>
 </section>
@@ -2443,7 +1550,6 @@ Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.</p>
 <img src="https://arthur-e.github.io/pyl4c/templates/images/logo_SMAP.jpg" alt="">
 </a>
 </header>
-<h1>Index</h1>
 <div class="toc">
 <ul></ul>
 </div>
@@ -2464,8 +1570,8 @@ Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.</p>
 <li><code><a title="pyl4c.science.k_mult" href="#pyl4c.science.k_mult">k_mult</a></code></li>
 <li><code><a title="pyl4c.science.litterfall_casa" href="#pyl4c.science.litterfall_casa">litterfall_casa</a></code></li>
 <li><code><a title="pyl4c.science.mean_residence_time" href="#pyl4c.science.mean_residence_time">mean_residence_time</a></code></li>
-<li><code><a title="pyl4c.science.npp" href="#pyl4c.science.npp">npp</a></code></li>
 <li><code><a title="pyl4c.science.ordinals365" href="#pyl4c.science.ordinals365">ordinals365</a></code></li>
+<li><code><a title="pyl4c.science.par" href="#pyl4c.science.par">par</a></code></li>
 <li><code><a title="pyl4c.science.rescale_smrz" href="#pyl4c.science.rescale_smrz">rescale_smrz</a></code></li>
 <li><code><a title="pyl4c.science.soc_analytical_spinup" href="#pyl4c.science.soc_analytical_spinup">soc_analytical_spinup</a></code></li>
 <li><code><a title="pyl4c.science.soc_numerical_spinup" href="#pyl4c.science.soc_numerical_spinup">soc_numerical_spinup</a></code></li>
@@ -2478,7 +1584,7 @@ Principles of Environmental Physics, 2nd. Ed. Edward Arnold Publisher.</p>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
 </footer>
 </body>
 </html>
