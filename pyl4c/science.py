@@ -180,7 +180,7 @@ def climatology365(series, dates, ignore_leap = True):
     Parameters
     ----------
     series : numpy.ndarray
-        T x ... array of data
+        (... x T) array of data (time should be the trailing axis)
     dates : list or tuple
         Sequence of datetime.datetime or datetime.date instances
     ignore_leap : bool
@@ -190,11 +190,12 @@ def climatology365(series, dates, ignore_leap = True):
     Returns
     -------
     numpy.ndarray
+        A (365 x ...) array: the 365-day climatology
     '''
     @suppress_warnings
     def calc_climatology(x):
         return np.array([
-            np.nanmean(x[ordinal == day,...], axis = 0)
+            np.nanmean(x[...,ordinal == day], axis = -1)
             for day in range(1, 366)
         ])
     # Get first and last day of the year (DOY)
@@ -478,13 +479,13 @@ def mean_residence_time(
     if subset_id is not None:
         # Get X- and Y-offsets while we're at it
         soc, xoff, yoff = subset(
-            hdf, soc_path, None, None, subset_id = subset_id)
+            hdf, soc_field, None, None, subset_id = subset_id)
         rh, _, _ = subset(
-            hdf, rh_path, None, None, subset_id = subset_id)
+            hdf, rh_field, None, None, subset_id = subset_id)
     else:
         xoff = yoff = 0
-        soc = hdf[soc_path][:]
-        rh = hdf[rh_path][:]
+        soc = hdf[soc_field][:]
+        rh = hdf[rh_field][:]
 
     # Find those areas of NoData in either array
     mask = np.logical_or(soc == nodata, rh == nodata)
@@ -494,47 +495,6 @@ def mean_residence_time(
         mrt = np.divide(mrt, 365.0)
     np.place(mrt, mask, nodata) # Put NoData values back in
     return (mrt, xoff, yoff)
-
-
-def npp(
-        hdf, use_subgrid = False, subset_id = None, subset_bbox = None,
-        nodata = -9999):
-    '''
-    Calculates net primary productivity (NPP), based on the carbon use
-    efficiency (CUE) of each plant functional type (PFT). NPP is derived
-    as: `NPP = GPP * CUE`, where `CUE = NPP/GPP`.
-
-    Parameters
-    ----------
-    hdf : h5py.File
-        The HDF5 file / h5py.File object
-    use_subgrid : bool
-        True to use the 1-km subgrid; requires iterating through the PFT means
-    subset_id : str
-        (Optional) Can provide keyword designating the desired subset area
-    subset_bbox : list or tuple
-        (Optional) Can provide a bounding box to define a desired subset area
-    nodata : float
-        The NoData value to mask (Default: -9999)
-
-    Returns
-    -------
-    numpy.ndarray
-        NPP values on an EASE-Grid 2.0 array
-    '''
-    grid = 'M01' if use_subgrid else 'M09'
-    cue_array = cue(get_pft_array(grid, subset_id, subset_bbox))
-    if not use_subgrid:
-        if subset_id is not None or subset_bbox is not None:
-            gpp, _, _ = subset(
-                hdf, 'GPP/gpp_mean', subset_id = subset_id,
-                subset_bbox = subset_bbox)
-        else:
-            gpp = hdf['GPP/gpp_mean'][:]
-    else:
-        raise NotImplementedError('No support for the 1-km subgrid')
-    gpp[gpp == nodata] = np.nan
-    return np.multiply(gpp, cue_array)
 
 
 def ordinals365(dates):
@@ -555,6 +515,42 @@ def ordinals365(dates):
         t - 1 if (year % 4 == 0 and t >= 60) else t
         for t, year in [(int(t.strftime('%j')), t.year) for t in dates]
     ]
+
+
+def par(sw_rad, period_hrs = 1):
+    '''
+    Calculates daily total photosynthetically active radiation (PAR) from
+    (hourly) incoming short-wave radiation (`sw_rad`). PAR is assumed to
+    be 45% of `sw_rad`.
+
+    I make a note here, because this is one place someone would come back to
+    when looking for this information: `sw_rad` is a power (energy per unit
+    time), so when working with sub-daily source data, we don't take, e.g., a
+    24-hour sum but a 24-hour mean. An alternative approach might be to
+    convert the hourly data to energy (Joules) first, but that is not what has
+    historically been done. This was confirmed by comparing an official
+    24-hour MERRA-2 granule with the (apparently averaged) MERRA-2 data used
+    previously in L4C V4, as listed here:
+
+        /anx_v2/laj/smap/code/geog2egv2/list/merra2_gran_swgdn.list
+
+    Parameters
+    ----------
+    sw_rad : int or float or numpy.ndarray
+        Incoming short-wave radiation (W m-2)
+    period_hrs : int
+        Period over which radiation is measured, in hours (Default: 1, i.e.,
+        once-hourly measurements)
+
+    Returns
+    -------
+    int or float or numpy.ndarray
+        Photosynthetically active radiation (MJ m-2)
+    '''
+    # Convert SW_rad from [W m-2] to [MJ m-2], then take 45%; because
+    #   1 W == 1 J s-1, we multiply 3600 secs hr-1 times
+    #   (1 MJ / 1e6 Joules) == 0.0036
+    return 0.45 * (0.0036 * (24 / period_hrs) * sw_rad)
 
 
 def rescale_smrz(smrz0, smrz_min, smrz_max = 100):
@@ -822,7 +818,7 @@ def tridiag_solver(tri, r, kl = 1, ku = 1, banded = None):
                   [10., 10.,  7.,  4.],
                   [ 0.,  2.,  4.,  5.]]
 
-    The banded matrix is what should be provided to the optoinal "banded"
+    The banded matrix is what should be provided to the optional "banded"
     argument, which should be used if the banded matrix can be created faster
     than `scipy.sparse.dia_matrix()`.
 

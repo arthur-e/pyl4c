@@ -13,7 +13,6 @@ from pyl4c.science import arrhenius, bias_correction_parameters, rescale_smrz, v
 from pyl4c.spatial import ease2_coords_approx
 from pyl4c.utils import MockL4CGranule, composite, get_ease2_coords, get_ease2_slice_idx, get_ease2_slice_offsets, get_pft_array, get_slice_idx_by_bbox, index, partition, partition_generator, subset, summarize, summarize_by_class
 from pyl4c.data.fixtures import ANCILLARY_DATA_PATHS as PATHS, restore_bplut
-from l4c import L4CForwardProcessPointTestSuite
 from transpiration import TranspirationTestSuite
 
 ANCILLARY_DATA_FOUND = os.path.exists(

@@ -1,0 +1,38 @@
+---
+LUE: # Normal distribution, priors from Madani et al. (2017, JGR: Biogeosciences)
+  mu: [~, 0.98, 1.40, 1.23, 1.68, 0.80, 1.19, 1.94, 1.94]
+  sigma: [~, 0.32, 0.20, 0.20, 0.35, 0.38, 0.45, 0.55, 0.55]
+  lower: [~, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+CUE: # Carbon use efficiency (Beta-distributed)
+  alpha: [~, 7.34, 10.26, 7.21, 6.93, 7.21, 7.21, 7.21, 7.21]
+  beta:  [~, 9.55, 10.58, 8.86, 7.64, 8.86, 8.86, 8.86, 8.86]
+tsoil: # Arrhenius soil temperature function parameter (Uniform)
+  lower: [~, 1, 1, 1, 1, 1, 1, 1, 1]
+  upper: [~, 800, 800, 800, 800, 800, 800, 800, 800]
+smsf0: # The left edge of the SMSF ramp function (Uniform)
+  lower: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+  upper: [~, 100, 100, 100, 100, 100, 100, 100, 100]
+smsf1: # The right edge of the SMSF ramp function (Uniform)
+  lower: [~, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  upper: [~, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0]
+tmin0: # The left edge of the Tmin ramp function (Uniform)
+  lower: [~, 230.0, 230.0, 230.0, 230.0, 230.0, 230.0, 230.0, 230.0]
+  upper: [~, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0, 320.0]
+tmin1: # The WIDTH of the Tmin ramp function (Uniform)
+  lower: [~, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  upper: [~, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0]
+vpd0: # The left edge of the VPD ramp function (Uniform)
+  lower: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+  upper: [~, 8000, 8000, 8000, 8000, 8000, 8000, 8000, 8000]
+vpd1: # The WIDTH of the VPD ramp function (Uniform)
+  lower: [~, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  upper: [~, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000]
+smrz0: # The left edge of the SMRZ ramp function (Uniform)
+  lower: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+  upper: [~, 100, 100, 100, 100, 100, 100, 100, 100]
+smrz1: # The WIDTH of the SMRZ ramp function (Uniform)
+  lower: [~, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  upper: [~, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0, 90.0]
+ft0:
+  lower: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+  upper: [~, 1, 1, 1, 1, 1, 1, 1, 1]

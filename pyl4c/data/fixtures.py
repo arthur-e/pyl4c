@@ -11,26 +11,51 @@ because, in fact, they must be 1000 or 9000, depending on the grid size, in
 order to get the right number of rows and columns in the output image.
 Grid resolution is only a whole number for the polar (north or south
 hemisphere) grids.
+
+`ANCILLARY_DATA_PATHS` is loaded from a file,
+`pyl4c/data/files/ancillary_file_paths.yaml`, which describes the location on
+the local file system of certain ancillary files (and naming conventions
+within those files):
+
+    smap_l4c_ancillary_data_file_path: "SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5"
+    smap_l4c_1km_ancillary_data_lc_path: "MCD12Q1_M01_lc_dom_uint8"
+    smap_l4c_9km_ancillary_data_lc_path: "MOD12Q1_M09_lc_dom_uint8"
+    smap_l4c_1km_ancillary_data_x_coord_path: "SMAP_L4_C_LON_14616_x_34704_M01_flt32"
+    smap_l4c_1km_ancillary_data_y_coord_path: "SMAP_L4_C_LAT_14616_x_34704_M01_flt32"
+    smap_l4c_9km_ancillary_data_x_coord_path: "SMAP_L4_C_LON_1624_x_3856_M09_flt32"
+    smap_l4c_9km_ancillary_data_y_coord_path: "SMAP_L4_C_LAT_1624_x_3856_M09_flt32"
+    smap_l4c_9km_pft_subgrid_counts_CONUS: "SMAP_L4C_Vv4040_1km_subgrid_PFT_counts_CONUS.h5"
+    smap_l4c_9km_sparse_col_index: "MCD12Q1_M09land_col.uint16"
+    smap_l4c_9km_sparse_row_index: "MCD12Q1_M09land_row.uint16"
+    transcom_netcdf_path: "CarbonTracker_TransCom_and_other_regions.nc"
+
 '''
 
 import csv
+import os
+import yaml
 import numpy as np
+import pyl4c
 from collections import OrderedDict
 
-ANCILLARY_DATA_PATHS = {
-    'smap_l4c_ancillary_data_file_path': 'SPL4C_Vv4040_SMAP_L4_C.Ancillary.h5',
-    'smap_l4c_1km_ancillary_data_lc_path': 'MCD12Q1_M01_lc_dom_uint8',
-    'smap_l4c_9km_ancillary_data_lc_path': 'MOD12Q1_M09_lc_dom_uint8',
-    'smap_l4c_1km_ancillary_data_x_coord_path': 'SMAP_L4_C_LON_14616_x_34704_M01_flt32',
-    'smap_l4c_1km_ancillary_data_y_coord_path': 'SMAP_L4_C_LAT_14616_x_34704_M01_flt32',
-    'smap_l4c_9km_ancillary_data_x_coord_path': 'SMAP_L4_C_LON_1624_x_3856_M09_flt32',
-    'smap_l4c_9km_ancillary_data_y_coord_path': 'SMAP_L4_C_LAT_1624_x_3856_M09_flt32',
-    'smap_l4c_9km_pft_subgrid_counts_CONUS': 'SMAP_L4C_Vv4040_1km_subgrid_PFT_counts_CONUS.h5',
-    'smap_l4c_9km_sparse_col_index': 'MCD12Q1_M09land_col.uint16',
-    'smap_l4c_9km_sparse_row_index': 'MCD12Q1_M09land_row.uint16',
-    'transcom_netcdf_path': 'CarbonTracker_TransCom_and_other_regions.nc'
-}
+ANCILLARY_FILE = os.path.join(
+    os.path.dirname(pyl4c.__file__), 'data/files/ancillary_file_paths.yaml')
+if os.path.exists(ANCILLARY_FILE):
+    with open(ANCILLARY_FILE, 'r') as file:
+        ANCILLARY_DATA_PATHS = yaml.safe_load(file)
 
+# CSV header for L4C Ops BPLUT files
+BPLUT_HEADER = ('LC_index', 'LC_Label', 'model_code', 'NDVItoFPAR_scale',
+    'NDVItoFPAR_offset', 'LUEmax', 'Tmin_min_K', 'Tmin_max_K',
+    'VPD_min_Pa', 'VPD_max_Pa', 'SMrz_min', 'SMrz_max', 'FT_min',
+    'FT_max', 'SMtop_min', 'SMtop_max', 'Tsoil_beta0', 'Tsoil_beta1',
+    'Tsoil_beta2', 'fraut', 'fmet', 'fstr', 'kopt', 'kstr', 'kslw',
+    'Nee_QA_Rank_min', 'Nee_QA_Rank_max', 'Nee_QA_Error_min',
+    'Nee_QA_Error_max', 'Fpar_QA_Rank_min', 'Fpar_QA_Rank_max',
+    'Fpar_QA_Error_min', 'Fpar_QA_Error_max', 'FtMethod_QA_mult',
+    'FtAge_QA_Rank_min', 'FtAge_QA_Rank_max', 'FtAge_QA_Error_min',
+    'FtAge_QA_Error_max', 'Par_QA_Error', 'Tmin_QA_Error',
+    'Vpd_QA_Error', 'Smrz_QA_Error', 'Tsoil_QA_Error', 'Smtop_QA_Error')
 
 # Version 4020 BPLUT parameters in order of PFT numeric code (PFT 0 through 9)
 BPLUT = OrderedDict({
@@ -93,6 +118,13 @@ EASE2_GRID_PARAMS = {
         'shape': (14616, 34704),
         'size': 14616*34704
     },
+    'M03': {
+        'epsg': 6933,
+        'geotransform': (-17367530.45, 3000, 0, 7314540.83, 0, -3000),
+        'resolution': 3002.69, # From NSIDC
+        'shape': (4872, 11568),
+        'size': 11568*4872
+    },
     'M09': {
         'epsg': 6933,
         'geotransform': (-17367530.45, 9000, 0, 7314540.83, 0, -9000),
@@ -109,14 +141,14 @@ EASE2_GRID_PARAMS = {
     },
     'M25': {
         'epsg': 6933,
-        'geotransform': (-17367530.45, 25000, 0, 7307375.92, 0, -25000),
+        'geotransform': (-17334193.54, 25000, 0, 7344784.83, 0, -25000),
         'resolution': 25000,
-        'shape': (584, 1388),
-        'size': 584*1388
+        'shape': (586, 1383),
+        'size': 586*1383
     },
     'M36': {
         'epsg': 6933,
-        'geotransform': (-17367530.45, 36000, 0, 7314540.83, 0, -36000),
+        'geotransform': (-17367530.44, 36000, 0, 7314540.83, 0, -36000),
         'resolution': 36032.22,
         'shape': (406, 964),
         'size': 406*964
@@ -202,7 +234,7 @@ def parameter_mapped(name, pft_array, bplut = BPLUT):
     '''
     param = bplut[name]
     # Basically, index the <name> array, in PFT order, by PFT numeric codes
-    return np.asarray(param)[np.ravel(pft_array)].reshape(pft_array.shape)
+    return np.asarray(param)[:,np.ravel(pft_array)].reshape(pft_array.shape)
 
 
 def restore_bplut(csv_file_path, version_id = None):
@@ -221,21 +253,11 @@ def restore_bplut(csv_file_path, version_id = None):
     -------
     OrderedDict
     '''
-    header = ('LC_index', 'LC_Label', 'model_code', 'NDVItoFPAR_scale',
-        'NDVItoFPAR_offset', 'LUEmax', 'Tmin_min_K', 'Tmin_max_K',
-        'VPD_min_Pa', 'VPD_max_Pa', 'SMrz_min', 'SMrz_max', 'FT_min',
-        'FT_max', 'SMtop_min', 'SMtop_max', 'Tsoil_beta0', 'Tsoil_beta1',
-        'Tsoil_beta2', 'fraut', 'fmet', 'fstr', 'kopt', 'kstr', 'kslw',
-        'Nee_QA_Rank_min', 'Nee_QA_Rank_max', 'Nee_QA_Error_min',
-        'Nee_QA_Error_max', 'Fpar_QA_Rank_min', 'Fpar_QA_Rank_max',
-        'Fpar_QA_Error_min', 'Fpar_QA_Error_max', 'FtMethod_QA_mult',
-        'FtAge_QA_Rank_min', 'FtAge_QA_Rank_max', 'FtAge_QA_Error_min',
-        'FtAge_QA_Error_max', 'Par_QA_Error', 'Tmin_QA_Error',
-        'Vpd_QA_Error', 'Smrz_QA_Error', 'Tsoil_QA_Error', 'Smtop_QA_Error')
     contents = []
     with open(csv_file_path, 'r') as stream:
         reader = csv.DictReader(
-            filter(lambda row: row[0] != '#', stream), fieldnames = header)
+            filter(lambda row: row[0] != '#', stream),
+            fieldnames = BPLUT_HEADER)
         for row in reader:
             contents.append(row)
 
@@ -306,3 +328,32 @@ def restore_bplut(csv_file_path, version_id = None):
     result['decay_rates'][2,:] = np.multiply(
         result['decay_rates'][0,:], result['decay_rates'][2,:])
     return result
+
+
+def restore_bplut_flat(csv_file_path, version_id = None):
+    '''
+    Translates a BPLUT CSV file to a Python internal representation
+    (OrderedDict instance). Compare to `restore_bplut()`, this version
+    sets parameter values as flat lists instead of n-dimensional NumPy
+    arrays.
+
+    Parameters
+    ----------
+    csv_file_path : str
+        File path to the CSV representation of the BPLUT
+    version_id : str
+        (Optional) Version identifier for the BPLUT
+
+    Returns
+    -------
+    OrderedDict
+    '''
+    params = restore_bplut(csv_file_path, version_id)
+    result = dict()
+    for key, value in params.items():
+        if key not in ('tmin', 'vpd', 'smsf', 'smrz', 'ft'):
+            result[key] = value
+            continue
+        for i, array in enumerate(value.tolist()):
+            result[f'{key}{i}'] = np.array(array).reshape((1,len(array)))
+    return OrderedDict(result)

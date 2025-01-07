@@ -1,0 +1,69 @@
+---
+description: "For calibrating L4C Version 8 via stochastic gradient descent"
+# This is a copy of the OLD BPLUT, updated with new CUE and GPP parameters
+BPLUT: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v7_Y2022/SMAP_BPLUT_V7_rev_20220728.csv"
+data:
+  file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_tower_site_drivers_SMAP-NRv11-4.h5"
+  # The supplemental file is used when the observed fluxes are not contained in the main "file" above
+  supplemental_file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_new_AmeriFlux-FLUXNET-ICOS_towers_v6.h5"
+  # EXPERIMENTAL: This is a file with SOC data from ISCN
+  soil_organic_carbon:
+    file: "/anx_lagr3/arthur.endsley/SMAP_L4C/calibration/v8_Y2023/L4_C_v8_SOC_from_ISCN_v2.h5"
+    fields:
+      time: "ISCN/time"
+      observed: "ISCN/all_SOC"
+      PFT: "PFT_selection_mask"
+  # These are our Core Validation Sites
+  sites_blacklisted: [ # Note: US-BZ* sites previously had last letter in lower-case
+    FI-Sod, CA-Oas, US-ICt, US-ICh, US-ICs, US-PFa, US-BZS, US-BZB, US-BZF,
+    US-Atq, US-Ivo, US-SRM, US-Wkg, US-Whs, US-Ton, US-Var, AU-Whr, AU-Rig,
+    AU-Ync, AU-Stp, AU-Dry, AU-DaS, AU-How, AU-GWW, AU-ASM, AU-TTE
+  ]
+  fields:
+    fPAR: "MODIS/MOD15A2H_fPAR_interpolated"
+    Tmin: "MERRA2/Tmin" # Daily minimum air temperature, 2-m height [deg K]
+    SWGDN: "MERRA2/SWGDN" # Downwelling short-wave radiation [W m-2]
+    QV2M: "MERRA2/QV2M" # Specific humidity at 2-m height
+    T2M: "MERRA2/T2M" # Air temperature at 2-m height [deg K]
+    PS: "MERRA2/PS" # Surface air pressure [Pa]
+    SMRZ0: "drivers/smrz0" # UNSCALED Root-zone soil moisture wetness [%]
+    SMSF: "drivers/smsf" # Surface soil moisture wetness [%]
+    Tsoil: "drivers/tsoil" # Soil temperature [deg K]
+    Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
+optimization:
+  backend: "/ntsg_home/SMAP_L4C/20240927_L4C_calibration.h5"
+  # Number of times to run the optimization, with random initializations
+  trials: 10
+  # Parameter values that are fixed in advance (i.e., not calibrated)
+  fixed:
+    LUE: [~, ~, 1.40, ~, 1.68, ~, ~, ~, 1.94]
+    CUE: [~, 0.424, 0.498, 0.448, 0.484, 0.447, 0.445, 0.467, 0.461]
+    smsf0: [~, 0, 0, 0, 0, 0, 0, 0, 0]
+  # Size of steps to be used in global parameter search
+  step_size:
+    LUE: 0.01
+    tmin0: 0.2
+    tmin1: 0.2
+    vpd0: 1
+    vpd1: 1
+    smrz0: 0.1
+    smrz1: 0.1
+    ft0: 0.01
+    CUE: 0.01
+    tsoil: 1
+    smsf0: 0.1
+    smsf1: 0.1
+  # Bounds on the optimization of free parameters
+  bounds:
+    LUE: [0.5, 4.0]
+    tmin0: [230.0, 279.9]
+    tmin1: [280.1, 330.0]
+    vpd0: [0, 1999]
+    vpd1: [2000, 8000]
+    smrz0: [0, 19]
+    smrz1: [20, 100]
+    ft0: [0, 1]
+    CUE: [0.22, 0.79]
+    tsoil: [100, 500]
+    smsf0: [0, 24.9]
+    smsf1: [25, 100]

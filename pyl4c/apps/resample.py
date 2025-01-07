@@ -4,7 +4,9 @@ Tools for down-scaling L4C 9-km data to 1-km scale, using the PFT means.
     nested = NestedGrid(subset_id = "CONUS")
     arr = nested.pft_mask(8) # 1-km map of PFT 8
     with h5py.File("something.h5", "r") as hdf:
-        nested.downscale_hdf5_by_pft(hdf, "GPP/gpp_pft%d_mean")
+        nested.downscale_hdf_by_pft(hdf, "GPP/gpp_pft%d_mean")
+
+The following attribute will provide the offsets
 
 The above example assumes that you have official SPL4CMDL HDF5 granules from
 NSIDC or EarthData Search. It's also possible to downscale netCDF4 granules
@@ -47,8 +49,8 @@ from affine import Affine
 from osgeo import gdal
 from scipy.ndimage import zoom
 from cached_property import cached_property
-from pyl4c.data.fixtures import EASE2_GRID_PARAMS
-from pyl4c.ease2 import ease2_coords
+from pyl4c.data.fixtures import EASE2_GRID_PARAMS, SUBSETS_BBOX
+from pyl4c.ease2 import translate_row_col_to_ease2, ease2_from_wgs84
 from pyl4c.utils import get_pft_array
 from pyl4c.spatial import ease2_to_geotiff
 from pyl4c.lib.cli import CommandLineInterface, ProgressBar
@@ -68,26 +70,45 @@ class NestedGrid(object):
         (Optional) The intended shape (at 9-km resolution) of the L4C data
         that will be downscaled. If not provided, should the shape of the
         data not match the PFT map, an error will be raised.
+    subset_id : str
+        (Optional) A string name that codes for a bounding box, e.g., "CONUS";
+        if `subset_id` and `subset_bbox` are both provided, `subset_bbox` will
+        be ignored.
     subset_bbox : Sequence
         (Optional) An optional bounding box, `(xmin, ymin, xmax, ymax)`,
         specifying a spatial subset that will be downscaled
     '''
-    def __init__(self, pft = range(1, 9), shape = None, subset_bbox = None):
-        self._offsets = (0, 0)
+    offsets = (0, 0)
+
+    def __init__(
+            self, pft = range(1, 9), shape = None, subset_id = None, 
+            subset_bbox = None):
         self._pft_codes = pft
         self._shp_1km = EASE2_GRID_PARAMS['M01']['shape']
         self._shp_9km = EASE2_GRID_PARAMS['M09']['shape']
         self._slice_idx_1km = None
         self._slice_idx_9km = None
         self._subset_bbox = subset_bbox
-        self._ul_coords = (subset_bbox[0], subset_bbox[-1]) # Upper-left coordinates
-        self._lr_coords = (subset_bbox[-2], subset_bbox[1]) # Lower-right coordinates
+        # If a well-known geographic subset is requested
+        if subset_id is not None:
+            assert subset_id in SUBSETS_BBOX.keys(), 'Unknown subset_id'
+            # Look-up the bounding box of the well-known subset, translate
+            #    from WGS84 to EASE-2.0 coordinates
+            bbox = SUBSETS_BBOX[subset_id]
+            bb_ul = translate_row_col_to_ease2(ease2_from_wgs84(bbox[0:2]))
+            bb_lr = translate_row_col_to_ease2(ease2_from_wgs84(bbox[2:]))
+            self._subset_bbox = list(bb_ul)
+            self._subset_bbox.extend(bb_lr)
+        # If any subset is requested...
+        if self._subset_bbox is not None:
+            self._ul_coords = (self._subset_bbox[0], self._subset_bbox[-1]) # Upper-left coordinates
+            self._lr_coords = (self._subset_bbox[-2], self._subset_bbox[1]) # Lower-right coordinates
         # This is the "global" affine transformation
         self._transform_1km = Affine.from_gdal(*EASE2_GRID_PARAMS['M01']['geotransform'])
         self._transform_9km = Affine.from_gdal(*EASE2_GRID_PARAMS['M09']['geotransform'])
         # This is the "output" (1-km) affine transformation
         self._transform = self._transform_1km * self._transform_1km.scale(1)
-        if subset_bbox is not None:
+        if self._subset_bbox is not None:
             # Need to calculate "local" transformation
             gt = list(self._transform_9km.to_gdal())
             gt[0] = self._ul_coords[0]
@@ -122,16 +143,20 @@ class NestedGrid(object):
             # Update the output 1-km transformation
             self._transform = transform_1km
 
+    @property
+    def offsets(self):
+        'The offset (in pixels) along each axis for an output, cropped image'
+        return list(map(int, ~self._transform_1km * self._ul_coords))
+
     @cached_property
     def pft(self):
         'The 1-km PFT map'
-        return get_pft_array(
-            'M01', slice_idx = self._slice_idx_1km).astype(np.uint8)[np.newaxis,...]
-
-    @property
-    def shape(self):
-        'Returns the 1-km array shape'
-        return self._shp_1km
+        # shp = self._shp_1km
+        _pft = get_pft_array(
+            'M01', slice_idx = self._slice_idx_1km).astype(np.uint8)
+        # if _pft.size < shp[0]*shp[1]:
+        #     _pft = np.add(np.zeros(shp)[:_pft.shape[0],:_pft.shape[1]], _pft)
+        return _pft[np.newaxis,...]
 
     def _downscale(self, downscaled, scale = 1, dtype = np.float32, nodata = -9999):
         # Where the PFT map is in the valid range, return data, else NoData
@@ -140,7 +165,7 @@ class NestedGrid(object):
                 np.in1d(self.pft.ravel(), self._pft_codes),
                 downscaled.ravel() != nodata),
             np.multiply(downscaled.ravel(), scale), nodata)\
-            .reshape(self._shp_1km)\
+            .reshape(self.pft.shape)\
             .astype(dtype)
 
     def pft_mask(self, p):
@@ -158,11 +183,11 @@ class NestedGrid(object):
         '''
         return np.where(self.pft == p, 1, 0)
 
-    def downscale_hdf5_by_pft(*args, **kwargs):
+    def downscale_hdf5_by_pft(self, *args, **kwargs):
         '''
         DEPRECATED. Use `NestedGrid.downscale_hdf_by_pft()` instead.
         '''
-        self.downscale_hdf_by_pft(*args, **kwargs)
+        self.downscale_hdf_by_pft(self, *args, **kwargs)
 
     def downscale_hdf_by_pft(
             self, hdf, field, scale = 1, dtype = np.float32, nodata = -9999):
@@ -203,7 +228,7 @@ class NestedGrid(object):
             ymin, ymax = y_idx
             xmin, xmax = x_idx
 
-        downscaled = np.zeros(self._shp_1km, dtype = dtype)
+        downscaled = np.zeros(self.pft.shape, dtype = dtype)
         for p in self._pft_codes:
             # Allow for the possibility of either netCDF4 or h5py datasets
             if hasattr(hdf, 'variables'):
@@ -216,8 +241,11 @@ class NestedGrid(object):
             else:
                 arr = source[ymin:ymax, xmin:xmax]
             # Resize, multiply by PFT mask, then add to output where != NoData
+            mask = self.pft_mask(p)
+            if mask.shape[0] == 1:
+                mask = mask[0]
             downscaled = np.add(
-                downscaled, np.multiply(self.pft_mask(p), zoom(arr, **opts)))
+                downscaled, np.multiply(mask, zoom(arr, **opts)))
         return self._downscale(downscaled, scale, dtype, nodata)
 
     def downscale_netcdf_by_pft(

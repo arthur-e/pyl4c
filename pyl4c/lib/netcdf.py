@@ -37,7 +37,9 @@ def nc_dim(variable):
         return len(variable.dimensions)
 
 
-def netcdf_array(nc, keys, cell_size = None, time_idx = 0, x_offset = -180):
+def netcdf_array(
+        nc, keys, cell_size = None, time_idx = 0, x_offset = -180,
+        scale_and_offset = True):
     '''
     Extracts an equirectangular NetCDF data array as a NumPy array, with
     spatial reference system (SRS) information. NOTE: Both `cell_size` elements
@@ -62,6 +64,10 @@ def netcdf_array(nc, keys, cell_size = None, time_idx = 0, x_offset = -180):
         NetCDF arrays, it may be necessary to "offset" the X coordinates; this
         is only used if it is detected that the maximum X coordinate value is
         >/= 180 degrees E (Default: -180);
+    scale_and_offset : bool
+        (Optional) True to apply the scale and offset to the data, if the
+        attributes "scale_factor" and "add_offset" are found (Default); False
+        to do nothing
 
     Returns
     -------
@@ -134,11 +140,11 @@ def netcdf_array(nc, keys, cell_size = None, time_idx = 0, x_offset = -180):
         arr = np.concatenate((arr[...,start_idx:], arr[...,:start_idx]), axis = 2)
 
     scale = 1
-    if hasattr(nc.variables[keys[0]], 'scale_factor'):
+    if scale_and_offset and hasattr(nc.variables[keys[0]], 'scale_factor'):
         scale = nc.variables[keys[0]].scale_factor
 
     offset = 0
-    if hasattr(nc.variables[keys[0]], 'add_offset'):
+    if scale_and_offset and hasattr(nc.variables[keys[0]], 'add_offset'):
         offset = nc.variables[keys[0]].add_offset
 
     return ((arr * scale) + offset, gt0, wkt0.ExportToWkt())
