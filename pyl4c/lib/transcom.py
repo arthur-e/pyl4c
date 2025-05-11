@@ -6,8 +6,9 @@ Tracker [1] uses it and provides the data used here. Intended use (Example):
 
     >>> f = h5py.File(file_path)
     >>> soc = f['SOC/soc_mean']
+    >>> np.where(soc == -9999, 0, soc)
     >>> tc = TransCom()
-    >>> tc.summarize_by_transcom(np.where(soc == -9999, 0, soc), 'M09')
+    >>> tc.summarize_ease2_by_transcom(arr, grid = 'M09')
     {'Australia': [736.73413, 914.3717],
      'Eurasia Boreal': [3593.8977, 1461.0577],
       ...

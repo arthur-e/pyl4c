@@ -342,9 +342,9 @@ class CalibrationAPI(object):
         tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
-        drivers_flat = list()
         # For eveything other than fPAR, add a trailing axis to the flat view;
         #   this will enable datasets to line up with fPAR's 1-km subgrid
+        drivers_flat = list()
         for field in drivers.keys():
             flat = drivers[field][~np.isnan(tower_gpp)]
             drivers_flat.append(flat[:,np.newaxis] if field != 'fPAR' else flat)
@@ -453,6 +453,8 @@ class CalibrationAPI(object):
         rh = tower_reco - ra
         rh = np.where(rh < 0, 0, rh) # Mask out negative RH values
         kmult0 = CalibrationAPI.k_mult(params, tsoil, smsf)
+        # Make an initial guess at steady-state SOC, essentially, based on
+        #   inverting the observed RH flux
         cbar0 = cbar(rh, kmult0, q_rh, q_k)
         return ra + (kmult0 * cbar0)
 
@@ -734,7 +736,8 @@ class CalibrationAPI(object):
             True to run the optimization (Default) or False if you just want
             the goodness-of-fit to be reported
         use_nlopt : bool
-            True to use `nlopt` for optimization (Default)
+            True to use the `nlopt` library for optimization (Default: True);
+            otherwise, uses `scipy`
         '''
         def residuals(params, drivers, observed, weights):
             gpp0 = self.gpp(params, *drivers).mean(axis = -1)
@@ -846,7 +849,8 @@ class CalibrationAPI(object):
             False to only report parameters and their fit statistics instead
             of optimizing (Default: True)
         use_nlopt : bool
-            True to use the nlopt library for optimization (Default: True)
+            True to use the `nlopt` library for optimization (Default: True);
+            otherwise, uses `scipy`
         '''
         def residuals(
                 params, drivers, observed_reco, observed_gpp, weights,
