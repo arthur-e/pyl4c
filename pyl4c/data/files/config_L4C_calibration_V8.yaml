@@ -32,7 +32,7 @@ data:
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
 optimization:
-  backend: "/ntsg_home/SMAP_L4C/20240927_L4C_calibration.h5"
+  backend: "/home/arthur.endsley/SMAP_L4C/20240927_L4C_calibration.h5"
   # Number of times to run the optimization, with random initializations
   trials: 10
   # Parameter values that are fixed in advance (i.e., not calibrated)

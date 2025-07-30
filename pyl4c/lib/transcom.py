@@ -438,6 +438,9 @@ class TransComCLI(CommandLineInterface):
                         except KeyError:
                             print(f'Skipping "{os.path.basename(filename)}" -- "{self._field}" not found')
                             continue
+                        except:
+                            import ipdb
+                            ipdb.set_trace()#FIXME
 
                 elif mode == 'sparse':
                     tcf = TCFArray(filename, self._grid)
