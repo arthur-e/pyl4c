@@ -79,9 +79,7 @@ class TransCom(object):
 
     def __filter__(self, arr):
         'Filters the TransCom regions array to terrestrial codes only'
-        return np.where(
-            ~np.isin(self.data, self.offshore_region_codes),
-            self.data, 0)
+        return np.where(~np.isin(arr, self.offshore_region_codes), arr, 0)
 
     def __resample__(self, arr, shp):
         'Nearest neighbor interpolation to a new pixel size'
@@ -134,7 +132,7 @@ class TransCom(object):
         else:
             raise ValueError('Requested grid size not available')
 
-    def as_raster(self, terrestrial = True):
+    def as_raster(self, terrestrial = True, size_degrees = 1):
         '''
         Returns the TransCom data as a `gdal.Dataset`.
 
@@ -151,7 +149,11 @@ class TransCom(object):
         # TransCom (source) spatial reference system
         wkt0 = osr.SpatialReference()
         wkt0.ImportFromEPSG(4326)
-        gt0 = (-180, 1, 0, 90, 0, -1)
+        gt0 = (-180, size_degrees, 0, 90, 0, -size_degrees)
+        if size_degrees != 1:
+            return array_to_raster(
+                self.__filter__(self.rescaled(size_degrees)) if terrestrial else self.rescaled(size_degrees),
+                gt0, str(wkt0))
         return array_to_raster(
             self.__filter__(self.data) if terrestrial else self.data,
             gt0, str(wkt0))
@@ -314,16 +316,19 @@ class TransCom(object):
         wkt.ImportFromWkt(EPSG[EASE2_GRID_PARAMS[grid]['epsg']])
 
         # Create a gdal.Dataset from TransCom data
-        rast0 = self.as_raster(terrestrial)
-        gt0 = rast0.GetGeoTransform()
-        wkt0 = str(rast0.GetProjection())
-        py, px = self.data.shape
-        px += 12 # HACK: Output is clipped for some reason (=/)
+        wkt0 = osr.SpatialReference()
+        wkt0.ImportFromEPSG(4326)
+        size_degrees = 0.1 if grid == 'M09' else 0.01
+        gt0 = (-180, size_degrees, 0, 90, 0, -size_degrees)
+        if terrestrial:
+            data = self.__filter__(self.rescaled(size_degrees))
+        else:
+            data = self.rescaled(size_degrees)
+        rast0 = array_to_raster(data, gt0, str(wkt0))
+        py, px = EASE2_GRID_PARAMS[grid]['shape']
+        # px += 12 # HACK: Output is clipped for some reason (=/)
 
-        # The output (projected) raster's GeoTransform is difficult to
-        #   determine, but this should do it automatically
-        gt = gdal.AutoCreateWarpedVRT(
-            rast0, str(wkt0), str(wkt), gdal.GRA_NearestNeighbour).GetGeoTransform()
+        gt = EASE2_GRID_PARAMS[grid]['geotransform']
         # rast0 is input raster, rast is output raster
         rast = gdal.GetDriverByName('MEM').Create('', px, py, 1, gdalconst.GDT_Int16)
         rast.SetGeoTransform(gt)
@@ -428,7 +433,11 @@ class TransComCLI(CommandLineInterface):
             for i, filename in enumerate(file_paths):
                 if mode == 'hdf5':
                     with h5py.File(filename, 'r') as hdf:
-                        arr = hdf[self._field][:]
+                        try:
+                            arr = hdf[self._field][:]
+                        except KeyError:
+                            print(f'Skipping "{os.path.basename(filename)}" -- "{self._field}" not found')
+                            continue
 
                 elif mode == 'sparse':
                     tcf = TCFArray(filename, self._grid)
