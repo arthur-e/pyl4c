@@ -19,6 +19,7 @@ data:
     US-Atq, US-Ivo, US-SRM, US-Wkg, US-Whs, US-Ton, US-Var, AU-Whr, AU-Rig,
     AU-Ync, AU-Stp, AU-Dry, AU-DaS, AU-How, AU-GWW, AU-ASM, AU-TTE
   ]
+  # The names of the HDF5 datasets used in calibration
   fields:
     fPAR: "MODIS/MOD15A2H_fPAR_interpolated"
     Tmin: "MERRA2/Tmin" # Daily minimum air temperature, 2-m height [deg K]
