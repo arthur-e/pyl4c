@@ -280,9 +280,9 @@ python optimize.py bplut show &lt;param&gt; None
         tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
         if weights is not None:
             weights = weights[~np.isnan(tower_gpp)]
-        drivers_flat = list()
         # For eveything other than fPAR, add a trailing axis to the flat view;
         #   this will enable datasets to line up with fPAR&#39;s 1-km subgrid
+        drivers_flat = list()
         for field in drivers.keys():
             flat = drivers[field][~np.isnan(tower_gpp)]
             drivers_flat.append(flat[:,np.newaxis] if field != &#39;fPAR&#39; else flat)
@@ -391,6 +391,8 @@ python optimize.py bplut show &lt;param&gt; None
         rh = tower_reco - ra
         rh = np.where(rh &lt; 0, 0, rh) # Mask out negative RH values
         kmult0 = CalibrationAPI.k_mult(params, tsoil, smsf)
+        # Make an initial guess at steady-state SOC, essentially, based on
+        #   inverting the observed RH flux
         cbar0 = cbar(rh, kmult0, q_rh, q_k)
         return ra + (kmult0 * cbar0)
 
@@ -672,7 +674,8 @@ python optimize.py bplut show &lt;param&gt; None
             True to run the optimization (Default) or False if you just want
             the goodness-of-fit to be reported
         use_nlopt : bool
-            True to use `nlopt` for optimization (Default)
+            True to use the `nlopt` library for optimization (Default: True);
+            otherwise, uses `scipy`
         &#39;&#39;&#39;
         def residuals(params, drivers, observed, weights):
             gpp0 = self.gpp(params, *drivers).mean(axis = -1)
@@ -784,7 +787,8 @@ python optimize.py bplut show &lt;param&gt; None
             False to only report parameters and their fit statistics instead
             of optimizing (Default: True)
         use_nlopt : bool
-            True to use the nlopt library for optimization (Default: True)
+            True to use the `nlopt` library for optimization (Default: True);
+            otherwise, uses `scipy`
         &#39;&#39;&#39;
         def residuals(
                 params, drivers, observed_reco, observed_gpp, weights,
@@ -1082,6 +1086,8 @@ def reco(params, tower_reco, tower_gpp, tsoil, smsf, q_rh, q_k):
     rh = tower_reco - ra
     rh = np.where(rh &lt; 0, 0, rh) # Mask out negative RH values
     kmult0 = CalibrationAPI.k_mult(params, tsoil, smsf)
+    # Make an initial guess at steady-state SOC, essentially, based on
+    #   inverting the observed RH flux
     cbar0 = cbar(rh, kmult0, q_rh, q_k)
     return ra + (kmult0 * cbar0)</code></pre>
 </details>
@@ -1502,7 +1508,8 @@ optimization.</p>
         True to run the optimization (Default) or False if you just want
         the goodness-of-fit to be reported
     use_nlopt : bool
-        True to use `nlopt` for optimization (Default)
+        True to use the `nlopt` library for optimization (Default: True);
+        otherwise, uses `scipy`
     &#39;&#39;&#39;
     def residuals(params, drivers, observed, weights):
         gpp0 = self.gpp(params, *drivers).mean(axis = -1)
@@ -1609,7 +1616,8 @@ data</dd>
 <dd>True to run the optimization (Default) or False if you just want
 the goodness-of-fit to be reported</dd>
 <dt><strong><code>use_nlopt</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to use <code>nlopt</code> for optimization (Default)</dd>
+<dd>True to use the <code>nlopt</code> library for optimization (Default: True);
+otherwise, uses <code>scipy</code></dd>
 </dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_reco"><code class="name flex">
@@ -1639,7 +1647,8 @@ the goodness-of-fit to be reported</dd>
         False to only report parameters and their fit statistics instead
         of optimizing (Default: True)
     use_nlopt : bool
-        True to use the nlopt library for optimization (Default: True)
+        True to use the `nlopt` library for optimization (Default: True);
+        otherwise, uses `scipy`
     &#39;&#39;&#39;
     def residuals(
             params, drivers, observed_reco, observed_gpp, weights,
@@ -1754,7 +1763,8 @@ data</dd>
 <dd>False to only report parameters and their fit statistics instead
 of optimizing (Default: True)</dd>
 <dt><strong><code>use_nlopt</code></strong> :&ensp;<code>bool</code></dt>
-<dd>True to use the nlopt library for optimization (Default: True)</dd>
+<dd>True to use the <code>nlopt</code> library for optimization (Default: True);
+otherwise, uses <code>scipy</code></dd>
 </dl></div>
 </dd>
 <dt id="pyl4c.apps.calibration.optimize.CalibrationAPI.tune_soc"><code class="name flex">
