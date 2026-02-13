@@ -71,6 +71,11 @@ class TCF(object):
         litterfall (units: g C m-2 year-1) for each model resolution cell
         (pixel). If not provided, it will be based on the climatological NPP
         (when it is calculated).
+    multipliers : dict
+        One or more environmental constraint multipliers: `'tmult'`,
+        `'wmult'`, `'ft'`, `'f_tmin'`, `'f_vpd'`, `'f_smrz'`. Each of these
+        keys should be paired with a NumPy array. This can be used to set
+        constraint(s) to non-limiting.
     '''
     required_drivers = [
         'fPAR', 'PAR', 'Tmin', 'VPD', 'SMRZ', 'FT', 'Tsoil', 'SMSF'
@@ -96,13 +101,15 @@ class TCF(object):
 
     def __init__(
             self, params: dict, land_cover_map: Sequence,
-            state: Sequence = None, litterfall: Sequence = None
+            state: Sequence = None, litterfall: Sequence = None,
+            multipliers: dict = None
         ):
         self.constants = Namespace()
         self.history = Namespace()
         self.state = Namespace()
         self.params = Namespace() # Parameters accessed, e.g., tcf.params.LUE
         self.lc_map = np.array(land_cover_map, dtype = np.uint16)
+        self.multipliers = multipliers
 
         # Load available annual litterfall (per resolution cell/ pixel)
         if litterfall is not None:
@@ -230,9 +237,15 @@ class TCF(object):
         # Pre-compute environmental constraints for soil RH
         tsoil, smsf = drivers[-2:]
         f_smsf = linear_constraint(self.params.smsf0, self.params.smsf1)
+        tmult = arrhenius(tsoil, self.params.tsoil)
+        wmult = f_smsf(smsf)
+        if self.multipliers is not None:
+            mult = self.multipliers
+            tmult = mult['tmult'] if 'tmult' in mult.keys() else tmult
+            wmult = mult['wmult'] if 'wmult' in mult.keys() else wmult
         # Swap axes here only to make time the major (first) axis
-        tmult = arrhenius(tsoil, self.params.tsoil).swapaxes(0, 1)
-        wmult = f_smsf(smsf).swapaxes(0, 1)
+        tmult = tmult.swapaxes(0, 1)
+        wmult = wmult.swapaxes(0, 1)
         return (gpp, npp, tmult, wmult)
 
     def check_drivers(self, drivers: Sequence):
@@ -257,7 +270,7 @@ class TCF(object):
             if np.nanmax(_drivers['SMSF']) <= 1:
                 warnings.warn('WARNING: Surface soil moisture might not have correct units; maximum value is less than 1.0')
 
-    def diagnose_emult(self, drivers):
+    def diagnose_emult(self, drivers: Sequence, mult: dict = None):
         '''
         Returns the environmental constraint multiplier on GPP (Emult). This
         dimensionless quantity indicates the aggregate impact of
@@ -276,6 +289,11 @@ class TCF(object):
             Either a flat sequence of P driver variables, each an array with
             (N x T) or (... x N x T) shape for N sites and T time steps; or a
             single array, with shape (P x N) or (P x N x T)
+        mult : dict
+            One or more environmental constraint multipliers: `'tmult'`,
+            `'wmult'`, `'ft'`, `'f_tmin'`, `'f_vpd'`, `'f_smrz'`. Each of these
+            keys should be paired with a NumPy array. This can be used to set
+            constraint(s) to non-limiting.
 
         Returns
         -------
@@ -297,10 +315,16 @@ class TCF(object):
         f_vpd = linear_constraint(
             self.params.vpd0, self.params.vpd1, 'reversed')(vpd)
         f_smrz = linear_constraint(self.params.smrz0, self.params.smrz1)(smrz)
+        if self.multipliers is not None:
+            mult = self.multipliers
+            ft = mult['ft'] if 'ft' in mult.keys() else ft
+            f_tmin = mult['f_tmin'] if 'f_tmin' in mult.keys() else f_tmin
+            f_vpd = mult['f_vpd'] if 'f_vpd' in mult.keys() else f_vpd
+            f_smrz = mult['f_smrz'] if 'f_smrz' in mult.keys() else f_smrz
         # Compute the environmental constraint
         return (ft, f_tmin, f_vpd, f_smrz)
 
-    def diagnose_kmult(self, drivers):
+    def diagnose_kmult(self, drivers: Sequence):
         '''
         Returns the environmental constraint multiplier on RH (Kmult). This
         dimensionless quantity indicates the aggregate impact of
@@ -334,6 +358,10 @@ class TCF(object):
         # Swap axes here only to make time the major (first) axis
         tmult = arrhenius(tsoil, self.params.tsoil)
         wmult = f_smsf(smsf)
+        if self.multipliers is not None:
+            mult = self.multipliers
+            tmult = mult['tmult'] if 'tmult' in mult.keys() else tmult
+            wmult = mult['wmult'] if 'wmult' in mult.keys() else wmult
         return (tmult, wmult)
 
     def forward_run(
@@ -394,6 +422,7 @@ class TCF(object):
             soc = self.state.soc
         # NOTE: self.constants.litterfall is also initialized in this function
         gpp, npp, tmult, wmult = self._setup_forward(drivers, state, dates)
+
         # Pre-allocate output arrays
         rh = np.ones((3, *gpp.shape), dtype = np.float32) # (3 x N x T)
         nee = np.ones((*gpp.shape,), dtype = np.float32) # (N x T)
@@ -532,6 +561,10 @@ class TCF(object):
         f_smsf = linear_constraint(self.params.smsf0.T, self.params.smsf1.T)
         tmult = arrhenius(tsoil, self.params.tsoil.T)
         wmult = f_smsf(smsf)
+        if self.multipliers is not None:
+            mult = self.multipliers
+            tmult = mult['tmult'] if 'tmult' in mult.keys() else tmult
+            wmult = mult['wmult'] if 'wmult' in mult.keys() else wmult
         rh = wmult * tmult * self.params.decay_rates * soc
         # "the adjustment...to account for material transferred into the slow
         #   pool during humification" (Jones et al. 2017, TGARS, p.5); note
