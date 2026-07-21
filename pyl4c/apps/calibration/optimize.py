@@ -259,8 +259,20 @@ class CalibrationAPI(object):
         blacklist = self.config['data']['sites_blacklisted']
         if store is None:
             store = self.hdf5
+        start = None
+        if 'date_start' in self.config['data'].keys():
+            if 'date_end' in self.config['data'].keys():
+                start = self.config['data']['date_start']
+                end = self.config['data']['date_end']
         with h5py.File(store, 'r') as hdf:
             n_steps = hdf[f'{prefix}time'].shape[0]
+            t0, t1 = 0, n_steps
+            if start is not None:
+                date_list = [
+                    datetime.date(*ymd).strftime('%Y-%m-%d')
+                    for ymd in hdf['time'][:].tolist()
+                ]
+                t0, t1 = date_list.index(start), date_list.index(end)
             sites = hdf[f'{prefix}site_id'][:]
             if hasattr(sites[0], 'decode'):
                 sites = list(map(lambda x: x.decode('utf-8'), sites))
@@ -316,11 +328,12 @@ class CalibrationAPI(object):
             else:
                 print('WARNING - "weights" not found in HDF5 file!')
             if load_gpp and 'GPP' not in hdf.keys():
+                field = self.config['data']['target_fields']
                 with h5py.File(
                         self.config['data']['supplemental_file'], 'r') as _hdf:
-                    tower_gpp = _hdf['GPP'][:][:,pft_mask]
+                    tower_gpp = _hdf[field['GPP']][:][:,pft_mask]
             elif load_gpp:
-                tower_gpp = hdf['GPP'][:][:,pft_mask]
+                tower_gpp = hdf[field['GPP']][:][:,pft_mask]
 
         # Check that driver data do not contain NaNs
         if check_validity:
@@ -329,6 +342,10 @@ class CalibrationAPI(object):
                     continue # The 1-km subgrid may have NaNs
                 assert not np.isnan(drivers[field]).any(),\
                     f'Driver dataset "{field}" contains NaNs'
+
+        # Subset the driver data and tower data in time
+        drivers = dict([(k, d[t0:t1]) for k, d in drivers.items()])
+        tower_gpp = tower_gpp[t0:t1]
 
         # If we don't want to load observational data, return the drivers data
         if not load_gpp:
@@ -341,7 +358,7 @@ class CalibrationAPI(object):
         # Subset all datasets to just the valid observation site-days
         tower_gpp_flat = tower_gpp[~np.isnan(tower_gpp)]
         if weights is not None:
-            weights = weights[~np.isnan(tower_gpp)]
+            weights = weights[t0:t1][~np.isnan(tower_gpp)]
         # For eveything other than fPAR, add a trailing axis to the flat view;
         #   this will enable datasets to line up with fPAR's 1-km subgrid
         drivers_flat = list()

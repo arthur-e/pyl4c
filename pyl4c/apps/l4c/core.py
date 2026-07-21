@@ -1,4 +1,15 @@
 '''
+Required driver datasets for `TCF`:
+
+    fPAR  -- (N x T) Fraction of photosynthetically active radiation, i.e.,
+                        as a proportion of the ground pixel area, on [0,1]
+    PAR   -- (N x T) Photosynthetically active radiation (MJ m-2)
+    Tmin  -- (N x T) Daily minimum air temperature at 2-m height (deg K)
+    VPD   -- (N x T) Daily average vapor pressure deficit (Pa)
+    SMRZ  -- (N x T) Root-zone soil wetness (%), on [0,100]
+    FT    -- (N x T) Freeze-thaw status of the soil, 0=Frozen or 1=Thawed
+    Tsoil -- (N x T) Surface soil temperature (deg K)
+    SMSF  -- (N x T) Surface soil wetness (%), on [0,100]
 '''
 
 import numpy as np

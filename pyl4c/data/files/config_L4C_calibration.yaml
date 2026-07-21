@@ -23,6 +23,8 @@ data:
     SMSF: "drivers/smsf" # Surface soil moisture wetness [%]
     Tsoil: "drivers/tsoil" # Soil temperature [deg K]
     Tsurf: "MERRA2/TS" # Surface skin temperature [deg K]
+  target_fields:
+    GPP: 'GPP'
 optimization:
   backend: "/home/arthur/20230207_L4C_GPP_calibration.h5"
   # Number of times to run the optimization, with random initializations
