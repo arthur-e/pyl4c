@@ -140,11 +140,18 @@ class SparseArray(object, metaclass = MetaSparseArray):
         else:
             raise TypeError('Must provide either a binary file path or a numpy.ndarray instance')
 
+    @property
+    def shape(self):
+        "Alias for the array data's shape"
+        return self.data.shape
+
+    @classmethod
     def __nested_src_idx__(self, x, y, ny):
         # Serialization offset for nested grid elements, e.g., 0 through 8
         #   for a 1-km grid nested in a 9-km grid
         return (x * ny) + y
 
+    @classmethod
     def __nested_dst_idx__(self, x, y, m, n, nn, ny):
         # Serialization offset for a grid nested within a 9-km grid
         # x, y correspond to 9-km grid indices; m, n to nested grid indices;
@@ -166,21 +173,64 @@ class SparseArray(object, metaclass = MetaSparseArray):
             for m, n in nested_grid:
                 # This is a translation of the function from spland.c
                 #   in the l4c-utils/mkgrid C library
-                src = self.__nested_src_idx__(
-                    i, self.__nested_src_idx__(m, n, 9), 81)
-                dst = self.__nested_dst_idx__(row, col, m, n, 9, shp[1])
+                src = cls.__nested_src_idx__(
+                    i, cls.__nested_src_idx__(m, n, 9), 81)
+                dst = cls.__nested_dst_idx__(row, col, m, n, 9, shp[1])
                 result[dst] = self.data[src]
 
-    @property
-    def shape(self):
-        "Alias for the array data's shape"
-        return self.data.shape
+    @classmethod
+    def get_deflated_idx_1km(cls, rc_9km, i1d_1km):
+        '''
+        This currently doesn't work as expected.
+
+        It should return the index of a pixel in the M01land grid, based on the
+        M09 (row, column) coordinates and the M01 (raveled) index.
+
+        However, the coordinates appear offset from their known 2D (M01)
+        positions; they are generally west of their intended location but the
+        magnitude of the offset changes with longitude and latitude.
+
+        Parameters
+        ----------
+        rc_9km : tuple
+            The M09 coordinates, i.e., A 2-element tuple of (row, column)
+            coordinates for the corresponding pixel in the 9-km (M09) grid
+        i1d_1km : int
+            The M01 raveled coordinate, i.e., the raveled index in the full
+            M01 grid corresponding to this location
+
+        Returns
+        -------
+        int
+        '''
+        row, col = rc_9km # These are the M09 row and column
+        # Deductively identify the sparse M09land index based on whether it
+        #   signifies *both* the correct row and column
+        ii = np.argwhere(cls.sparse_row_idx == row).ravel()
+        jj = np.argwhere(cls.sparse_col_idx == col).ravel()
+        if not np.in1d(ii, jj).any():
+            return np.nan
+        idx = ii[np.in1d(ii, jj)]
+        shp = EASE2_GRID_PARAMS['M01']['shape']
+        # Source array has first 81 pixels, then second 81 pixels, etc...
+        nested_grid = product(range(0, 9), range(0, 9))
+        # Similarly, we iteratively search for the matching 1-km pixel
+        for i, nesting in enumerate(nested_grid):
+            m, n = nesting
+            # This is a translation of the function from spland.c
+            #   in the l4c-utils/mkgrid C library
+            src = cls.__nested_src_idx__(
+                idx, cls.__nested_src_idx__(m, n, 9), 81)
+            dst = cls.__nested_dst_idx__(row, col, m, n, 9, shp[1])
+            if dst == i1d_1km:
+                return int(src)
 
     @classmethod
     def get_deflated_idx(cls, coords):
         '''
-        Translates (row, column) coordinates in the inflated array to the
-        corresponding 1D index in the deflated (sparse) array.
+        For the 9-km (M09) grids (only), translates (row, column) coordinates
+        in the inflated array to the corresponding 1D index in the deflated
+        (sparse) array.
 
         Parameters
         ----------

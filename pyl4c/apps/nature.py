@@ -22,9 +22,10 @@ class NatureRunNetCDF4(object):
     file_path : str
         The NetCDF4 file path
     '''
+    _grid = 'M09'
+
     def __init__(self, file_path: str):
         self._dataset_file_path = file_path
-        self._grid = 'M09'
         try:
             self.dataset = netCDF4.Dataset(file_path)
         except OSError:
@@ -132,7 +133,7 @@ class NatureRunNetCDF4(object):
         ]
         return self.__class__.index_bulk(self, variable, tile_idx)
 
-    def inflated(self, variable, dtype = np.float32, nodata = -9999):
+    def inflate(self, variable, dtype = np.float32, nodata = -9999):
         '''
         Returns a "tile space" variable (1D) as a 2D NumPy array, calculating
         a daily average as needed.
@@ -144,7 +145,7 @@ class NatureRunNetCDF4(object):
         dtype : type
             The NumPy data type to use for the resulting array
         nodata : int or float
-            The NoData value to use in the output array
+            The NoData value to use in the output array (Default: -9999)
 
         Returns
         -------
@@ -170,3 +171,35 @@ class NatureRunNetCDF4(object):
                 result[row, col] = target_variable[i]
 
         return result
+
+
+def inflate_array(arr, template, nodata = -9999):
+    '''
+    Given an array in "tile space" variable (1D), returns a 2D NumPy array.
+
+    Parameters
+    ----------
+    arr : numpy.ndarray
+        The flat (1D) or "tile space" array to be inflated
+    template : str
+        File path to a template Nature Run granule; required because these
+        granules contain the tile space mapping
+    nodata : int or float
+        The NoData value to use in the output array (Default: -9999)
+
+    Returns
+    -------
+    numpy.ndarray
+    '''
+    tpl = NatureRunNetCDF4(template)
+    shp = EASE2_GRID_PARAMS[tpl._grid]['shape']
+    result = np.ones(shp, dtype = dtype) * nodata
+
+    assert arr.ndim == 2 and arr.shape[0] == 1,\
+        'This does not appear to be a daily average granule, which is the only kind currently supported'
+    arr = np.array(arr).ravel()
+    for i in range(0, arr.shape[0]):
+        row, col = tpl.tile_to_ease2(i)
+        result[row, col] = target_variable[i]
+
+    return result
