@@ -40,6 +40,7 @@ from collections import OrderedDict
 
 ANCILLARY_FILE = os.path.join(
     os.path.dirname(pyl4c.__file__), 'data/files/ancillary_file_paths.yaml')
+ANCILLARY_DATA_PATHS = None
 if os.path.exists(ANCILLARY_FILE):
     with open(ANCILLARY_FILE, 'r') as file:
         ANCILLARY_DATA_PATHS = yaml.safe_load(file)

@@ -116,7 +116,7 @@ def netcdf_array(
             x_coords > 0, x_coords <= np.abs(x_coords).min())
         if np.any(test):
             idx = np.arange(0, x_coords.shape[0])
-            start_idx = int(idx[x_coords == x_coords[test]])
+            start_idx = int(idx[x_coords == x_coords[test]][0])
 
     # Extract a NumPy array
     if hasattr(time_idx, 'index'):
